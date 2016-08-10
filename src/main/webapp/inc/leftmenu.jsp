@@ -41,10 +41,7 @@
                         </a>
                         <!--二级菜单-->
                         <ul class="submenu">
-                            <li><a href="#">合同分析统计</a></li>
-                            <li><a href="#">客户信息管理</a></li>
-                            <li><a href="#">合同信息管理</a></li>
-                            <li><a href="#">网络协议签订列表</a></li>
+                            <li><a href="${_base}/storage/list" target="mainFrame">商品列表</a></li>
                         </ul>
                         <!--二级菜单结束-->
                     </li>

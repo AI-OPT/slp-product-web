@@ -28,7 +28,7 @@ define('app/jsp/storage/prodstorage', function (require, exports, module) {
     		clickId:""
     	},
     	Statics: {
-    		DEFAULT_PAGE_SIZE: 30
+    		DEFAULT_PAGE_SIZE: 10
     	},
     	//事件代理
     	events: {
