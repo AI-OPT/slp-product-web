@@ -9,7 +9,7 @@
                         <!--<span class="label label-info label-circle pull-right">28</span>--></a></li>
                     <li>
                         <a href="#" class="dropdown-toggle">
-                            <i class="fa fa-sitemap"></i><span>类目属性管理</span>
+                            <i class="fa fa-shopping-cart"></i><span>类目属性管理</span>
                             <i class="fa fa-chevron-circle-right drop-icon"></i>
                         </a>
                         <!--二级菜单-->
