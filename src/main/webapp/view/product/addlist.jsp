@@ -20,7 +20,7 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!-- 查询条件 -->
 						<div class="form-label">
-							<ul>
+							<ul id="data1ProdCat">
 								<li>
 									<p class="word">商品类目</p>
 									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
