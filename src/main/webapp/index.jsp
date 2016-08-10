@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="iotStatic" value="${pageContext.request.contextPath}/template/static"/>
 <!DOCTYPE html>
