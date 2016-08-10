@@ -48,7 +48,7 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         loadData: function(currentPage) {
         	var _this = this;
         	var opt = _this.options;
-        	this.showLoadingMessage();
+        	//this.showLoadingMessage();
         	var renderId = opt.renderId;
         	if(renderId){
         		var showDoc = document.getElementById(renderId);
@@ -77,10 +77,10 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
  	            //message: opt.message,
  	            processing: false,
  	            success: function (resp) {
- 	            	_this.hiddenLoadingMessage();
+ 	            	//_this.hiddenLoadingMessage();
  	            	var d = (resp && resp.data)?resp.data:{};
  	            	if(d && d.result && d.result.length>0){
- 	            		_this.hiddenNotResultMessage();
+ 	            		//_this.hiddenNotResultMessage();
  	            		opt.render && opt.render.call(_this,d.result);
  	            	}else{
  	            		_this.showNotResultMessage();

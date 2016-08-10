@@ -6914,17 +6914,17 @@ svg {
 	line-height:30px;
 }
 /**iframe样式 开始**/
-#content-wrapper-iframe {
+.content-wrapper-iframe {
 	background: #e7ebee;
 	height: 100%;
 	margin-top: 0;
 	margin-bottom: 0;
 	position: relative;
-	min-height: 1200px;	
+	min-height: 1200px;
 }
 
 @media (max-width: 991px) {
-#content-wrapper-iframe {
+.content-wrapper-iframe {
 	margin-left: 0;
 	border-left: 0!important;
 	border-right: 0!important;
@@ -6932,17 +6932,17 @@ svg {
 }
 
 @media (max-width: 767px) {
-#content-wrapper-iframe {
-	padding: 10px 8px 0 8px;
+.content-wrapper-iframe {
+	/*padding: 10px 8px 0 8px;*/
 }
 }
 
 @media (max-width: 419px) {
-#content-wrapper-iframe {
-	padding: 5px 5px 0 5px;
+.content-wrapper-iframe {
+	/*padding: 5px 5px 0 5px;*/
 }
 }
-#content-wrapper-iframe>.row {
+.content-wrapper-iframe>.row {
 	opacity: 1;
 }
 /**iframe样式 结束**/
