@@ -106,29 +106,30 @@
 										</thead>
 										<tbody id="searchProductData">
 										</tbody>
-										<script id="searchProductTemple" type="text/template">
-											<tr>
-												<td>{{:prodId}}</td>
-												<td>{{:productCatName}}</td>
-												<td>{{:productTypeName}}</td>
-												{{if picUrl==null || picUrl==""}}
-												<td><img src="${_slpres}/images/sp-03-a.png"></td>
-												{{else}}
-												<td><img src="{{:picUrl}}"></td>
-												{{/if}}
-												<td>{{:prodName}}</td>
-												<%-- <td>{{:totalNum}}</td>--%>
-												<td>{{:stateName}}</td>
-												<td>{{:~timesToFmatter(createTime)}}</td>
-												<td>
-													<div>
-														<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
-														<%-- <p><a href="#" class="blue">查看商品</a></p> --%>
-													</div>
-												</td>
-											</tr>
-										</script>
 									</table>
+									<div id="showMessageDiv"></div>
+									<script id="searchProductTemple" type="text/template">
+										<tr>
+											<td>{{:prodId}}</td>
+											<td>{{:productCatName}}</td>
+											<td>{{:productTypeName}}</td>
+											{{if picUrl==null || picUrl==""}}
+											<td><img src="${_slpres}/images/sp-03-a.png"></td>
+											{{else}}
+											<td><img src="{{:picUrl}}"></td>
+											{{/if}}
+											<td>{{:prodName}}</td>
+											<%-- <td>{{:totalNum}}</td>--%>
+											<td>{{:stateName}}</td>
+											<td>{{:~timesToFmatter(createTime)}}</td>
+											<td>
+												<div>
+													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
+													<%-- <p><a href="#" class="blue">查看商品</a></p> --%>
+												</div>
+											</td>
+										</tr>
+									</script>
 								</div>
 								<!--分页-->
 								<div class="paging">

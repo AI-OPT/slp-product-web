@@ -1,4 +1,4 @@
-define('app/jsp/productcat/catlist', function (require, exports, module) {
+define('app/jsp/prodcat/catlist', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
@@ -20,7 +20,7 @@ define('app/jsp/productcat/catlist', function (require, exports, module) {
     var ajaxController = new AjaxController();
     var clickId = "";
     //定义页面组件类
-    var catlistPager = Widget.extend({
+    var catListPager = Widget.extend({
     	
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -28,54 +28,44 @@ define('app/jsp/productcat/catlist', function (require, exports, module) {
     		clickId:""
     	},
     	Statics: {
-    		DEFAULT_PAGE_SIZE: 30
+    		DEFAULT_PAGE_SIZE: 10
     	},
     	//事件代理
     	events: {
-    		//查询
+			"click #selectList":"_selectPageList"
             },
     	//重写父类
     	setup: function () {
-    		catlistPager.superclass.setup.call(this);
+			catListPager.superclass.setup.call(this);
+			this._selectPageList();
     	},
     	
     	
     	//查询
-    	_selectNormProductList:function(){
+    	_selectPageList:function(){
     		var _this = this;
-    		/*var div = document.getElementById("data1ProdCat");
-    		var length = document.getElementsByTagName("select").length-3;
-    		var productCatId = $("#productCat"+length+" option:selected").val();
-    		var productType = $("#productType").val().trim();
-    		var productId = $("#standedProdId").val().trim();
-    		var productName = $("#standedProductName").val().trim();
-    		
-    		var state = $("#state").val().trim();
-    		var operStartTime = $("#operStartTime").val().trim();
-    		var operEndTime = $("#operEndTime").val().trim();*/
-    		
+			var catId = $("#productCatId").val();
+			var parentCatId = $("#parentProductCatId").val();
+			var catName = $("#productCatName").val();
+			var isChile = $("#isChild").val();
     		$("#pagination-ul").runnerPagination({
-    			
-	 			url: _base+"/normprodquery/getNormProductList",
-	 			
+	 			url: _base+"/cat/query/list",
 	 			method: "POST",
 	 			dataType: "json",
-	 			renderId:"searchNormProductData",
+	 			renderId: "listData",
 	 			messageId:"showMessageDiv",
-	 			
-	           /* data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName},
-	            */
-	 			/*data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName,
-		 			"operStartTimeStr":operStartTime,"operEndTimeStr":operEndTime,"state":state
-		 			},*/
-	 			
-	           	pageSize: catlistPager.DEFAULT_PAGE_SIZE,
+	 			data:
+					{
+						"productCatId":catId,"parentProductCatId":parentCatId,
+						"productCatName":catName,"isChild":isChile
+		 			},
+	           	pageSize: catListPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
-	            		var template = $.templates("#searchNormProductTemple");
+	            		var template = $.templates("#searchTemple");
 	            	    var htmlOutput = template.render(data);
-	            	    $("#searchNormProductData").html(htmlOutput);
+	            	    $("#listData").html(htmlOutput);
 	            	}
 	            	_this._returnTop();
 	            }
@@ -89,6 +79,6 @@ define('app/jsp/productcat/catlist', function (require, exports, module) {
     	
     });
     
-    module.exports = catlistPager
+    module.exports = catListPager
 });
 

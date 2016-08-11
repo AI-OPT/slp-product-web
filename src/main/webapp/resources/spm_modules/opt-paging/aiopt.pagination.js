@@ -48,7 +48,7 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         loadData: function(currentPage) {
         	var _this = this;
         	var opt = _this.options;
-        	//this.showLoadingMessage();
+        	this.showLoadingMessage();
         	var renderId = opt.renderId;
         	if(renderId){
         		var showDoc = document.getElementById(renderId);
@@ -77,10 +77,10 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
  	            //message: opt.message,
  	            processing: false,
  	            success: function (resp) {
- 	            	//_this.hiddenLoadingMessage();
+ 	            	_this.hiddenLoadingMessage();
  	            	var d = (resp && resp.data)?resp.data:{};
  	            	if(d && d.result && d.result.length>0){
- 	            		//_this.hiddenNotResultMessage();
+ 	            		_this.hiddenNotResultMessage();
  	            		opt.render && opt.render.call(_this,d.result);
  	            	}else{
  	            		_this.showNotResultMessage();
@@ -110,7 +110,7 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         /**
          * 显示加载信息
          */
-        showLoadingMessage(){
+        showLoadingMessage:function(){
         	var messageId = this.options.messageId;
         	if(messageId){
         		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-loading'></li>";
@@ -124,7 +124,7 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         /**
          * 隐藏加载信息
          */
-        hiddenLoadingMessage(){
+        hiddenLoadingMessage:function(){
         	var messageId = this.options.messageId;
         	if(messageId){
         		document.getElementById(messageId).innerHTML = "";
@@ -138,7 +138,7 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         /**
          * 显示无返回信息
          */
-        showNotResultMessage(){
+        showNotResultMessage:function(){
         	this.$element.removeClass("pagination");
         	var imageType = this.options.resultImageType;
         	var messageId = this.options.messageId;
@@ -162,7 +162,7 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         /**
          * 隐藏无返回信息
          */
-        hiddenNotResultMessage(){
+        hiddenNotResultMessage:function(){
         	this.$element.addClass("pagination");
         	var imageType = this.options.resultImageType;
         	var messageId = this.options.messageId;
