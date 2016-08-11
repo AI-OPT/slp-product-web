@@ -152,8 +152,8 @@
 		var prodInfoList = '${prodInfoList}';
 		var productEditInfo = '${productEditInfo}';
 		(function () {
-			seajs.use('app/jsp/product/addlist', function (AddlistPager) {
-				pager = new AddlistPager({element: document.body});
+			seajs.use('app/jsp/product/addlist', function (addlistPager) {
+				pager = new addlistPager({element: document.body});
 				pager.render();
 			});
 		})();
