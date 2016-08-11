@@ -46,7 +46,9 @@
 								<li class="width-xlag">
 									<p class="word">标准品名称</p>
 									<p><input id="standedProductName" type="text" class="int-text int-medium"></p>
-									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="icon-caret-down"></i></a>
+									<p><input id="selectNormProductList" type="button" value="查询"
+											  class="biu-btn btn-primary btn-blue btn-mini"></p>
+									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
 									</p>
 								</li>
 							</ul>
@@ -70,24 +72,19 @@
 								</ul>
 								<input type="hidden" id="state" value="1"/>
 								<ul>
-									<li class="width-xlag">
-										<p class="word">操作时间</p>
-										<p><input type="text" class="int-text int-medium" id="operStartTime"><a
-												href="#" class="ccc"><i class="icon-calendar"></i></a></p>
-										<p>~</p>
-										<p><input type="text" class="int-text int-medium" id="operEndTime"><a
-												href="#" class="ccc"><i class="icon-calendar"></i></a></p>
+									<li class="col-md-6">
+										<p class="word">操作开始时间</p>
+										<p><input type="text" class="int-text int-medium" id="operStartTime">
+											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
+									</li>
+									<li class="col-md-6">
+										<p class="word">操作结束时间</p>
+										<p><input type="text" class="int-text int-medium" id="operEndTime">
+											<span class="time"> <i class="fa  fa-calendar" ></i></span>
+										</p>
 									</li>
 								</ul>
-
 							</div>
-								<ul>
-									<li class="width-xlag">
-										<p class="word">&nbsp;</p>
-										<p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
-												  id="selectNormProductList" value="查  询"></p>
-									</li>
-								</ul>
 						</div>
 					</div>
 				</div>
@@ -163,7 +160,7 @@
 	var productEditInfo = '${productEditInfo}';
 	(function () {
 		<%-- 展示日历 --%>
-		$('#selectDiv').delegate('.icon-calendar','click',function(){
+		$('#selectDiv').delegate('.fa-calendar','click',function(){
 			var calInput = $(this).parent().prev();
 			var timeId = calInput.attr('id');
 			console.log("click calendar "+timeId);
