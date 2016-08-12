@@ -26,6 +26,9 @@
 
 	<dubbo:reference id="iNormProductSV" interface="com.ai.slp.product.api.normproduct.interfaces.INormProductSV"
 					 registry="slpRegistry"/>
+	<!-- 属性管理 -->
+	<dubbo:reference id="iAttrAndValDefSV" interface="com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV"
+					 registry="slpRegistry"/>
 	<!-- 商品类目 -->
 	<dubbo:reference id="iProductCatSV" interface="com.ai.slp.product.api.productcat.interfaces.IProductCatSV"
 					 registry="slpRegistry"/>
