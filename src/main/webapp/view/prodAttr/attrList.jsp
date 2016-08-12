@@ -130,7 +130,7 @@
 	var prodInfoList = '${prodInfoList}';
 	var productEditInfo = '${productEditInfo}';
 	(function () {
-		seajs.use('app/jsp/prodCat/attrList', function(
+		seajs.use('app/jsp/prodAttr/attrList', function(
 				catlistPager) {
 			pager = new catlistPager({
 				element : document.body

@@ -1,4 +1,4 @@
-define('app/jsp/prodCat/attrList', function (require, exports, module) {
+define('app/jsp/prodcat/catlist', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
@@ -7,10 +7,12 @@ define('app/jsp/prodCat/attrList', function (require, exports, module) {
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
+    require("my97DatePicker/WdatePicker");
     require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
     require("opt-paging/aiopt.pagination");
     require("twbs-pagination/jquery.twbsPagination.min");
+   
     
     var SendMessageUtil = require("app/util/sendMessage");
     
@@ -18,7 +20,7 @@ define('app/jsp/prodCat/attrList', function (require, exports, module) {
     var ajaxController = new AjaxController();
     var clickId = "";
     //定义页面组件类
-    var catlistPager = Widget.extend({
+    var catListPager = Widget.extend({
     	
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -30,40 +32,40 @@ define('app/jsp/prodCat/attrList', function (require, exports, module) {
     	},
     	//事件代理
     	events: {
-    		//查询
-            "click #selectCatAttrList":"_selectCatAttrList",
+			"click #selectList":"_selectPageList"
             },
     	//重写父类
     	setup: function () {
-    		catlistPager.superclass.setup.call(this);
-    		this._selectCatAttrList();
+			catListPager.superclass.setup.call(this);
+			this._selectPageList();
     	},
     	
     	
-    	//查询列表
-    	_selectCatAttrList:function(){
+    	//查询
+    	_selectPageList:function(){
     		var _this = this;
-    		
-    		var attrId = $("#attrId").val().trim();
-    		var attrName = $("#attrName").val().trim();
-    		var valueWay = $("#valueWay").val().trim();
-    		
+			var catId = $("#productCatId").val();
+			var parentCatId = $("#parentProductCatId").val();
+			var catName = $("#productCatName").val();
+			var isChile = $("#isChild").val();
     		$("#pagination-ul").runnerPagination({
-	 			url: _base+"/cat/getAttrList",
+	 			url: _base+"/cat/query/list",
 	 			method: "POST",
 	 			dataType: "json",
-	 			renderId:"searchAttrData",
+	 			renderId: "listData",
 	 			messageId:"showMessageDiv",
-	 			
-	 			data: {"attrId":attrId,"attrName":attrName,"valueWay":valueWay},
-	 			
-	           	pageSize: catlistPager.DEFAULT_PAGE_SIZE,
+	 			data:
+					{
+						"productCatId":catId,"parentProductCatId":parentCatId,
+						"productCatName":catName,"isChild":isChile
+		 			},
+	           	pageSize: catListPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
-	            		var template = $.templates("#searchAttrTemple");
+	            		var template = $.templates("#searchTemple");
 	            	    var htmlOutput = template.render(data);
-	            	    $("#searchAttrData").html(htmlOutput);
+	            	    $("#listData").html(htmlOutput);
 	            	}
 	            	_this._returnTop();
 	            }
@@ -77,6 +79,6 @@ define('app/jsp/prodCat/attrList', function (require, exports, module) {
     	
     });
     
-    module.exports = catlistPager
+    module.exports = catListPager
 });
 

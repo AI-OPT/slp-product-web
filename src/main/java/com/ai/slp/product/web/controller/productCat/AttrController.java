@@ -39,17 +39,17 @@ import com.ai.slp.product.web.util.DateUtil;
  */
 
 @Controller
-@RequestMapping("/cat")
+@RequestMapping("/attr")
 public class AttrController {
 	private static Logger LOG = LoggerFactory.getLogger(AttrController.class);
 	
 	/**
 	 * 进入页面
 	 */
-	@RequestMapping("/catList")
+	@RequestMapping("/attrList")
 	public String catList() {
 		
-		return "prodCat/catList";
+		return "prodAttr/attrList";
 	}
 	
 	/**
