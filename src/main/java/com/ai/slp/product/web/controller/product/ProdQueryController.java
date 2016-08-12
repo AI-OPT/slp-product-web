@@ -190,6 +190,7 @@ public class ProdQueryController {
 	 */
 	private void queryBuilder(HttpServletRequest request, ProductEditQueryReq productEditQueryReq) {
 		productEditQueryReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		productEditQueryReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
 		productEditQueryReq.setProductCatId(request.getParameter("productCatId"));
 		if(!request.getParameter("productType").isEmpty())
 			productEditQueryReq.setProductType(request.getParameter("productType"));

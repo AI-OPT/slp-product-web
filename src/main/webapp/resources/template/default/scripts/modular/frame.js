@@ -4,7 +4,7 @@ $(function () {
 		$(this).children('i').toggleClass("fa-minus fa-plus");
 		$(this).parent().parent().parent().parent().parent().parent().parent().children('.zhank').slideToggle(100);
     });
-});	
+});
 
 /**去掉最后的线条**/
 $(function () {

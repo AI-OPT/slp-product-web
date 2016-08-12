@@ -17,7 +17,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     //定义页面组件类
-    var AddlistPager = Widget.extend({
+    var addlistPager = Widget.extend({
     	
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -113,6 +113,6 @@ define('app/jsp/product/addlist', function (require, exports, module) {
     	
     });
     
-    module.exports = AddlistPager
+    module.exports = addlistPager
 });
 
