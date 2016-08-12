@@ -70,8 +70,9 @@
 							<div class="nav-tplist-title">
 				                   <div class="nav-tplist-title nav-tplist-title-border">
 					                  <ul>
-					                    <div class="title-right">
-						                    <p><input id="#" type="button" value="新增属性" class="biu-btn btn-blue btn-mini"/></p>
+					                    <div>
+						                    <!-- <p><input id="#" type="button" value="新增属性" class="biu-btn btn-blue btn-mini"/></p> -->
+						                    <li><a href="${_base}/attr/addAttr/" class="biu-btn btn-blue btn-mini">新增属性</a></li>
 					                    </div>
 					                  </ul>
 				              		</div>

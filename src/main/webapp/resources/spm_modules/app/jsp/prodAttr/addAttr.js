@@ -1,4 +1,4 @@
-define('app/jsp/prodCat/addAttr', function (require, exports, module) {
+define('app/jsp/prodAttr/addAttr', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
@@ -18,7 +18,7 @@ define('app/jsp/prodCat/addAttr', function (require, exports, module) {
     var ajaxController = new AjaxController();
     var clickId = "";
     //定义页面组件类
-    var catlistPager = Widget.extend({
+    var addAttrPager = Widget.extend({
     	
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -31,25 +31,24 @@ define('app/jsp/prodCat/addAttr', function (require, exports, module) {
     	//事件代理
     	events: {
     		//查询
-            "click #selectCatAttrList":"_selectCatAttrList",
+            "click #saveAttr":"_saveAttr",
             },
     	//重写父类
     	setup: function () {
-    		catlistPager.superclass.setup.call(this);
-    		this._selectCatAttrList();
+    		addAttrPager.superclass.setup.call(this);
+    		this._saveAttr();
     	},
     	
     	
-    	//查询列表
-    	_selectCatAttrList:function(){
+    	//添加
+    	_saveAttr:function(){
     		var _this = this;
-    		
     		var attrName = $("#attrName").val().trim();
     		var firstLetter = $("#firstLetter").val().trim();
     		var valueWay = $("#valueWay").val().trim();
     		
     		$("#pagination-ul").runnerPagination({
-	 			url: _base+"/cat/getAttrList",
+	 			url: _base+"/attr/saveAttr",
 	 			method: "POST",
 	 			dataType: "json",
 	 			renderId:"searchAttrData",
@@ -57,7 +56,7 @@ define('app/jsp/prodCat/addAttr', function (require, exports, module) {
 	 			
 	 			data: {"firstLetter":firstLetter,"attrName":attrName,"valueWay":valueWay},
 	 			
-	           	pageSize: catlistPager.DEFAULT_PAGE_SIZE,
+	           	pageSize: addAttrPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
@@ -77,6 +76,6 @@ define('app/jsp/prodCat/addAttr', function (require, exports, module) {
     	
     });
     
-    module.exports = catlistPager
+    module.exports = addAttrPager
 });
 
