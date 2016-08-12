@@ -14,7 +14,7 @@
                         </a>
                         <!--二级菜单-->
                         <ul class="submenu">
-                            <li><a href="#">属性及属性值管理</a></li>
+                            <li><a href="${_base}/cat/catList" target="mainFrame">属性及属性值管理</a></li>
                             <li><a href="#">类目管理</a></li>
                         </ul>
                         <!--二级菜单结束-->
