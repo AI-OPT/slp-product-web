@@ -131,8 +131,8 @@
 	var productEditInfo = '${productEditInfo}';
 	(function () {
 		seajs.use('app/jsp/prodAttr/attrList', function(
-				catlistPager) {
-			pager = new catlistPager({
+				attrlistPager) {
+			pager = new attrlistPager({
 				element : document.body
 			});
 			pager.render();

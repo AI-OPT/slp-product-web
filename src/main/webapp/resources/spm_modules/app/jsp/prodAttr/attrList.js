@@ -18,7 +18,7 @@ define('app/jsp/prodAttr/attrList', function (require, exports, module) {
     var ajaxController = new AjaxController();
     var clickId = "";
     //定义页面组件类
-    var catlistPager = Widget.extend({
+    var attrlistPager = Widget.extend({
     	
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -35,7 +35,7 @@ define('app/jsp/prodAttr/attrList', function (require, exports, module) {
             },
     	//重写父类
     	setup: function () {
-    		catlistPager.superclass.setup.call(this);
+    		attrlistPager.superclass.setup.call(this);
     		this._selectCatAttrList();
     	},
     	
@@ -57,7 +57,7 @@ define('app/jsp/prodAttr/attrList', function (require, exports, module) {
 	 			
 	 			data: {"attrId":attrId,"attrName":attrName,"valueWay":valueWay},
 	 			
-	           	pageSize: catlistPager.DEFAULT_PAGE_SIZE,
+	           	pageSize: attrlistPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
@@ -77,6 +77,6 @@ define('app/jsp/prodAttr/attrList', function (require, exports, module) {
     	
     });
     
-    module.exports = catlistPager
+    module.exports = attrlistPager
 });
 
