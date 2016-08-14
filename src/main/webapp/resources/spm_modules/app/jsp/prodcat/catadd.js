@@ -2,7 +2,7 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
-		Validate = require("arale-validator/0.10.2/index"),
+		Validator = require("arale-validator/0.10.2/index"),
 	    Dialog = require("optDialog/src/dialog"),
 	    Paging = require('paging/0.0.1/paging'),
 	    AjaxController = require('opt-ajax/1.0.0/index');
@@ -18,7 +18,30 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-	var validate = new Validate();
+	//表单校验对象
+	var validator = new Validator({
+		element: $(".form-label")
+	});
+	validator.addItem({
+		element: "input[name=productCatName]",
+		required: true,
+		errormessageRequired:"类目名称不能为空"
+	}).addItem({
+		element: "input[name=firstLetter]",
+		required: true,
+		pattern: "[A-Z]{1}",
+		errormessagePattern:'请输入大写字母'
+	}).addItem({
+		element: "input[name=serialNumber]",
+		min:1,
+		max:10000,
+		errormessageMin:'请输入1至10000的数字',
+		errormessageMax:'请输入1至10000的数字'
+	}).addItem({
+		element: "input[type=radio]",
+		required: true,
+		errormessageRequired:'请选择是否存在子分类'
+	});
     //定义页面组件类
     var catAddPager = Widget.extend({
     	
@@ -38,7 +61,6 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
     	//重写父类
     	setup: function () {
 			catAddPager.superclass.setup.call(this);
-			catAddPager.superclass.autoRenderAll();
     	},
 		//增加类目
 		_addCatTemp:function(){
@@ -53,51 +75,51 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 		},
 		//提交添加
 		_submitCatList:function(){
-			validate.execute(function(error, results, element) {
-				console.log("form validator:");
-				console.log(arguments);
-			});
-			//父类目
-			var parentCatId = $('#parentProductCatId').val();
-			var catArr = [];
-			//获取所有的form-label下的input
-			$("#addViewDiv > .form-label ").each(function(index,form){
-				var catObj = {};
-				console.log(index+" form-label");
-				if (parentCatId!=null & parentCatId!='')
-					catObj['parentProductCatId'] = parentCatId;
-				//类目名
-				var catName = $(this).find("input[name='productCatName']")[0];
-				catObj['productCatName'] = catName.value;
-				//首字母
-				var fLetter = $(this).find("input[name='firstLetter']")[0];
-				catObj['firstLetter'] = fLetter.value;
-				//排序
-				var sn = $(this).find("input[name='serialNumber']")[0];
-				catObj['serialNumber'] = sn.value;
-				//是否有子分类
-				var isChild = $(this).find("input[type='radio']:checked")[0];
-				catObj['isChild'] = isChild.value;
-				catArr.push(catObj);
-			});
-			console.log("cat arr lengeth "+catArr.length);
-			ajaxController.ajax({
-				type: "post",
-				processing: true,
-				message: "保存中，请等待...",
-				url: _base+"/cat/edit/create",
-				data:{'catListStr':JSON.stringify(catArr)},
-				success: function(data){
-					if("1"===data.statusCode){
-						alert("保存成功");
-						//保存成功,回退到进入的列表页
-						//window.history.go(-1);
+			validator.execute(function(error, results, element) {
+				if (error) return;
+				//父类目
+				var parentCatId = $('#parentProductCatId').val();
+				var catArr = [];
+				//获取所有的form-label下的input
+				$("#addViewDiv > .form-label ").each(function(index,form){
+					var catObj = {};
+					console.log(index+" form-label");
+					if (parentCatId!=null & parentCatId!='')
+						catObj['parentProductCatId'] = parentCatId;
+					//类目名
+					var catName = $(this).find("input[name='productCatName']")[0];
+					catObj['productCatName'] = catName.value;
+					//首字母
+					var fLetter = $(this).find("input[name='firstLetter']")[0];
+					catObj['firstLetter'] = fLetter.value;
+					//排序
+					var sn = $(this).find("input[name='serialNumber']")[0];
+					catObj['serialNumber'] = sn.value;
+					//是否有子分类
+					var isChild = $(this).find("input[type='radio']:checked")[0];
+					catObj['isChild'] = isChild.value;
+					catArr.push(catObj);
+				});
+				console.log("cat arr lengeth "+catArr.length);
+				ajaxController.ajax({
+					type: "post",
+					processing: true,
+					message: "保存中，请等待...",
+					url: _base+"/cat/edit/create",
+					data:{'catListStr':JSON.stringify(catArr)},
+					success: function(data){
+						if("1"===data.statusCode){
+							alert("保存成功");
+							//保存成功,回退到进入的列表页
+							//window.history.go(-1);
+						}
 					}
-				}
+				});
 			});
+
 		}
     });
     
-    module.exports = catAddPager
+    module.exports = catAddPager;
 });
 
