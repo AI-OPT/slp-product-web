@@ -40,7 +40,10 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 			var htmlOutput = template.render();
 			$("#subDiv").before(htmlOutput);
 		},
-
+		//删除类目
+		_delCatTemp:function(){
+			console.log("")
+		}
     });
     
     module.exports = catAddPager

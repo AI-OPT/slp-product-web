@@ -18,7 +18,7 @@
             <div class="row"><!--内侧框架-->
                 <div class="col-lg-12"><!--删格化-->
                     <div class="main-box clearfix"><!--白色背景-->
-                        <div class="main-box-body clearfix">
+                        <div id="addViewDiv" class="main-box-body clearfix">
                             <input type="hidden" id="parentProductCatId" name="parentCatId" value="${parentCatId}">
                             <!-- 查询条件 -->
                             <div class="form-label bd-bottom">
@@ -71,7 +71,7 @@
     <div class="form-label bd-bottom">
         <div class="title-right">
             <p class="plus-word btn-primary">
-                <a href="#"><i class="fa fa-times"></i>删  除</a></p>
+                <a href="#" name="delBtn"><i class="fa fa-times"></i>删  除</a></p>
         </div>
         <ul>
             <li class="col-md-6">
@@ -102,6 +102,12 @@
 <script type="text/javascript">
     var pager;
     (function () {
+        <%-- 删除按钮 --%>
+        $('#addViewDiv').delegate("a[name='delBtn']", 'click', function () {
+            console.log("删除");
+            <%--p  div(.title-right) div(.form-label) --%>
+            $(this).parent().parent().parent().remove();
+        });
         seajs.use('app/jsp/prodcat/catadd', function (catAddPager) {
             pager = new catAddPager({element: document.body});
             pager.render();
