@@ -16,6 +16,7 @@
                         <ul class="submenu">
                             <li><a href="#">属性及属性值管理</a></li>
                             <li><a href="${_base}/cat/query/" target="mainFrame">类目管理</a></li>
+                            <li><a href="${_base}/cat/edit/addview/" target="mainFrame">类目添加</a></li>
                         </ul>
                         <!--二级菜单结束-->
                     </li>

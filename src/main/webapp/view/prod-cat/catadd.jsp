@@ -21,25 +21,27 @@
                         <div id="addViewDiv" class="main-box-body clearfix">
                             <input type="hidden" id="parentProductCatId" name="parentCatId" value="${parentCatId}">
                             <!-- 查询条件 -->
-                            <div class="form-label bd-bottom">
+                            <div class="form-label bd-bottom" data-widget="validator">
                                 <ul>
                                     <li class="col-md-6">
                                         <p class="word"><span>*</span>类目名称</p>
-                                        <p><input name="productCatName" type="text" class="int-text int-medium"></p>
+                                        <p><input name="productCatName" type="text" class="int-text int-medium"
+                                                  required maxlength="100"></p>
                                     </li>
                                     <li class="col-md-6">
                                         <p class="word">名称首字母(大写)</p>
-                                        <p><input name="firstLetter" type="text" class="int-text int-medium"></p>
+                                        <p><input name="firstLetter" type="text" class="int-text int-medium" maxlength="1"></p>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="col-md-6">
                                         <p class="word">排序</p>
-                                        <p><input name="serialNumber" type="text" class="int-text int-medium"></p>
+                                        <p><input name="serialNumber" type="text" class="int-text int-medium" maxlength="4"></p>
                                     </li>
                                     <li class="col-md-6">
                                         <p class="word"><span>*</span>是否存在子分类</p>
-                                        <p><input name="isChild" type="radio" value="Y"></p>
+                                        <p><input name="isChild" type="radio" value="Y"
+                                                  required data-errormessage-required="请选择是否存在子分类"></p>
                                         <p>是</p>
                                         <p><input name="isChild" type="radio" value="N"></p>
                                         <p>否</p>
@@ -48,15 +50,17 @@
 
                                 <div class="title-right">
                                     <p id="addCatBtn" class="plus-word btn-primary">
-                                        <a href="#"><i class="fa fa-plus"></i>新  增</a></p>
+                                        <a href="javaScript:void(0);"><i class="fa fa-plus"></i>新  增</a></p>
                                 </div>
                             </div>
 
 
                             <div id="subDiv" class="row pt-30"><!--删格化-->
                                 <p class="center pr-30 mt-30">
-                                    <input type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="提  交">
-                                    <input type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="返  回">
+                                    <input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                           value="提  交">
+                                    <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                           value="返  回" onclick="javaScript:window.history.go(-1);">
                                 </p>
                             </div>
                         </div>
@@ -68,31 +72,31 @@
 </div>
 <script id="catAddTemplate" type="text/template">
     <!-- 查询条件 -->
-    <div class="form-label bd-bottom">
+    <div class="form-label bd-bottom" data-widget="validator" >
         <div class="title-right">
             <p class="plus-word btn-primary">
-                <a href="#" name="delBtn"><i class="fa fa-times"></i>删  除</a></p>
+                <a href="javaScript:void(0);" name="delBtn"><i class="fa fa-times"></i>删  除</a></p>
         </div>
         <ul>
             <li class="col-md-6">
                 <p class="word"><span>*</span>类目名称</p>
-                <p><input name="productCatName" type="text" class="int-text int-medium"></p>
+                <p><input name="productCatName" type="text" class="int-text int-medium" required maxlength="100"></p>
             </li>
             <li class="col-md-6">
                 <p class="word">名称首字母(大写)</p>
-                <p><input name="firstLetter" type="text" class="int-text int-medium"></p>
+                <p><input name="firstLetter" type="text" class="int-text int-medium" maxlength="1"></p>
             </li>
         </ul>
         <ul>
             <li class="col-md-6">
                 <p class="word">排序</p>
-                <p><input name="serialNumber" type="text" class="int-text int-medium"></p>
+                <p><input name="serialNumber" type="text" class="int-text int-medium" min="0" max="10000"></p>
             </li>
             <li class="col-md-6">
                 <p class="word"><span>*</span>是否存在子分类</p>
-                <p><input name="isChild" type="radio" value="Y"></p>
+                <p><input name="isChild{{:num}}" type="radio" value="Y" required data-errormessage-required="请选择是否存在子分类"></p>
                 <p>是</p>
-                <p><input name="isChild" type="radio" value="N"></p>
+                <p><input name="isChild{{:num}}" type="radio" value="N"></p>
                 <p>否</p>
             </li>
         </ul>
@@ -101,6 +105,7 @@
 </body>
 <script type="text/javascript">
     var pager;
+    var catNum = {'num':0};
     (function () {
         <%-- 删除按钮 --%>
         $('#addViewDiv').delegate("a[name='delBtn']", 'click', function () {
