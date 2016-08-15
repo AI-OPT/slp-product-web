@@ -31,6 +31,7 @@
 <link rel="stylesheet" type="text/css" href="${uedroot}/css/bootstrap/font-awesome.css"/>
 <link rel="stylesheet" type="text/css" href="${uedroot}/css/modular/frame.css"/>
 <link rel="stylesheet" type="text/css" href="${uedroot}/css/modular/global.css"/>
+<link rel="stylesheet" type="text/css" href="${uedroot}/css/modular/modular.css"/>
 <link rel="stylesheet" type="text/css" href="${uedroot}/css/ztree/zTreeStyle.css"/>
 
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>

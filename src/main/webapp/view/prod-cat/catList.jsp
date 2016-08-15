@@ -25,8 +25,8 @@
                                 <li class="width-xlag">
                                     <p class="word">类目名称</p>
                                     <p><input id="productCatName" type="text" class="int-text int-medium"></p>
-                                    <p><input id="selectList" type="button" value="查询"
-                                              class="biu-btn btn-primary btn-blue btn-mini"></p>
+                                </li>
+                                <li>
                                     <p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
                                     </p>
                                 </li>
@@ -49,6 +49,13 @@
                                     </li>
                                 </ul>
                             </div>
+                            <ul>
+                                <li class="width-xlag">
+                                    <p class="word">&nbsp;</p>
+                                    <p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
+                                              id="selectList" value="查  询"></p>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -61,11 +68,19 @@
                         <div class="main-box clearfix"><!--白色背景-->
                             <!--标题-->
                             <header class="main-box-header clearfix">
-                                <h2 class="pull-left">上级类目</h2>
-                                <c:forEach var="catInfo" items="${catLink}"
-                                           varStatus="stat">${catInfo.productCatName}<c:if
-                                        test="${!stat.last}">&gt;</c:if></c:forEach>
+                                <h2 class="pull-left">查询结果&emsp;</h2>
+
                             </header>
+                            <div class="row"><!--删格化-->
+                                <p class="left pl-40">
+                                    上级类目:<c:forEach var="catInfo" items="${catLink}"
+                                               varStatus="stat">${catInfo.productCatName}<c:if
+                                            test="${!stat.last}">&gt;</c:if></c:forEach>
+                                </p>
+                                <p class="right pr-30">
+                                    <a href="${_base}/cat/edit/addview" class="btn btn-primary btn-blue btn-auto active" role="button">新  增</a>
+                                </p>
+                            </div>
                             <!--标题结束-->
                             <div class="main-box-body clearfix">
                                 <!--table表格-->
@@ -90,15 +105,18 @@
                                             <td>{{:#index+1}}</td>
                                             <td>{{:productCatId}}</td>
                                             <td>{{:productCatName}}</td>
-                                            <td>{{:isChild}}</td>
+                                            <td>{{if isChild=='Y'}}是{{else}}否{{/if}}</td>
                                             <td>{{:serialNumber}}</td>
                                             <td>
-                                                <div>
-                                                    <p><a href="${_base}/prodedit/{{:productCatId}}" class="blue-border">编辑</a></p>
-                                                    <p><a href="${_base}/prodedit/{{:productCatId}}" class="blue-border">编辑</a></p>
-
-                                                    <%-- <p><a href="#" class="blue">查看商品</a></p> --%>
-                                                </div>
+                                                <a href="${_base}/prodedit/{{:productCatId}}">编辑</a>
+                                                <a href="${_base}/prodedit/{{:productCatId}}">删除</a>
+                                                <%-- 判断有子分类 --%>
+                                                {{if isChild=='Y'}}
+                                                <a href="${_base}/cat/query?parentProductCatId={{:productCatId}}">&nbsp;管理子分类&nbsp;</a>
+                                                {{else }}
+                                                <a href="${_base}/prodedit/{{:productCatId}}">关联类目属性</a>
+                                                <a href="${_base}/prodedit/{{:productCatId}}">查看类目属性</a>
+                                                {{/if}}
                                             </td>
                                         </tr>
                                     </script>
@@ -120,9 +138,6 @@
 </body>
 <script type="text/javascript">
     var pager;
-    var count = '${count}';
-    var prodInfoList = '${prodInfoList}';
-    var productEditInfo = '${productEditInfo}';
     (function () {
         seajs.use('app/jsp/prodcat/catlist', function (catListPager) {
             pager = new catListPager({element: document.body});
@@ -130,4 +145,5 @@
         });
     })();
 </script>
+<script src="${uedroot}/scripts/modular/frame.js"></script>
 </html>
