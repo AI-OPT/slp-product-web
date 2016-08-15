@@ -12,11 +12,13 @@ import com.ai.slp.product.web.constants.ProductCatConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.model.prodCat.ProdCatQuery;
 import com.ai.slp.product.web.vo.ProdQueryCatVo;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -94,7 +96,7 @@ public class CatQueryController {
     }
 
     /**
-     *
+     * 查询分页数据
      * @param catQuery
      * @return
      */
@@ -117,6 +119,32 @@ public class CatQueryController {
             responseData = new ResponseData<PageInfoResponse<ProductCatInfo>>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK",catInfoPageRes);
 
+        return responseData;
+    }
+
+    /**
+     * 查询单个类目信息
+     * @return
+     */
+    @RequestMapping("/{id}")
+    @ResponseBody
+    public ResponseData<ProductCatInfo> queryCatById(@PathVariable("id") String catId){
+        ResponseData<ProductCatInfo> responseData;
+        IProductCatSV catSV = DubboConsumerFactory.getService(IProductCatSV.class);
+        ProductCatUniqueReq uniqueReq = new ProductCatUniqueReq();
+        uniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        uniqueReq.setProductCatId(catId);
+        ProductCatInfo catInfo = catSV.queryByCatId(uniqueReq);
+        ResponseHeader header = catInfo.getResponseHeader();
+
+        //保存错误
+        if (header!=null && !header.isSuccess()){
+            logger.error("Query by catId is fail,catId:{},headInfo:\r\n",catId, JSON.toJSONString(header));
+            responseData = new ResponseData<ProductCatInfo>(
+                    ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
+        }else
+            responseData = new ResponseData<ProductCatInfo>(
+                    ResponseData.AJAX_STATUS_SUCCESS, "OK",catInfo);
         return responseData;
     }
 }

@@ -77,3 +77,35 @@ jQuery(document).ready(function($) {
 	$('#add-samll').slideUp(150);
 	})
 })
+
+//废弃弹出
+jQuery(document).ready(function($) {
+	$('#abandoned').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#aband-small').slideDown(200);
+	})
+	$('#aband-close').click(function(){
+	$('#eject-mask').fadeOut(100);
+	$('#aband-small').slideUp(150);
+	})
+	$('.eject-medium-title .img').click(function(){
+	$('#eject-mask').fadeOut(100);
+	$('#aband-small').slideUp(150);
+	})
+})
+
+//库存增加
+jQuery(document).ready(function($) {
+	$('#increase').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#increase-samll').slideDown(200);
+	})
+	$('#increase-close').click(function(){
+	$('#eject-mask').fadeOut(100);
+	$('#increase-samll').slideUp(150);
+	})
+	$('.eject-medium-title .img').click(function(){
+	$('#eject-mask').fadeOut(100);
+	$('#increase-samll').slideUp(150);
+	})
+})

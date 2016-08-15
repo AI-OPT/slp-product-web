@@ -74,4 +74,19 @@ public class CatEditController {
         }
         return responseData;
     }
+
+    /**
+     * 更新类目信息
+     * @return
+     */
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public ResponseData<String> updateCat(ProductCatParam catParam,HttpSession session){
+        ResponseData<String> responseData;
+        IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
+        catParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        catParam.setOperId(AdminUtil.getAdminId(session));
+        productCatSV.updateProductCat(catParam);
+        //TODO...
+        return new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"","");
+    }
 }
