@@ -23,7 +23,7 @@
 	}   */
 	</script>	
 </head>
-<body>
+<body class="theme-white">
  <!--/提示弹出框操作结束-->
 <div id="theme-wrapper">
     <header class="navbar" id="header-navbar">
