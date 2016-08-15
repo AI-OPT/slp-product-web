@@ -109,9 +109,9 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 					data:{'catListStr':JSON.stringify(catArr)},
 					success: function(data){
 						if("1"===data.statusCode){
-							alert("保存成功");
+							//alert("保存成功");
 							//保存成功,回退到进入的列表页
-							//window.history.go(-1);
+							window.history.go(-1)
 						}
 					}
 				});
