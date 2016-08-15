@@ -15,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
@@ -26,6 +28,7 @@ import com.ai.slp.product.api.normproduct.param.NormProdResponse;
 import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
 import com.ai.slp.product.api.productcat.param.AttrDefInfo;
 import com.ai.slp.product.api.productcat.param.AttrDefParam;
+import com.ai.slp.product.api.productcat.param.AttrParam;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
@@ -47,7 +50,7 @@ public class AttrController {
 	 * 进入页面
 	 */
 	@RequestMapping("/attrList")
-	public String catList() {
+	public String attrList() {
 		
 		return "prodAttr/attrList";
 	}
@@ -101,4 +104,28 @@ public class AttrController {
 		return result;
 	}
 	
+	/**
+	 * 进入添加属性页面
+	 */
+	@RequestMapping("/addAttr")
+	public String addAttr() {
+		
+		return "prodAttr/addAttr";
+	}
+	
+	/**
+	 * 保存属性
+	 */
+	@RequestMapping("/saveAttr")
+	public ResponseData<String> saveAttr(List<AttrParam> attrParamList) {
+		ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
+		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
+		BaseResponse response = attrAndValDefSV.createAttrs(attrParamList);
+		ResponseHeader header = response.getResponseHeader();
+		
+		if (header!=null && !header.isSuccess()){
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "添加失败:"+header.getResultMessage());
+        }
+        return responseData;
+	}
 }

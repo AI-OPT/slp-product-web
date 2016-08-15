@@ -30,44 +30,67 @@ define('app/jsp/prodAttr/addAttr', function (require, exports, module) {
     	},
     	//事件代理
     	events: {
-    		//查询
+    		//保存
             "click #saveAttr":"_saveAttr",
             },
     	//重写父类
     	setup: function () {
     		addAttrPager.superclass.setup.call(this);
-    		this._saveAttr();
     	},
     	
-    	
-    	//添加
+    	//保存
     	_saveAttr:function(){
     		var _this = this;
-    		var attrName = $("#attrName").val().trim();
-    		var firstLetter = $("#firstLetter").val().trim();
-    		var valueWay = $("#valueWay").val().trim();
+    		var msg = $("#submitForm").serialize();
     		
-    		$("#pagination-ul").runnerPagination({
-	 			url: _base+"/attr/saveAttr",
-	 			method: "POST",
-	 			dataType: "json",
-	 			renderId:"searchAttrData",
-	 			messageId:"showMessageDiv",
-	 			
-	 			data: {"firstLetter":firstLetter,"attrName":attrName,"valueWay":valueWay},
-	 			
-	           	pageSize: addAttrPager.DEFAULT_PAGE_SIZE,
-	           	visiblePages:5,
-	            render: function (data) {
-	            	if(data != null && data != 'undefined' && data.length>0){
-	            		var template = $.templates("#searchAttrTemple");
-	            	    var htmlOutput = template.render(data);
-	            	    $("#searchAttrData").html(htmlOutput);
-	            	}
-	            	_this._returnTop();
-	            }
-    		});
+    		var json = "[{";
+    		var msg2 = msg.split("&");   //先以“&”符号进行分割，得到一个key=value形式的数组
+    		var t = false;
+    		for(var i = 0; i<msg2.length; i++){
+    		  var msg3 = msg2[i].split("=");  //再以“=”进行分割，得到key，value形式的数组
+    		  for(var j = 0; j<msg3.length; j++){
+    		    json+="\""+msg3[j]+"\"";
+    		    if(j+1 != msg3.length){
+    		      json+=":";
+    		    }
+    		    if(t){
+    		      json+="}";
+    		      if(i+1 != msg2.length){  //表示是否到了当前行的最后一列
+    		        json+=",{";
+    		      }
+    		      t=false;
+    		    }
+    		    if(msg3[j] == "valueWay"){  //这里的“canshu5”是你的表格的最后一列的input标签的name值，表示是否到了当前行的最后一个input
+    		      t = true;
+    		    }
+    		  }
+    		  if(!msg2[i].match("valueWay")){  //同上
+    		    json+=";";
+    		  }
+    		           
+    		}
+    		json+="]";
+    		
+    		ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "保存中，请等待...",
+				url: _base+"/attr/saveAttr",
+				
+				data:json,
+				
+				success: function(data){
+					if("1"===data.statusCode){
+						
+						//保存成功,回退到进入的列表页
+						window.history.go(-1);
+					}
+				}
+			});
+    		
     	},
+    	
+    	
     	//滚动到顶部
     	_returnTop:function(){
     		var container = $('.wrapper-right');
