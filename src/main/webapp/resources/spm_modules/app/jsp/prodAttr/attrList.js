@@ -1,16 +1,17 @@
 define('app/jsp/prodAttr/attrList', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
-	    Widget = require('arale-widget/1.2.0/widget'),
-	    Dialog = require("optDialog/src/dialog"),
-	    Paging = require('paging/0.0.1/paging-debug'),
-	    AjaxController = require('opt-ajax/1.0.0/index');
-    require("jsviews/jsrender.min");
-    require("jsviews/jsviews.min");
-    require("bootstrap-paginator/bootstrap-paginator.min");
-    require("app/util/jsviews-ext");
-    require("opt-paging/aiopt.pagination");
-    require("twbs-pagination/jquery.twbsPagination.min");
+    Widget = require('arale-widget/1.2.0/widget'),
+    Dialog = require("optDialog/src/dialog"),
+    Paging = require('paging/0.0.1/paging-debug'),
+    AjaxController = require('opt-ajax/1.0.0/index');
+require("jsviews/jsrender.min");
+require("jsviews/jsviews.min");
+require("my97DatePicker/WdatePicker");
+require("bootstrap-paginator/bootstrap-paginator.min");
+require("app/util/jsviews-ext");
+require("opt-paging/aiopt.pagination");
+require("twbs-pagination/jquery.twbsPagination.min");
     
     var SendMessageUtil = require("app/util/sendMessage");
     
@@ -18,7 +19,7 @@ define('app/jsp/prodAttr/attrList', function (require, exports, module) {
     var ajaxController = new AjaxController();
     var clickId = "";
     //定义页面组件类
-    var catlistPager = Widget.extend({
+    var attrlistPager = Widget.extend({
     	
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -35,7 +36,7 @@ define('app/jsp/prodAttr/attrList', function (require, exports, module) {
             },
     	//重写父类
     	setup: function () {
-    		catlistPager.superclass.setup.call(this);
+    		attrlistPager.superclass.setup.call(this);
     		this._selectCatAttrList();
     	},
     	
@@ -57,7 +58,7 @@ define('app/jsp/prodAttr/attrList', function (require, exports, module) {
 	 			
 	 			data: {"attrId":attrId,"attrName":attrName,"valueWay":valueWay},
 	 			
-	           	pageSize: catlistPager.DEFAULT_PAGE_SIZE,
+	           	pageSize: attrlistPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
@@ -77,6 +78,6 @@ define('app/jsp/prodAttr/attrList', function (require, exports, module) {
     	
     });
     
-    module.exports = catlistPager
+    module.exports = attrlistPager
 });
 

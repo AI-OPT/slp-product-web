@@ -28,6 +28,8 @@
 				                    <p class="word">属性名称</p>
 				                    <p><input id="attrName" type="text" class="int-text int-medium"></p>
 				                </li>
+				               </ul>
+				               <ul> 
 				                 <li>
 				                    <p class="word">属性值输入方式</p>
 				                    <p>
@@ -65,19 +67,19 @@
 						<header class="main-box-header clearfix">
 							<h2 class="pull-left">查询结果</h2>
 						</header>
+						<div class="row"><!--删格化-->
+                                <%-- <p class="right pr-30">
+                                    <a href="${_base}/cat/edit/addview?parentId=${parentProductCatId}" class="btn btn-primary btn-blue btn-auto active" role="button">新  增</a>
+                                </p> --%>
+                                <p class="right pr-30">
+                                	<a href="${_base}/attr/addAttr/" class="biu-btn btn-blue btn-mini">新增</a>
+                                </p>
+                                
+                            </div>
+						
 						<!--标题结束-->
-						<div class="main-box-body clearfix">
-							<div class="nav-tplist-title">
-				                   <div class="nav-tplist-title nav-tplist-title-border">
-					                  <ul>
-					                    <div class="title-right">
-						                    <p><input id="#" type="button" value="新增属性" class="biu-btn btn-blue btn-mini"/></p>
-					                    </div>
-					                  </ul>
-				              		</div>
-			              	</div>
-			             </div>
 							<!--table表格-->
+							<div class="main-box-body clearfix">
 							<div class="table-responsive clearfix">
 								<table class="table table-hover table-border table-bordered">
 									<thead>
@@ -92,9 +94,7 @@
 										<th>操作</th>
 									</tr>
 									</thead>
-									<tbody id="searchAttrData">
-									</tbody>
-
+									<tbody id="searchAttrData"></tbody>
 								</table>
 								<div id="showMessageDiv"></div>
 								<script id="searchAttrTemple" type="text/template">
@@ -106,7 +106,11 @@
 										<td>{{:attrValNum}}</td>
 										<td>{{:operTime}}</td>
 										<td>{{:operId}}</td>
-										<td><a href="#" class="blue-border">编辑</a></td>
+										<td>
+											<a href="#" class="blue-border">编辑</a>
+											<a href="#" class="blue-border">管理属性值</a>
+											<a href="#" class="blue-border">删除</a>
+										</td>
 									</tr>
 								</script>
 							</div>
@@ -116,28 +120,41 @@
 								</ul>
 							</div>
 							<!--分页结束-->
+							</div>
 						</div>
-					</div>
+					</div> 
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 </body>
+
 <script type="text/javascript">
+    var pager;
+    (function () {
+        seajs.use('app/jsp/prodAttr/attrList', function (attrlistPager) {
+            pager = new attrlistPager({element: document.body});
+            pager.render();
+        });
+    })();
+</script>
+<script src="${uedroot}/scripts/modular/frame.js"></script>
+
+<!-- <script type="text/javascript">
 	var pager;
 	var count = '${count}';
 	var prodInfoList = '${prodInfoList}';
 	var productEditInfo = '${productEditInfo}';
 	(function () {
 		seajs.use('app/jsp/prodAttr/attrList', function(
-				catlistPager) {
-			pager = new catlistPager({
+				attrlistPager) {
+			pager = new attrlistPager({
 				element : document.body
 			});
 			pager.render();
 		});
 	})();
-</script>
+</script> -->
 </html>
 

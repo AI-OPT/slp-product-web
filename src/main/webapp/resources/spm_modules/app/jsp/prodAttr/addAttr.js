@@ -1,25 +1,43 @@
-define('app/jsp/prodCat/addAttr', function (require, exports, module) {
+define('app/jsp/prodAttr/addAttr', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
-	    Widget = require('arale-widget/1.2.0/widget'),
-	    Dialog = require("optDialog/src/dialog"),
-	    Paging = require('paging/0.0.1/paging-debug'),
-	    AjaxController = require('opt-ajax/1.0.0/index');
-    require("jsviews/jsrender.min");
-    require("jsviews/jsviews.min");
-    require("bootstrap-paginator/bootstrap-paginator.min");
-    require("app/util/jsviews-ext");
-    require("opt-paging/aiopt.pagination");
-    require("twbs-pagination/jquery.twbsPagination.min");
-    
+    Widget = require('arale-widget/1.2.0/widget'),
+	Validator = require("arale-validator/0.10.2/index"),
+    Dialog = require("optDialog/src/dialog"),
+    Paging = require('paging/0.0.1/paging'),
+    AjaxController = require('opt-ajax/1.0.0/index');
+require("jsviews/jsrender.min");
+require("jsviews/jsviews.min");
+require("bootstrap-paginator/bootstrap-paginator.min");
+require("app/util/jsviews-ext");
+
+require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
+require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
+
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-    var clickId = "";
+  //表单校验对象
+	var validator = new Validator({
+		element: $(".form-label")
+	});
+	validator.addItem({
+		element: "input[name=attrName]",
+		required: true,
+		errormessageRequired:"属性名称不能为空"
+	}).addItem({
+		element: "input[name=firstLetter]",
+		required: true,
+		pattern: "[A-Z]{1}",
+		errormessagePattern:'请输入大写字母'
+	}).addItem({
+		element: "select",
+		required: true,
+		errormessageRequired:'请选择属性值输入方式'
+	});
     //定义页面组件类
-    var catlistPager = Widget.extend({
-    	
+    var attrAddPager = Widget.extend({
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
     	attrs: {
@@ -30,53 +48,61 @@ define('app/jsp/prodCat/addAttr', function (require, exports, module) {
     	},
     	//事件代理
     	events: {
-    		//查询
-            "click #selectCatAttrList":"_selectCatAttrList",
+    		//保存
+    		"click #addAttrBtn":"_addAttrBtn",
+            "click #submitAddBtn":"_saveAttr",
             },
     	//重写父类
     	setup: function () {
-    		catlistPager.superclass.setup.call(this);
-    		this._selectCatAttrList();
+    		attrAddPager.superclass.setup.call(this);
     	},
-    	
-    	
-    	//查询列表
-    	_selectCatAttrList:function(){
-    		var _this = this;
-    		
-    		var attrName = $("#attrName").val().trim();
-    		var firstLetter = $("#firstLetter").val().trim();
-    		var valueWay = $("#valueWay").val().trim();
-    		
-    		$("#pagination-ul").runnerPagination({
-	 			url: _base+"/cat/getAttrList",
-	 			method: "POST",
-	 			dataType: "json",
-	 			renderId:"searchAttrData",
-	 			messageId:"showMessageDiv",
-	 			
-	 			data: {"firstLetter":firstLetter,"attrName":attrName,"valueWay":valueWay},
-	 			
-	           	pageSize: catlistPager.DEFAULT_PAGE_SIZE,
-	           	visiblePages:5,
-	            render: function (data) {
-	            	if(data != null && data != 'undefined' && data.length>0){
-	            		var template = $.templates("#searchAttrTemple");
-	            	    var htmlOutput = template.render(data);
-	            	    $("#searchAttrData").html(htmlOutput);
-	            	}
-	            	_this._returnTop();
-	            }
-    		});
-    	},
-    	//滚动到顶部
-    	_returnTop:function(){
-    		var container = $('.wrapper-right');
-    		container.scrollTop(0);//滚动到div 顶部
-    	},
-    	
+    	//增加类目
+    	_addAttrBtn:function(){
+			attrNum['num']=attrNum['num']+1;
+			var template = $.templates("#attrAddTemplate");
+			var htmlOutput = template.render(attrNum);
+			$("#subDiv").before(htmlOutput);
+		},
+		
+		//提交
+		_saveAttr:function(){
+			validator.execute(function(error, results, element) {
+			//获取from-label下的数据
+			var attrArr = [];
+			$("#addViewDiv > .form-label ").each(function(index,form){
+				var attrObj = {};
+				console.log(index+" form-label");
+				//属性名称
+				var attrName = $(this).find("input[name='attrName']")[0];
+				attrObj['attrName'] = attrName.value;
+				//首字母
+				var firstLetter = $(this).find("input[name='firstLetter']")[0];
+				attrObj['firstLetter'] = firstLetter.value;
+				//输入方式
+				var valueWay = $(this).find("select")[0];
+				attrObj['valueWay'] = valueWay.value;
+				attrArr.push(attrObj);
+			});
+		
+		console.log("attr arr lengeth "+attrArr.length);
+		ajaxController.ajax({
+			type: "post",
+			processing: true,
+			message: "保存中，请等待...",
+			url: _base+"/attr/saveAttr",
+			data:{'attrListStr':JSON.stringify(attrArr)},
+			success: function(data){
+				if("1"===data.statusCode){
+					//alert("保存成功");
+					//保存成功,回退到进入的列表页
+					window.history.go(-1)
+				}
+			}
+		});
+	});	
+    }
     });
     
-    module.exports = catlistPager
+    module.exports = attrAddPager
 });
 

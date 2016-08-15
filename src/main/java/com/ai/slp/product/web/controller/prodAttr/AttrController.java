@@ -1,9 +1,11 @@
-package com.ai.slp.product.web.controller.productCat;
+package com.ai.slp.product.web.controller.prodAttr;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.xml.resolver.apps.resolver;
@@ -15,8 +17,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
 import com.ai.slp.common.api.cache.param.SysParamSingleCond;
@@ -26,11 +31,15 @@ import com.ai.slp.product.api.normproduct.param.NormProdResponse;
 import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
 import com.ai.slp.product.api.productcat.param.AttrDefInfo;
 import com.ai.slp.product.api.productcat.param.AttrDefParam;
+import com.ai.slp.product.api.productcat.param.AttrParam;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
+import com.ai.slp.product.web.model.prodAttr.ProdAttrInfo;
 import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
 import com.ai.slp.product.web.util.DateUtil;
+import com.alibaba.fastjson.JSON;
 
 /**
  * 属性及属性值的管理 
@@ -47,7 +56,7 @@ public class AttrController {
 	 * 进入页面
 	 */
 	@RequestMapping("/attrList")
-	public String catList() {
+	public String attrList() {
 		
 		return "prodAttr/attrList";
 	}
@@ -101,4 +110,42 @@ public class AttrController {
 		return result;
 	}
 	
+	/**
+	 * 进入添加属性页面
+	 */
+	@RequestMapping("/addAttr")
+	public String addAttr() {
+		
+		return "prodAttr/addAttr";
+	}
+	
+	/**
+	 * 批量添加
+	 * 保存属性
+	 */
+	@RequestMapping("/saveAttr")
+	@ResponseBody
+	public ResponseData<String> saveAttr(String attrListStr, HttpSession session) {
+		//List<AttrParam>
+		ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
+		List<ProdAttrInfo> attrInfoList = JSON.parseArray(attrListStr,ProdAttrInfo.class);
+		
+		List<AttrParam> attrParamList = new ArrayList<>();
+		for (ProdAttrInfo attrInfo : attrInfoList) {
+			AttrParam attrParam = new AttrParam();
+			BeanUtils.copyProperties(attrParam, attrInfo);
+			attrParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+			attrParam.setOperId(AdminUtil.getAdminId(session));
+			attrParamList.add(attrParam);
+		}		
+		
+		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
+		BaseResponse response = attrAndValDefSV.createAttrs(attrParamList);
+		ResponseHeader header = response.getResponseHeader();
+		
+		if (header!=null && !header.isSuccess()){
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "添加失败:"+header.getResultMessage());
+        }
+        return responseData;
+	}
 }
