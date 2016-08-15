@@ -68,7 +68,7 @@ public class CatEditController {
         if (header==null || !header.isSuccess()){
             String errorCode = header==null?ExceptCodeConstants.Special.SYSTEM_ERROR:header.getResultCode();
             String errMsg = header==null?"未知错误":header.getResultMessage();
-            logger.error("Create cat is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
+            logger.error(" Create cat is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
             responseData = new ResponseData<String>(
                     ResponseData.AJAX_STATUS_FAILURE, errorCode,errMsg);
         }
@@ -80,13 +80,21 @@ public class CatEditController {
      * @return
      */
     @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @ResponseBody
     public ResponseData<String> updateCat(ProductCatParam catParam,HttpSession session){
-        ResponseData<String> responseData;
+        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"","");
         IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
         catParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
         catParam.setOperId(AdminUtil.getAdminId(session));
-        productCatSV.updateProductCat(catParam);
-        //TODO...
-        return new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"","");
+        BaseResponse response = productCatSV.updateProductCat(catParam);
+        ResponseHeader header = response==null?null:response.getResponseHeader();
+        if (header==null || !header.isSuccess()){
+            String errorCode = header==null?ExceptCodeConstants.Special.SYSTEM_ERROR:header.getResultCode();
+            String errMsg = header==null?"未知错误":header.getResultMessage();
+            logger.error("Update cat is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_FAILURE, errorCode,errMsg);
+        }
+        return responseData;
     }
 }

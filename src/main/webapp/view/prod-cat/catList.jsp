@@ -10,8 +10,52 @@
     <%@ include file="/inc/inc.jsp" %>
 </head>
 
-<body style="min-height: 3000px;">
-<div class="content-wrapper-iframe"><!--右侧灰色背景-->
+<body style="min-height: 2000px;">
+<div class="eject-big">
+    <div class="eject-medium" id="increase-samll">
+        <div class="eject-medium-title">
+            <p>更新类目</p>
+            <p class="img"><i class="fa fa-times"></i></p>
+        </div>
+        <div class="form-label">
+            <input type="hidden" name="productCatId" id="upCatId">
+            <input type="hidden" name="parentProductCatId" id="parentCatId">
+            <ul>
+                <li>
+                    <p class="word"><span>*</span>类目名称:</p>
+                    <p><input id="upCatName" type="text" class="int-text int-small"
+                              name="productCatName" maxlength="100"></p>
+                </li>
+                <li>
+                    <p class="word"><span>*</span>名称首字母(大写):</p>
+                    <p><input id="upFletter" type="text" class="int-text int-small"
+                              name="firstLetter" maxlength="1"></p>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <p class="word"><span>*</span>排序:</p>
+                    <p><input id="upSerialNum" type="text" class="int-text int-small"
+                              name="serialNumber" maxlength="4"></p>
+                </li>
+                <li >
+                    <p class="word">是否存在子分类:</p>
+                    <p><input id="upIsChildY" name="isChild" type="radio" value="Y"></p><p>是</p>
+                    <p><input id="upIsChildN" name="isChild" type="radio" value="N"></p><p>否</p>
+                </li>
+            </ul>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="upCatBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="确  定">
+                <input id="increase-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
+            </p>
+        </div>
+    </div>
+    <div class="eject-mask" id="eject-mask"></div>
+    </div>
+    <div class="content-wrapper-iframe"><!--右侧灰色背景-->
     <!--框架标签结束-->
     <div class="row"><!--外围框架-->
         <div class="col-lg-12"><!--删格化-->
@@ -108,7 +152,7 @@
                                             <td>{{if isChild=='Y'}}是{{else}}否{{/if}}</td>
                                             <td>{{:serialNumber}}</td>
                                             <td>
-                                                <a href="${_base}/prodedit/{{:productCatId}}">编辑</a>
+                                                <a href="javaScript:void(0);" name="editView" catId="{{:productCatId}}">编辑</a>
                                                 <a href="${_base}/prodedit/{{:productCatId}}">删除</a>
                                                 <%-- 判断有子分类 --%>
                                                 {{if isChild=='Y'}}
@@ -139,11 +183,22 @@
 <script type="text/javascript">
     var pager;
     (function () {
+        <%-- 编辑按钮 --%>
+        $('#listData').delegate("a[name='editView']", 'click', function () {
+            var catId = $(this).attr('catId');
+            console.log("编辑链接:"+catId);
+            <%--p  div(.title-right) div(.form-label) --%>
+            pager._showCat(catId);
+        });
+        <%-- 高级区域 --%>
+        $(".form-label ul li .sos a").click(function () {
+            $(".open ").slideToggle(100);
+            $(".nav-form ").toggleClass("reorder remove");
+        });
         seajs.use('app/jsp/prodcat/catlist', function (catListPager) {
             pager = new catListPager({element: document.body});
             pager.render();
         });
     })();
 </script>
-<script src="${uedroot}/scripts/modular/frame.js"></script>
 </html>
