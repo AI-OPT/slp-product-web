@@ -78,7 +78,7 @@
                                             test="${!stat.last}">&gt;</c:if></c:forEach>
                                 </p>
                                 <p class="right pr-30">
-                                    <a href="${_base}/cat/edit/addview" class="btn btn-primary btn-blue btn-auto active" role="button">新  增</a>
+                                    <a href="${_base}/cat/edit/addview?parentId=${parentProductCatId}" class="btn btn-primary btn-blue btn-auto active" role="button">新  增</a>
                                 </p>
                             </div>
                             <!--标题结束-->

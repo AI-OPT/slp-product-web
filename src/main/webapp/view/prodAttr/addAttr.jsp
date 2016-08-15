@@ -10,74 +10,125 @@
 </head>
 
 <body>
+
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
-	<form id="submitForm">
-		<div class="row" id="table0"><!--外围框架-->
-			<div class="col-lg-12"><!--删格化-->
-				<div class="row"><!--内侧框架-->
-					<div class="col-lg-12"><!--删格化-->
-						<div class="main-box clearfix"><!--白色背景-->
-							<!-- 查询条件 -->
-							<div class="form-label">
-								<%-- 类目 --%>
-									<ul>
-						                <li>
-						                    <p class="word">属性名称</p>
-						                    <p><input id="attrName" name="attrName" type="text" class="int-text int-medium"></p>
-						                </li>
-						                <li class="width-xlag">
-											<p class="word">属性名称首字母</p>
-											<p><input id="firstLetter" name="firstLetter" type="text" class="int-text int-medium"></p>
-										</li>
-						             </ul>
-						             <ul>   
-						                 <li>
-						                    <p class="word">属性值输入方式</p>
-						                    <p>
-						                    	<select id="valueWay" name="valueWay" class="select select-medium">
-								                   	<option value="1">全部</option>
-								                   	<option value="1">下拉单选</option>
-								                   	<option value="2">多选</option>
-								                   	<!-- <option value="">可输入文本框(单行)</option>
-								                   	<option value="">可输入文本框(多行)</option>
-								                   	<option value="">日期时间</option>
-								                   	<option value="">日期时间段</option> -->
-						                    	</select>
-						                    </p>
-						               	 </li>
-						           	 </ul>
-							</div>
+	<div class="row"><!--外围框架-->
+		<div class="col-lg-12"><!--删格化-->
+			<div class="row"><!--内侧框架-->
+				<div class="col-lg-12"><!--删格化-->
+					<div class="main-box clearfix"><!--白色背景-->
+						<div id="addViewDiv" class="main-box-body clearfix">
+                            <!-- 查询条件 -->
+                            <div class="form-label bd-bottom" data-widget="validator">
+								<ul>
+					                <li class="col-md-6">
+					                    <p class="word">属性名称</p>
+					                    <p><input name="attrName" type="text" class="int-text int-medium"></p>
+					                </li>
+					                <li class="col-md-6">
+										<p class="word">属性名称首字母</p>
+										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1"></p>
+									</li>
+					             </ul>
+					             <ul>
+					             	<li class="col-md-6">
+					             		<p class="word">属性值输入方式</p>
+					             		<p>
+					                    	<select  name="valueWay" class="select select-medium">
+							                   	<option value="">全部</option>
+							                   	<option value="1">下拉单选</option>
+							                   	<option value="2">多选</option>
+							                   	 <!-- <option value="">可输入文本框(单行)</option>
+							                   	<option value="">可输入文本框(多行)</option>
+							                   	<option value="">日期时间</option>
+							                   	<option value="">日期时间段</option>  -->
+					                    	</select>
+					                    </p>
+					            	</li>
+					             </ul>
+					             
+					             <div class="title-right">
+					             	<p id="addAttrBtn" class="plus-word btn-primary" >
+					             		 <a href="javaScript:void(0);"><i class="fa fa-plus"></i>新  增</a>
+					             	</p>
+					             </div>
+                            </div> 
+                            
+                            <div id="subDiv" class="row pt-30">
+                            	<p class="center pr-30 mt-30">
+                            		<input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                           value="提  交">
+                                    <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                           value="返  回" onclick="javaScript:window.history.go(-1);">
+                            	</p>
+                            </div>
+                            
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</form>
-	<div class="row"><!--外围框架-->
-		<div class="col-lg-12"><!--删格化-->
-			<div class="row"><!--内侧框架-->
-				<div class="col-lg-12"><!--删格化-->
-					 <ul>
-		           	 <!-- <input type="button" id="add" onclick="add" class="biu-btn btn-blue btn-mini" value="添加"/> -->
-		           	 <input type="button" id="add" onclick="add()" class="biu-btn btn-blue btn-mini" value="添加"/>
-		           	 </ul>
-					 <ul>
-		           	 <input type="button" id="saveAttr" class="biu-btn btn-blue btn-mini" value="保存"/>
-		           	 <input type="button" id="cancel" class="biu-btn btn-blue btn-mini" value="取消"/>
-		           	 </ul>
-				</div>
-				<!--分页-->
-				<div class="paging">
-					<ul id="pagination-ul">
-					</ul>
-				</div>
-				<!--分页结束-->
-			</div>
-		</div>
 	</div>
 </div>
+<script id="attrAddTemplate"  type="text/template">
+	 <!-- 查询条件 -->
+                            <div class="form-label bd-bottom" data-widget="validator">
+								<div class="title-right">
+                                   <p class="plus-word btn-primary">
+
+                                     <a href="javaScript:void(0);" name="delBtn"><i class="fa fa-times"></i>删  除</a> 
+									
+									</p>
+                                </div>
+								<ul>
+					                <li class="col-md-6">
+					                    <p class="word">属性名称</p>
+					                    <p><input name="attrName" type="text" class="int-text int-medium"></p>
+					                </li>
+					                <li class="col-md-6">
+										<p class="word">属性名称首字母</p>
+										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1"></p>
+									</li>
+					             </ul>
+					             <ul>
+					             	<li class="col-md-6">
+					             		<p class="word">属性值输入方式</p>
+					             		<p>
+					                    	<select  name="valueWay{{:num}}" class="select select-medium">
+							                   	<option value="">全部</option>
+							                   	<option value="1">下拉单选</option>
+							                   	<option value="2">多选</option>
+							                   	 <!-- <option value="">可输入文本框(单行)</option>
+							                   	<option value="">可输入文本框(多行)</option>
+							                   	<option value="">日期时间</option>
+							                   	<option value="">日期时间段</option>  -->
+					                    	</select>
+					                    </p>
+					            	</li>
+					             </ul>
+							</div>
+</script>
+
+
 </body>
 <script type="text/javascript">
+    var pager;
+    var attrNum = {'num':0};
+    (function () {
+        <%-- 删除按钮 --%>
+        $('#addViewDiv').delegate("a[name='delBtn']", 'click', function () {
+            console.log("删除");
+            $(this).parent().parent().parent().remove();
+        });
+        
+        seajs.use('app/jsp/prodAttr/addAttr', function (attrAddPager) {
+            pager = new attrAddPager({element: document.body});
+            pager.render();
+        });
+    })();
+</script>
+
+<!-- <script type="text/javascript">
 	var pager;
 	var count = '${count}';
 	(function () {
@@ -89,9 +140,9 @@
 			pager.render();
 		});
 	})();
-</script>
+</script> -->
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	var i=1;
 	function add(){
 		i++;
@@ -99,7 +150,8 @@
 		var html= '<div class="col-lg-12"><div class="row"><div class="col-lg-12"><div class="main-box clearfix"><div class="form-label"><ul><li><p class="word">'
 		+'属性名称</p><p><input id="attrName_'+i +'"class="int-text int-medium"></p></li><li class="width-xlag"><p class="word">'
 		+'属性名称首字母</p><p><input id="firstLetter_'+i+'"class="int-text int-medium"></p></li></ul><ul><li><p class="word">'
-		+'属性值输入方式</p><p><select id="valueWay_'+i+'"class="select select-medium"><option value="1">全部</option><option value="1">下拉单选</option><option value="2">多选</option></select></p>  <a href="javascript:" class="biu-btn btn-blue btn-mini" onclick="RemoveAdd('+i+')">删除</a></li></ul></div></div></div></div>';
+		+'属性值输入方式</p><p><select id="valueWay_'+i+'"class="select select-medium"><option value="1">全部</option><option value="1">下拉单选</option><option value="2">多选</option></select></p> '
+		+' <a href="javascript:" class="biu-btn btn-blue btn-mini" onclick="RemoveAdd('+i+')">删除</a></li></ul></div></div></div></div>';
 		div.innerHTML=html;
 		div.setAttribute("id","talbe"+i);
 		div.class="row";
@@ -113,7 +165,7 @@
 	 div2.removeChild(div);
 	}  
 	
-</script>
+</script> -->
 
 
 
