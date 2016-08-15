@@ -11,6 +11,31 @@
 </head>
 
 <body style="min-height: 2000px;">
+
+<!--删除 弹出框  小-->
+<div class="eject-big">
+    <div class="eject-samll" id="aband-small">
+        <input type="hidden" id="delCatId">
+        <div class="eject-medium-title">
+            <p>删除类目</p>
+            <p id="delCloseImg" class="img"><i class="fa fa-times"></i></p>
+        </div>
+
+        <div class="eject-medium-complete">
+            <p><img src="${uedroot}/images/eject-icon-prompt.png"></p>
+            <p class="word">该类目的子类目将一起删除，确定删除该类目吗？</p>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="delCatBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+                <input id="aband-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
+            </p>
+        </div>
+    </div>
+    <div class="eject-mask" id="eject-mask"></div>
+</div>
+<!-- 更新信息展示 -->
 <div class="eject-big">
     <div class="eject-medium" id="increase-samll">
         <div class="eject-medium-title">
@@ -64,6 +89,8 @@
                     <div class="main-box clearfix"><!--白色背景-->
                         <!-- 查询条件 -->
                         <div class="form-label">
+                            <input type="hidden" id="pageSize" name="pageSize" value="10">
+                            <input type="hidden" id="pageNo" name="pageNo">
                             <input type="hidden" id="parentProductCatId" name="parentProductCatId" value="${parentProductCatId}">
                             <ul>
                                 <li class="width-xlag">
@@ -153,7 +180,7 @@
                                             <td>{{:serialNumber}}</td>
                                             <td>
                                                 <a href="javaScript:void(0);" name="editView" catId="{{:productCatId}}">编辑</a>
-                                                <a href="${_base}/prodedit/{{:productCatId}}">删除</a>
+                                                <a href="javaScript:void(0);" name="delView" catId="{{:productCatId}}">删除</a>
                                                 <%-- 判断有子分类 --%>
                                                 {{if isChild=='Y'}}
                                                 <a href="${_base}/cat/query?parentProductCatId={{:productCatId}}">&nbsp;管理子分类&nbsp;</a>

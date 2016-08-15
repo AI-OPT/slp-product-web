@@ -32,7 +32,13 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     	},
     	//事件代理
     	events: {
-			"click #selectList":"_selectPageList"
+			"click #selectList":"_selectPageList",
+			"click #increase-close":"_closeEditDiv",
+			"click .eject-medium-title .img":"_closeEditDiv",
+			"click #upCatBtn":"_updateCat",//提交更新
+			"click #listData a[name='delView']":"_showDelConf",
+			"click #aband-close":"_closeDelConf",
+			"click #delCloseImg":"_closeDelConf",
             },
     	//重写父类
     	setup: function () {
@@ -54,11 +60,8 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 	 			dataType: "json",
 	 			renderId: "listData",
 	 			messageId:"showMessageDiv",
-	 			data:
-					{
-						"productCatId":catId,"parentProductCatId":parentCatId,
-						"productCatName":catName,"isChild":isChile
-		 			},
+	 			data:{"productCatId":catId,"parentProductCatId":parentCatId,
+						"productCatName":catName,"isChild":isChile},
 	           	pageSize: catListPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
@@ -76,7 +79,89 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     		var container = $('.wrapper-right');
     		container.scrollTop(0);//滚动到div 顶部
     	},
-    	
+		//显示类目编辑页面
+		_showCat:function(catId){
+			//后台获取数据,
+			ajaxController.ajax({
+				type: "get",
+				processing: true,
+				message: "数据获取中,请等待...",
+				url: _base+"/cat/query/"+catId,
+				success: function(data){
+					//获取数据成功
+					if("1"===data.statusCode){
+						var catInfo = data.data;
+						$("#upCatId").val(catInfo.productCatId);//类目标识
+						$("#parentCatId").val(catInfo.parentProductCatId);//父类目
+						$("#upCatName").val(catInfo.productCatName);//类目名称
+						$("#upFletter").val(catInfo.firstLetter);//首字母
+						$("#upSerialNum").val(catInfo.serialNumber);//序列号
+						//是否有子目录
+						if ( catInfo.isChild == "Y")
+							$("#upIsChildY").attr("checked",true);
+						else
+							$("#upIsChildN").attr("checked",true);
+						$('#eject-mask').fadeIn(100);
+						$('#increase-samll').slideDown(200);
+					}
+				}
+			});
+
+		},
+		//删除确认提示框
+		_showDelConf:function(){
+			$('#eject-mask').fadeIn(100);
+			$('#aband-small').slideDown(200);
+			var catId = $(this).attr('catId');
+			console.log("del cat id is "+ catId);
+			$("#delCatId").val(catId);
+		},
+		//关闭编辑页面弹出
+		_closeEditDiv:function(){
+			$('#eject-mask').fadeOut(100);
+			$('#increase-samll').slideUp(150);
+			//清空数据
+			$("#upCatId").val("");//类目标识
+			$("#parentCatId").val("");//父类目
+			$("#upCatName").val("");//类目名称
+			$("#upFletter").val("");//首字母
+			$("#upSerialNum").val("");//序列号
+			//是否有子目录
+			$("input[name=isChild][value=´Y´]").removeAttr("checked");
+			$("input[name=isChild][value=´N´]").removeAttr("checked");
+		},
+		//关闭确认提示框
+		_closeDelConf:function(){
+			$('#eject-mask').fadeOut(100);
+			$('#aband-small').slideUp(150);
+			$("#delCatId").val('');
+		},
+		//提交更新
+		_updateCat:function(){
+			var _this = this;
+			var catId = $("#upCatId").val();//类目标识
+			var parentId = $("#parentCatId").val();//父类目
+			var catName = $("#upCatName").val();//类目名称
+			var fLetter = $("#upFletter").val();//首字母
+			var sn = $("#upSerialNum").val();//序列号
+			var isChild = $('input:radio[name=isChild]:checked').val();
+			this._closeEditDiv();
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "数据更新中,请等待...",
+				url: _base+"/cat/edit/update",
+				data:{"productCatId":catId,"productCatName":catName,"parentProductCatId":parentId,
+					"isChild":isChild,"firstLetter":fLetter,"serialNumber":sn},
+				success: function(data){
+					//获取数据成功
+					if("1"===data.statusCode){
+						//刷新当前数据
+						$("#pagination-ul .page .active").trigger("click");
+					}
+				}
+			});
+		}
     });
     
     module.exports = catListPager
