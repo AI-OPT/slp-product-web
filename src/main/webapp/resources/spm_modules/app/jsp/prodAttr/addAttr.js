@@ -38,12 +38,14 @@ define('app/jsp/prodAttr/addAttr', function (require, exports, module) {
     		addAttrPager.superclass.setup.call(this);
     	},
     	
-    	//保存
     	_saveAttr:function(){
     		var _this = this;
+    		
     		var msg = $("#submitForm").serialize();
     		
-    		var json = "[{";
+    		alert(msg); 
+    		
+    		/*var json = "[{";
     		var msg2 = msg.split("&");   //先以“&”符号进行分割，得到一个key=value形式的数组
     		var t = false;
     		for(var i = 0; i<msg2.length; i++){
@@ -69,7 +71,7 @@ define('app/jsp/prodAttr/addAttr', function (require, exports, module) {
     		  }
     		           
     		}
-    		json+="]";
+    		json+="]";*/
     		
     		ajaxController.ajax({
 				type: "post",

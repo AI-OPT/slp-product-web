@@ -20,22 +20,21 @@
 							<!-- 查询条件 -->
 							<div class="form-label">
 								<%-- 类目 --%>
-								<form id="attrForm" action="${_base}/attr/saveAttr" method="post">
 									<ul>
 						                <li>
 						                    <p class="word">属性名称</p>
-						                    <p><input id="attrName" type="text" class="int-text int-medium"></p>
+						                    <p><input id="attrName" name="attrName" type="text" class="int-text int-medium"></p>
 						                </li>
 						                <li class="width-xlag">
 											<p class="word">属性名称首字母</p>
-											<p><input id="firstLetter" type="text" class="int-text int-medium"></p>
+											<p><input id="firstLetter" name="firstLetter" type="text" class="int-text int-medium"></p>
 										</li>
 						             </ul>
 						             <ul>   
 						                 <li>
 						                    <p class="word">属性值输入方式</p>
 						                    <p>
-						                    	<select id="valueWay" class="select select-medium">
+						                    	<select id="valueWay" name="valueWay" class="select select-medium">
 								                   	<option value="1">全部</option>
 								                   	<option value="1">下拉单选</option>
 								                   	<option value="2">多选</option>
@@ -47,7 +46,6 @@
 						                    </p>
 						               	 </li>
 						           	 </ul>
-						          </form> 	 
 							</div>
 						</div>
 					</div>
