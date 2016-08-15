@@ -19,7 +19,7 @@
 
 	<sitemesh:head/>
 </head>
-<body>
+<body class="theme-white">
 <sitemesh:body/>
  
 <script src="${iotStatic}/scripts/modular/p-skin-changer.js"></script>  

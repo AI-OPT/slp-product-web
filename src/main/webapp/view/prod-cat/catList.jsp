@@ -33,7 +33,7 @@
             </p>
         </div>
     </div>
-    <div class="eject-mask" id="eject-mask"></div>
+    <div class="mask" id="eject-mask"></div>
 </div>
 <!-- 更新信息展示 -->
 <div class="eject-big">
@@ -78,7 +78,7 @@
             </p>
         </div>
     </div>
-    <div class="eject-mask" id="eject-mask"></div>
+    <div class="mask" id="eject-mask"></div>
     </div>
     <div class="content-wrapper-iframe"><!--右侧灰色背景-->
     <!--框架标签结束-->
@@ -149,7 +149,8 @@
                                             test="${!stat.last}">&gt;</c:if></c:forEach>
                                 </p>
                                 <p class="right pr-30">
-                                    <a href="${_base}/cat/edit/addview?parentId=${parentProductCatId}" class="btn btn-primary btn-blue btn-auto active" role="button">新  增</a>
+                                    <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
+                                           value="新  增" onclick="javaScript:window.location.href = '${_base}/cat/edit/addview?parentId=${parentProductCatId}';">
                                 </p>
                             </div>
                             <!--标题结束-->
