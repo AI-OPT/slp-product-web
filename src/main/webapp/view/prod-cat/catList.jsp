@@ -40,7 +40,7 @@
     <div class="eject-medium" id="increase-samll">
         <div class="eject-medium-title">
             <p>更新类目</p>
-            <p class="img"><i class="fa fa-times"></i></p>
+            <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
         <div class="form-label">
             <input type="hidden" name="productCatId" id="upCatId">
@@ -214,8 +214,13 @@
         $('#listData').delegate("a[name='editView']", 'click', function () {
             var catId = $(this).attr('catId');
             console.log("编辑链接:"+catId);
-            <%--p  div(.title-right) div(.form-label) --%>
             pager._showCat(catId);
+        });
+        <%-- 删除按钮 --%>
+        $('#listData').delegate("a[name='delView']", 'click', function () {
+            var catId = $(this).attr('catId');
+            console.log("删除链接:"+catId);
+            pager._showDelConf(catId);
         });
         <%-- 高级区域 --%>
         $(".form-label ul li .sos a").click(function () {

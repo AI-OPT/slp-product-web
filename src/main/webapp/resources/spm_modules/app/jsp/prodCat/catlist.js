@@ -34,11 +34,11 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     	events: {
 			"click #selectList":"_selectPageList",
 			"click #increase-close":"_closeEditDiv",
-			"click .eject-medium-title .img":"_closeEditDiv",
+			"click #upCloseImg":"_closeEditDiv",
 			"click #upCatBtn":"_updateCat",//提交更新
-			"click #listData a[name='delView']":"_showDelConf",
 			"click #aband-close":"_closeDelConf",
 			"click #delCloseImg":"_closeDelConf",
+			"click #delCatBtn":"_delCat"
             },
     	//重写父类
     	setup: function () {
@@ -109,10 +109,9 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 
 		},
 		//删除确认提示框
-		_showDelConf:function(){
+		_showDelConf:function(catId){
 			$('#eject-mask').fadeIn(100);
 			$('#aband-small').slideDown(200);
-			var catId = $(this).attr('catId');
 			console.log("del cat id is "+ catId);
 			$("#delCatId").val(catId);
 		},
@@ -153,6 +152,25 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 				url: _base+"/cat/edit/update",
 				data:{"productCatId":catId,"productCatName":catName,"parentProductCatId":parentId,
 					"isChild":isChild,"firstLetter":fLetter,"serialNumber":sn},
+				success: function(data){
+					//获取数据成功
+					if("1"===data.statusCode){
+						//刷新当前数据
+						$("#pagination-ul .page .active").trigger("click");
+					}
+				}
+			});
+		},
+		//删除类目
+		_delCat:function(){
+			var _this = this;
+			var catId = $("#delCatId").val();//类目标识
+			this._closeDelConf();
+			ajaxController.ajax({
+				type: "get",
+				processing: true,
+				message: "数据删除中,请等待...",
+				url: _base+"/cat/edit/del/"+catId,
 				success: function(data){
 					//获取数据成功
 					if("1"===data.statusCode){

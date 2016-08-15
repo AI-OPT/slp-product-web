@@ -8,6 +8,7 @@ import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.ProductCatParam;
+import com.ai.slp.product.api.productcat.param.ProductCatUniqueReq;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.model.prodCat.ProdCatInfo;
 import com.ai.slp.product.web.util.AdminUtil;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -92,6 +94,33 @@ public class CatEditController {
             String errorCode = header==null?ExceptCodeConstants.Special.SYSTEM_ERROR:header.getResultCode();
             String errMsg = header==null?"未知错误":header.getResultMessage();
             logger.error("Update cat is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_FAILURE, errorCode,errMsg);
+        }
+        return responseData;
+    }
+
+    /**
+     * 删除类目信息
+     * @param catId
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/del/{id}")
+    @ResponseBody
+    public ResponseData<String> updateCat(@PathVariable("id") String catId, HttpSession session){
+        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"","");
+        IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
+        ProductCatUniqueReq uniqueReq = new ProductCatUniqueReq();
+        uniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        uniqueReq.setProductCatId(catId);
+        uniqueReq.setOperId(AdminUtil.getAdminId(session));
+        BaseResponse response = productCatSV.deleteProductCat(uniqueReq);
+        ResponseHeader header = response==null?null:response.getResponseHeader();
+        if (header==null || !header.isSuccess()){
+            String errorCode = header==null?ExceptCodeConstants.Special.SYSTEM_ERROR:header.getResultCode();
+            String errMsg = header==null?"未知错误":header.getResultMessage();
+            logger.error("Delete cat is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
             responseData = new ResponseData<String>(
                     ResponseData.AJAX_STATUS_FAILURE, errorCode,errMsg);
         }
