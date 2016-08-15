@@ -35,7 +35,6 @@
 					             		<p class="word">属性值输入方式</p>
 					             		<p>
 					                    	<select  name="valueWay" class="select select-medium">
-							                   	<option value="">全部</option>
 							                   	<option value="1">下拉单选</option>
 							                   	<option value="2">多选</option>
 							                   	 <!-- <option value="">可输入文本框(单行)</option>
