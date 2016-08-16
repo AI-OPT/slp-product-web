@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,8 +32,11 @@ import com.ai.slp.product.api.normproduct.param.NormProdResponse;
 import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
 import com.ai.slp.product.api.productcat.param.AttrDefInfo;
 import com.ai.slp.product.api.productcat.param.AttrDefParam;
+import com.ai.slp.product.api.productcat.param.AttrInfo;
+import com.ai.slp.product.api.productcat.param.AttrPam;
 import com.ai.slp.product.api.productcat.param.AttrParam;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
+import com.ai.slp.product.api.productcat.param.ProductCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.model.prodAttr.ProdAttrInfo;
@@ -105,8 +109,18 @@ public class AttrController {
 	 */
 	private PageInfoResponse<AttrDefInfo> queryAttrByValueWay(AttrDefParam attrDefParam) {
 		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
+		ICacheSV cacheSV = DubboConsumerFactory.getService("iCacheSV");
+		SysParamSingleCond sysParamSingleCond = null;
 		PageInfoResponse<AttrDefInfo> result = attrAndValDefSV.queryPageAttrs(attrDefParam);
-		
+		//获取输入值方式
+		/*for (AttrDefInfo attrDefInfo : result.getResult()) {
+			if (StringUtils.isNotBlank(attrDefInfo.getValueWay())) {
+			String valueWay = attrDefInfo.getValueWay();
+			 sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID, ComCacheConstants.NormProduct.VALUE_WAY, ComCacheConstants.NormProduct.VALUE_WAY, valueWay);
+			 String valueWayName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
+			 attrDefInfo.setValueWay(valueWayName);
+			}
+		}*/
 		return result;
 	}
 	
@@ -129,7 +143,6 @@ public class AttrController {
 		//List<AttrParam>
 		ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
 		List<ProdAttrInfo> attrInfoList = JSON.parseArray(attrListStr,ProdAttrInfo.class);
-		
 		List<AttrParam> attrParamList = new ArrayList<>();
 		for (ProdAttrInfo attrInfo : attrInfoList) {
 			AttrParam attrParam = new AttrParam();
@@ -148,4 +161,32 @@ public class AttrController {
         }
         return responseData;
 	}
+	/**
+	 * 根据ID查询单个属性
+	 */
+	@RequestMapping("/{id}")
+    @ResponseBody
+    private ResponseData<AttrInfo> queryAttrById(@PathVariable("id") String attrId){
+		ResponseData<AttrInfo> responseData;
+		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
+		AttrPam attrPam = new AttrPam();
+		//设置租户ID
+		attrPam.setTenantId(SysCommonConstants.COMMON_TENANT_ID); 
+		//设置属性ID
+		Long attrIdLong = Long.valueOf(attrId).longValue();
+		attrPam.setAttrId(attrIdLong);
+		AttrInfo attrInfo = attrAndValDefSV.queryAttr(attrPam);
+		ResponseHeader header = attrInfo.getResponseHeader();
+		
+		 //保存错误
+        if (header!=null && !header.isSuccess()){
+        	LOG.error("Query by attrId is fail,attrId:{},headInfo:\r\n",attrId, JSON.toJSONString(header));
+            responseData = new ResponseData<AttrInfo>(
+                    ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
+        }else
+            responseData = new ResponseData<AttrInfo>(
+                    ResponseData.AJAX_STATUS_SUCCESS, "OK",attrInfo);
+        return responseData;
+	}
+	
 }
