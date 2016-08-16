@@ -155,6 +155,23 @@ public class CatQueryController {
      */
     @RequestMapping("/attr/{id}")
     public String queryAttrOfCat(@PathVariable("id")String catId,Model uiModel){
+        addAttr(catId,uiModel);
+        return "prodcat/catattrview";
+    }
+
+    /**
+     * 显示类目属性编辑页面
+     * @param catId
+     * @param uiModel
+     * @return
+     */
+    @RequestMapping("/attr/edit/{id}")
+    public String attrOfCatEditView(@PathVariable("id")String catId,Model uiModel){
+        addAttr(catId,uiModel);
+        return "prodcat/catattredit";
+    }
+
+    private void addAttr(String catId,Model uiModel){
         IProductCatSV catSV = DubboConsumerFactory.getService(IProductCatSV.class);
         //类目链
         ProductCatUniqueReq uniqueReq = new ProductCatUniqueReq();
@@ -179,7 +196,5 @@ public class CatQueryController {
         attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_NONKEY);
         BaseListResponse<ProdCatAttrDef> noKeyAttrMap = catSV.queryAttrByCatAndType(attrQuery);
         uiModel.addAttribute("noKeyAttr",noKeyAttrMap.getResult());
-
-        return "prodcat/catattrview";
     }
 }
