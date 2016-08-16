@@ -46,7 +46,7 @@ import com.ai.slp.product.web.util.DateUtil;
 import com.alibaba.fastjson.JSON;
 
 /**
- * 属性及属性值的管理 
+ * 属性的管理 
  * @author jiawen
  *
  */
@@ -113,14 +113,14 @@ public class AttrController {
 		SysParamSingleCond sysParamSingleCond = null;
 		PageInfoResponse<AttrDefInfo> result = attrAndValDefSV.queryPageAttrs(attrDefParam);
 		//获取输入值方式
-		/*for (AttrDefInfo attrDefInfo : result.getResult()) {
+		for (AttrDefInfo attrDefInfo : result.getResult()) {
 			if (StringUtils.isNotBlank(attrDefInfo.getValueWay())) {
-			String valueWay = attrDefInfo.getValueWay();
-			 sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID, ComCacheConstants.NormProduct.VALUE_WAY, ComCacheConstants.NormProduct.VALUE_WAY, valueWay);
+			 String valueWay = attrDefInfo.getValueWay();
+			 sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID, ComCacheConstants.ProdAttr.CODE, ComCacheConstants.ProdAttr.VALUE_WAY, valueWay);
 			 String valueWayName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 			 attrDefInfo.setValueWay(valueWayName);
 			}
-		}*/
+		}
 		return result;
 	}
 	
