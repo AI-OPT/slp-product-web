@@ -32,23 +32,26 @@
 				               <ul> 
 				                 <li>
 				                    <p class="word">属性值输入方式</p>
+				                    <!-- 1.下拉单选 2.多选 3.可输入文本框（单行）4.可输入文本框（多行）
+   										   5.日期时间 6.日期时间段 -->
 				                    <p>
 				                    	<select id="valueWay" class="select select-medium">
 						                   	<option value="">全部</option>
 						                   	<option value="1">下拉单选</option>
 						                   	<option value="2">多选</option>
-						                   	<!-- <option value="">可输入文本框(单行)</option>
-						                   	<option value="">可输入文本框(多行)</option>
-						                   	<option value="">日期时间</option>
-						                   	<option value="">日期时间段</option> -->
+						                   	<option value="3">可输入文本框(单行)</option>
+						                   	<option value="4">可输入文本框(多行)</option>
+						                   	<option value="5">日期时间</option>
+						                   	<option value="6">日期时间段</option>
 				                    	</select>
 				                    </p>
 				               	 </li>
 				           	 </ul>
 				           	 <ul>
 				                <li class="width-xlag">
-				                    <p><input id="selectCatAttrList" type="button" value="查询" class="biu-btn btn-blue btn-mini"/></p>
-				                    <p><input type="reset" value="重置" class="biu-btn btn-blue btn-mini"/></p>
+				               		 <p class="word">&nbsp;</p>
+				                    <p><input id="selectCatAttrList" type="button" value="查询" class="biu-btn  btn-primary btn-blue btn-medium ml-10"/></p>
+				                    <!-- <p><input type="reset" value="重置" class="biu-btn btn-blue btn-mini"/></p> -->
 				                    
 				                </li>
 				            </ul>
@@ -68,13 +71,12 @@
 							<h2 class="pull-left">查询结果</h2>
 						</header>
 						<div class="row"><!--删格化-->
-                                <%-- <p class="right pr-30">
-                                    <a href="${_base}/cat/edit/addview?parentId=${parentProductCatId}" class="btn btn-primary btn-blue btn-auto active" role="button">新  增</a>
-                                </p> --%>
                                 <p class="right pr-30">
-                                	<a href="${_base}/attr/addAttr/" class="biu-btn btn-blue btn-mini">新增</a>
+                                    <a href="${_base}/attr/addAttr" class="btn btn-primary btn-blue btn-auto active" role="button">新  增</a>
                                 </p>
-                                
+                                <%-- <p class="right pr-30">
+                                	<a href="${_base}/attr/addAttr/" class="biu-btn  btn-primary btn-blue btn-auto  ml-5">新增</a>
+                                </p> --%>
                             </div>
 						
 						<!--标题结束-->
