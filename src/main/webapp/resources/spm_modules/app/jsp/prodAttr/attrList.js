@@ -32,17 +32,20 @@ require("twbs-pagination/jquery.twbsPagination.min");
     	//事件代理
     	events: {
     		//查询
-            "click #selectCatAttrList":"_selectCatAttrList",
+            "click #selectAttrList":"_selectAttrList",
+            "click #increase-close":"_closeEditDiv",
+            "click #upAttrBtn":"_updateAttr",
+            "click #delAttrBtn":"_delAttr",
+            "click #aband-close":"_closeDelConf"
             },
     	//重写父类
     	setup: function () {
     		attrlistPager.superclass.setup.call(this);
-    		this._selectCatAttrList();
+    		this._selectAttrList();
     	},
     	
-    	
     	//查询列表
-    	_selectCatAttrList:function(){
+    	_selectAttrList:function(){
     		var _this = this;
     		
     		var attrId = $("#attrId").val().trim();
@@ -75,6 +78,99 @@ require("twbs-pagination/jquery.twbsPagination.min");
     		var container = $('.wrapper-right');
     		container.scrollTop(0);//滚动到div 顶部
     	},
+    	
+    	//弹出编辑框
+    	_showAttr:function(attrId){
+			//后台获取数据,
+			ajaxController.ajax({
+				type: "get",
+				processing: true,
+				message: "数据获取中,请等待...",
+				url: _base+"/attr/"+attrId,
+				success: function(data){
+					//获取数据成功
+					if("1"===data.statusCode){
+						var attrInfo = data.data;
+						$("#upAttrId").val(attrInfo.attrId);
+						$("#upAttrName").val(attrInfo.attrName);
+						$("#upValueWay").val(attrInfo.valueWay);
+						
+						$('#eject-mask').fadeIn(100);
+						$('#increase-samll').slideDown(200);
+					}
+				}
+			});
+
+		},
+		//关闭编辑页面弹出
+		_closeEditDiv:function(){
+			$('#eject-mask').fadeOut(100);
+			$('#increase-samll').slideUp(150);
+			//清空数据
+			$("#upAttrId").val("");
+			$("#upAttrName").val("");
+			$("#upValueWay").val("");
+		},
+		//提交更新
+		_updateAttr:function(){
+			var _this = this;
+			var attrId = $("#upAttrId").val();
+			var attrName = $("#upAttrName").val();
+			var valueWay = $("#upValueWay").val();
+			this._closeEditDiv();
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "数据更新中,请等待...",
+				
+				url: _base+"/attrEdit/updateAttr",
+				
+				data:{"attrId":attrId,"attrName":attrName,"valueWay":valueWay},
+				success: function(data){
+					//获取数据成功
+					if("1"===data.statusCode){
+						//刷新当前数据
+						//$("#pagination-ul .page .active").trigger("click");
+						window.location.reload();
+					}
+				}
+			});
+		},
+		
+		//删除确认提示框
+		_showDelConf:function(attrId){
+			$('#eject-mask').fadeIn(100);
+			$('#aband-small').slideDown(200);
+			console.log("del attr id is "+ attrId);
+			$("#delAttrId").val(attrId);
+		},
+		//删除类目
+		_delAttr:function(){
+			var _this = this;
+			var attrId = $("#delAttrId").val();//类目标识
+			this._closeDelConf();
+			ajaxController.ajax({
+				type: "get",
+				processing: true,
+				message: "数据删除中,请等待...",
+				url: _base+"/attrEdit/delAttr/"+attrId,
+				success: function(data){
+					//获取数据成功
+					if("1"===data.statusCode){
+						//刷新当前数据
+						//$("#pagination-ul .page .active").trigger("click");
+						window.location.reload();
+					}
+				}
+			});
+		},
+		//关闭确认提示框
+		_closeDelConf:function(){
+			$('#eject-mask').fadeOut(100);
+			$('#aband-small').slideUp(150);
+			$("#delAttrId").val('');
+		}
+		
     	
     });
     
