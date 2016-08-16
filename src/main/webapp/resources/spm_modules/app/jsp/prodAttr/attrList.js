@@ -123,14 +123,15 @@ require("twbs-pagination/jquery.twbsPagination.min");
 				processing: true,
 				message: "数据更新中,请等待...",
 				
-				url: _base+"",
+				url: _base+"/attrEdit/updateAttr",
 				
-				data:{"upAttrId":attrId,"upAttrName":attrName,"upValueWay":valueWay},
+				data:{"attrId":attrId,"attrName":attrName,"valueWay":valueWay},
 				success: function(data){
 					//获取数据成功
 					if("1"===data.statusCode){
 						//刷新当前数据
-						$("#pagination-ul .page .active").trigger("click");
+						//$("#pagination-ul .page .active").trigger("click");
+						window.location.reload();
 					}
 				}
 			});
@@ -146,18 +147,19 @@ require("twbs-pagination/jquery.twbsPagination.min");
 		//删除类目
 		_delAttr:function(){
 			var _this = this;
-			var catId = $("#delAttrId").val();//类目标识
+			var attrId = $("#delAttrId").val();//类目标识
 			this._closeDelConf();
 			ajaxController.ajax({
 				type: "get",
 				processing: true,
 				message: "数据删除中,请等待...",
-				url: _base+"/#/"+attrId,
+				url: _base+"/attrEdit/delAttr/"+attrId,
 				success: function(data){
 					//获取数据成功
 					if("1"===data.statusCode){
 						//刷新当前数据
-						$("#pagination-ul .page .active").trigger("click");
+						//$("#pagination-ul .page .active").trigger("click");
+						window.location.reload();
 					}
 				}
 			});
