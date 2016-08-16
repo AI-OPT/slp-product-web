@@ -13,6 +13,9 @@ public final class ComCacheConstants {
 		public static final String CODE = "STANDEDPRODUCT";
 		
 		public static final String STATUS = "STATE";
+		
+		public static final String VALUE_WAY = "VALUE_WAY";
+		
 	}
 
     /**
