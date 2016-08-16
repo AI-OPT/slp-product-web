@@ -79,3 +79,58 @@ $('.order-list-table ul li a').click(function(){
 //table切换结束
 
 
+/**商品编辑 其他设置 全国 部分 table**/
+$(function(){
+$(".radioa").click(function () {
+	$('#check1').show();
+	$('#check2').hide();
+});
+});
+
+$(function(){
+$(".radiob").click(function () {
+	$('#check2').show();
+	$('#check1').hide();
+});
+});
+/**商品编辑 其他设置 全国 部分 table**/
+$(function(){
+$(".radioc").click(function () {
+	$('#check3').show();
+	$('#check4').hide();
+});
+});
+
+$(function(){
+$(".radiod").click(function () {
+	$('#check4').show();
+	$('#check3').hide();
+});
+});
+
+//商品编辑展开更多 点击展开
+$(function () {
+    $(".cit-width .zk").click(function () {
+		$(this).children('i').toggleClass("icon-angle-down  icon-angle-up");
+		$(this).parents().children('.open').slideToggle(100);
+    });
+});	
+
+//搜索已选中关闭
+$(function(){
+$(".form-label .fa-times").click(function () {
+	$(this).parent('.img').hide();
+	});
+	});  
+
+//商品编辑上传图片弹出框 点击展开
+$(function () {
+    $(".int-zk").click(function () {
+		$(this).parents().children('.mouse-open').slideToggle(100);
+    });
+});	
+$(function () {
+    $(".newly-build").click(function () {
+		$(this).parents().children('.newly-build-onclick').slideToggle(100);
+    });
+});	

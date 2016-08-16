@@ -1,3 +1,4 @@
+<%@ page import="com.ai.slp.product.web.constants.ProductCatConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
@@ -8,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>运营管理</title>
     <%@ include file="/inc/inc.jsp" %>
-    <script type="text/javascript" src="${uedroot}/scripts/modular/fold.js"></script>
+
 </head>
 <body style="min-height: 2000px;">
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
@@ -24,8 +25,10 @@
                                                                   varStatus="stat">${catInfo.productCatName}<c:if
                                     test="${!stat.last}">&gt;</c:if></c:forEach></h5>
                         </header>
+                        <input type="hidden" name="catId" id="catId" value="${catId}">
                         <!--标题结束-->
-                        <div class="relation-title main-box-header">1、关键属性(添加保存标准品后，关键属性不可修改，请认真选择）<a href="#">选择属性</a></div>
+                        <div class="relation-title main-box-header">1、关键属性(添加保存标准品后，关键属性不可修改，请认真选择）
+                            <a href="${_base}/cat/query/attr/view/${catId}?attrType=<%=ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY%>">选择属性</a></div>
                         <div class="main-box-body clearfix">
                             <!--table表格-->
                             <div class="table-responsive clearfix relation-special">
@@ -83,7 +86,8 @@
                             </div>
                             <!--/table表格结束-->
                         </div>
-                        <div class="relation-title main-box-header">2、销售属性（添加保存标准品后，关键属性不可修改，请认真选择）<a href="#">选择属性</a></div>
+                        <div class="relation-title main-box-header">2、销售属性（添加保存标准品后，关键属性不可修改，请认真选择）
+                            <a href="${_base}/cat/query/attr/view/${catId}?attrType=<%=ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE%>">选择属性</a></div>
                         <div class="main-box-body clearfix">
                             <!--table表格-->
                             <div class="table-responsive clearfix relation-special">
@@ -146,7 +150,8 @@
                             </div>
                             <!--/table表格结束-->
                         </div>
-                        <div class="relation-title main-box-header">3、非关键属性<a href="#">选择属性</a></div>
+                        <div class="relation-title main-box-header">3、非关键属性
+                            <a href="${_base}/cat/query/attr/view/${catId}?attrType=<%=ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_NONKEY%>">选择属性</a></div>
                         <div class="main-box-body clearfix">
                             <!--table表格-->
                             <div class="table-responsive clearfix relation-special">
@@ -214,4 +219,5 @@
         </div>
     </div>
 </body>
+<script type="text/javascript" src="${uedroot}/scripts/modular/fold.js"></script>
 </html>

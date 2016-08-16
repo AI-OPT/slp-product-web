@@ -46,3 +46,4 @@
 
 <script src="${uedroot}/scripts/plugin/jquery.nanoscroller.min.js"></script>
 <script src="${uedroot}/scripts/modular/skin.js"></script>
+<script src="${uedroot}/scripts/modular/theme.js"></script>
