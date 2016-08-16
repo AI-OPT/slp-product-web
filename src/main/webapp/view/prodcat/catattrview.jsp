@@ -62,7 +62,7 @@
                                                 <c:forEach items="${attr.attrValList}" var="attrVal">
                                                 <tr class="border-bot-none">
                                                     <td  width="45%" class="right-text">${attrVal.attrValueName}<i class="fa fa-times i-close1"></i></td>
-                                                    <td  width="55%">1</td>
+                                                    <td  width="55%">${attrVal.serialNumber}</td>
                                                 </tr>
                                                 </c:forEach>
                                             </table>
@@ -116,7 +116,7 @@
                                                         <c:forEach items="${attr.attrValList}" var="attrVal">
                                                             <tr class="border-bot-none">
                                                                 <td  width="45%" class="right-text">${attrVal.attrValueName}<i class="fa fa-times i-close1"></i></td>
-                                                                <td  width="55%">1</td>
+                                                                <td  width="55%">${attrVal.serialNumber}</td>
                                                             </tr>
                                                         </c:forEach>
                                                     </table>
@@ -167,7 +167,7 @@
                                                         <c:forEach items="${attr.attrValList}" var="attrVal">
                                                             <tr class="border-bot-none">
                                                                 <td  width="45%" class="right-text">${attrVal.attrValueName}<i class="fa fa-times i-close1"></i></td>
-                                                                <td  width="55%">1</td>
+                                                                <td  width="55%">${attrVal.serialNumber}</td>
                                                             </tr>
                                                         </c:forEach>
                                                     </table>
