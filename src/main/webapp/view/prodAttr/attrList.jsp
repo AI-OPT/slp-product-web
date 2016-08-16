@@ -131,7 +131,7 @@
 				           	 <ul>
 				                <li class="width-xlag">
 				               		 <p class="word">&nbsp;</p>
-				                    <p><input id="selectCatAttrList" type="button" value="查询" class="biu-btn  btn-primary btn-blue btn-medium ml-10"/></p>
+				                    <p><input id="selectAttrList" type="button" value="查询" class="biu-btn  btn-primary btn-blue btn-medium ml-10"/></p>
 				                    <!-- <p><input type="reset" value="重置" class="biu-btn btn-blue btn-mini"/></p> -->
 				                    
 				                </li>
@@ -187,11 +187,11 @@
 										<td>{{:attrName}}</td>
 										<td>{{:valueWay}}</td>
 										<td>{{:attrValNum}}</td>
-										<td>{{:operTime}}</td>
+										<td>{{:~timesToFmatter(operTime)}}</td>
 										<td>{{:operId}}</td>
 										<td>
 											<a attrId="{{:attrId}}" name="editView" href="#" class="blue-border">编辑</a>
-											<a href="#" class="blue-border">管理属性值</a>
+											<a attrId="{{:attrId}}" name="manageView" href="${_base}/attrValue/attrManage" class="blue-border">管理属性值</a>
 											<a attrId="{{:attrId}}" name="delView" href="#" class="blue-border">删除</a>
 										</td>
 									</tr>
@@ -229,7 +229,12 @@
             console.log("编辑链接:"+attrId);
             pager._showDelConf(attrId);
         });
-        
+        <%-- 属性管理按钮 --%>
+        /*  $('#searchAttrData').delegate("a[name='manageView']", 'click', function () {
+             var attrId = $(this).attr('attrId');
+             console.log("编辑链接:"+attrId);
+             pager._showManageConf(attrId);
+         }); */
         seajs.use('app/jsp/prodAttr/attrList', function (attrlistPager) {
             pager = new attrlistPager({element: document.body});
             pager.render();

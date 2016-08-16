@@ -32,7 +32,7 @@ require("twbs-pagination/jquery.twbsPagination.min");
     	//事件代理
     	events: {
     		//查询
-            "click #selectCatAttrList":"_selectCatAttrList",
+            "click #selectAttrList":"_selectAttrList",
             "click #increase-close":"_closeEditDiv",
             "click #upAttrBtn":"_updateAttr",
             "click #delAttrBtn":"_delAttr",
@@ -41,11 +41,11 @@ require("twbs-pagination/jquery.twbsPagination.min");
     	//重写父类
     	setup: function () {
     		attrlistPager.superclass.setup.call(this);
-    		this._selectCatAttrList();
+    		this._selectAttrList();
     	},
     	
     	//查询列表
-    	_selectCatAttrList:function(){
+    	_selectAttrList:function(){
     		var _this = this;
     		
     		var attrId = $("#attrId").val().trim();
@@ -170,6 +170,7 @@ require("twbs-pagination/jquery.twbsPagination.min");
 			$('#aband-small').slideUp(150);
 			$("#delAttrId").val('');
 		}
+		
     	
     });
     
