@@ -1,5 +1,6 @@
 package com.ai.slp.product.web.controller.prodCat;
 
+import com.ai.opt.base.vo.BaseListResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -92,7 +93,7 @@ public class CatQueryController {
             uiModel.addAttribute("catLink", catLink);
             uiModel.addAttribute("parentProductCatId",parentProductCatId);
         }
-        return "prod-cat/catlist";
+        return "prodcat/catlist";
     }
 
     /**
@@ -146,5 +147,39 @@ public class CatQueryController {
             responseData = new ResponseData<ProductCatInfo>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK",catInfo);
         return responseData;
+    }
+
+    /**
+     * 查询类目属性信息
+     * @return
+     */
+    @RequestMapping("/attr/{id}")
+    public String queryAttrOfCat(@PathVariable("id")String catId,Model uiModel){
+        IProductCatSV catSV = DubboConsumerFactory.getService(IProductCatSV.class);
+        //类目链
+        ProductCatUniqueReq uniqueReq = new ProductCatUniqueReq();
+        uniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        uniqueReq.setProductCatId(catId);
+        List<ProductCatInfo> catLink = catSV.queryLinkOfCatById(uniqueReq);
+        uiModel.addAttribute("catLink", catLink);
+
+        //关键属性
+        AttrQueryForCat attrQuery = new AttrQueryForCat();
+        attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        attrQuery.setProductCatId(catId);
+        attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
+        BaseListResponse<ProdCatAttrDef> attrMap = catSV.queryAttrByCatAndType(attrQuery);
+        uiModel.addAttribute("keyAttr",attrMap.getResult());
+
+        //销售属性
+        attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
+        BaseListResponse<ProdCatAttrDef> salAttrMap = catSV.queryAttrByCatAndType(attrQuery);
+        uiModel.addAttribute("saleAttr",salAttrMap.getResult());
+        //非关键属性
+        attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_NONKEY);
+        BaseListResponse<ProdCatAttrDef> noKeyAttrMap = catSV.queryAttrByCatAndType(attrQuery);
+        uiModel.addAttribute("noKeyAttr",noKeyAttrMap.getResult());
+
+        return "prodcat/catattrview";
     }
 }

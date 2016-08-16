@@ -187,7 +187,7 @@
                                                 <a href="${_base}/cat/query?parentProductCatId={{:productCatId}}">&nbsp;管理子分类&nbsp;</a>
                                                 {{else }}
                                                 <a href="${_base}/prodedit/{{:productCatId}}">关联类目属性</a>
-                                                <a href="${_base}/prodedit/{{:productCatId}}">查看类目属性</a>
+                                                <a href="${_base}/cat/query/attr/{{:productCatId}}">查看类目属性</a>
                                                 {{/if}}
                                             </td>
                                         </tr>

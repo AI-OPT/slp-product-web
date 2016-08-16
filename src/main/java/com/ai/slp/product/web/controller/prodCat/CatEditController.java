@@ -42,7 +42,7 @@ public class CatEditController {
     @RequestMapping("/addview")
     public String addView(String parentId, Model uiModel){
         uiModel.addAttribute("parentCatId",parentId);
-        return "prod-cat/catadd";
+        return "prodcat/catadd";
     }
 
     /**
