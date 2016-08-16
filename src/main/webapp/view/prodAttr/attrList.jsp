@@ -10,6 +10,87 @@
 </head>
 
 <body>
+<!-- 点击编辑按钮弹框 -->
+<div class="eject-big">
+	<div class="eject-samll" id="increase-samll">
+		<!--编辑-->
+		<div class="eject-medium-title">
+            <p>更新属性</p>
+            <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
+        </div>
+		<div class="form-label">
+			<ul>
+				<li class="width-xlag">
+					<p class="word">属性ID</p>
+					<p><input id="upAttrId" type="text" class="int-text int-medium"></p>
+				</li>
+			</ul>
+	           <ul>	
+	               <li>
+	                   <p class="word">属性名称</p>
+	                   <p><input id="upAttrName" type="text" class="int-text int-medium"></p>
+	               </li>
+	           </ul>
+              <ul> 
+                <li>
+                   <p class="word">属性值输入方式</p>
+                   <!-- 1.下拉单选 2.多选 3.可输入文本框（单行）4.可输入文本框（多行）
+								   5.日期时间 6.日期时间段 -->
+                   <p>
+                   	<select id="upValueWay" class="select select-medium">
+	                   	<option value="">全部</option>
+	                   	<option value="1">下拉单选</option>
+	                   	<option value="2">多选</option>
+	                   	<option value="3">可输入文本框(单行)</option>
+	                   	<option value="4">可输入文本框(多行)</option>
+	                   	<option value="5">日期时间</option>
+	                   	<option value="6">日期时间段</option>
+                   	</select>
+                   </p>
+              	 </li>
+          	 </ul>
+		</div>
+		<!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="upAttrBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="确  定">
+                <input id="increase-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
+            </p>
+        </div>
+	</div>	
+	<div class="mask" id="eject-mask"></div>	
+	</div>
+<!-- 编辑弹框结束 -->
+
+<!-- 删除单个属性弹框 -->
+<div class="eject-big">
+    <div class="eject-samll" id="aband-small">
+        <input type="hidden" id="delAttrId">
+        <div class="eject-medium-title">
+            <p>删除属性</p>
+            <p id="delCloseImg" class="img"><i class="fa fa-times"></i></p>
+        </div>
+
+        <div class="eject-medium-complete">
+            <p><img src="${uedroot}/images/eject-icon-prompt.png"></p>
+            <p class="word">确定删除该属性吗？</p>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="delAttrBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+                <input id="aband-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
+            </p>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
+<!-- 删除单个属性弹框结束 -->
+
+<!--  -->
+
+
+
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
 	<div class="row"><!--外围框架-->
 		<div class="col-lg-12"><!--删格化-->
@@ -109,9 +190,9 @@
 										<td>{{:operTime}}</td>
 										<td>{{:operId}}</td>
 										<td>
-											<a href="#" class="blue-border">编辑</a>
+											<a attrId="{{:attrId}}" name="editView" href="#" class="blue-border">编辑</a>
 											<a href="#" class="blue-border">管理属性值</a>
-											<a href="#" class="blue-border">删除</a>
+											<a attrId="{{:attrId}}" name="delView" href="#" class="blue-border">删除</a>
 										</td>
 									</tr>
 								</script>
@@ -135,6 +216,20 @@
 <script type="text/javascript">
     var pager;
     (function () {
+    	<%-- 编辑按钮 --%>
+        $('#searchAttrData').delegate("a[name='editView']", 'click', function () {
+            var attrId = $(this).attr('attrId');
+            console.log("编辑链接:"+attrId);
+            pager._showAttr(attrId);
+        });
+        
+        <%-- 删除按钮 --%>
+        $('#searchAttrData').delegate("a[name='delView']", 'click', function () {
+            var attrId = $(this).attr('attrId');
+            console.log("编辑链接:"+attrId);
+            pager._showDelConf(attrId);
+        });
+        
         seajs.use('app/jsp/prodAttr/attrList', function (attrlistPager) {
             pager = new attrlistPager({element: document.body});
             pager.render();
@@ -143,20 +238,7 @@
 </script>
 <script src="${uedroot}/scripts/modular/frame.js"></script>
 
-<!-- <script type="text/javascript">
-	var pager;
-	var count = '${count}';
-	var prodInfoList = '${prodInfoList}';
-	var productEditInfo = '${productEditInfo}';
-	(function () {
-		seajs.use('app/jsp/prodAttr/attrList', function(
-				attrlistPager) {
-			pager = new attrlistPager({
-				element : document.body
-			});
-			pager.render();
-		});
-	})();
-</script> -->
+
+
 </html>
 
