@@ -182,7 +182,14 @@
                             </div>
                             <!--/table表格结束-->
                         </div>
+                        <div class="row"><!--删格化-->
+                            <p class="right pr-30">
+                                <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="返  回"
+                                       onclick="javaScript:window.history.go(-1);">
+                            </p>
                         </div>
+                    </div>
+
                     </div>
                 </div>
             </div>
