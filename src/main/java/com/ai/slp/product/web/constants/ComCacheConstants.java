@@ -14,6 +14,14 @@ public final class ComCacheConstants {
 		
 		public static final String STATUS = "STATE";
 		
+	}
+	/**
+	 * 类目属性
+	 */
+	public final class ProdAttr{
+		public static final String CODE = "PRODATTRDEF";
+		
+		
 		public static final String VALUE_WAY = "VALUE_WAY";
 		
 	}
