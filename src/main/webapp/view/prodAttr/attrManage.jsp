@@ -10,6 +10,50 @@
 </head>
 
 <body>
+<!-- 属性值新增弹框 -->
+
+<div class="eject-big" id="addViewDiv">
+	<div class="eject-samll" id="addAttrValue-samll">
+		<!-- 新增 -->
+		<div class="eject-medium-title">
+            <p>属性值</p>
+            <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
+        </div>
+		<div class="form-label">
+				<input type="hidden" id="attrId" name="attrId" value="${attrId}"/>
+				<ul>
+	               <li>
+	                   <p class="word">属性值名称</p>
+	                   <p><input id="attrValueName" name="attrValueName" type="text" class="int-text int-medium"></p>
+	               </li>
+	               <li class="width-xlag">
+					<p class="word">属性值名称首字母（大写）</p>
+					<p><input id="firstLetter" name="firstLetter" type="text" class="int-text int-medium"></p>
+					</li>
+	           </ul>
+	           <div class="title-right">
+	             	<p id="addAttrValueButton" class="plus-word btn-primary" >
+	             		 <a href="javaScript:void(0);"><i class="fa fa-plus"></i>新  增</a>
+	             	</p>
+	           </div>
+		</div>
+		<!-- 按钮 -->
+        <div id="subDiv" class="row mt-15"><!-- 删格化 -->
+            <p class="center pr-30 mt-30">
+                <input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="提  交">
+                <input id="addAttrValue-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
+                <!-- <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5"
+                                           value="返  回" onclick="javaScript:window.history.go(-1);"> -->
+            </p>
+        </div>
+	</div>	
+	<div class="mask" id="eject-mask"></div>	
+</div>
+
+
+<!-- 属性值新增弹框结束 -->
+
+
 <!-- 点击编辑按钮弹框 -->
 <div class="eject-big">
 	<div class="eject-samll" id="increase-samll">
@@ -20,17 +64,15 @@
         </div>
 		<div class="form-label">
 			<ul>
+				<li>
+                   <p class="word">属性值名称</p>
+                   <p><input id="attrValueName" type="text" class="int-text int-medium"></p>
+               </li>
 				<li class="width-xlag">
-					<p class="word">属性值ID</p>
-					<p><input id="upAttrvalueDefId" type="text" class="int-text int-medium"></p>
+					<p class="word">属性值名称首字母（大写）</p>
+					<p><input id="firstLetter" type="text" class="int-text int-medium"></p>
 				</li>
-			</ul>
-	           <ul>	
-	               <li>
-	                   <p class="word">属性名称</p>
-	                   <p><input id="upAttrValueName" type="text" class="int-text int-medium"></p>
-	               </li>
-	           </ul>
+	        </ul>
 		</div>
 		<!--按钮-->
         <div class="row mt-15"><!--删格化-->
@@ -41,7 +83,7 @@
         </div>
 	</div>	
 	<div class="mask" id="eject-mask"></div>	
-	</div>
+</div>
 <!-- 编辑弹框结束 -->
 
 <!-- 删除单个属性弹框 -->
@@ -69,7 +111,6 @@
 </div>
 <!-- 删除单个属性弹框结束 -->
 
-<!--  -->
 
 
 
@@ -85,11 +126,11 @@
 							<%-- 类目 --%>
 							<ul>
 								<li class="width-xlag">
-									<p class="word">属性ID</p>
+									<p class="word">属性值ID</p>
 									<p><input id="attrvalueDefId" type="text" class="int-text int-medium"></p>
 								</li>
 				                <li>
-				                    <p class="word">属性名称</p>
+				                    <p class="word">属性值名称</p>
 				                    <p><input id="attrValueName" type="text" class="int-text int-medium"></p>
 				                </li>
 				               </ul>
@@ -116,14 +157,14 @@
 						<header class="main-box-header clearfix">
 							<h2 class="pull-left">查询结果</h2>
 						</header>
-						<div class="row"><!--删格化-->
-                               <%--  <p class="right pr-30">
-                                    <a href="${_base}/attrValue/addAttrValue" class="btn btn-primary btn-blue btn-auto active" role="button">新  增</a>
-                                </p> --%>
+						<div class="row"  id="addAttrValueBtn"><!--删格化-->
                                 <p class="right pr-30">
-                                    <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
-                                           value="新  增" onclick="javaScript:window.location.href = '${_base}/attrValue/addAttrValue';">
+                                    <a name="addAttrValueView" href="#" class="biu-btn  btn-primary btn-blue btn-auto  ml-5">新  增</a>
                                 </p>
+                               <%--  <p class="right pr-30">
+                                    <input id="addAttrValueBtn" name="addAttrValueView" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
+                                           value="新  增" onclick="javaScript:window.location.href = '${_base}/attrValue/addAttrValue';">
+                                </p> --%>
                             </div>
 						
 						<!--标题结束-->
@@ -174,20 +215,54 @@
 		</div>
 	</div>
 </div>
+<script id="attrAddTemplate"  type="text/template">
+	 <!-- 查询条件 -->
+          <div class="form-label bd-bottom" data-widget="validator">
+			<input type="hidden" id="attrId" name="attrId" value="${attrId}"/>
+			<div class="title-right">
+              <p class="plus-word btn-primary">
+                   <a href="javaScript:void(0);" name="delBtn"><i class="fa fa-times"></i>删  除</a> 
+			  </p>
+            </div>
+			<ul>
+				<li>
+                   <p class="word">属性值名称</p>
+                   <p><input id="attrValueName{{:num}}" name="attrValueName" type="text" class="int-text int-medium"></p>
+               </li>
+				<li class="width-xlag">
+					<p class="word">属性值名称首字母（大写）</p>
+					<p><input id="firstLetter" name="firstLetter" type="text" class="int-text int-medium"></p>
+				</li>
+	        </ul>
+		</div>
+</script>
 </body>
 
 <script type="text/javascript">
     var pager;
+    var attrNum = {'num':0};
     (function () {
+    	<%-- 新增属性值的删除按钮 --%>
+        $('#addViewDiv').delegate("a[name='delBtn']", 'click', function () {
+            console.log("删除");
+            $(this).parent().parent().parent().remove();
+        });
+    	
+    	<%-- 新增按钮 --%>
+    	 $('#addAttrValueBtn').delegate("a[name='addAttrValueView']", 'click', function () {
+            pager._showAddAttr();
+        });
+    	
+    	
     	<%-- 编辑按钮 --%>
-        $('#searchAttrData').delegate("a[name='editView']", 'click', function () {
+         $('#searchAttrData').delegate("a[name='editView']", 'click', function () {
             var attrvalueDefId = $(this).attr('attrvalueDefId');
             console.log("编辑链接:"+attrvalueDefId);
             pager._showAttr(attrvalueDefId);
         });
-        
+         
         <%-- 删除按钮 --%>
-        $('#searchAttrData').delegate("a[name='delView']", 'click', function () {
+         $('#searchAttrData').delegate("a[name='delView']", 'click', function () {
             var attrvalueDefId = $(this).attr('attrvalueDefId');
             console.log("编辑链接:"+attrvalueDefId);
             pager._showDelConf(attrvalueDefId);
