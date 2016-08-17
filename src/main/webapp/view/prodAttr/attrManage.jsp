@@ -117,12 +117,13 @@
 							<h2 class="pull-left">查询结果</h2>
 						</header>
 						<div class="row"><!--删格化-->
-                                <p class="right pr-30">
+                               <%--  <p class="right pr-30">
                                     <a href="${_base}/attrValue/addAttrValue" class="btn btn-primary btn-blue btn-auto active" role="button">新  增</a>
-                                </p>
-                                <%-- <p class="right pr-30">
-                                	<a href="${_base}/attr/addAttr/" class="biu-btn  btn-primary btn-blue btn-auto  ml-5">新增</a>
                                 </p> --%>
+                                <p class="right pr-30">
+                                    <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
+                                           value="新  增" onclick="javaScript:window.location.href = '${_base}/attrValue/addAttrValue';">
+                                </p>
                             </div>
 						
 						<!--标题结束-->
