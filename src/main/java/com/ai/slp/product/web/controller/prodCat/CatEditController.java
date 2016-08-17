@@ -7,12 +7,14 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
+import com.ai.slp.product.api.productcat.param.ProdCatAttrAddParam;
 import com.ai.slp.product.api.productcat.param.ProductCatParam;
 import com.ai.slp.product.api.productcat.param.ProductCatUniqueReq;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.model.prodCat.ProdCatInfo;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by jackieliu on 16/8/11.
@@ -52,8 +56,6 @@ public class CatEditController {
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     @ResponseBody
     public ResponseData<String> addCat(String catListStr, HttpSession session){
-        ResponseData<String> responseData = new ResponseData<String>(
-                ResponseData.AJAX_STATUS_SUCCESS, ExceptCodeConstants.Special.SUCCESS);
         List<ProdCatInfo> catInfoList = JSON.parseArray(catListStr,ProdCatInfo.class);
         List<ProductCatParam> catParamList = new ArrayList<>();
         for (ProdCatInfo catInfo:catInfoList){
@@ -66,15 +68,7 @@ public class CatEditController {
         }
         IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
         BaseResponse response = productCatSV.createProductCat(catParamList);
-        ResponseHeader header = response==null?null:response.getResponseHeader();
-        if (header==null || !header.isSuccess()){
-            String errorCode = header==null?ExceptCodeConstants.Special.SYSTEM_ERROR:header.getResultCode();
-            String errMsg = header==null?"未知错误":header.getResultMessage();
-            logger.error(" Create cat is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
-            responseData = new ResponseData<String>(
-                    ResponseData.AJAX_STATUS_FAILURE, errorCode,errMsg);
-        }
-        return responseData;
+        return genResponse(response);
     }
 
     /**
@@ -84,20 +78,11 @@ public class CatEditController {
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
     public ResponseData<String> updateCat(ProductCatParam catParam,HttpSession session){
-        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"","");
         IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
         catParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
         catParam.setOperId(AdminUtil.getAdminId(session));
         BaseResponse response = productCatSV.updateProductCat(catParam);
-        ResponseHeader header = response==null?null:response.getResponseHeader();
-        if (header==null || !header.isSuccess()){
-            String errorCode = header==null?ExceptCodeConstants.Special.SYSTEM_ERROR:header.getResultCode();
-            String errMsg = header==null?"未知错误":header.getResultMessage();
-            logger.error("Update cat is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
-            responseData = new ResponseData<String>(
-                    ResponseData.AJAX_STATUS_FAILURE, errorCode,errMsg);
-        }
-        return responseData;
+        return genResponse(response);
     }
 
     /**
@@ -109,18 +94,45 @@ public class CatEditController {
     @RequestMapping(value = "/del/{id}")
     @ResponseBody
     public ResponseData<String> updateCat(@PathVariable("id") String catId, HttpSession session){
-        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"","");
         IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
         ProductCatUniqueReq uniqueReq = new ProductCatUniqueReq();
         uniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
         uniqueReq.setProductCatId(catId);
         uniqueReq.setOperId(AdminUtil.getAdminId(session));
         BaseResponse response = productCatSV.deleteProductCat(uniqueReq);
+        return genResponse(response);
+    }
+
+    /**
+     * 更新类目的某个类型属性和属性值
+     * @param catId
+     * @param attrType
+     * @param attrMap
+     * @return
+     */
+    @RequestMapping(value = "/attr/type/{id}")
+    @ResponseBody
+    public ResponseData<String> upCatAttrByType(
+            @PathVariable("id")String catId,String attrType, String attrMap,HttpSession session){
+        IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
+        Map<Long,Set<String>> attrValMap = JSON.parseObject(attrMap,new TypeReference<Map<Long, Set<String>>>() {});
+        ProdCatAttrAddParam addParam = new ProdCatAttrAddParam();
+        addParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        addParam.setOperId(AdminUtil.getAdminId(session));
+        addParam.setProductCatId(catId);
+        addParam.setAttrType(attrType);
+        addParam.setAttrAndVal(attrValMap);
+        BaseResponse response = productCatSV.addAttrForCatAndType(addParam);
+        return genResponse(response);
+    }
+
+    private ResponseData<String> genResponse(BaseResponse response){
+        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"","");
         ResponseHeader header = response==null?null:response.getResponseHeader();
         if (header==null || !header.isSuccess()){
             String errorCode = header==null?ExceptCodeConstants.Special.SYSTEM_ERROR:header.getResultCode();
             String errMsg = header==null?"未知错误":header.getResultMessage();
-            logger.error("Delete cat is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
+            logger.error("Option cat is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
             responseData = new ResponseData<String>(
                     ResponseData.AJAX_STATUS_FAILURE, errorCode,errMsg);
         }

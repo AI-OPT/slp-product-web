@@ -127,7 +127,7 @@
                         <!--按钮-->
                         <div class="row"><!--删格化-->
                             <p class="right pr-30">
-                                <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5" value="保  存">
+                                <input id="sumBtn" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5" value="保  存">
                             </p>
                         </div>
                     </div>
@@ -140,6 +140,8 @@
 </body>
 <script type="text/javascript" src="${uedroot}/scripts/modular/fold.js"></script>
 <script>
+    var catId = '${catId}';
+    var attrType = '${attrType}';
     var pager;
     var catNum = {'num':0};
     (function () {
@@ -163,10 +165,9 @@
             }
         });
 
-        seajs.use('app/jsp/prodcat/catadd', function (catAddPager) {
-            pager = new catAddPager({element: document.body});
+        seajs.use('app/jsp/prodcat/catattrall', function (catattrallPage) {
+            pager = new catattrallPage({element: document.body});
             pager.render();
-
         });
     })();
 </script>
