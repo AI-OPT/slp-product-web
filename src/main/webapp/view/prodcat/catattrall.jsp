@@ -16,6 +16,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>运营管理</title>
     <%@ include file="/inc/inc.jsp" %>
+    <style>
+        <%-- 原css文件样式不正常,所以在这里自定义 --%>
+        .relation-table-div ul li{float:left;text-align:left;padding-left: 85px;}
+    </style>
 </head>
 <body>
 <div class="content-wrapper-iframe">
@@ -33,6 +37,8 @@
                         <c:set var="letter" value="-1"/>
                         <!--标题结束-->
                         <c:forEach var="attr" items="${attrList}">
+                            <%-- 如果属性未被其他使用,则显示 --%>
+                            <c:if test="${otherSet.contains(attr.attrId) == false}">
                             <c:if test="${attr.firstLetter != letter}">
                                 <c:if test="${letter!='-1'}">
                                     </table>
@@ -74,7 +80,6 @@
                                                 <td colspan="2"  class="border-bot-none">
                                                     <div class="relation-table-div">
                                                         <c:set var="valLetter" value="-1"/>
-                                                        <c:set var="ind" value="1"/>
                                                         <c:forEach var="attrVal" items="${attr.valDefList}" >
                                                             <c:if test="${attrVal.firstLetter != valLetter}">
                                                                 <c:if test="${valLetter!='-1'}">
@@ -89,13 +94,7 @@
                                                                 <ul>
                                                                 <li>
                                                             </c:if>
-                                                                <c:set var="ind" value="${ind+1}"/>
                                                             <p><input type="checkbox" class="margin-checkbox m-left">${attrVal.attrValueName}</p>
-                                                            <c:if test="${ind%10 == 0}">
-                                                                </li>
-                                                                </ul>
-                                                                <ul><li>
-                                                            </c:if>
                                                         </c:forEach>
                                                                 </li>
                                                                 </ul>
@@ -108,10 +107,12 @@
                                 </c:if>
                                 <!--点击行为表现层结束-->
                                 </tbody>
-
+                                </c:if>
                         </c:forEach>
+                                <c:if test="${letter != '-1'}">
                             </table>
                         </div>
+                                    </c:if>
                                     <!--/table表格结束-->
                                 </div>
                         <!--按钮-->

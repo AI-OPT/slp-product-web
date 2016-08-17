@@ -205,7 +205,7 @@ public class CatQueryController {
         BaseListResponse<AttrDef> response = attrAndValDefSV.queryAllAttrAndVal(baseInfo);
         uiModel.addAttribute("attrList",response.getResult());
         uiModel.addAttribute("nowMap",nowMap);
-        uiModel.addAttribute("otherMap",otherAttr);
+        uiModel.addAttribute("otherSet",otherAttr);
         return "prodcat/catattrall";
     }
 
