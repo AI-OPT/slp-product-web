@@ -19,26 +19,32 @@
                 <div class="col-lg-12"><!--删格化-->
                     <div class="main-box clearfix"><!--白色背景-->
                         <div id="addViewDiv" class="main-box-body clearfix">
+                            <form id="addFrom">
                             <input type="hidden" id="parentProductCatId" name="parentCatId" value="${parentCatId}">
                             <!-- 查询条件 -->
                             <div class="form-label bd-bottom" data-widget="validator">
                                 <ul>
-                                    <li class="col-md-6">
+                                    <li class="col-md-12">
                                         <p class="word"><span>*</span>类目名称</p>
                                         <p><input name="productCatName" type="text" class="int-text int-medium"
                                                   required maxlength="100"></p>
                                     </li>
-                                    <li class="col-md-6">
+                                </ul>
+                                <ul>
+                                    <li class="col-md-12">
                                         <p class="word">名称首字母(大写)</p>
                                         <p><input name="firstLetter" type="text" class="int-text int-medium" maxlength="1"></p>
                                     </li>
                                 </ul>
                                 <ul>
-                                    <li class="col-md-6">
+                                    <li class="col-md-12">
                                         <p class="word">排序</p>
-                                        <p><input name="serialNumber" type="text" class="int-text int-medium" maxlength="4"></p>
+                                        <p><input name="serialNumber" type="text" class="int-text int-medium" maxlength="4"
+                                                  placeholder="1至10000之间整数"></p>
                                     </li>
-                                    <li class="col-md-6">
+                                </ul>
+                                <ul>
+                                    <li class="col-md-12">
                                         <p class="word"><span>*</span>是否存在子分类</p>
                                         <p><input name="isChild" type="radio" value="Y"
                                                   required data-errormessage-required="请选择是否存在子分类"></p>
@@ -54,11 +60,11 @@
                                 </div>
                             </div>
 
-
+                            </form>
                             <div id="subDiv" class="row pt-30"><!--删格化-->
                                 <p class="center pr-30 mt-30">
                                     <input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
-                                           value="提  交">
+                                           value="提  交" />
                                     <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
                                            value="返  回" onclick="javaScript:window.history.go(-1);">
                                 </p>
@@ -78,21 +84,26 @@
                 <a href="javaScript:void(0);" name="delBtn"><i class="fa fa-times"></i>删  除</a></p>
         </div>
         <ul>
-            <li class="col-md-6">
+            <li class="col-md-12">
                 <p class="word"><span>*</span>类目名称</p>
                 <p><input name="productCatName" type="text" class="int-text int-medium" required maxlength="100"></p>
             </li>
-            <li class="col-md-6">
+        </ul>
+        <ul>
+            <li class="col-md-12">
                 <p class="word">名称首字母(大写)</p>
                 <p><input name="firstLetter" type="text" class="int-text int-medium" maxlength="1"></p>
             </li>
         </ul>
         <ul>
-            <li class="col-md-6">
+            <li class="col-md-12">
                 <p class="word">排序</p>
-                <p><input name="serialNumber" type="text" class="int-text int-medium" min="0" max="10000"></p>
+                <p><input name="serialNumber" type="text" class="int-text int-medium" min="0" max="10000" number
+                          placeholder="1至10000之间整数"></p>
             </li>
-            <li class="col-md-6">
+        </ul>
+        <ul>
+            <li class="col-md-12">
                 <p class="word"><span>*</span>是否存在子分类</p>
                 <p><input name="isChild{{:num}}" type="radio" value="Y" required data-errormessage-required="请选择是否存在子分类"></p>
                 <p>是</p>
@@ -113,9 +124,11 @@
             <%--p  div(.title-right) div(.form-label) --%>
             $(this).parent().parent().parent().remove();
         });
+
         seajs.use('app/jsp/prodcat/catadd', function (catAddPager) {
             pager = new catAddPager({element: document.body});
             pager.render();
+
         });
     })();
 </script>

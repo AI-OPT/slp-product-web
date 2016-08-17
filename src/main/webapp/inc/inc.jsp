@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="_base" value="${pageContext.request.contextPath}"/>
 <c:set var="_slpres" value="${_base}/resources/local"/>
+<c:set var="spmRes" value="${_base}/resources/spm_modules"/>
 <c:set var="accountBalanceLink" value="${_base}/account/balance/index"/>
 <c:set var="accountRechargeOneLink" value="${_base}/account/recharge/one"/>
 <%
@@ -19,7 +20,7 @@
 <c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template/default"/>
 <script>
     var _base = "${_base}";
-    var _slpbase = "${_slpbase}";
+    var _spm_res = "${spmRes}";
     var slp_uac_host="${slp_uac_host}";
     var ssoLoginUrl="${ssoLoginUrl}";
     var uedroot="${uedroot}";
@@ -45,3 +46,4 @@
 
 <script src="${uedroot}/scripts/plugin/jquery.nanoscroller.min.js"></script>
 <script src="${uedroot}/scripts/modular/skin.js"></script>
+<script src="${uedroot}/scripts/modular/theme.js"></script>

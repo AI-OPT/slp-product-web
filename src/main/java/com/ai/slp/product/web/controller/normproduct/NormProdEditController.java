@@ -1,5 +1,6 @@
 package com.ai.slp.product.web.controller.normproduct;
 
+import com.ai.opt.base.vo.BaseListResponse;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -8,12 +9,12 @@ import com.ai.slp.common.api.cache.interfaces.ICacheSV;
 import com.ai.slp.common.api.cache.param.SysParam;
 import com.ai.slp.common.api.cache.param.SysParamMultiCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
-import com.ai.slp.product.api.normproduct.param.AttrMap;
 import com.ai.slp.product.api.normproduct.param.NormProdSaveRequest;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
 import com.ai.slp.product.api.product.interfaces.IProductSV;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.AttrQueryForCat;
+import com.ai.slp.product.api.productcat.param.ProdCatAttrDef;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.service.AttrAndValService;
@@ -91,8 +92,8 @@ public class NormProdEditController {
     		
     		IProductCatSV iProductCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
     	//	Map<ProdCatAttrDef, List<AttrValInfo>> attrMap = iProductCatSV.queryAttrByCatAndType(attrqueryforcat);
-    		AttrMap attrMap = (AttrMap) iProductCatSV.queryAttrByCatAndType(attrqueryforcat);
-    		uiModel.addAttribute("attrAndVal", attrAndValService.getAttrAndVals(attrMap));
+    		BaseListResponse<ProdCatAttrDef> catDefList = iProductCatSV.queryAttrByCatAndType(attrqueryforcat);
+//    		uiModel.addAttribute("attrAndVal", attrAndValService.getAttrAndVals(attrMap));
 	        
 	        
     	//标准品的状态 --缓存中进行查询
