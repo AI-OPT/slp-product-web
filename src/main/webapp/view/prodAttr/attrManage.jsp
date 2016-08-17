@@ -81,6 +81,7 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!-- 查询条件 -->
 						<div class="form-label">
+						<input type="hidden" id="attrId" name="attrId" value="${attrId}"/>
 							<%-- 类目 --%>
 							<ul>
 								<li class="width-xlag">
