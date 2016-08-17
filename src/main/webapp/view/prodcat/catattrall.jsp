@@ -39,6 +39,7 @@
                         <c:forEach var="attr" items="${attrList}">
                             <%-- 如果属性未被其他使用,则显示 --%>
                             <c:if test="${otherSet.contains(attr.attrId) == false}">
+                            <c:set var="isCheck" value="${nowMap.containsKey(attr.attrId)}"/>
                             <c:if test="${attr.firstLetter != letter}">
                                 <c:if test="${letter!='-1'}">
                                     </table>
@@ -63,8 +64,12 @@
                                         <!--点击行为层-->
                                         <table width="20%" border="0">
                                             <tr class="click">
-                                                <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
-                                                <td width="1%" class="ctr1 border-bot-none"><input type="checkbox" class="margin-checkbox"></td>
+                                                <td width="2%" class="ahref border-bot-none">
+                                                    <A href="#"><i class="fa fa-plus"></i></A></td>
+                                                <td width="1%" class="ctr1 border-bot-none">
+                                                    <input name="attrCheck" type="checkbox" class="margin-checkbox" attrId="${attr.attrId}"
+                                                    <c:if test="${isCheck}">checked="true"</c:if>>
+                                                </td>
                                                 <td width="1%" class="ctr border-bot-none">${attr.attrName}</td>
                                             </tr>
                                         </table>
@@ -73,6 +78,7 @@
                                 </tr>
                                 <!--点击行为表现层-->
                                 <c:if test="${attr.valDefList!=null && attr.valDefList.size()>0}">
+                                    <c:set var="valList" value="${nowMap.get(attr.attrId)}"/>
                                 <tr class="zhank"  style=" display:none;">
                                     <td colspan="1" >
                                         <table width="100%" border="0">
@@ -94,7 +100,9 @@
                                                                 <ul>
                                                                 <li>
                                                             </c:if>
-                                                            <p><input type="checkbox" class="margin-checkbox m-left">${attrVal.attrValueName}</p>
+                                                            <p><input name="valCheck" type="checkbox" class="margin-checkbox m-left"
+                                                                <c:if test="${isCheck && valList.contains(attrVal.attrvalueDefId)}">checked="true"</c:if>
+                                                                >${attrVal.attrValueName}</p>
                                                         </c:forEach>
                                                                 </li>
                                                                 </ul>
@@ -107,6 +115,7 @@
                                 </c:if>
                                 <!--点击行为表现层结束-->
                                 </tbody>
+                                </td>
                                 </c:if>
                         </c:forEach>
                                 <c:if test="${letter != '-1'}">
