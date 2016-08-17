@@ -1,6 +1,10 @@
 package com.ai.slp.product.web.controller.prodAttr;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -11,8 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
 import com.ai.slp.common.api.cache.param.SysParamSingleCond;
@@ -21,7 +28,12 @@ import com.ai.slp.product.api.productcat.param.AttrDefInfo;
 import com.ai.slp.product.api.productcat.param.AttrDefParam;
 import com.ai.slp.product.api.productcat.param.AttrValInfo;
 import com.ai.slp.product.api.productcat.param.AttrValPageQuery;
+import com.ai.slp.product.api.productcat.param.AttrValParam;
 import com.ai.slp.product.web.constants.SysCommonConstants;
+import com.ai.slp.product.web.model.prodAttr.ProdAttrInfo;
+import com.ai.slp.product.web.model.prodAttr.ProdAttrValueInfo;
+import com.ai.slp.product.web.util.AdminUtil;
+import com.alibaba.fastjson.JSON;
 
 /**
  * 属性值管理
@@ -36,7 +48,7 @@ public class AttrValueController {
 	/**
 	 * 进入页面
 	 */
-	@RequestMapping("/getAttrList/{id}")
+	@RequestMapping("/getAttrValue/{id}")
 	public String attrList(@PathVariable("id")String attrId,Model uiModel) {
 		/*//设置属性ID
 		Long attrIdLong = Long.valueOf(attrId).longValue();
@@ -69,7 +81,7 @@ public class AttrValueController {
 		return responseData;
 	}
 	
-	private void queryBuilder(HttpServletRequest request, AttrValPageQuery pageQuery) {
+/*	private void queryBuilder(HttpServletRequest request, AttrValPageQuery pageQuery) {
 		//设置租户ID
 		pageQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
 		
@@ -78,13 +90,42 @@ public class AttrValueController {
 		}
 		if (StringUtils.isNotBlank(request.getParameter("attrValueName"))) 
 			pageQuery.setAttrValueName(request.getParameter("attrValueName"));
-	}
+	}*/
 	
 	private PageInfoResponse<AttrValInfo> queryAttrByAttrvalId(AttrValPageQuery pageQuery) {
 		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
 		PageInfoResponse<AttrValInfo> result = attrAndValDefSV.queryPageAttrvalue(pageQuery);
 		
 		return result;
+	}
+	
+	/**
+	 * 批量添加属性值
+	 */
+	@RequestMapping("saveAttrValue")
+	@ResponseBody
+	public ResponseData<String> saveAttrValue(String attrValueListStr, HttpSession session) {
+		ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
+		List<ProdAttrValueInfo> attrValueInfoList = JSON.parseArray(attrValueListStr,ProdAttrValueInfo.class);
+		//创建用于接收页面传入的数据的集合
+		ArrayList<AttrValParam> attrValueList = new ArrayList<>();
+		for (ProdAttrValueInfo attrValueInfo : attrValueInfoList) {
+			AttrValParam attrValParam = new AttrValParam();
+			BeanUtils.copyProperties(attrValParam, attrValueInfo);
+			//补全属性值的字段
+			attrValParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+			attrValParam.setOperId(AdminUtil.getAdminId(session));
+			attrValueList.add(attrValParam);
+		}
+		
+		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
+		BaseResponse response = attrAndValDefSV.createAttrvalue(attrValueList);
+		ResponseHeader header = response.getResponseHeader();
+		
+		if (header!=null && !header.isSuccess()){
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "添加失败:"+header.getResultMessage());
+        }
+        return responseData;
 	}
 	
 }
