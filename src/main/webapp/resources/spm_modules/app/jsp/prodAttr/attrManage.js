@@ -47,18 +47,18 @@ require("twbs-pagination/jquery.twbsPagination.min");
     	//查询列表
     	_selectAttrValueList:function(){
     		var _this = this;
-    		
+    		var attrId = $("#attrId").val().trim();
     		var attrvalueDefId = $("#attrvalueDefId").val().trim();
     		var attrValueName = $("#attrValueName").val().trim();
     		
     		$("#pagination-ul").runnerPagination({
-	 			url: _base+"/attrManage/getAttrLis",
+	 			url: _base+"/attrManage/getAttrValueList",
 	 			method: "POST",
 	 			dataType: "json",
 	 			renderId:"searchAttrData",
 	 			messageId:"showMessageDiv",
 	 			
-	 			data: {"attrvalueDefId":attrvalueDefId,"attrValueName":attrValueName},
+	 			data: {"attrId":attrId,"attrvalueDefId":attrvalueDefId,"attrValueName":attrValueName},
 	 			
 	           	pageSize: attrlistPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,

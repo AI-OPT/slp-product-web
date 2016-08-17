@@ -6,6 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,28 +30,32 @@ import com.ai.slp.product.web.constants.SysCommonConstants;
  *
  */
 @Controller
-@RequestMapping("/attrValue")
+@RequestMapping("/attrManage")
 public class AttrValueController {
 	private static Logger LOG = LoggerFactory.getLogger(AttrController.class);
-	
 	/**
-	 * 进入属性值管理页面
+	 * 进入页面
 	 */
-	@RequestMapping("/attrManage")
-	public String attrList() {
+	@RequestMapping("/getAttrList/{id}")
+	public String attrList(@PathVariable("id")String attrId,Model uiModel) {
+		/*//设置属性ID
+		Long attrIdLong = Long.valueOf(attrId).longValue();
+		pageQuery.setAttrId(attrIdLong);*/
+		uiModel.addAttribute("attrId", attrId);
 		return "prodAttr/attrManage";
 	}
+	
 	/**
 	 * 查询属性值列表
 	 */
-	@RequestMapping("/getAttrList")
+	@RequestMapping("/getAttrValueList")
 	@ResponseBody
-	private ResponseData<PageInfoResponse<AttrValInfo>> queryAttrValueList(HttpServletRequest request,AttrValPageQuery pageQuery){
+	public ResponseData<PageInfoResponse<AttrValInfo>> queryAttrValueList(HttpServletRequest request,AttrValPageQuery pageQuery){
 		ResponseData<PageInfoResponse<AttrValInfo>> responseData = null;
 		
 		try {
 			//查询条件
-			queryBuilder(request, pageQuery);
+			pageQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
 			
 			PageInfoResponse<AttrValInfo> result = queryAttrByAttrvalId(pageQuery);
 			responseData = new ResponseData<PageInfoResponse<AttrValInfo>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
@@ -60,17 +66,12 @@ public class AttrValueController {
 			LOG.error("获取信息出错：", e);
 		}
 		
-		
 		return responseData;
 	}
 	
 	private void queryBuilder(HttpServletRequest request, AttrValPageQuery pageQuery) {
 		//设置租户ID
 		pageQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-		//设置属性ID
-		String parameter = request.getParameter("AttrId");
-		Long attrIdLong = Long.valueOf(parameter).longValue();
-		pageQuery.setAttrId(attrIdLong);
 		
 		if (StringUtils.isNotBlank(request.getParameter("attrvalueDefId"))) {
 			pageQuery.setAttrvalueDefId(request.getParameter("attrvalueDefId"));

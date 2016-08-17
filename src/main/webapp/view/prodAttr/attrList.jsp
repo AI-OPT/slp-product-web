@@ -152,12 +152,13 @@
 							<h2 class="pull-left">查询结果</h2>
 						</header>
 						<div class="row"><!--删格化-->
-                                <p class="right pr-30">
-                                    <a href="${_base}/attr/addAttr" class="btn btn-primary btn-blue btn-auto active" role="button">新  增</a>
-                                </p>
                                 <%-- <p class="right pr-30">
-                                	<a href="${_base}/attr/addAttr/" class="biu-btn  btn-primary btn-blue btn-auto  ml-5">新增</a>
+                                    <a href="${_base}/attr/addAttr" class="biu-btn  btn-primary btn-blue btn-auto  ml-5" role="button">新  增</a>
                                 </p> --%>
+                                <p class="right pr-30">
+                                    <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
+                                           value="新  增" onclick="javaScript:window.location.href = '${_base}/attr/addAttr';">
+                                </p>
                             </div>
 						
 						<!--标题结束-->
@@ -191,7 +192,7 @@
 										<td>{{:operId}}</td>
 										<td>
 											<a attrId="{{:attrId}}" name="editView" href="#" class="blue-border">编辑</a>
-											<a attrId="{{:attrId}}" name="manageView" href="${_base}/attrValue/attrManage" class="blue-border">管理属性值</a>
+											<a attrId="{{:attrId}}" name="manageView" href="${_base}/attrManage/getAttrList/{{:attrId}}" class="blue-border">管理属性值</a>
 											<a attrId="{{:attrId}}" name="delView" href="#" class="blue-border">删除</a>
 										</td>
 									</tr>
@@ -242,7 +243,6 @@
     })();
 </script>
 <script src="${uedroot}/scripts/modular/frame.js"></script>
-
 
 
 </html>
