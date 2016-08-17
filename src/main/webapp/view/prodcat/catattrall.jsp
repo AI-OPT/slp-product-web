@@ -27,7 +27,7 @@
         <div class="col-lg-12"><!--删格化-->
             <div class="row"><!--内侧框架-->
                 <div class="col-lg-12"><!--删格化-->
-                    <div class="main-box clearfix"><!--白色背景-->
+                    <div id="attrDivView" class="main-box clearfix"><!--白色背景-->
                         <!--标题-->
                         <header class="main-box-header clearfix">
                             <h5 class="pull-left">所属类目：<c:forEach var="catInfo" items="${catLink}"
@@ -67,8 +67,8 @@
                                                 <td width="2%" class="ahref border-bot-none">
                                                     <A href="#"><i class="fa fa-plus"></i></A></td>
                                                 <td width="1%" class="ctr1 border-bot-none">
-                                                    <input name="attrCheck" type="checkbox" class="margin-checkbox" attrId="${attr.attrId}"
-                                                    <c:if test="${isCheck}">checked="true"</c:if>>
+                                                    <input name="attrCheck" type="checkbox" class="margin-checkbox"
+                                                    <c:if test="${isCheck}">checked="true"</c:if> value="${attr.attrId}">
                                                 </td>
                                                 <td width="1%" class="ctr border-bot-none">${attr.attrName}</td>
                                             </tr>
@@ -102,7 +102,7 @@
                                                             </c:if>
                                                             <p><input name="valCheck" type="checkbox" class="margin-checkbox m-left"
                                                                 <c:if test="${isCheck && valList.contains(attrVal.attrvalueDefId)}">checked="true"</c:if>
-                                                                >${attrVal.attrValueName}</p>
+                                                                attrId="${attr.attrId}" value="${attrVal.attrvalueDefId}">${attrVal.attrValueName}</p>
                                                         </c:forEach>
                                                                 </li>
                                                                 </ul>
@@ -139,4 +139,35 @@
 </div>
 </body>
 <script type="text/javascript" src="${uedroot}/scripts/modular/fold.js"></script>
+<script>
+    var pager;
+    var catNum = {'num':0};
+    (function () {
+        <%-- 属性值点击 --%>
+        $('#attrDivView').delegate("input:checkbox[name='valCheck']", 'click', function () {
+            var attrId= $(this).attr("attrId");
+            var attrVal = $(this).val();
+            console.log("attrId:"+attrId+",attrVal:"+attrVal+",click");
+            <%-- 若属性值选中,则属性也选中 --%>
+            if($(this).is(':checked')){
+                $("input:checkbox[name='attrCheck'][value='"+attrId+"']").prop("checked",true);
+            }
+        });
+        <%-- 属性点击 --%>
+        $('#attrDivView').delegate("input:checkbox[name='attrCheck']",'click',function(){
+            var attrId = $(this).val();
+            console.log("attrId:"+attrId+",click");
+            <%-- 若属性取消选择,则属性值也取消 --%>
+            if(!$(this).is(':checked')){
+                $("input:checkbox[name='valCheck'][attrId='"+attrId+"']").prop("checked",false);
+            }
+        });
+
+        seajs.use('app/jsp/prodcat/catadd', function (catAddPager) {
+            pager = new catAddPager({element: document.body});
+            pager.render();
+
+        });
+    })();
+</script>
 </html>
