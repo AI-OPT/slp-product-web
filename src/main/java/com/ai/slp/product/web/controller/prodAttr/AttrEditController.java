@@ -17,6 +17,7 @@ import com.ai.opt.sdk.constants.ExceptCodeConstants;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
+import com.ai.slp.product.api.productcat.param.AttrDefParam;
 import com.ai.slp.product.api.productcat.param.AttrPam;
 import com.ai.slp.product.api.productcat.param.AttrParam;
 import com.ai.slp.product.web.constants.SysCommonConstants;
@@ -71,6 +72,9 @@ public class AttrEditController {
 		//设置属性ID
 		Long attrIdLong = Long.valueOf(attrId).longValue();
 		attrPam.setAttrId(attrIdLong);
+		
+		
+		//执行删除
 		BaseResponse response = attrAndValDefSV.deleteAttr(attrPam);
 		
 		ResponseHeader header = response==null?null:response.getResponseHeader();
