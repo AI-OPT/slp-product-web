@@ -170,7 +170,7 @@ public class AttrController {
 	 */
 	@RequestMapping("/{id}")
     @ResponseBody
-    private ResponseData<AttrInfo> queryAttrById(@PathVariable("id") String attrId){
+    public ResponseData<AttrInfo> queryAttrById(@PathVariable("id") String attrId){
 		ResponseData<AttrInfo> responseData;
 		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
 		AttrPam attrPam = new AttrPam();
