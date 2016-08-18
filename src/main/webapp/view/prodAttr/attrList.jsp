@@ -101,11 +101,11 @@
 						<div class="form-label">
 							<%-- 类目 --%>
 							<ul>
-								<li class="width-xlag">
+								<li class="col-md-6">
 									<p class="word">属性ID</p>
 									<p><input id="attrId" type="text" class="int-text int-medium"></p>
 								</li>
-				                <li>
+				                <li class="col-md-6">
 				                    <p class="word">属性名称</p>
 				                    <p><input id="attrName" type="text" class="int-text int-medium"></p>
 				                </li>
