@@ -18,7 +18,7 @@
         <div class="col-lg-12"><!--删格化-->
             <div class="row"><!--内侧框架-->
                 <div class="col-lg-12"><!--删格化-->
-                    <div class="main-box clearfix"><!--白色背景-->
+                    <div id="mainBoxDiv" class="main-box clearfix"><!--白色背景-->
                         <!--标题-->
                         <header class="main-box-header clearfix">
                             <h5 class="pull-left">所属类目：<c:forEach var="catInfo" items="${catLink}"
@@ -50,7 +50,7 @@
                                                 <tr class="click">
                                                     <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
                                                     <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
-                                                    <td width="1%" ><i class="fa fa-times i-close"></i></td>
+                                                    <td width="1%" ><i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -67,7 +67,8 @@
                                             <table width="100%" border="0" >
                                                 <c:forEach items="${attr.attrValList}" var="attrVal">
                                                 <tr class="border-bot-none">
-                                                    <td  width="45%" class="right-text">${attrVal.attrValueName}<i class="fa fa-times i-close1"></i></td>
+                                                    <td  width="45%" class="right-text">${attrVal.attrValueName}
+                                                        <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                     <td  width="55%">
                                                         <input type="text" class="int-text int-mini" placeholder="属性值排序" value="${attrVal.serialNumber}">
                                                     </td>
@@ -111,7 +112,7 @@
                                                     <tr class="click">
                                                         <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
                                                         <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
-                                                        <td width="1%" ><i class="fa fa-times i-close"></i></td>
+                                                        <td width="1%" ><i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i></td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -120,7 +121,7 @@
                                             </td>
                                             <td class="left-none ">
                                                 <span class="radio-sp"><input type="radio" <c:if test="${attr.isPicture == 'Y'}">checked="checked"</c:if>>是</span>
-                                                <span class="radio-sp"><input type="radio" <c:if test="${attr.isPicture == 'N'}">checked="checked"</c:if>>否</span>
+                                                <span class="radio-sp"><input type="radio" <c:if test="${attr.isPicture != 'Y'}">checked="checked"</c:if>>否</span>
                                             </td>
                                             <!--点击行为层结束-->
                                         </tr>
@@ -131,7 +132,8 @@
                                                     <table width="100%" border="0" >
                                                         <c:forEach items="${attr.attrValList}" var="attrVal">
                                                             <tr class="border-bot-none">
-                                                                <td  width="45%" class="right-text">${attrVal.attrValueName}</td>
+                                                                <td  width="45%" class="right-text">${attrVal.attrValueName}
+                                                                    <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                                 <td  width="55%">
                                                                     <input type="text" class="int-text int-mini" placeholder="属性值排序" value="${attrVal.serialNumber}">
                                                                 </td>
@@ -172,7 +174,8 @@
                                                     <tr class="click">
                                                         <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
                                                         <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
-                                                        <td width="1%" ><i class="fa fa-times i-close"></i></td>
+                                                        <%-- 1:属性  2:属性值 --%>
+                                                        <td width="1%" ><i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i></td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -188,7 +191,8 @@
                                                     <table width="100%" border="0" >
                                                         <c:forEach items="${attr.attrValList}" var="attrVal">
                                                             <tr class="border-bot-none">
-                                                                <td  width="45%" class="right-text">${attrVal.attrValueName}</td>
+                                                                <td  width="45%" class="right-text">${attrVal.attrValueName}
+                                                                    <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                                 <td  width="55%">
                                                                     <input type="text" class="int-text int-mini" placeholder="属性值排序" value="${attrVal.serialNumber}">
                                                                 </td>
@@ -208,7 +212,7 @@
                         </div>
                         <div class="row"><!--删格化-->
                             <p class="right pr-30">
-                                <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="保  存"/>
+                                <input id="sumBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="保  存"/>
                                 <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="返  回"
                                        onclick="javaScript:window.history.go(-1);">
                             </p>
@@ -222,4 +226,30 @@
     </div>
 </body>
 <script type="text/javascript" src="${uedroot}/scripts/modular/fold.js"></script>
+<script>
+    var pager;
+    var catId = "${catId}";
+    var catNum = {'num':0};
+    (function () {
+        <%-- 属性删除按钮 --%>
+        $('#mainBoxDiv').delegate(".i-close", 'click', function () {
+            var id= $(this).attr('catAttrId');
+            var objType = "1";
+            console.log("删除属性,id="+id);
+            pager._delAttrOfVal(id,objType);
+        });
+
+        $('#mainBoxDiv').delegate(".i-close1", 'click', function () {
+            var id=$(this).attr('catAttrValId');
+            var objType = "2";
+            console.log("删除属性值,id="+id);
+            pager._delAttrOfVal(id,objType);
+        });
+        seajs.use('app/jsp/prodcat/catattredit', function (catattredit) {
+            pager = new catattredit({element: document.body});
+            pager.render();
+
+        });
+    })();
+</script>
 </html>

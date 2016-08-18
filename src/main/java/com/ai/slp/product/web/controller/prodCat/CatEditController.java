@@ -8,6 +8,7 @@ import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.ProdCatAttrAddParam;
+import com.ai.slp.product.api.productcat.param.ProdCatAttrVal;
 import com.ai.slp.product.api.productcat.param.ProductCatParam;
 import com.ai.slp.product.api.productcat.param.ProductCatUniqueReq;
 import com.ai.slp.product.web.constants.SysCommonConstants;
@@ -123,6 +124,21 @@ public class CatEditController {
         addParam.setAttrType(attrType);
         addParam.setAttrAndVal(attrValMap);
         BaseResponse response = productCatSV.addAttrForCatAndType(addParam);
+        return genResponse(response);
+    }
+
+    /**
+     * 删除属性关联或属性值关联
+     * @param catAttrVal
+     * @return
+     */
+    @RequestMapping("/attr/del")
+    @ResponseBody
+    public ResponseData<String> deleteCatAttrOrVal(ProdCatAttrVal catAttrVal,HttpSession session){
+        IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
+        catAttrVal.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        catAttrVal.setOperId(AdminUtil.getAdminId(session));
+        BaseResponse response = productCatSV.deleteProductCatAttrOrVal(catAttrVal);
         return genResponse(response);
     }
 
