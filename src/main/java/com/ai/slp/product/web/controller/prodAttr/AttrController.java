@@ -74,7 +74,8 @@ public class AttrController {
 		ResponseData<PageInfoResponse<AttrDefInfo>> responseData = null;
 		try {
 			//查询条件
-			queryBuilder(request, attrDefParam);
+//			queryBuilder(request, attrDefParam);
+			attrDefParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
 			
 			PageInfoResponse<AttrDefInfo> result = queryAttrByValueWay(attrDefParam);
 			responseData = new ResponseData<PageInfoResponse<AttrDefInfo>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
@@ -112,6 +113,9 @@ public class AttrController {
 		ICacheSV cacheSV = DubboConsumerFactory.getService("iCacheSV");
 		SysParamSingleCond sysParamSingleCond = null;
 		PageInfoResponse<AttrDefInfo> result = attrAndValDefSV.queryPageAttrs(attrDefParam);
+		//获取属性对应属性值的数量
+		
+		
 		//获取输入值方式
 		for (AttrDefInfo attrDefInfo : result.getResult()) {
 			if (StringUtils.isNotBlank(attrDefInfo.getValueWay())) {
@@ -166,7 +170,7 @@ public class AttrController {
 	 */
 	@RequestMapping("/{id}")
     @ResponseBody
-    private ResponseData<AttrInfo> queryAttrById(@PathVariable("id") String attrId){
+    public ResponseData<AttrInfo> queryAttrById(@PathVariable("id") String attrId){
 		ResponseData<AttrInfo> responseData;
 		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
 		AttrPam attrPam = new AttrPam();

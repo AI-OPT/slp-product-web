@@ -3,6 +3,7 @@ package com.ai.slp.product.web.model.prodAttr;
 /**
  * 
  * @author jiawen
+ * @time 2016-8-16
  *
  */
 

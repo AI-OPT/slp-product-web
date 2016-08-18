@@ -19,16 +19,17 @@
             <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
 		<div class="form-label">
-			<ul>
-				<li class="width-xlag">
-					<p class="word">属性ID</p>
-					<p><input id="upAttrId" type="text" class="int-text int-medium"></p>
-				</li>
-			</ul>
+						<p><input type="hidden" id="upAttrId"  class="int-text int-medium"></p>
 	           <ul>	
 	               <li>
 	                   <p class="word">属性名称</p>
 	                   <p><input id="upAttrName" type="text" class="int-text int-medium"></p>
+	               </li>
+	           </ul>
+	           <ul>	
+	               <li>
+	                   <p class="word">属性名称首字母(大写)</p>
+	                   <p><input id="upFirstLetter" type="text" class="int-text int-medium"></p>
 	               </li>
 	           </ul>
               <ul> 
@@ -101,11 +102,11 @@
 						<div class="form-label">
 							<%-- 类目 --%>
 							<ul>
-								<li class="width-xlag">
+								<li class="col-md-6">
 									<p class="word">属性ID</p>
 									<p><input id="attrId" type="text" class="int-text int-medium"></p>
 								</li>
-				                <li>
+				                <li class="col-md-6">
 				                    <p class="word">属性名称</p>
 				                    <p><input id="attrName" type="text" class="int-text int-medium"></p>
 				                </li>
@@ -192,7 +193,7 @@
 										<td>{{:operId}}</td>
 										<td>
 											<a attrId="{{:attrId}}" name="editView" href="#" class="blue-border">编辑</a>
-											<a attrId="{{:attrId}}" name="manageView" href="${_base}/attrManage/getAttrList/{{:attrId}}" class="blue-border">管理属性值</a>
+											<a attrId="{{:attrId}}" name="manageView" href="${_base}/attrManage/getAttrValue/{{:attrId}}" class="blue-border">管理属性值</a>
 											<a attrId="{{:attrId}}" name="delView" href="#" class="blue-border">删除</a>
 										</td>
 									</tr>
@@ -230,12 +231,6 @@
             console.log("编辑链接:"+attrId);
             pager._showDelConf(attrId);
         });
-        <%-- 属性管理按钮 --%>
-        /*  $('#searchAttrData').delegate("a[name='manageView']", 'click', function () {
-             var attrId = $(this).attr('attrId');
-             console.log("编辑链接:"+attrId);
-             pager._showManageConf(attrId);
-         }); */
         seajs.use('app/jsp/prodAttr/attrList', function (attrlistPager) {
             pager = new attrlistPager({element: document.body});
             pager.render();
