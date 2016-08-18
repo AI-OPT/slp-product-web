@@ -19,16 +19,17 @@
             <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
 		<div class="form-label">
-			<ul>
-				<li class="width-xlag">
-					<p class="word">属性ID</p>
-					<p><input id="upAttrId" type="text" class="int-text int-medium"></p>
-				</li>
-			</ul>
+						<p><input type="hidden" id="upAttrId"  class="int-text int-medium"></p>
 	           <ul>	
 	               <li>
 	                   <p class="word">属性名称</p>
 	                   <p><input id="upAttrName" type="text" class="int-text int-medium"></p>
+	               </li>
+	           </ul>
+	           <ul>	
+	               <li>
+	                   <p class="word">属性名称首字母(大写)</p>
+	                   <p><input id="upFirstLetter" type="text" class="int-text int-medium"></p>
 	               </li>
 	           </ul>
               <ul> 

@@ -93,6 +93,7 @@ require("twbs-pagination/jquery.twbsPagination.min");
 						var attrInfo = data.data;
 						$("#upAttrId").val(attrInfo.attrId);
 						$("#upAttrName").val(attrInfo.attrName);
+						$("#upFirstLetter").val(attrInfo.firstLetter);
 						$("#upValueWay").val(attrInfo.valueWay);
 						
 						$('#eject-mask').fadeIn(100);
@@ -107,8 +108,9 @@ require("twbs-pagination/jquery.twbsPagination.min");
 			$('#eject-mask').fadeOut(100);
 			$('#increase-samll').slideUp(150);
 			//清空数据
-			$("#upAttrId").val("");
+			//$("#upAttrId").val("");
 			$("#upAttrName").val("");
+			$("#upFirstLetter").val("");
 			$("#upValueWay").val("");
 		},
 		//提交更新
@@ -116,6 +118,7 @@ require("twbs-pagination/jquery.twbsPagination.min");
 			var _this = this;
 			var attrId = $("#upAttrId").val();
 			var attrName = $("#upAttrName").val();
+			var firstLetter = $("#upFirstLetter").val();
 			var valueWay = $("#upValueWay").val();
 			this._closeEditDiv();
 			ajaxController.ajax({
@@ -125,7 +128,7 @@ require("twbs-pagination/jquery.twbsPagination.min");
 				
 				url: _base+"/attrEdit/updateAttr",
 				
-				data:{"attrId":attrId,"attrName":attrName,"valueWay":valueWay},
+				data:{"attrId":attrId,"attrName":attrName,"firstLetter":firstLetter,"valueWay":valueWay},
 				success: function(data){
 					//获取数据成功
 					if("1"===data.statusCode){
@@ -144,7 +147,7 @@ require("twbs-pagination/jquery.twbsPagination.min");
 			console.log("del attr id is "+ attrId);
 			$("#delAttrId").val(attrId);
 		},
-		//删除类目
+		//删除
 		_delAttr:function(){
 			var _this = this;
 			var attrId = $("#delAttrId").val();//类目标识
