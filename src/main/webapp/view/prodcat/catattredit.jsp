@@ -11,7 +11,7 @@
     <%@ include file="/inc/inc.jsp" %>
 
 </head>
-<body style="min-height: 2000px;">
+<body>
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
     <!--框架标签结束-->
     <div class="row"><!--外围框架-->
@@ -209,6 +209,8 @@
                         <div class="row"><!--删格化-->
                             <p class="right pr-30">
                                 <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="保  存"/>
+                                <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="返  回"
+                                       onclick="javaScript:window.history.go(-1);">
                             </p>
                         </div>
                     </div>
