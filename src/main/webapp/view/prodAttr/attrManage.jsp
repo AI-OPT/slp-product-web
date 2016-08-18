@@ -125,11 +125,11 @@
 						<input type="hidden" id="attrId" name="attrId" value="${attrId}"/>
 							<%-- 类目 --%>
 							<ul>
-								<li class="width-xlag">
+								<li class="col-md-6">
 									<p class="word">属性值ID</p>
 									<p><input id="attrvalueDefId" type="text" class="int-text int-medium"></p>
 								</li>
-				                <li>
+				                <li class="col-md-6">
 				                    <p class="word">属性值名称</p>
 				                    <p><input id="attrValueName" type="text" class="int-text int-medium"></p>
 				                </li>
