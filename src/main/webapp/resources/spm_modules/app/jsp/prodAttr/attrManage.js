@@ -29,7 +29,7 @@ require("twbs-pagination/jquery.twbsPagination.min");
 	validator.addItem({
 		element: "input[name=attrValueName]",
 		required: true,
-		errormessageRequired:"属性名称不能为空"
+		errormessageRequired:"属性值名称不能为空"
 	}).addItem({
 		element: "input[name=firstLetter]",
 		required: true,
@@ -113,8 +113,10 @@ require("twbs-pagination/jquery.twbsPagination.min");
 					//获取数据成功
 					if("1"===data.statusCode){
 						var attrValueInfo = data.data;
-						$("#upAttrvalueDefId").val(attrValueInfo.attrvalueDefId);
 						$("#upAttrValueName").val(attrValueInfo.attrValueName);
+						$("#upFirstLetter").val(attrValueInfo.firstLetter);
+						$("#upAttrvalueDefId").val(attrvalueDefId);
+						$("#upAttrId").val(attrValueInfo.attrId);
 						
 						$('#eject-mask').fadeIn(100);
 						$('#increase-samll').slideDown(200);
@@ -130,21 +132,26 @@ require("twbs-pagination/jquery.twbsPagination.min");
 			//清空数据
 			$("#upAttrvalueDefId").val("");
 			$("#upAttrValueName").val("");
+			$("#upFirstLetter").val("");
+			$("#upAttrId").val("");
 		},
 		//提交更新
 		_updateAttr:function(){
 			var _this = this;
+			
 			var attrvalueDefId = $("#upAttrvalueDefId").val();
-			var attrName = $("#upAttrValueName").val();
+			var attrValueName = $("#upAttrValueName").val();
+			var firstLetter = $("#upFirstLetter").val();
+			var attrId = $("#upAttrId").val();
 			this._closeEditDiv();
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
 				message: "数据更新中,请等待...",
 				
-				url: _base+"/attrEdit/updateAttr",
+				url: _base+"/attrManage/updateAttrValue",
 				
-				data:{"attrvalueDefId":attrvalueDefId,"attrName":attrName,"valueWay":valueWay},
+				data:{"attrId":attrId,"attrvalueDefId":attrvalueDefId,"attrValueName":attrValueName,"firstLetter":firstLetter},
 				success: function(data){
 					//获取数据成功
 					if("1"===data.statusCode){
@@ -158,22 +165,46 @@ require("twbs-pagination/jquery.twbsPagination.min");
 		
 		//删除确认提示框
 		_showDelConf:function(attrvalueDefId){
-			$('#eject-mask').fadeIn(100);
+			
+			//后台获取数据,
+			ajaxController.ajax({
+				type: "get",
+				processing: true,
+				message: "数据获取中,请等待...",
+				url: _base+"/attrManage/"+attrvalueDefId,
+				success: function(data){
+					//获取数据成功
+					if("1"===data.statusCode){
+						var attrValueInfo = data.data;
+						$("#delAttrvalueDefId").val(attrvalueDefId);
+						$("#delAttrId").val(attrValueInfo.attrId);
+						
+						$('#eject-mask').fadeIn(100);
+						$('#aband-small').slideDown(200);
+					}
+				}
+			});
+			
+			/*$('#eject-mask').fadeIn(100);
 			$('#aband-small').slideDown(200);
-			console.log("del attr id is "+ attrvalueDefId);
-			$("#delAttrValueId").val(attrvalueDefId);
+			console.log("del attrvalue id is "+ attrvalueDefId);
+			$("#delAttrValueId").val(attrvalueDefId);*/
 		},
 		
-		//删除类目
+		//删除
 		_delAttr:function(){
 			var _this = this;
-			var attrvalueDefId = $("#delAttrValueId").val();//类目标识
+			var attrvalueDefId = $("#delAttrvalueDefId").val();
+			var attrId = $("#delAttrId").val();
+			
 			this._closeDelConf();
 			ajaxController.ajax({
 				type: "get",
 				processing: true,
 				message: "数据删除中,请等待...",
-				url: _base+"/attrValueEdit/delAttrValue/"+attrvalueDefId,
+				url: _base+"/attrManage/delAttrValue/"+attrvalueDefId,
+				data:{"attrId":attrId,"attrvalueDefId":attrvalueDefId},
+				
 				success: function(data){
 					//获取数据成功
 					if("1"===data.statusCode){

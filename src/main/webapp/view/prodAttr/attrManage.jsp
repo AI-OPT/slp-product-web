@@ -49,8 +49,6 @@
 	</div>	
 	<div class="mask" id="eject-mask"></div>	
 </div>
-
-
 <!-- 属性值新增弹框结束 -->
 
 
@@ -63,14 +61,16 @@
             <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
 		<div class="form-label">
+			<input type="hidden" id="upAttrvalueDefId" />
+			<input type="hidden" id="upAttrId" />
 			<ul>
 				<li>
                    <p class="word">属性值名称</p>
-                   <p><input id="attrValueName" type="text" class="int-text int-medium"></p>
+                   <p><input id=upAttrValueName type="text" class="int-text int-medium"></p>
                </li>
 				<li class="width-xlag">
 					<p class="word">属性值名称首字母（大写）</p>
-					<p><input id="firstLetter" type="text" class="int-text int-medium"></p>
+					<p><input id="upFirstLetter" type="text" class="int-text int-medium"></p>
 				</li>
 	        </ul>
 		</div>
@@ -89,7 +89,8 @@
 <!-- 删除单个属性弹框 -->
 <div class="eject-big">
     <div class="eject-samll" id="aband-small">
-        <input type="hidden" id="delAttrValueId">
+        	<input type="hidden" id="delAttrvalueDefId" />
+			<input type="hidden" id="delAttrId" />
         <div class="eject-medium-title">
             <p>删除属性值</p>
             <p id="delCloseImg" class="img"><i class="fa fa-times"></i></p>
@@ -192,7 +193,7 @@
 										<td>{{:attrvalueDefId}}</td>
 										<td>{{:attrValueName}}</td>
 										<td>{{:firstLetter}}</td>
-										<td>{{:operTime}}</td>
+										<td>{{:~timesToFmatter(operTime)}}</td>
 										<td>{{:operId}}</td>
 										<td>
 											<a attrvalueDefId="{{:attrvalueDefId}}" name="editView" href="#" class="blue-border">编辑</a>
