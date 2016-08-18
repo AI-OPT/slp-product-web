@@ -49,28 +49,46 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
         //提交添加
         _submitCatList:function() {
             var attrMap = {};
-            //获取所有选中的属性
-            $("input:checkbox[name=attrCheck]:checked").each(function (index, form) {
-                var attrId = $(this).val();
-                var valArr = [];
-                //获取选中的属性值
-                $("input:checkbox[name=valCheck][attrId="+attrId+"]:checked").each(function(index,form){
-                    valArr.push($(this).val());
-                });
+            var catUpParams = [];
+            //获取所有是否上传图片
+            $("input:radio:checked").each(function (index, form) {
+                var attrId = $(this).attr('catAttrId');
                 console.log("attrId:"+attrId);
-                console.log("attrVal:"+valArr.toString());
-                attrMap[attrId] = valArr;
+                attrMap[attrId] = $(this).val();
             });
+            //获取属性顺序
+            $("input[type=number][name=attrSn]").each(function(index,form){
+                var catAttrId = $(this).attr('catAttrId');
+                var catUp = {};
+                catUp['updateObjId'] = catAttrId;
+                catUp['objType'] = '1';
+                catUp['serialNumber'] = $(this).val();
+                var isPic = attrMap[catAttrId];
+                if (isPic == null || isPic== undefined )
+                    isPic = 'N';
+                catUp['isPicture'] = isPic;
+                catUpParams.push(catUp);
+            });
+            //获取属性值顺序
+            $("input[type=number][name=attrValSn]").each(function(index,form){
+                var catAttrId = $(this).attr('catAttrValId');
+                var catUp = {};
+                catUp['updateObjId'] = catAttrId;
+                catUp['objType'] = '2';
+                catUp['serialNumber'] = $(this).val();
+                catUp['isPicture'] = 'N';
+                catUpParams.push(catUp);
+            });
+
             ajaxController.ajax({
                 type: "post",
                 processing: true,
                 message: "保存中，请等待...",
-                url: _base + "/cat/edit/attr/type/"+catId,
-                data: {'attrType':attrType,'attrMap': JSON.stringify(attrMap)},
+                url: _base + "/cat/edit/attr/update",
+                data: {'catUpParamStr': JSON.stringify(catUpParams)},
                 success: function (data) {
                     if ("1" === data.statusCode) {
-                        //保存成功,回退到进入的列表页
-                        window.location.href = _base+"/cat/query/attr/edit/"+catId;
+                        alert("保存成功");
                     }
                 }
             });

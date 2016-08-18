@@ -55,8 +55,9 @@
                                             </table>
                                         </td>
                                         <td class="left-none">
-                                            <input type="text" class="int-text int-mini"
-                                                                      placeholder="属性排序" value="${attr.serialNumber}">
+                                            <input type="number" class="int-text int-mini" min="0" max="1000"
+                                                   catAttrId="${attr.catAttrId}" name="attrSn"
+                                                   placeholder="属性排序" value="${attr.serialNumber}">
                                         </td>
                                         <!--点击行为层结束-->
                                     </tr>
@@ -70,7 +71,9 @@
                                                     <td  width="45%" class="right-text">${attrVal.attrValueName}
                                                         <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                     <td  width="55%">
-                                                        <input type="text" class="int-text int-mini" placeholder="属性值排序" value="${attrVal.serialNumber}">
+                                                        <input type="number" class="int-text int-mini" placeholder="属性值排序"
+                                                               catAttrValId="${attrVal.catAttrValId}" name="attrValSn"
+                                                               value="${attrVal.serialNumber}" min="0" max="1000">
                                                     </td>
                                                 </tr>
                                                 </c:forEach>
@@ -117,11 +120,17 @@
                                                 </table>
                                             </td>
                                             <td class="left-none right-none">
-                                                <input type="text" class="int-text int-mini" placeholder="属性排序" value="${attr.serialNumber}">
+                                                <input type="number" class="int-text int-mini" catAttrId="${attr.catAttrId}"
+                                                       catAttrId="${attr.catAttrId}" name="attrSn" min="0" max="1000"
+                                                       placeholder="属性排序" value="${attr.serialNumber}">
                                             </td>
                                             <td class="left-none ">
-                                                <span class="radio-sp"><input type="radio" <c:if test="${attr.isPicture == 'Y'}">checked="checked"</c:if>>是</span>
-                                                <span class="radio-sp"><input type="radio" <c:if test="${attr.isPicture != 'Y'}">checked="checked"</c:if>>否</span>
+                                                <span class="radio-sp">
+                                                    <input type="radio" name="isPic${attr.catAttrId}" catAttrId="${attr.catAttrId}" value="Y"
+                                                           <c:if test="${attr.isPicture == 'Y'}">checked="checked"</c:if>>是</span>
+                                                <span class="radio-sp">
+                                                    <input type="radio" name="isPic${attr.catAttrId}" catAttrId="${attr.catAttrId}" value="N"
+                                                           <c:if test="${attr.isPicture != 'Y'}">checked="checked"</c:if>>否</span>
                                             </td>
                                             <!--点击行为层结束-->
                                         </tr>
@@ -135,7 +144,9 @@
                                                                 <td  width="45%" class="right-text">${attrVal.attrValueName}
                                                                     <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                                 <td  width="55%">
-                                                                    <input type="text" class="int-text int-mini" placeholder="属性值排序" value="${attrVal.serialNumber}">
+                                                                    <input type="number" class="int-text int-mini" placeholder="属性值排序"
+                                                                           catAttrValId="${attrVal.catAttrValId}" name="attrValSn"
+                                                                           value="${attrVal.serialNumber}" min="0" max="1000">
                                                                 </td>
                                                                 <td></td>
                                                             </tr>
@@ -180,7 +191,9 @@
                                                 </table>
                                             </td>
                                             <td class="left-none">
-                                                <input type="text" class="int-text int-mini" placeholder="属性排序" value="${attr.serialNumber}">
+                                                <input type="number" class="int-text int-mini" min="0" max="1000"
+                                                       catAttrId="${attr.catAttrId}" name="attrSn"
+                                                       placeholder="属性排序" value="${attr.serialNumber}">
                                             </td>
                                             <!--点击行为层结束-->
                                         </tr>
@@ -194,7 +207,9 @@
                                                                 <td  width="45%" class="right-text">${attrVal.attrValueName}
                                                                     <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                                 <td  width="55%">
-                                                                    <input type="text" class="int-text int-mini" placeholder="属性值排序" value="${attrVal.serialNumber}">
+                                                                    <input type="number" class="int-text int-mini" placeholder="属性值排序"
+                                                                           catAttrValId="${attrVal.catAttrValId}" name="attrValSn"
+                                                                           value="${attrVal.serialNumber}" min="0" max="1000">
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
