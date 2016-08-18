@@ -16,6 +16,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>运营管理</title>
     <%@ include file="/inc/inc.jsp" %>
+    <style>
+        <%-- 原css文件样式不正常,所以在这里自定义 --%>
+        .relation-table-div ul li{float:left;text-align:left;padding-left: 85px;}
+    </style>
 </head>
 <body>
 <div class="content-wrapper-iframe">
@@ -23,7 +27,7 @@
         <div class="col-lg-12"><!--删格化-->
             <div class="row"><!--内侧框架-->
                 <div class="col-lg-12"><!--删格化-->
-                    <div class="main-box clearfix"><!--白色背景-->
+                    <div id="attrDivView" class="main-box clearfix"><!--白色背景-->
                         <!--标题-->
                         <header class="main-box-header clearfix">
                             <h5 class="pull-left">所属类目：<c:forEach var="catInfo" items="${catLink}"
@@ -33,6 +37,9 @@
                         <c:set var="letter" value="-1"/>
                         <!--标题结束-->
                         <c:forEach var="attr" items="${attrList}">
+                            <%-- 如果属性未被其他使用,则显示 --%>
+                            <c:if test="${otherSet.contains(attr.attrId) == false}">
+                            <c:set var="isCheck" value="${nowMap.containsKey(attr.attrId)}"/>
                             <c:if test="${attr.firstLetter != letter}">
                                 <c:if test="${letter!='-1'}">
                                     </table>
@@ -57,8 +64,12 @@
                                         <!--点击行为层-->
                                         <table width="20%" border="0">
                                             <tr class="click">
-                                                <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
-                                                <td width="1%" class="ctr1 border-bot-none"><input type="checkbox" class="margin-checkbox"></td>
+                                                <td width="2%" class="ahref border-bot-none">
+                                                    <A href="#"><i class="fa fa-plus"></i></A></td>
+                                                <td width="1%" class="ctr1 border-bot-none">
+                                                    <input name="attrCheck" type="checkbox" class="margin-checkbox"
+                                                    <c:if test="${isCheck}">checked="true"</c:if> value="${attr.attrId}">
+                                                </td>
                                                 <td width="1%" class="ctr border-bot-none">${attr.attrName}</td>
                                             </tr>
                                         </table>
@@ -67,6 +78,7 @@
                                 </tr>
                                 <!--点击行为表现层-->
                                 <c:if test="${attr.valDefList!=null && attr.valDefList.size()>0}">
+                                    <c:set var="valList" value="${nowMap.get(attr.attrId)}"/>
                                 <tr class="zhank"  style=" display:none;">
                                     <td colspan="1" >
                                         <table width="100%" border="0">
@@ -74,7 +86,6 @@
                                                 <td colspan="2"  class="border-bot-none">
                                                     <div class="relation-table-div">
                                                         <c:set var="valLetter" value="-1"/>
-                                                        <c:set var="ind" value="1"/>
                                                         <c:forEach var="attrVal" items="${attr.valDefList}" >
                                                             <c:if test="${attrVal.firstLetter != valLetter}">
                                                                 <c:if test="${valLetter!='-1'}">
@@ -89,13 +100,9 @@
                                                                 <ul>
                                                                 <li>
                                                             </c:if>
-                                                                <c:set var="ind" value="${ind+1}"/>
-                                                            <p><input type="checkbox" class="margin-checkbox m-left">${attrVal.attrValueName}</p>
-                                                            <c:if test="${ind%10 == 0}">
-                                                                </li>
-                                                                </ul>
-                                                                <ul><li>
-                                                            </c:if>
+                                                            <p><input name="valCheck" type="checkbox" class="margin-checkbox m-left"
+                                                                <c:if test="${isCheck && valList.contains(attrVal.attrvalueDefId)}">checked="true"</c:if>
+                                                                attrId="${attr.attrId}" value="${attrVal.attrvalueDefId}">${attrVal.attrValueName}</p>
                                                         </c:forEach>
                                                                 </li>
                                                                 </ul>
@@ -108,16 +115,19 @@
                                 </c:if>
                                 <!--点击行为表现层结束-->
                                 </tbody>
-
+                                </td>
+                                </c:if>
                         </c:forEach>
+                                <c:if test="${letter != '-1'}">
                             </table>
                         </div>
+                                    </c:if>
                                     <!--/table表格结束-->
                                 </div>
                         <!--按钮-->
                         <div class="row"><!--删格化-->
                             <p class="right pr-30">
-                                <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5" value="保  存">
+                                <input id="sumBtn" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5" value="保  存">
                             </p>
                         </div>
                     </div>
@@ -129,4 +139,36 @@
 </div>
 </body>
 <script type="text/javascript" src="${uedroot}/scripts/modular/fold.js"></script>
+<script>
+    var catId = '${catId}';
+    var attrType = '${attrType}';
+    var pager;
+    var catNum = {'num':0};
+    (function () {
+        <%-- 属性值点击 --%>
+        $('#attrDivView').delegate("input:checkbox[name='valCheck']", 'click', function () {
+            var attrId= $(this).attr("attrId");
+            var attrVal = $(this).val();
+            console.log("attrId:"+attrId+",attrVal:"+attrVal+",click");
+            <%-- 若属性值选中,则属性也选中 --%>
+            if($(this).is(':checked')){
+                $("input:checkbox[name='attrCheck'][value='"+attrId+"']").prop("checked",true);
+            }
+        });
+        <%-- 属性点击 --%>
+        $('#attrDivView').delegate("input:checkbox[name='attrCheck']",'click',function(){
+            var attrId = $(this).val();
+            console.log("attrId:"+attrId+",click");
+            <%-- 若属性取消选择,则属性值也取消 --%>
+            if(!$(this).is(':checked')){
+                $("input:checkbox[name='valCheck'][attrId='"+attrId+"']").prop("checked",false);
+            }
+        });
+
+        seajs.use('app/jsp/prodcat/catattrall', function (catattrallPage) {
+            pager = new catattrallPage({element: document.body});
+            pager.render();
+        });
+    })();
+</script>
 </html>

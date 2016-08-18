@@ -93,22 +93,20 @@
                             <input type="hidden" id="pageNo" name="pageNo">
                             <input type="hidden" id="parentProductCatId" name="parentProductCatId" value="${parentProductCatId}">
                             <ul>
-                                <li class="width-xlag">
+                                <li class="col-md-12">
                                     <p class="word">类目名称</p>
                                     <p><input id="productCatName" type="text" class="int-text int-medium"></p>
-                                </li>
-                                <li>
                                     <p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
                                     </p>
                                 </li>
                             </ul>
                             <div class="open" style="display:none;">
                                 <ul>
-                                    <li>
+                                    <li class="col-md-6">
                                         <p class="word">类目ID</p>
                                         <p><input id="productCatId" name="productCatId" type="text" class="int-text int-medium"></p>
                                     </li>
-                                    <li>
+                                    <li class="col-md-6">
                                         <p class="word">是否有子分类</p>
                                         <p>
                                             <select id="isChild" class="select select-medium">
