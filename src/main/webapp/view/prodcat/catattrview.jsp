@@ -10,7 +10,7 @@
     <%@ include file="/inc/inc.jsp" %>
     <script type="text/javascript" src="${uedroot}/scripts/modular/fold.js"></script>
 </head>
-<body style="min-height: 2000px;">
+<body>
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
     <!--框架标签结束-->
     <div class="row"><!--外围框架-->

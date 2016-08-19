@@ -21,7 +21,7 @@
         .relation-table-div ul li{float:left;text-align:left;padding-left: 85px;}
     </style>
 </head>
-<body>
+<body style="min-height: 2000px;">
 <div class="content-wrapper-iframe">
     <div class="row"><!--外围框架-->
         <div class="col-lg-12"><!--删格化-->
@@ -127,7 +127,10 @@
                         <!--按钮-->
                         <div class="row"><!--删格化-->
                             <p class="right pr-30">
-                                <input id="sumBtn" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5" value="保  存">
+                                <input id="sumBtn" type="button"
+                                       class="biu-btn  btn-primary btn-blue btn-auto  ml-5" value="保  存">
+                                <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="返  回"
+                                       onclick="javaScript:window.history.go(-1);">
                             </p>
                         </div>
                     </div>

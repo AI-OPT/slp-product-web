@@ -10,7 +10,7 @@
     <%@ include file="/inc/inc.jsp" %>
 </head>
 
-<body style="min-height: 2000px;">
+<body>
 
 <!--删除 弹出框  小-->
 <div class="eject-big">
