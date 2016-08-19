@@ -9,9 +9,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>运营管理</title>
     <%@ include file="/inc/inc.jsp" %>
-
 </head>
 <body>
+<!--提示弹出框-->
+<div class="eject-big" id="choice">
+    <div class="prompt-samll" id="p-operation">
+        <div class="eject-medium-title">
+            <p>提示操作</p>
+            <p class="img"><i class="fa fa-times"></i></p>
+        </div>
+        <!--确认删除-->
+        <div class="prompt-samll-confirm">
+            <ul>
+                <li><img src="${uedroot}/images/warning.png"></li>
+                <li class="word">至少选择一个部门进行操作！</li>
+                <li>
+                    <input id="p-op-close" type="button"  class="biu-btn btn-primary btn-small ml-15 mt-20 radius" value="确认">
+            </ul>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
     <!--框架标签结束-->
     <div class="row"><!--外围框架-->
