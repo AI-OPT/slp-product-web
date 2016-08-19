@@ -117,3 +117,7 @@ eclipse {
         }
     }
 }
+
+war {
+    baseName 'product-web'
+}
