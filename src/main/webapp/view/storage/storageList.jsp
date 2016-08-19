@@ -20,7 +20,7 @@
 						<div class="form-label">
 							<%-- 类目 --%>
 							<ul id="data1ProdCat">
-								<li>
+								<li class="col-md-12">
 									<p class="word">商品类目</p>
 									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
 										<p id="productCat${status.index}">
@@ -43,11 +43,9 @@
 								</li>
 							</ul>
 							<ul>
-								<li class="width-xlag">
+								<li class="col-md-12">
 									<p class="word">标准品名称</p>
 									<p><input id="standedProductName" type="text" class="int-text int-medium"></p>
-									<p><input id="selectNormProductList" type="button" value="查询"
-											  class="biu-btn btn-primary btn-blue btn-mini"></p>
 									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
 									</p>
 								</li>
@@ -85,6 +83,13 @@
 									</li>
 								</ul>
 							</div>
+								<ul>
+									<li class="width-xlag">
+										<p class="word">&nbsp;</p>
+										<p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
+												  id="selectNormProductList" value="查  询"></p>
+									</li>
+								</ul>
 						</div>
 					</div>
 				</div>
@@ -166,11 +171,13 @@
 			console.log("click calendar "+timeId);
 			WdatePicker({el:timeId,readOnly:true});
 		});
-		seajs.use('app/jsp/storage/prodstorage', function(
-				normproductlistPager) {
-			pager = new normproductlistPager({
-				element : document.body
-			});
+		<%-- 高级区域 --%>
+		$(".form-label ul li .sos a").click(function () {
+			$(".open ").slideToggle(100);
+			$(".nav-form ").toggleClass("reorder remove");
+		});
+		seajs.use('app/jsp/storage/storageList', function(storageList) {
+			pager = new storageList({element : document.body});
 			pager.render();
 		});
 	})();

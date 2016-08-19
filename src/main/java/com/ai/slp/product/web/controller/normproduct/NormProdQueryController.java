@@ -109,10 +109,7 @@ public class NormProdQueryController {
 	 */
 	private void queryBuilder(HttpServletRequest request,NormProdRequest productRequest) {
 		productRequest.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-		productRequest.setProductCatId(request.getParameter("productCatId"));
-		
-		if (StringUtils.isNotBlank(request.getParameter("state")))
-			productRequest.setState(request.getParameter("state"));
+		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
 		if(!request.getParameter("productId").isEmpty())
 			productRequest.setStandedProdId(request.getParameter("productId"));
 		if(!request.getParameter("productName").isEmpty())

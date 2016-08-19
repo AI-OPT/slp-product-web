@@ -1,4 +1,4 @@
-define('app/jsp/storage/prodstorage', function (require, exports, module) {
+define('app/jsp/storage/storageList', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
@@ -20,7 +20,7 @@ define('app/jsp/storage/prodstorage', function (require, exports, module) {
     var ajaxController = new AjaxController();
     var clickId = "";
     //定义页面组件类
-    var normproductlistPager = Widget.extend({
+    var storageList = Widget.extend({
     	
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -37,7 +37,7 @@ define('app/jsp/storage/prodstorage', function (require, exports, module) {
             },
     	//重写父类
     	setup: function () {
-    		normproductlistPager.superclass.setup.call(this);
+			storageList.superclass.setup.call(this);
     		this._selectNormProductList();
     	},
     	
@@ -114,7 +114,7 @@ define('app/jsp/storage/prodstorage', function (require, exports, module) {
 		 			"operStartTimeStr":operStartTime,"operEndTimeStr":operEndTime,"state":state
 		 			},
 	 			
-	           	pageSize: normproductlistPager.DEFAULT_PAGE_SIZE,
+	           	pageSize: storageList.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
@@ -134,5 +134,5 @@ define('app/jsp/storage/prodstorage', function (require, exports, module) {
     	
     });
     
-    module.exports = normproductlistPager
+    module.exports = storageList;
 });

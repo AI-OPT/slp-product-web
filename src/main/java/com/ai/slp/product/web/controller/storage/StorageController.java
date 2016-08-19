@@ -182,6 +182,6 @@ public class StorageController {
         Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
         uiModel.addAttribute("count", productCatMap.size() - 1);
         uiModel.addAttribute("catInfoMap", productCatMap);
-        return "storage/prodstorage";
+        return "storage/storageList";
     }
 }
