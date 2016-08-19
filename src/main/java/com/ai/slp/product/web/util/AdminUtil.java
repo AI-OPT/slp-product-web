@@ -1,5 +1,8 @@
 package com.ai.slp.product.web.util;
 
+import com.ai.opt.sso.client.filter.SSOClientConstants;
+import com.ai.slp.product.web.model.sso.GeneralSSOClientUser;
+
 import javax.servlet.http.HttpSession;
 
 /**
@@ -12,6 +15,8 @@ public class AdminUtil {
      * @return
      */
     public static Long getAdminId(HttpSession session){
+        GeneralSSOClientUser user = (GeneralSSOClientUser)session.getAttribute(SSOClientConstants.USER_SESSION_KEY);
+//        return user.getUserId();
         return 1l;
     }
 }
