@@ -17,7 +17,7 @@
 		<!-- 新增 -->
 		<div class="eject-medium-title">
             <p>属性值</p>
-            <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
+            <p id="createCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
 		<div class="form-label">
 				<input type="hidden" id="attrId" name="attrId" value="${attrId}"/>

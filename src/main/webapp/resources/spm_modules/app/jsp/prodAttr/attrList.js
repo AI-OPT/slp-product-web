@@ -33,9 +33,11 @@ require("twbs-pagination/jquery.twbsPagination.min");
     	events: {
     		//查询
             "click #selectAttrList":"_selectAttrList",
+            "click #upCloseImg":"_closeEditDiv",
             "click #increase-close":"_closeEditDiv",
             "click #upAttrBtn":"_updateAttr",
             "click #delAttrBtn":"_delAttr",
+            "click #delCloseImg":"_closeDelConf",
             "click #aband-close":"_closeDelConf"
             },
     	//重写父类
