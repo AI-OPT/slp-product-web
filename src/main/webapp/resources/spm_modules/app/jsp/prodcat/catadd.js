@@ -2,6 +2,7 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
+		Validator = require("arale-validator/0.10.2/index"),
 	    Dialog = require("optDialog/src/dialog"),
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
@@ -12,10 +13,35 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 	//require("jquery-validation/1.15.1/jquery.validate");
 	//require("jquery-validation/1.15.1/additional-methods");
 	//require("jquery-validation/1.15.1/localization/messages_zh");
+	require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
+	require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
     var SendMessageUtil = require("app/util/sendMessage");
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
+	//表单校验对象
+	var validator = new Validator({
+		element: $(".form-label")
+	});
+	validator.addItem({
+		element: "input[name=productCatName]",
+		required: true,
+		errormessageRequired:"类目名称不能为空"
+	}).addItem({
+		element: "input[name=firstLetter]",
+		required: true,
+		pattern: "[A-Z]{1}",
+		errormessageRequired:'名称首字母不能为空',
+		errormessagePattern:'请输入大写字母'
+	}).addItem({
+		element: "input[name=serialNumber]",
+		required: true,
+		min:1,
+		max:10000,
+		errormessageRequired:'排序不能为空',
+		errormessageMin:'请输入1至10000的数字',
+		errormessageMax:'请输入1至10000的数字'
+	});
     //定义页面组件类
     var catAddPager = Widget.extend({
     	
@@ -49,7 +75,13 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 		},
 		//提交添加
 		_submitCatList:function() {
-			console.log("validate "+$("#addFrom").valid());
+			validator.execute(function(error, results, element) {
+				if (error){
+					console.log("Has error");
+					return;
+				}
+			});
+			console.log("No error");
 			return;
 			//父类目
 			var parentCatId = $('#parentProductCatId').val();
