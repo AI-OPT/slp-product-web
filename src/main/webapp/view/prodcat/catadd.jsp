@@ -19,7 +19,6 @@
                 <div class="col-lg-12"><!--删格化-->
                     <div class="main-box clearfix"><!--白色背景-->
                         <div id="addViewDiv" class="main-box-body clearfix">
-                            <form id="addFrom">
                             <input type="hidden" id="parentProductCatId" name="parentCatId" value="${parentCatId}">
                             <!-- 查询条件 -->
                             <div class="form-label bd-bottom ui-form" data-widget="validator">
@@ -33,14 +32,14 @@
                                 </ul>
                                 <ul>
                                     <li class="col-md-12 ui-form-item">
-                                        <p class="word">名称首字母(大写)</p>
+                                        <p class="word"><span>*</span>名称首字母(大写)</p>
                                         <p><input name="firstLetter" type="text" class="int-text int-medium" maxlength="1"></p>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="col-md-12 ui-form-item">
-                                        <p class="word">排序</p>
-                                        <p><input name="serialNumber" type="text" class="int-text int-medium" maxlength="4"
+                                        <p class="word"><span>*</span>排序</p>
+                                        <p><input name="serialNumber" type="text" class="int-text int-medium" maxlength="5"
                                                   placeholder="1至10000之间整数"></p>
                                     </li>
                                 </ul>
@@ -59,8 +58,6 @@
                                         <a href="javaScript:void(0);"><i class="fa fa-plus"></i>新  增</a></p>
                                 </div>
                             </div>
-
-                            </form>
                             <div id="subDiv" class="row pt-30"><!--删格化-->
                                 <p class="center pr-30 mt-30">
                                     <input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
@@ -78,7 +75,7 @@
 </div>
 <script id="catAddTemplate" type="text/template">
     <!-- 查询条件 -->
-    <div class="form-label bd-bottom ui-form" >
+    <div class="form-label bd-bottom ui-form" data-widget="validator">
         <div class="title-right">
             <p class="plus-word btn-primary">
                 <a href="javaScript:void(0);" name="delBtn"><i class="fa fa-times"></i>删  除</a></p>

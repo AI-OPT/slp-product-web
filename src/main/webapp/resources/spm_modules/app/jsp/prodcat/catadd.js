@@ -19,29 +19,7 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-	//表单校验对象
-	var validator = new Validator({
-		element: $(".form-label")
-	});
-	validator.addItem({
-		element: "input[name=productCatName]",
-		required: true,
-		errormessageRequired:"类目名称不能为空"
-	}).addItem({
-		element: "input[name=firstLetter]",
-		required: true,
-		pattern: "[A-Z]{1}",
-		errormessageRequired:'名称首字母不能为空',
-		errormessagePattern:'请输入大写字母'
-	}).addItem({
-		element: "input[name=serialNumber]",
-		required: true,
-		min:1,
-		max:10000,
-		errormessageRequired:'排序不能为空',
-		errormessageMin:'请输入1至10000的数字',
-		errormessageMax:'请输入1至10000的数字'
-	});
+	Validator.addRule('upperCaseRule', /^[A-Z]{1}$/, '请输入大写字母');
     //定义页面组件类
     var catAddPager = Widget.extend({
     	
@@ -62,6 +40,24 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
     	setup: function () {
 			catAddPager.superclass.setup.call(this);
     	},
+		//添加输入验证
+		_addValidator:function(validator){
+			validator.addItem({
+				element: "input[name=productCatName]",
+				required: true,
+				errormessageRequired:"类目名称不能为空"
+			}).addItem({
+				element: "input[name=firstLetter]",
+				required: true,
+				rule:'upperCaseRule',
+				errormessage:'请输入名称首字母(大写)',
+			}).addItem({
+				element: "input[name=serialNumber]",
+				required: true,
+				rule:'number min{min:1} max{max:10000}',
+				errormessage:'请输入1至10000的数字',
+			});
+		},
 		//增加类目
 		_addCatTemp:function(){
 			catNum['num']=catNum['num']+1;
@@ -69,25 +65,24 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 			var htmlOutput = template.render(catNum);
 			$("#subDiv").before(htmlOutput);
 		},
-		//删除类目
-		_delCatTemp:function(){
-			console.log("")
-		},
 		//提交添加
 		_submitCatList:function() {
-			validator.execute(function(error, results, element) {
-				if (error){
-					console.log("Has error");
-					return;
-				}
-			});
-			console.log("No error");
-			return;
+			var _this= this;
 			//父类目
 			var parentCatId = $('#parentProductCatId').val();
 			var catArr = [];
+			var hasError = false;
 			//获取所有的form-label下的input
 			$("#addViewDiv > .form-label ").each(function (index, form) {
+				var validator = new Validator({
+					element: $(this)
+				});
+				_this._addValidator(validator);
+				validator.execute(function(error, results, element) {
+					if (error){
+						hasError = true;
+					}
+				});
 				var catObj = {};
 				console.log(index + " form-label");
 				if (parentCatId != null & parentCatId != '')
@@ -106,6 +101,9 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 				catObj['isChild'] = isChild.value;
 				catArr.push(catObj);
 			});
+			console.log("No error");
+			if (hasError)
+				return;
 			console.log("cat arr lengeth " + catArr.length);
 			ajaxController.ajax({
 				type: "post",
