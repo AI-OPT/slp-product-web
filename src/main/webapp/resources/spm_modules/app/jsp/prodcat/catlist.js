@@ -2,6 +2,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
+		Validator = require("arale-validator/0.10.2/index"),
 	    Dialog = require("optDialog/src/dialog"),
 	    Paging = require('paging/0.0.1/paging-debug'),
 	    AjaxController = require('opt-ajax/1.0.0/index');
@@ -15,7 +16,25 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
    
     
     var SendMessageUtil = require("app/util/sendMessage");
-    
+	Validator.addRule('upperCaseRule', /^[A-Z]{1}$/, '请输入大写字母');
+	var validator = new Validator({
+		element: $(".form-label")[0]
+	});
+	validator.addItem({
+		element: $('#upCatName'),
+		required: true,
+		errormessageRequired:"类目名称不能为空"
+	}).addItem({
+		element: $('#upFletter'),
+		required: true,
+		rule:'upperCaseRule',
+		errormessage:'请输入名称首字母(大写)',
+	}).addItem({
+		element: $('#upSerialNum'),
+		required: true,
+		rule:'number min{min:1} max{max:10000}',
+		errormessage:'请输入1至10000的数字',
+	});
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     var clickId = "";
@@ -137,6 +156,24 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 		},
 		//提交更新
 		_updateCat:function(){
+			var hasError = false;
+			var errMsg = "";
+			validator.execute(function(error, results, element) {
+				if (!error){
+					return;
+				}
+				hasError = true;
+				$.each(results,function(n,value){
+					if (value[1]!=null && value[1]!=undefined){
+						errMsg = value[1];
+						return;
+					}
+				});
+			});
+			if (errMsg!= "")
+				alert(errMsg);
+			if (hasError)
+				return;
 			var _this = this;
 			var catId = $("#upCatId").val();//类目标识
 			var parentId = $("#parentCatId").val();//父类目
