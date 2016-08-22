@@ -19,20 +19,20 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<div id="addViewDiv" class="main-box-body clearfix">
                             <!-- 查询条件 -->
-                            <div class="form-label bd-bottom" data-widget="validator">
+                            <div class="form-label bd-bottom ui-form" data-widget="validator">
 								<ul>
-					                <li class="col-md-6">
-					                    <p class="word">属性名称</p>
+					                <li class="col-md-12 ui-form-item">
+					                    <p class="word"><span>*</span>属性名称</p>
 					                    <p><input name="attrName" type="text" class="int-text int-medium"></p>
 					                </li>
-					                <li class="col-md-6">
-										<p class="word">属性名称首字母</p>
+					                <li class="col-md-12 ui-form-item">
+										<p class="word"><span>*</span>名称首字母(大写)</p>
 										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1"></p>
 									</li>
 					             </ul>
 					             <ul>
-					             	<li class="col-md-6">
-					             		<p class="word">属性值输入方式</p>
+					             	<li class="col-md-12 ui-form-item">
+					             		<p class="word"><span>*</span>属性值输入方式</p>
 					             		<p>
 					                    	<select  name="valueWay" class="select select-medium">
 							                   	<option value="1">下拉单选</option>
@@ -71,7 +71,7 @@
 </div>
 <script id="attrAddTemplate"  type="text/template">
 	 <!-- 查询条件 -->
-                            <div class="form-label bd-bottom" data-widget="validator">
+                            <div class="form-label bd-bottom ui-form" data-widget="validator">
 								<div class="title-right">
                                    <p class="plus-word btn-primary">
 
@@ -80,20 +80,20 @@
 									</p>
                                 </div>
 								<ul>
-					                <li class="col-md-6">
-					                    <p class="word">属性名称</p>
+					                <li class="col-md-12 ui-form-item">
+					                    <p class="word"><span>*</span>属性名称</p>
 					                    <p><input name="attrName" type="text" class="int-text int-medium"></p>
 					                </li>
-					                <li class="col-md-6">
-										<p class="word">属性名称首字母</p>
+					                <li class="col-md-12 ui-form-item">
+										<p class="word"><span>*</span>属性名称首字母</p>
 										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1"></p>
 									</li>
 					             </ul>
 					             <ul>
-					             	<li class="col-md-6">
-					             		<p class="word">属性值输入方式</p>
+					             	<li class="col-md-12 ui-form-item">
+					             		<p class="word"><span>*</span>属性值输入方式</p>
 					             		<p>
-					                    	<select  name="valueWay{{:num}}" class="select select-medium">
+					                    	<select  name="valueWay{{:num}}" class="select select-medium ui-form-item">
 							                   	<option value="">全部</option>
 							                   	<option value="1">下拉单选</option>
 							                   	<option value="2">多选</option>

@@ -4,7 +4,7 @@ define('app/jsp/prodAttr/addAttr', function (require, exports, module) {
     Widget = require('arale-widget/1.2.0/widget'),
 	Validator = require("arale-validator/0.10.2/index"),
     Dialog = require("optDialog/src/dialog"),
-    Paging = require('paging/0.0.1/paging'),
+  //  Paging = require('paging/0.0.1/paging'),
     AjaxController = require('opt-ajax/1.0.0/index');
 require("jsviews/jsrender.min");
 require("jsviews/jsviews.min");
@@ -14,28 +14,13 @@ require("app/util/jsviews-ext");
 require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
 require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 
+
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-  //表单校验对象
-	var validator = new Validator({
-		element: $(".form-label")
-	});
-	validator.addItem({
-		element: "input[name=attrName]",
-		required: true,
-		errormessageRequired:"属性名称不能为空"
-	}).addItem({
-		element: "input[name=firstLetter]",
-		required: true,
-		pattern: "[A-Z]{1}",
-		errormessagePattern:'请输入大写字母'
-	}).addItem({
-		element: "select",
-		required: true,
-		errormessageRequired:'请选择属性值输入方式'
-	});
+    Validator.addRule('upperCaseRule', /^[A-Z]{1}$/, '请输入大写字母');
+    
     //定义页面组件类
     var attrAddPager = Widget.extend({
     	Implements:SendMessageUtil,
@@ -56,7 +41,22 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
     	setup: function () {
     		attrAddPager.superclass.setup.call(this);
     	},
-    	//增加类目
+    	
+    	//添加输入验证
+    	_addValidator:function(validator){
+    		validator.addItem({
+    			element: "input[name=attrName]",
+    			required: true,
+    			errormessageRequired:"属性名称不能为空"
+    		}).addItem({
+    			element: "input[name=firstLetter]",
+    			required: true,
+    			rule:'upperCaseRule',
+    			errormessage:'请输入名称首字母(大写)',
+    		});
+    	},
+    	
+    	//增加
     	_addAttrBtn:function(){
 			attrNum['num']=attrNum['num']+1;
 			var template = $.templates("#attrAddTemplate");
@@ -66,10 +66,22 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 		
 		//提交
 		_saveAttr:function(){
-			validator.execute(function(error, results, element) {
+			var _this= this;
 			//获取from-label下的数据
 			var attrArr = [];
+			var hasError = false;
 			$("#addViewDiv > .form-label ").each(function(index,form){
+				
+				var validator = new Validator({
+					element: $(this)
+				});
+				_this._addValidator(validator);
+				validator.execute(function(error, results, element) {
+					if (error){
+						hasError = true;
+					}
+				});
+				
 				var attrObj = {};
 				console.log(index+" form-label");
 				//属性名称
@@ -78,12 +90,13 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 				//首字母
 				var firstLetter = $(this).find("input[name='firstLetter']")[0];
 				attrObj['firstLetter'] = firstLetter.value;
-				//输入方式
-				var valueWay = $(this).find("select")[0];
-				attrObj['valueWay'] = valueWay.value;
 				attrArr.push(attrObj);
 			});
 		
+			console.log("No error");
+			if (hasError)
+				return;
+			
 		console.log("attr arr lengeth "+attrArr.length);
 		ajaxController.ajax({
 			type: "post",
@@ -99,7 +112,6 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 				}
 			}
 		});
-	});	
     }
     });
     
