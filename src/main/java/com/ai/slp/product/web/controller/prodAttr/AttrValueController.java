@@ -73,6 +73,7 @@ public class AttrValueController {
 		
 		try {
 			//查询条件
+		//	queryBuilder(request, pageQuery);
 			pageQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
 			
 			PageInfoResponse<AttrValInfo> result = queryAttrByAttrvalId(pageQuery);
@@ -87,13 +88,13 @@ public class AttrValueController {
 		return responseData;
 	}
 	
-/*	private void queryBuilder(HttpServletRequest request, AttrValPageQuery pageQuery) {
+	/*private void queryBuilder(HttpServletRequest request, AttrValPageQuery pageQuery) {
 		//设置租户ID
 		pageQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
 		
 		if (StringUtils.isNotBlank(request.getParameter("attrvalueDefId"))) {
 			pageQuery.setAttrvalueDefId(request.getParameter("attrvalueDefId"));
-		}
+		}j
 		if (StringUtils.isNotBlank(request.getParameter("attrValueName"))) 
 			pageQuery.setAttrValueName(request.getParameter("attrValueName"));
 	}*/
@@ -103,6 +104,15 @@ public class AttrValueController {
 		PageInfoResponse<AttrValInfo> result = attrAndValDefSV.queryPageAttrvalue(pageQuery);
 		
 		return result;
+	}
+	
+	/**
+	 * 进入添加属性值的页面
+	 */
+	@RequestMapping("/addAttrValue")
+	public String addAttr() {
+		
+		return "prodAttr/addAttrValue";
 	}
 	
 	/**
