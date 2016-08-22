@@ -23,11 +23,11 @@
 				<input type="hidden" id="attrId" name="attrId" value="${attrId}"/>
 				<ul>
 	               <li>
-	                   <p class="word">属性值名称</p>
+	                   <p class="word"><span>*</span>属性值名称</p>
 	                   <p><input id="attrValueName" name="attrValueName" type="text" class="int-text int-medium"></p>
 	               </li>
 	               <li class="width-xlag">
-					<p class="word">属性值名称首字母（大写）</p>
+					<p class="word"><span>*</span>名称首字母(大写)</p>
 					<p><input id="firstLetter" name="firstLetter" type="text" class="int-text int-medium"></p>
 					</li>
 	           </ul>
@@ -139,8 +139,6 @@
 				                <li class="width-xlag">
 				               		 <p class="word">&nbsp;</p>
 				                    <p><input id="selectAttrValueList" type="button" value="查询" class="biu-btn  btn-primary btn-blue btn-medium ml-10"/></p>
-				                    <!-- <p><input type="reset" value="重置" class="biu-btn btn-blue btn-mini"/></p> -->
-				                    
 				                </li>
 				            </ul>
 						</div>
@@ -231,7 +229,7 @@
                    <p><input id="attrValueName{{:num}}" name="attrValueName" type="text" class="int-text int-medium"></p>
                </li>
 				<li class="width-xlag">
-					<p class="word">属性值名称首字母（大写）</p>
+					<p class="word">名称首字母(大写)</p>
 					<p><input id="firstLetter" name="firstLetter" type="text" class="int-text int-medium"></p>
 				</li>
 	        </ul>
@@ -244,16 +242,16 @@
     var attrNum = {'num':0};
     (function () {
     	<%-- 新增属性值的删除按钮 --%>
-        $('#addViewDiv').delegate("a[name='delBtn']", 'click', function () {
+         $('#addViewDiv').delegate("a[name='delBtn']", 'click', function () {
             console.log("删除");
             $(this).parent().parent().parent().remove();
-        });
+        }); 
     	
     	<%-- 新增按钮 --%>
-    	 $('#addAttrValueBtn').delegate("a[name='addAttrValueView']", 'click', function () {
+    	  $('#addAttrValueBtn').delegate("a[name='addAttrValueView']", 'click', function () {
             pager._showAddAttr();
         });
-    	
+    	 
     	
     	<%-- 编辑按钮 --%>
          $('#searchAttrData').delegate("a[name='editView']", 'click', function () {
