@@ -161,7 +161,7 @@
                             </header>
                             <!--标题结束-->
                             <div class="form-label  bd-bottom">
-                                <c:forEach var="aav" items="${attrAndVal}">
+                                <c:forEach var="aav" items="${keyAttr}">
                                     <ul>
                                         <li class="col-md-6">
                                             <p class="word">${aav.key.attrName}:</p>
@@ -172,52 +172,24 @@
                                     </ul>
                                 </c:forEach>
                             </div>
+                            <c:if test="${!saleAttr.isEmpty()}">
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品销售属性</h5>
                             </header>
                             <!--标题结束-->
                             <div class="form-label  bd-bottom">
-                                <ul>
-                                    <li class="col-md-6">
-                                        <p class="word">品牌:</p>
-                                        <p>only</p>
-                                    </li>
-                                    <li class="col-md-6">
-                                        <p class="word">货号:</p>
-                                        <p>347483483</p>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li class="col-md-6">
-                                        <p class="word">衣长:</p>
-                                        <p>中长款</p>
-                                    </li>
-                                    <li class="col-md-6">
-                                        <p class="word">面料:</p>
-                                        <p>纯棉</p>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li class="col-md-6">
-                                        <p class="word">版型:</p>
-                                        <p>修身型</p>
-                                    </li>
-                                    <li class="col-md-6">
-                                        <p class="word">材质:</p>
-                                        <p>人造纤维</p>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li class="col-md-6">
-                                        <p class="word">流行元素:</p>
-                                        <p>简约</p>
-                                    </li>
-                                    <li class="col-md-6">
-                                        <p class="word">风格:</p>
-                                        <p>通勤</p>
-                                    </li>
-                                </ul>
+                                <c:forEach var="aav" items="${saleAttr}">
+                                    <ul>
+                                        <li class="col-md-6">
+                                            <p class="word">${aav.key.attrName}:</p>
+                                            <c:forEach var="attrVal" items="${aav.value}">
+                                                <p>${attrVal.attrVal}</p>
+                                            </c:forEach>
+                                        </li>
+                                    </ul>
+                                </c:forEach>
                             </div>
+                            </c:if>
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">库存设置</h5>
                                 <%--<div class="title-right">--%>

@@ -13,10 +13,7 @@ import com.ai.slp.product.api.normproduct.param.AttrMap;
 import com.ai.slp.product.api.normproduct.param.AttrQuery;
 import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
 import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
-import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
-import com.ai.slp.product.api.productcat.param.ProductCatInfo;
-import com.ai.slp.product.api.productcat.param.ProductCatUniqueReq;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
 import com.ai.slp.product.web.constants.ComCacheConstants;
@@ -64,16 +61,12 @@ public class StorageController {
         NormProdUniqueReq normProdUniqueReq = new NormProdUniqueReq();
         normProdUniqueReq.setProductId(standedProdId);
         normProdUniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        normProdUniqueReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
         INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
         NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
         uiModel.addAttribute("normProdInfo", normProdInfoResponse);
         //查询类目链
-        ProductCatUniqueReq catUniqueReq = new ProductCatUniqueReq();
-        catUniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-        catUniqueReq.setProductCatId(normProdInfoResponse.getProductCatId());
-        IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
-        List<ProductCatInfo> catLinkList = productCatSV.queryLinkOfCatById(catUniqueReq);
-        uiModel.addAttribute("catLinkList", catLinkList);
+        uiModel.addAttribute("catLinkList", prodCatService.queryLink(normProdInfoResponse.getProductCatId()));
         uiModel.addAttribute("productCatId", normProdInfoResponse.getProductCatId());
         //商品类型
         SysParamSingleCond paramSingleCond = new SysParamSingleCond();
@@ -90,7 +83,12 @@ public class StorageController {
         attrQuery.setProductId(normProdInfoResponse.getProductId());
         attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
         AttrMap attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
-        uiModel.addAttribute("attrAndVal", attrAndValService.getAttrAndVals(attrMap));
+        uiModel.addAttribute("keyAttr", attrAndValService.getAttrAndVals(attrMap));
+        //查询销售属性
+        attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
+        attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
+        uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
+
         //查询库存组和库存信息
         StorageGroupQuery storageGroupQuery = new StorageGroupQuery();
         storageGroupQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
