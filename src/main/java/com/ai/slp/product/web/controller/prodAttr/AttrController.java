@@ -95,8 +95,9 @@ public class AttrController {
 		attrDefParam.setValueWay(request.getParameter("valueWay"));
 		
 		if (StringUtils.isNotBlank(request.getParameter("attrId"))) {
-			String parameter = request.getParameter("attrId");
-			attrDefParam.setAttrId(Long.valueOf("parameter"));
+
+			Long attrIdLong = Long.valueOf(request.getParameter("attrId")).longValue();
+			attrDefParam.setAttrId(attrIdLong);
 		}
 		if (StringUtils.isNotBlank(request.getParameter("attrName"))) 
 			attrDefParam.setAttrName(request.getParameter("attrName"));
@@ -113,8 +114,6 @@ public class AttrController {
 		ICacheSV cacheSV = DubboConsumerFactory.getService("iCacheSV");
 		SysParamSingleCond sysParamSingleCond = null;
 		PageInfoResponse<AttrDefInfo> result = attrAndValDefSV.queryPageAttrs(attrDefParam);
-		//获取属性对应属性值的数量
-		
 		
 		//获取输入值方式
 		for (AttrDefInfo attrDefInfo : result.getResult()) {

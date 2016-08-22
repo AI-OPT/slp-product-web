@@ -108,6 +108,7 @@ public class NormProdQueryController {
 	 * 查询条件检查设置  
 	 */
 	private void queryBuilder(HttpServletRequest request,NormProdRequest productRequest) {
+		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
 		productRequest.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
 		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
 		if(!request.getParameter("productId").isEmpty())

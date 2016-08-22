@@ -54,11 +54,14 @@ require("twbs-pagination/jquery.twbsPagination.min");
     		//查询
             "click #selectAttrValueList":"_selectAttrValueList",
             "click #increase-close":"_closeEditDiv",
+            "click #upCloseImg":"_closeEditDiv",
             "click #upAttrValueBtn":"_updateAttr",
             "click #delAttrValueBtn":"_delAttr",
             "click #aband-close":"_closeDelConf",
+            "click #delCloseImg":"_closeDelConf",
             "click #addAttrValueButton":"_addAttrValueButton",
             "click #addAttrValue-close":"_closeAddAttrValueDiv",
+            "click #createCloseImg":"_closeAddAttrValueDiv",
             "click #submitAddBtn":"_saveAttrValue"
             },
     	//重写父类
