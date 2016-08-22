@@ -50,10 +50,7 @@ define('app/jsp/normproduct/addinfo', function (require, exports, module) {
       	_saveNormProd:function() {
 			var _this = this;
 			//验证通过,则进行保存操作.
-			if(this._checkInput() && this._convertKeyAttr()){
-				//获取editor中内容
-				$("#detailConVal").val(editDom.getData());
-				console.log($('#detailConVal').val());
+			if(this._checkInput() && this._convertKeyAttr() && this._convertSaleAttr){
 				ajaxController.ajax({
 					type: "post",
 					processing: true,
@@ -73,27 +70,27 @@ define('app/jsp/normproduct/addinfo', function (require, exports, module) {
 		_convertKeyAttr:function(){
 			var keyVal = {};
 			//获取所有
-			$("#attrAndValDiv .word").each(function(i){
+			$("#keyAttrDiv .word").each(function(i){
 				var attrId = $(this).attr('attrId');
 				var valWay = $(this).attr('valueType');
 				var attrValArray = [];
 				switch (valWay){
 					case '1'://下拉
-						var obj = $("#attrAndValDiv select[attrId='attrAndVal"+attrId+"']")[0];
+						var obj = $("#keyAttrDiv select[attrId='attrAndVal"+attrId+"']")[0];
 						var val = obj.value;
 						attrValArray.push({'attrvalueDefId':val,'attrVal':'','attrVal2':''});
 						break;
 					case '2'://多选
-						$("#attrAndValDiv input:checkbox[attrId='attrAndVal"+attrId+"']:checked").each(function(i){
+						$("#keyAttrDiv input:checkbox[attrId='attrAndVal"+attrId+"']:checked").each(function(i){
 							attrValArray.push({'attrvalueDefId':$(this).val(),'attrVal':'','attrVal2':''});
 						});
 						break;
 					case '3'://单行输入
-						var val = $("#attrAndValDiv input[attrId='attrAndVal"+attrId+"'")[0].value;
+						var val = $("#keyAttrDiv input[attrId='attrAndVal"+attrId+"'")[0].value;
 						attrValArray.push({'attrvalueDefId':'','attrVal':val,'attrVal2':''});
 						break;
 					case '4'://多行输入
-						var val = $("#attrAndValDiv textarea[attrId='attrAndVal"+attrId+"'")[0].value;
+						var val = $("#keyAttrDiv textarea[attrId='attrAndVal"+attrId+"'")[0].value;
 						attrValArray.push({'attrvalueDefId':'','attrVal':val,'attrVal2':''});
 						break;
 
@@ -106,32 +103,32 @@ define('app/jsp/normproduct/addinfo', function (require, exports, module) {
 			return true;
 		},
 		//将销售属性转换json字符串
-		_convertSaleAttrStr:function(){
+		_convertSaleAttr:function(){
 			var saleVal = {};
 			//获取所有
-			$("#attrAndValDiv .word").each(function(i){
+			$("#saleAttrDiv .word").each(function(i){
 				var attrId = $(this).attr('attrId');
 				var valWay = $(this).attr('valueType');
 				var attrValArray = [];
 				switch (valWay){
 				case '1'://下拉
-					var obj = $("#attrAndValDiv select[attrId='attrAndVal"+attrId+"']")[0];
+					var obj = $("#saleAttrDiv select[attrId='attrAndVal"+attrId+"']")[0];
 					var val = obj.value;
 					attrValArray.push({'attrvalueDefId':val,'attrVal':'','attrVal2':''});
 					break;
 					
 					
 				case '2'://多选
-					$("#attrAndValDiv input:checkbox[attrId='attrAndVal"+attrId+"']:checked").each(function(i){
+					$("#saleAttrDiv input:checkbox[attrId='attrAndVal"+attrId+"']:checked").each(function(i){
 						attrValArray.push({'attrvalueDefId':$(this).val(),'attrVal':'','attrVal2':''});
 					});
 					break;
 				case '3'://单行输入
-					var val = $("#attrAndValDiv input[attrId='attrAndVal"+attrId+"'")[0].value;
+					var val = $("#saleAttrDiv input[attrId='attrAndVal"+attrId+"'")[0].value;
 					attrValArray.push({'attrvalueDefId':'','attrVal':val,'attrVal2':''});
 					break;
 				case '4'://多行输入
-					var val = $("#attrAndValDiv textarea[attrId='attrAndVal"+attrId+"'")[0].value;
+					var val = $("#saleAttrDiv textarea[attrId='attrAndVal"+attrId+"'")[0].value;
 					attrValArray.push({'attrvalueDefId':'','attrVal':val,'attrVal2':''});
 					break;
 					

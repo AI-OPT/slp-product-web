@@ -3,328 +3,176 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<title>运营管理</title>
 	<%@ include file="/inc/inc.jsp" %>
-	<link href="${_slpres }/styles/bootstrap.css"rel="stylesheet" type="text/css">
-	<link href="${_slpres }/styles/font-awesome.css" rel="stylesheet" type="text/css">
-	<link href="${_slpres }/styles/frame.css" rel="stylesheet" type="text/css">
-	<link href="${_slpres }/styles/global.css" rel="stylesheet" type="text/css">
-	<link href="${_slpres }/styles/modular.css" rel="stylesheet" type="text/css">
-	
 </head>
 
 <body>
 
-<!--顶部菜单-->
-	<%@ include file="/inc/top-menu.jsp" %>
-	<!--顶部菜单结束-->
-	<!-- 左侧菜单 -->
-	<%@ include file="/inc/left-menu.jsp" %>
-	<!-- 左侧菜单结束 -->
-
-
-<div class="wrapper"><!--外围框架-->
-<!--右侧框架-->
- <div class="wrapper-right">
-    <!--公告位置-->
-        <div class="right-topnav">
-            <p class="gongg"><A href="#">［公告］:</A></p>
-            <div  id="elem">
-            <ul id="elem1">
-                <li><A href="#">公告位置！比如说系统维护，哪些功能在什么时间段可能不可用之类的，针对后台</A></li>
-                <li><A href="#">公告位置！比如说系统维护，哪些功能在什么时间段可能不可用之类的，针对后台</A></li>
-                <li><A href="#">公告位置！比如说系统维护，哪些功能在什么时间段可能不可用之类的，针对后台</A></li>
-                <li><A href="#">公告位置！比如说系统维护，哪些功能在什么时间段可能不可用之类的，针对后台</A></li>
-            </ul>
-            <ul id="elem2">
-            </ul>
-            </div>
-             <p class="dclose"><A href="#"><i class="icon-remove"></i></A></p>
-        </div>
-    <!--公告位置结束-->   
-    <!--标签-->
-    <div class="right-tags">
-        <ul>
-           <li>
-	           <p class="none">您现在的位置：</p>
-	           <p><a href="#">标准品库管理</a></p>  
-	           <p>></p>  
-	           <p>添加编辑页面</p>
-           </li>
-        </ul>  
-    </div>
-    
-   <!--标签结束-->
-      <!--查询区域-->
-     
-  		
-    <div class="form-wrapper"><!--白底内侧-->
-    <div class="nav-tplist-wrapper"><!--白底内侧-->
-    
-    	<form id="nromProdForm" action="${_base}/normprodedit/save" method="post">
-	       <div class="nav-form-title">添加</div>
-	        <div class="nav-form nav-form-border">
-	           	<ul>
-	                <li class="width-xlag">
-	                    <p class="word"><b style="color:#f00;">*</b>标准品名称</p>
-	                    <p><input id="standedProductName" name="standedProductName" type="text" class="int-text int-xlarge"></p>
-	                    <p>限45字以内</p>
-	                </li>   
-	            </ul>
-	            <ul>
-	            	<li class="width-xlag">
-	                    <p class="word"><b style="color:#f00;">*</b>标准品类型</p>
-	                    <p>
-	                    	<select id="productType" name="productType" class="select select-medium">
-			                   	<option value="1">实物</option>
-			                   	<option value="2">虚拟</option>
-			                </select>
-			            </p>
-	                    
-	                    <p><input id="state" name="state" type="checkbox" class="checkbox-small">标识标准品状态：未使用，已使用，已过期</p>
-	               </li>
-	            </ul>  
-	        </div>
-	        
-	        
-	        
-	        <!-- 标准品关键属性 动态获取 1关键属性  2销售属性  3非关键属性 -->
-	        <!-- 获取到类目ID 从而得到该类目下的属性值    根据属性值的name(属性值的ID跟name是一一对应) 可以得到valueWay  -->
-	        <div class="nav-form-title">标准品关键属性</div>
-	        <div class="nav-form nav-form-border" id="attrAndValDiv">
-	        	<input type="hidden" id="keyAttrStr" name="keyAttrStr">
-				<c:forEach var="attr" items="${attrAndVal}">
-						<ul>
-							<li>
-								<p class="word">${attr.key.attrName}</p>
-								<c:choose>
-									<!-- 1关键属性	2销售属性		3非关键属性 -->
-									<c:when test="${attr.key.attrType == '1'}">
-										<ul>
-											<li class="width-xlag">
-												<p class="word" attrId="${attr.key.attrId}" valueType="${attr.key.valueWay}">		<!-- 属性ID 属性值输入方式 -->
-													${attr.key.attrName}
-												</p>
-												<c:choose>
-													<!-- 下拉菜单 -->
-													<c:when test="${attr.key.valueWay == '1'}">
-														<select class="select select-medium" attrId="attrAndVal${attr.attrId}">
-															<c:forEach var="valInfo" items="${attrAndVal.get(attr.key.attrId)}">
-																<option test="${valInfo.attrvalueDefId}">
-																	<c:if test="${valInfo.attrvalueDefId != null}">
-																		selected
-																	</c:if>
-																	>${valInfo.attrValueName}
-																</option>
-															</c:forEach>
-														</select>
-													</c:when>
-													
-													<!-- 多选 -->
-													<c:when test="${attr.key.valueWay == '2'}">
-														<div class="width-xlag">
-															<c:forEach var="valInfo" items="${attrAndVal.get(attr.key.attrId)}">
-																<p><input type="checkbox" class="checkbox-small" attrId="attrAndVal${attr.attrId}" value="${valInfo.attrvalueDefId}"
-																	  <c:if test="${valInfo.attrvalueDefId != null}">checked</c:if> >
-																	  ${valInfo.attrValueName}
-																</p>
-															</c:forEach>
-														</div>
-													</c:when>
-													
-													<%--单行输入--%>
-													<c:when test="${attr.key.valueWay == '3'}">
-														<c:set var="valInfo" value="${attrAndVal.get(attr.key.attrId).get(0)}"></c:set>
-														<p><input type="text" class="int-text int-xlarge" attrId="attrAndVal${attr.attrId}" maxlength="100"
-																  <c:if test="${valInfo!=null}">value="${valInfo.attrValueName}"</c:if> >
-														</p>
-													</c:when>
-													<%--多行输入--%>
-													<c:when test="${attr.key.valueWay == '4'}">
-														<c:set var="valInfo" value="${attrAndVal.get(attr.key.attrId).get(0)}"></c:set>
-														<p>
-															<textarea class="textarea-xlarge" maxlength="100"
-																	 attrId="attrAndVal${attr.attrId}"><c:if test="${valInfo!=null}">${valInfo.attrValueName}</c:if>
-															</textarea>
-														</p>
-													</c:when>
-												</c:choose>
-											</li>
-										</ul>
-									</c:when>
-								</c:choose>
-							</li>
-						</ul>
-					</c:forEach>
-	        </div>
-	        
-	        
-	        <div class="nav-form-title">标准品销售属性</div>	<!-- 标题 -->
-	        <div class="nav-form nav-form-border">
-	        <input type="hidden" id="saleAttrStr" name="saleAttrStr">
-	        	<c:forEach var="attr" items="${attrAndVal}">
-						<ul>
-							<li>
-								<p class="word">${attr.key.attrName}</p>
-								<c:choose>
-									<!-- 1关键属性	2销售属性		3非关键属性 -->
-									<c:when test="${attr.key.attrType == '2'}">
-										<ul>
-											<li class="width-xlag">
-												<p class="word" attrId="${attr.key.attrId}" valueType="${attr.key.valueWay}">		<!-- 属性ID 属性值输入方式 -->
-													${attr.key.attrName}
-												</p>
-												<c:choose>
-													<!-- 下拉菜单 -->
-													<c:when test="${attr.key.valueWay == '1'}">
-														<select class="select select-medium" attrId="attrAndVal${attr.attrId}">
-															<c:forEach var="valInfo" items="${attrAndVal.get(attr.key.attrId)}">
-																<option test="${valInfo.attrvalueDefId}">
-																	<c:if test="${valInfo.attrvalueDefId != null}">
-																		selected
-																	</c:if>
-																	>${valInfo.attrValueName}
-																</option>
-															</c:forEach>
-														</select>
-													</c:when>
-													
-													<!-- 多选 -->
-													<c:when test="${attr.key.valueWay == '2'}">
-														<div class="width-xlag">
-															<c:forEach var="valInfo" items="${attrAndVal.get(attr.key.attrId)}">
-																<p><input type="checkbox" class="checkbox-small" attrId="attrAndVal${attr.attrId}" value="${valInfo.attrvalueDefId}"
-																	  <c:if test="${valInfo.attrvalueDefId != null}">checked</c:if> >
-																	  ${valInfo.attrValueName}
-																</p>
-															</c:forEach>
-														</div>
-													</c:when>
-													
-													<%--单行输入--%>
-													<c:when test="${attr.key.valueWay == '3'}">
-														<c:set var="valInfo" value="${attrAndVal.get(attr.key.attrId).get(0)}"></c:set>
-														<p><input type="text" class="int-text int-xlarge" attrId="attrAndVal${attr.attrId}" maxlength="100"
-																  <c:if test="${valInfo!=null}">value="${valInfo.attrValueName}"</c:if> >
-														</p>
-													</c:when>
-													<%--多行输入--%>
-													<c:when test="${attr.key.valueWay == '4'}">
-														<c:set var="valInfo" value="${attrAndVal.get(attr.key.attrId).get(0)}"></c:set>
-														<p>
-															<textarea class="textarea-xlarge" maxlength="100"
-																	 attrId="attrAndVal${attr.attrId}"><c:if test="${valInfo!=null}">${valInfo.attrValueName}</c:if>
-															</textarea>
-														</p>
-													</c:when>
-												</c:choose>
-											</li>
-										</ul>
-									</c:when>
-								</c:choose>
-							</li>
-						</ul>
-					</c:forEach>
-	        
-	        <%-- 
-				<c:forEach var="attr" items="${attrAndVal}">
-					<ul>
-						<li class="width-xlag">
-							<p class="word" attrId="${attr.key.attrId}" valueType="${attr.key.valueWay}">		<!-- 属性ID 属性值输入方式 -->
-								${attr.key.attrName}
-							</p>
-							<c:choose>
-								<!-- 下拉菜单 -->
-								<c:when test="${attr.key.valueWay == '1'}">
-									<select class="select select-medium" attrId="attrAndVal${attr.attrId}">
-										<c:forEach var="valInfo" items="${attrAndVal.get(attr.key.attrId)}">
-											<option test="${valInfo.attrvalueDefId}">
-												<c:if test="${valInfo.attrvalueDefId != null}">
-													selected
-												</c:if>
-												>${valInfo.attrValueName}
-											</option>
-										</c:forEach>
-									</select>
-								</c:when>
-								
-								<!-- 多选 -->
-								<c:when test="${attr.key.valueWay == '2'}">
-									<div class="width-xlag">
-										<c:forEach var="valInfo" items="${attrAndVal.get(attr.key.attrId)}">
-											<p><input type="checkbox" class="checkbox-small" attrId="attrAndVal${attr.attrId}" value="${valInfo.attrvalueDefId}"
-												  <c:if test="${valInfo.attrvalueDefId != null}">checked</c:if> >
-												  ${valInfo.attrValueName}
-											</p>
-										</c:forEach>
-									</div>
-								</c:when>
-								
-								单行输入
-								<c:when test="${attr.key.valueWay == '3'}">
-									<c:set var="valInfo" value="${attrAndVal.get(attr.key.attrId).get(0)}"></c:set>
-									<p><input type="text" class="int-text int-xlarge" attrId="attrAndVal${attr.attrId}" maxlength="100"
-											  <c:if test="${valInfo!=null}">value="${valInfo.attrValueName}"</c:if> >
-									</p>
-								</c:when>
-								多行输入
-								<c:when test="${attr.key.valueWay == '4'}">
-									<c:set var="valInfo" value="${attrAndVal.get(attr.key.attrId).get(0)}"></c:set>
-									<p>
-										<textarea class="textarea-xlarge" maxlength="100"
-												 attrId="attrAndVal${attr.attrId}"><c:if test="${valInfo!=null}">${valInfo.attrValueName}</c:if>
-										</textarea>
-									</p>
-								</c:when>
-							</c:choose>
-						</li>
-					</ul>
-				</c:forEach>
-
-
- --%>
-
-	        </div>
-	        
-	        
-	        
-	        
-	        <!-- 标准品状态  从缓存中获取 -->
-	        <div class="nav-form-title">标准品状态</div>
-	        <div class="nav-form">
-	           		<ul>
-	                <li class="width-xlag">
-	                    <p class="word"><b style="color:#f00;">*</b>状态</p>
-	                    <p>
-	                    	<select class="select select-small" name="state">
-								<c:forEach var="state" items="${state}">
-									<option value="${state.columnValue}">${state.columnDesc}</option>
+<div class="content-wrapper-iframe"><!--右侧灰色背景-->
+	<div class="row"><!--外围框架-->
+		<div class="col-lg-12"><!--删格化-->
+			<div class="row"><!--内侧框架-->
+				<div class="col-lg-12"><!--删格化-->
+					<div class="main-box clearfix"><!--白色背景-->
+						<!-- 查询条件 -->
+						<div class="form-label">
+							<!-- 类目 -->
+							
+							<div class="form-label bd-bottom" data-widget="validator">
+								<ul>
+					                <li class="col-md-6">
+					                    <p class="word"><b class="red">*</b>标准品名称</p>
+					                    <p><input name="standedProductName" type="text" class="int-text int-medium"></p>
+					                </li>
+					             </ul>
+					             <ul>
+					             	<li class="col-md-6">
+					             		<p class="word"><b class="red">*</b>标准品类型</p>
+					             		<p>
+					                    	<select  name="productType" class="select select-medium">
+							                   	<option value="1">实物</option>
+							                   	<option value="2">虚拟</option>
+					                    	</select>
+					                    </p>
+					            	</li>
+					             </ul>
+                            </div> 
+                            
+                            <!-- 1关键属性  2销售属性  3非关键属性 -->
+                            <!-- 根据类目信息动态获取关键属性,和销售属性 的  属性  以及属性值 -->
+                            <div class="nav-form-title">标准品关键属性</div>
+                            <div class="nav-form nav-form-border" id="keyAttrDiv">
+                            	<input type="hidden" id="keyAttrStr" name="keyAttrStr">
+								<c:forEach var="keyAttr" items="${keyAttrlist}">
+									<ul>
+										<li class="width-xlag">
+											<p class="word" attrId="${keyAttr.attrId}" valueType="${keyAttr.valueWay}">${keyAttr.attrName}</p>
+											<c:choose>
+											
+											<!-- /*** 值输入方式<br>* 1:下拉单选 2:多选* 3:可输入文本框（单行）
+											* 4:可输入文本框（多行） * 5:日期时间 * 6:日期时间段 */  -->
+												<%-- 下拉选择 --%>
+												<c:when test="${keyAttr.valueWay == '1'}">
+													<select class="select select-medium" attrId="keyAttr${keyAttr.attrId}">
+														<c:forEach var="valInfo" items="${keyAttr.attrValList}">
+															<option value="${valInfo.attrvalueDefId}">
+															${valInfo.attrValueName}
+															</option>
+														</c:forEach>
+													</select>
+												</c:when>
+												
+												
+												<%--多选--%>
+												<c:when test="${keyAttr.valueWay == '2'}">
+													<div class="width-xlag">
+														<c:forEach var="valInfo" items="${keyAttr.attrValList}">
+															<p><input type="checkbox" class="checkbox-small" attrId="keyAttr${keyAttr.attrId}">${valInfo.attrValueName}</p>
+														</c:forEach>
+													</div>
+												</c:when>
+												
+												<%--单行输入--%>
+												<c:when test="${keyAttr.valueWay  == '3'}">
+													<p><input type="text" class="int-text int-xlarge" attrId="keyAttr${keyAttr.attrId}" maxlength="100"></p>
+												</c:when>
+												
+												<%--多行输入--%>
+												<c:when test="${attr.valueWay == '4'}">
+													<p><textarea class="textarea-xlarge" maxlength="100"attrId="keyAttr${keyAttr.attrId}"></textarea></p>
+												</c:when>
+												
+											</c:choose>
+										</li>
+									</ul>
 								</c:forEach>
-							</select>
-						</p>
-	                    
-	                </li>
-	            </ul>  
-	        </div>
-	        <div class="nav-form">
-	            <ul>
-	                <li class="width-xlag">
-		                <p class="word">&nbsp;</p>
-		                <p><input id="saveNormProd" type="button" class="biu-btn btn-blue btn-large mr-10" value="保  存"></p>
-		                <p><input id="cancel" type="button" class="biu-btn btn-blue btn-large mr-10" value="返回"></p>
-	                </li>
-	            </ul>   
-	        </div>
-		</form>
-    </div>
-   <!--查询区域结束-->
+                            </div> 
+                            
+                            <div class="nav-form-title">标准品销售属性</div>
+                            <div class="nav-form nav-form-border" id="saleAttrDiv">
+								<c:forEach var="saleAttr" items="${saleAttrlist}">
+									<ul>
+										<li class="width-xlag">
+											<p class="word" attrId="${saleAttr.attrId}" valueType="${saleAttr.valueWay}">${saleAttr.attrName}</p>
+											<c:choose>
+											
+											<!-- /*** 值输入方式<br>* 1:下拉单选 2:多选* 3:可输入文本框（单行）
+											* 4:可输入文本框（多行） * 5:日期时间 * 6:日期时间段 */  -->
+												<%-- 下拉选择 --%>
+												<c:when test="${saleAttr.valueWay == '1'}">
+													<select class="select select-medium" attrId="saleAttr${saleAttr.attrId}">
+														<c:forEach var="valInfo" items="${saleAttr.attrValList}">
+															<option value="${valInfo.attrvalueDefId}">
+															   ${valInfo.attrValueName}
+															</option>
+														</c:forEach>
+													</select>
+												</c:when>
+												
+												<%--多选--%>
+												<c:when test="${saleAttr.valueWay == '2'}">
+													<div class="width-xlag">
+														<c:forEach var="valInfo" items="${saleAttr.attrValList}">
+															<p><input type="checkbox" class="checkbox-small" attrId="saleAttr${saleAttr.attrId}">${valInfo.attrValueName}</p>
+														</c:forEach>
+													</div>
+												</c:when>
+												
+												<%--单行输入--%>
+												<c:when test="${saleAttr.valueWay  == '3'}">
+													<p><input type="text" class="int-text int-xlarge" attrId="saleAttr${saleAttr.attrId}" maxlength="100"></p>
+												</c:when>
+												
+												<%--多行输入--%>
+												<c:when test="${saleAttr.valueWay == '4'}">
+													<p><textarea class="textarea-xlarge" maxlength="100"attrId="saleAttr${saleAttr.attrId}"></textarea></p>
+												</c:when>
+												
+											</c:choose>
+										</li>
+									</ul>
+								</c:forEach>
+                            </div> 
+                            <div class="nav-form-title"><b class="red">*</b>标准品状态</div>
+                            <div class="nav-form nav-form-border" id="stateDiv">
+                            	<ul>
+					             	<li class="col-md-6">
+					             		<p class="word"><b class="red">*</b>状态</p>
+					             		<p>
+					                    	<select  name="state" class="select select-medium">
+							                   	<option value="1">可使用</option>
+							                   	<option value="2">不可使用</option>
+					                    	</select>
+					                    </p>
+					            	</li>
+					             </ul>
+                            </div>
+                            
+                            
+                            <div id="subDiv" class="row pt-30">
+                            	<p class="center pr-30 mt-30">
+                            		<input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                           value="提  交">
+                                    <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                           value="返  回" onclick="javaScript:window.history.go(-1);">
+                            	</p>
+                            </div>
+							
+							
+							
+		
+		
+            			</div>
+  					</div>
+				</div>
+			</div>
+		</div>
+	</div> 
+</div>
 
-
-    </div>
-    </div>
-</div>	
-<!-- footer -->
-<div class="footer">版权所有 © SLP版权归运营家所有</div>
 </body>
 
 <script src="${_slpres }/scripts/jquery-1.11.1.min.js"></script>
