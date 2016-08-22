@@ -78,6 +78,7 @@ public class ProdQueryController {
 	 * @return
 	 */
 	private PageInfoResponse<ProductEditUp> queryProductByState(ProductEditQueryReq productEditQueryReq) {
+		productEditQueryReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
 		IProductManagerSV productManagerSV = DubboConsumerFactory.getService("iProductManagerSV");
 		PageInfoResponse<ProductEditUp> result = productManagerSV.queryProductEdit(productEditQueryReq);
 		ICacheSV cacheSV = DubboConsumerFactory.getService("iCacheSV");

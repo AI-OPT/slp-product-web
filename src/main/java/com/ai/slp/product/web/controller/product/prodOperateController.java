@@ -37,6 +37,7 @@ public class prodOperateController {
 		//封装参数进行上架操作
 		ProductInfoQuery productInfoQuery = new ProductInfoQuery();
 		productInfoQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		productInfoQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
 		productInfoQuery.setOperId(AdminUtil.getAdminId(session));
 		productInfoQuery.setProductId(productId);
 		BaseResponse baseResponse = productManagerSV.changeToInSale(productInfoQuery);
@@ -59,6 +60,7 @@ public class prodOperateController {
 		IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
 		ProductInfoQuery productInfoQuery = new ProductInfoQuery();
 		productInfoQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		productInfoQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
 		productInfoQuery.setOperId(AdminUtil.getAdminId(session));
 		productInfoQuery.setProductId(productId);
 		BaseResponse baseResponse = productManagerSV.changeToInStore(productInfoQuery);
