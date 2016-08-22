@@ -43,33 +43,33 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
     	
     	// 改变商品类目
     	_selectChange:function(osel){
-    		var prodCatId = osel.options[osel.selectedIndex].value;
-    		var clickId = $(osel).parent().attr('id');
-    		//获取当前ID的最后数字
-    		var index = Number(clickId.substring(10))+1;
-    		//获取下拉菜单的总个数
-    		var prodCat = document.getElementById("data1ProdCat");
-    		var length = prodCat.getElementsByTagName("select").length;
-    		if(index==length){
-    			return;
-    		}
-    		//从当前元素开始移除后面的下拉菜单
-    		for(var i=index;i<length;i++){
-    			$("#productCat"+i).remove();
-    		}
-    		ajaxController.ajax({
+			var prodCatId = osel.options[osel.selectedIndex].value;
+			var clickId = $(osel).parent().attr('id');
+			//获取当前ID的最后数字
+			var index = Number(clickId.substring(10))+1;
+			//获取下拉菜单的总个数
+			var prodCat = document.getElementById("data1ProdCat");
+			var length = prodCat.getElementsByTagName("select").length;
+			//if(index==length){
+			//	return;
+			//}
+			//从当前元素开始移除后面的下拉菜单
+			for(var i=index;i<length;i++){
+				$("#productCat"+i).remove();
+			}
+			ajaxController.ajax({
 				type: "post",
 				processing: false,
 				// message: "加载中，请等待...",
 				url: _base+"/cat/query/child",
 				data:{"prodCatId":prodCatId},
 				success: function(data){
-					if(data != null && data != 'undefined' && data.length>0){
-	            		var template = $.templates("#prodCatTemple");
-	            	    var htmlOutput = template.render(data);
-	            	    $("#"+clickId).after(htmlOutput);
-	            	}else{
-	            		var d = Dialog({
+					if(data != null && data != 'undefined' && data.data.length>0){
+						var template = $.templates("#prodCatTemple");
+						var htmlOutput = template.render(data.data);
+						$("#"+clickId).after(htmlOutput);
+					}else if(data.statusCode === AjaxController.AJAX_STATUS_FAILURE){
+						var d = Dialog({
 							content:"获取类目信息出错:"+data.statusInfo,
 							icon:'fail',
 							okValue: '确 定',
@@ -78,7 +78,7 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
 							}
 						});
 						d.show();
-	            	}
+					}
 				}
 			});
     	},
