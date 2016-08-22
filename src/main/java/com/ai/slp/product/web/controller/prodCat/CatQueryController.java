@@ -3,6 +3,7 @@ package com.ai.slp.product.web.controller.prodCat;
 import com.ai.opt.base.vo.*;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.BeanUtils;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.util.JSonUtil;
 import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
@@ -44,7 +45,8 @@ public class CatQueryController {
      */
     @RequestMapping("/child")
     @ResponseBody
-    public List<ProdQueryCatVo> queryChildCat(String prodCatId) {
+    public ResponseData<List<ProdQueryCatVo>> queryChildCat(String prodCatId) {
+        ResponseData<List<ProdQueryCatVo>> responseData;
         List<ProdQueryCatVo> prodQueryCatVoList = new ArrayList<>();
         try {
             IProductCatSV productCatSV = DubboConsumerFactory.getService("iProductCatSV");
@@ -53,15 +55,17 @@ public class CatQueryController {
             productCatUniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
             productCatUniqueReq.setProductCatId(prodCatId);
             ProductCatInfo productCatInfo = productCatSV.queryByCatId(productCatUniqueReq);
-            ProductCatQuery catQuery = new ProductCatQuery();
-            ProdCatInfo prodCatInfo = null;
-            catQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
             //如果当前类目有子类则查询下一级类目
             if(productCatInfo.getIsChild().equals(ProductCatConstants.ProductCat.IsChild.HAS_CHILD)){
+                ProductCatQuery catQuery = new ProductCatQuery();
+                catQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
                 catQuery.setParentProductCatId(prodCatId);
+                ProdCatInfo prodCatInfo = null;
                 do{
                     // 查询同一级的类目信息
                     List<ProdCatInfo> productCatInfos = productCatSV.queryCatByNameOrFirst(catQuery);
+                    if (CollectionUtil.isEmpty(productCatInfos))
+                        break;
                     prodCatInfo = productCatInfos.get(0);
                     ProdQueryCatVo prodQueryCatVo = new ProdQueryCatVo();
                     prodQueryCatVo.setLevel((short)(prodCatInfo.getCatLevel()-1));
@@ -71,11 +75,12 @@ public class CatQueryController {
                 }while(prodCatInfo.getIsChild().equals(ProductCatConstants.ProductCat.IsChild.HAS_CHILD));
             }
             logger.debug("获取类目信息出参:" + JSonUtil.toJSon(prodQueryCatVoList));
+            responseData = new ResponseData<List<ProdQueryCatVo>>(ResponseData.AJAX_STATUS_SUCCESS,"",prodQueryCatVoList);
         } catch (Exception e) {
-            prodQueryCatVoList = null;
             logger.error("获取类目信息出错", e);
+            responseData = new ResponseData<List<ProdQueryCatVo>>(ResponseData.AJAX_STATUS_FAILURE,e.getMessage());
         }
-        return prodQueryCatVoList;
+        return responseData;
     }
     
     

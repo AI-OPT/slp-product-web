@@ -1,6 +1,7 @@
 package com.ai.slp.product.web.service;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.api.productcat.param.ProductCatInfo;
@@ -29,6 +30,8 @@ public class ProdCatService {
         do {
             // 查询同一级的类目信息
             List<ProdCatInfo> productCatInfos = productCatSV.queryCatByNameOrFirst(catQuery);
+            if (CollectionUtil.isEmpty(productCatInfos))
+                break;
             prodCatInfo = productCatInfos.get(0);
             // 把类目信息按照类目等级放入集合
             productCatMap.put(prodCatInfo.getCatLevel(), productCatInfos);

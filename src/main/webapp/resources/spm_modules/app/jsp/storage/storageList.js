@@ -50,9 +50,9 @@ define('app/jsp/storage/storageList', function (require, exports, module) {
     		//获取下拉菜单的总个数
     		var prodCat = document.getElementById("data1ProdCat");
     		var length = prodCat.getElementsByTagName("select").length;
-    		if(index==length){
-    			return;
-    		}
+    		//if(index==length){
+    		//	return;
+    		//}
     		//从当前元素开始移除后面的下拉菜单
     		for(var i=index;i<length;i++){
     			$("#productCat"+i).remove();
@@ -64,11 +64,11 @@ define('app/jsp/storage/storageList', function (require, exports, module) {
 				url: _base+"/cat/query/child",
 				data:{"prodCatId":prodCatId},
 				success: function(data){
-					if(data != null && data != 'undefined' && data.length>0){
+					if(data != null && data != 'undefined' && data.data.length>0){
 	            		var template = $.templates("#prodCatTemple");
-	            	    var htmlOutput = template.render(data);
+	            	    var htmlOutput = template.render(data.data);
 	            	    $("#"+clickId).after(htmlOutput);
-	            	}else{
+	            	}else if(data.statusCode === AjaxController.AJAX_STATUS_FAILURE){
 	            		var d = Dialog({
 							content:"获取类目信息出错:"+data.statusInfo,
 							icon:'fail',
