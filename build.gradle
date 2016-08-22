@@ -78,7 +78,7 @@ dependencies {
     //标准品
     compile 'com.ai.slp.product:normproduct:1.1.0-SNAPSHOT'
     //库存
-    compile 'com.ai.slp.product:storage:1.0-SNAPSHOT'
+    compile 'com.ai.slp.product:storage:1.1.0-SNAPSHOT'
     //商品类目
     compile 'com.ai.slp.product:productcat:1.0-SNAPSHOT'
     //销售商品
