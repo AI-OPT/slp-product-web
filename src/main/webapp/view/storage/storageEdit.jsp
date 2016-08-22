@@ -198,19 +198,89 @@
                             </header>
                             <%-- 遍历库存组 --%>
                             <c:forEach var="stoGroup" items="${storGroupList}">
-                                <div class="setup-sku">
-                                    <ul>
-                                        <li>
-                                            <p>库存组名称:${stoGroup.storageGroupName}</p>
-                                            <p><input type="button" class="biu-btn  btn-primary  btn-auto " groupId="${stoGroup.storageGroupId}"
-                                                      name="upGroupName" value="编辑名称 " /></p>
-                                            <p>总库存量:${stoGroup.storageTotal}</p>
-                                            <%--<p><input type="button" class="biu-btn  btn-primary  btn-auto " value="设置sku " /></p>--%>
-                                            <p><input type="button" class="biu-btn  btn-primary  btn-auto " value="增加优先级 " /></p>
-                                            <p>状态:${stoGroup.stateName}</p>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <c:set var="noDicard" value="true"/>
+                                <%-- 库存组已废弃 --%>
+                                <c:if test="${stoGroup.state=='3' || stoGroup.state=='31'}">
+                                    <c:set var="noDicard" value="false"/>
+                                </c:if>
+                            <div class="table-responsive clearfix">
+                                <table width="100%" border="0" class="table table-hover table-border table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="9">
+                                            <div class="setup-sku sku-bot-none">
+                                                <ul>
+                                                    <li>
+                                                        <p>库存组</p>
+                                                        <p>总库存量:${stoGroup.storageTotal}</p>
+                                                        <c:if test="${noDicard}">
+                                                        <p><input type="button" class="biu-btn  btn-primary  btn-auto" value="增加优先级 "></p>
+                                                        <p><input type="button" class="biu-btn  btn-primary  btn-auto" value="停用 "></p>
+                                                        </c:if>
+                                                        <p>状态:${stoGroup.stateName}</p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <%-- 优先级 --%>
+                                    <c:forEach var="storageMap" items="${stoGroup.storageList}">
+                                        <tr>
+                                            <td colspan="9">
+                                                <div class="setup-sku sku-bot-none">
+                                                    <ul>
+                                                        <li>
+                                                            <p>优先级${storageMap.key}</p>
+                                                            <c:if test="${noDicard}">
+                                                            <p><input type="button" class="biu-btn  btn-primary  btn-auto" id="increase" value="增加库存"></p>
+                                                            </c:if>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="bj">
+                                            <td>序号</td>
+                                            <td>库存ID</td>
+                                            <td>库存名称</td>
+                                            <td>库存量</td>
+                                            <td>状态</td>
+                                            <td>操作</td>
+                                        </tr>
+                                        <c:forEach var="storage" items="${storageMap.value}" varStatus="status">
+                                            <tr>
+                                                <td>${status.index + 1}</td>
+                                                <td>${storage.storageId}</td>
+                                                <td>${storage.storageName}</td>
+                                                <td>${storage.totalNum}</td>
+                                                <td>${storage.stateName}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <%-- 废弃\自动废弃状态 --%>
+                                                        <c:when test="${storage.state == '3' || storage.state == '31'}">
+                                                            <a href="#"  class="blue">查看</a>
+                                                        </c:when>
+                                                        <%-- 启用\自动启用状态 --%>
+                                                        <c:when test="${storage.state == '1' || storage.state == '11'}">
+                                                            <a href="#"  class="blue">编辑</a><a href="#"  class="blue">停用</a><a href="#"  class="blue">废弃</a>
+                                                        </c:when>
+                                                        <%-- 停用状态 --%>
+                                                        <c:when test="${storage.state == '2'}">
+                                                            <a href="#"  class="blue">编辑</a><a href="#"  class="blue">启用</a><a href="#"  class="blue">废弃</a>
+                                                        </c:when>
+                                                        <%-- 自动停用状态 --%>
+                                                        <c:when test="${storage.state == '21'}">
+                                                            <a href="#"  class="blue">编辑</a><a href="#"  class="blue">废弃</a>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                                <br/>
                             </c:forEach>
                         </div>
                         <div class="row"><!--删格化-->
