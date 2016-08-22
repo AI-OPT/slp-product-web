@@ -3,13 +3,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>生成虚拟库存-编辑（无销售属性）</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>运营管理</title>
     <%@ include file="/inc/inc.jsp" %>
-    <link href="${_slpres }/styles/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="${_slpres }/styles/font-awesome.css" rel="stylesheet" type="text/css">
-    <link href="${_slpres }/styles/frame.css" rel="stylesheet" type="text/css">
-    <link href="${_slpres }/styles/global.css" rel="stylesheet" type="text/css">
-    <link href="${_slpres }/styles/modular.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -127,239 +124,126 @@
 </div>
 <!--/结束-->
 
-<!--右侧弹出框-->
-<div class="msg-cnt">
-    <div class="p">
-        <a ng-click="$hide()" class="pull-right text-muted"><img src="${_slpres }/images/close.png"></a>
-        审批待办事项
-    </div>
-    <div class="box-row">
-        <div class="box-cell">
-            <div class="box-inner">
-                <div class="list-group no-radius no-borders">
-                    <a class="list-group-item p-h-md p-v-xs">
-                        <i class="icon-circle text-success text-xs m-r-xs"></i>
-                        <span>审批待办事项1</span>
-                    </a>
-                    <a class="list-group-item p-h-md p-v-xs">
-                        <i class="icon-circle text-success text-xs m-r-xs"></i>
-                        <span> 审批待办事项5条</span>
-                    </a>
-                    <a class="list-group-item p-h-md p-v-xs">
-                        <i class="icon-circle text-warning text-xs m-r-xs"></i>
-                        <span>审批待办事项2</span>
-                    </a>
-                    <a class="list-group-item p-h-md p-v-xs">
-                        <i class="icon-circle text-muted-lt text-xs m-r-xs"></i>
-                        <span>审批待办事项5条</span>
-                    </a>
-                    <a class="list-group-item p-h-md p-v-xs">
-                        <i class="icon-circle text-muted-lt text-xs m-r-xs"></i>
-                        <span>审批待办事项3个审批</span>
-                    </a>
-                    <a class="list-group-item p-h-md p-v-xs">
-                        <i class="icon-circle text-muted-lt text-xs m-r-xs"></i>
-                        <span>审批待办事项</span>
-                    </a>
-                    <a class="list-group-item p-h-md p-v-xs">
-                        <i class="icon-circle text-muted-lt text-xs m-r-xs"></i>
-                        <span>审批待办事项</span>
-                    </a>
-                    <a class="list-group-item p-h-md p-v-xs">
-                        <i class="icon-circle text-muted-lt text-xs m-r-xs"></i>
-                        <span>审批待办事项5条</span>
-                    </a>
-                    <a class="list-group-item p-h-md p-v-xs">
-                        <i class="icon-circle text-muted-lt text-xs m-r-xs"></i>
-                        <span>审批待办事项</span>
-                    </a>
-                    <a class="list-group-item p-h-md p-v-xs">
-                        <i class="icon-circle text-muted-lt text-xs m-r-xs"></i>
-                        <span>审批待办事项</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--右侧弹出框结束-->
-<!--顶部菜单-->
-<%@ include file="/inc/top-menu.jsp" %>
-<!--顶部菜单结束-->
-<!-- 左侧菜单 -->
-<%@ include file="/inc/left-menu.jsp" %>
-<!-- 左侧菜单结束 -->
 
-<div class="wrapper"><!--外围框架-->
-    <!--右侧框架-->
-    <div class="wrapper-right">
-        <!--公告位置-->
-        <%@ include file="/inc/public-msg.jsp" %>
-        <!--公告位置结束-->
-        <!--标签-->
-        <div class="right-tags">
-            <ul>
-                <li>
-                    <p class="none">您现在的位置：</p>
-                    <p><a href="javascript:void(0);">库存管理</a> > </p>
-                    <p>虚拟库存列表 > </p>
-                    <p>查看详情</p>
-                </li>
-            </ul>
-        </div>
-	   <!--标签结束-->
-    <div class="form-wrapper"><!--白底内侧-->
-    <div class="nav-tplist-wrapper"><!--白底内侧-->
-    	      <div class="nav-form-title">所属类目：
-					<c:forEach var="catInfo" items="${catLinkList}"
-					 varStatus="stat">${catInfo.productCatName}<c:if test="${!stat.last}">&gt;</c:if></c:forEach>
-			  </div>
-        <div class="form-label nav-form-border">
-           	<ul>
-                <li class="width-xlag">
-                    <p class="word">标准品名称:</p>
-                    <p>${normProdInfo.productName}</p>
-                </li>
-                <li class="width-xlag">
-                    <p class="word">标准品类型:</p>
-                    <p>${prodType}</p>
-                </li>  
-            </ul>  
-        </div>
-       
-        <div class="nav-form-title">标准品关键属性</div>
-        <div class="form-label nav-form-border">
-	        <c:forEach var="aav" items="${attrAndVal}">
-				<ul>
-					<li class="width-xlag">
-						<p class="word">${aav.key.attrName}:</p>
-							<c:forEach var="attrVal" items="${aav.value}">
-								<p>${attrVal.attrVal}</p>
-							</c:forEach>
-					</li>
-				</ul>
-			</c:forEach>
-        </div>
-    	<div class="nav-tplist-title">
-            <ul>
-                <li>库存设置</li>
-            </ul>
-        </div>
-        <div class="title-right">
-            <p class="plus" id＝"samll-eject"><a href="javascript:void(0);"><i class="icon-plus"></i></a></p>
-            <p class="plus-word" id="small-eject1"><a href="javascript:void(0);">添加库存组</a></p>
-        </div>
-        <!-- 储存点击按钮的相关信息 -->
-        <input id="saveCache" type="hidden" storGroupId="" priorityNum="" number="">
-        <div class="table table-border table-bordered table-bg table-hover mt-10">
-            <!-- value值储存当前标准品下的库存组数量 -->
-            <table id="storAndStorGroup" width="100%" border="0" value="${storGroupList.size()}">
-                <c:forEach var="storGroup" items="${storGroupList}" varStatus="storGroupNum">
-                    <!-- value值储存当前库存组的最大优先级 -->
-                    <tbody id="${storGroup.storageGroupId }${storGroupNum.index+1 }"
-                           value="${storGroup.storageList.size()}">
-                    <tr id="${storGroup.storageGroupId }_0">
-                        <td colspan="9">
-                            <div class="setup-sku mg-0">
+<div class="content-wrapper-iframe"><!--外围框架-->
+    <div class="row"><!--外围框架-->
+        <div class="col-lg-12"><!--删格化-->
+            <div class="row"><!--内侧框架-->
+                <div class="col-lg-12"><!--删格化-->
+                    <div class="main-box clearfix"><!--白色背景-->
+                        <div class="main-box-body clearfix">
+                            <!-- 类目链 -->
+                            <header class="main-box-header clearfix">
+                                <h5 class="pull-left">所属类目：
+                                    <c:forEach var="catInfo" items="${catLinkList}"
+                                               varStatus="stat">${catInfo.productCatName}<c:if test="${!stat.last}">&gt;</c:if>
+                                    </c:forEach>
+                                </h5>
+                            </header>
+                            <!--标题结束-->
+                            <div class="form-label  bd-bottom">
+                                <ul class="big-word">
+                                    <li class="col-md-6">
+                                        <p class="word">商品名称：</p>
+                                        <p>${normProdInfo.productName}</p>
+                                    </li>
+                                </ul>
                                 <ul>
-                                    <li>
-                                        <p>库存组名称: ${storGroup.storageGroupName }</p>
-                                        <p id="small-eject2"><input type="button" class="biu-btn btn-blue stock-btn"
-                                                                    value="编辑名称 "></p>
-                                        <p>总库存量:${storGroup.storageTotal }</p>
-                                        <p><input name="addPriorityNumber" type="button"
-                                                  class="biu-btn btn-blue stock-btn" value="增加优先级 "
-                                                  storGroupId="${storGroup.storageGroupId }"
-                                                  priorityNum="${storGroup.storageList.size()}"></p>
-                                        <p><input type="button" class="biu-btn btn-blue stock-btn" value="启动 "></p>
-                                        <p id="small-eject4"><input type="button" class="biu-btn btn-blue stock-btn"
-                                                                    value="废弃 "></p>
-                                        <p>状态:${storGroup.stateName }</p>
+                                    <li class="col-md-6">
+                                        <p class="word">商品类型：</p>
+                                        <p>${prodType}</p>
                                     </li>
                                 </ul>
                             </div>
-                        </td>
-                    </tr>
-                    <c:forEach var="priority" items="${storGroup.storageList}">
-                        <tr id="${storGroup.storageGroupId }_${priority.key}">
-                            <td colspan="9">
-                                <div class="setup-sku mg-0">
+                            <!-- 关键属性 -->
+                            <header class="main-box-header clearfix">
+                                <h5 class="pull-left">商品关键属性</h5>
+                            </header>
+                            <!--标题结束-->
+                            <div class="form-label  bd-bottom">
+                                <c:forEach var="aav" items="${attrAndVal}">
                                     <ul>
-                                        <li>
-                                            <p>优先级 ${priority.key}</p>
-                                            <p><a href="javascript:void(0);"><img
-                                                    src="${_slpres }/images/down.png"/></a></p>
-                                            <p><a href="javascript:void(0);"><img src="${_slpres }/images/up.png"/></a>
-                                            </p>
-                                            <p><input name="addStorageShow" type="button"
-                                                      class="biu-btn btn-blue stock-btn" id="small-eject3" value="增加库存"
-                                                      storGroupId="${storGroup.storageGroupId }"
-                                                      priorityNum="${priority.key}"
-                                                      storageNum="${priority.value.size()}"></p>
-                                            <p>
-                                                <span><input type="checkbox" class="checkbox-medium"/></span>
-                                                <span>促销活动</span>
-                                            </p>
-                                            <p class="eject-int"><input type="input" class="int-text int-mini"><a
-                                                    href="javascript:void(0);"><i class="icon-calendar"></i></a></p>
-                                            <p class="eject-int">~</p>
-                                            <p class="eject-int"><input type="input" class="int-text int-mini"><a
-                                                    href="javascript:void(0);"><i class="icon-calendar"></i></a></p>
-                                            <p class="word">(没有结束时间可不填)</p>
+                                        <li class="col-md-6">
+                                            <p class="word">${aav.key.attrName}:</p>
+                                            <c:forEach var="attrVal" items="${aav.value}">
+                                                <p>${attrVal.attrVal}</p>
+                                            </c:forEach>
                                         </li>
                                     </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="bj">
-                            <td>序号</td>
-                            <td>库存ID</td>
-                            <td>库存名称</td>
-                            <td><span>*</span>虚拟库存量</td>
-                            <td>生效时间</td>
-                            <td>失效时间</td>
-                            <td><span>*</span>最低预警库存量</td>
-                            <td>状态</td>
-                            <td>操作</td>
-                        </tr>
-                        <c:forEach var="storage" items="${priority.value}" varStatus="status">
-                            <tr id="${storGroup.storageGroupId }${priority.key}${status.index+1 }">
-                                <td>${status.index+1 }</td>
-                                <td>${storage.storageId }</td>
-                                <td>${storage.storageName }</td>
-                                <td>${storage.totalNum }</td>
-                                <td>${storage.activeTime }</td>
-                                <td>${storage.inactiveTime }</td>
-                                <td>${storage.warnNum }</td>
-                                <td>${storage.stateName }</td>
-                                <c:choose>
-                                    <c:when test="${storage.state=='3'|| storage.state=='31'}">
-                                        <td><a href="javascript:void(0);" class="blue">查看</a></td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td><a href="javascript:void(0);" class="blue">编辑</a><a
-                                                href="javascript:void(0);" class="blue">启用</a><a
-                                                href="javascript:void(0);" class="blue">废弃</a><a
-                                                href="javascript:void(0);" class="blue">管理预警接收人</a></td>
-                                    </c:otherwise>
-                                </c:choose>
-                            </tr>
-                        </c:forEach>
-                        <tr id="${storGroup.storageGroupId }priorityDemo"></tr>
-                    </c:forEach>
-                    <c:if test="${storGroup.storageList.size() == 0 }">
-                        <tr id="${storGroup.storageGroupId }priorityDemo"></tr>
-                    </c:if>
-                    </tbody>
-                </c:forEach>
-                <tbody id="storGroupMarked"></tbody>
-            </table>
+                                </c:forEach>
+                            </div>
+                            <header class="main-box-header clearfix">
+                                <h5 class="pull-left">商品销售属性</h5>
+                            </header>
+                            <!--标题结束-->
+                            <div class="form-label  bd-bottom">
+                                <ul>
+                                    <li class="col-md-6">
+                                        <p class="word">品牌:</p>
+                                        <p>only</p>
+                                    </li>
+                                    <li class="col-md-6">
+                                        <p class="word">货号:</p>
+                                        <p>347483483</p>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="col-md-6">
+                                        <p class="word">衣长:</p>
+                                        <p>中长款</p>
+                                    </li>
+                                    <li class="col-md-6">
+                                        <p class="word">面料:</p>
+                                        <p>纯棉</p>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="col-md-6">
+                                        <p class="word">版型:</p>
+                                        <p>修身型</p>
+                                    </li>
+                                    <li class="col-md-6">
+                                        <p class="word">材质:</p>
+                                        <p>人造纤维</p>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="col-md-6">
+                                        <p class="word">流行元素:</p>
+                                        <p>简约</p>
+                                    </li>
+                                    <li class="col-md-6">
+                                        <p class="word">风格:</p>
+                                        <p>通勤</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <header class="main-box-header clearfix">
+                                <h5 class="pull-left">库存设置</h5>
+                                <%--<div class="title-right">--%>
+                                    <%--<p id="add-k" class="plus-word btn-primary"><a href="#"><i class="fa fa-plus"></i>添加库存组</a></p>--%>
+                                <%--</div>--%>
+                            </header>
+                            <div class="setup-sku">
+                                <ul>
+                                    <li>
+                                        <p>库存组名称:个人库存北京地区</p>
+                                        <p id="edit"><input type="button"class="biu-btn  btn-primary  btn-auto " value="编辑名称 " /></p>
+                                        <p>总库存量:0</p>
+                                        <p><input type="button"class="biu-btn  btn-primary  btn-auto " value="设置sku " /></p>
+                                        <p><input type="button"class="biu-btn  btn-primary  btn-auto " value="增加优先级 " /></p>
+                                        <p>状态:停用</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="pst-bttton">
-            <input id="goBack" type="button" class="biu-btn btn-blue btn-large mr-10" value="返  回">
-        </div>
-    </div>
 </div>
 <!-- footer -->
 </body>

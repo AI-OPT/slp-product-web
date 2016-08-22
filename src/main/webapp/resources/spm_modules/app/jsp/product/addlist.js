@@ -33,7 +33,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
         },
     	//重写父类
     	setup: function () {
-    		AddlistPager.superclass.setup.call(this);
+			addlistPager.superclass.setup.call(this);
     		this._selectProductEdit();
     	},
     	// 改变商品类目
@@ -93,7 +93,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 	 			renderId:"searchProductData",
 	 			messageId:"showMessageDiv",
 	            data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName},
-	           	pageSize: AddlistPager.DEFAULT_PAGE_SIZE,
+	           	pageSize: addlistPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
