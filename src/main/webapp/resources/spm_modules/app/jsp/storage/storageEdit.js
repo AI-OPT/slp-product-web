@@ -62,6 +62,40 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     		}
     		return false;
     	},
+		//更改库存组状态
+		_changeGroupStatus:function(statusBtn){
+			var statusBtnJ = $(statusBtn);
+			var groupId = statusBtnJ.attr("groupId");
+			var status = statusBtnJ.attr("groupStatus");
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "状态变更中，请等待...",
+				url: _base+"/storage/edit/upGroupStatus/"+groupId,
+				data:{"status":status},
+				success: function(data){
+					//变更成功
+					if("1"!= data.statusCode){
+						return;
+					}
+					var btnVal = '';
+					var statusVal = '';
+					//若变更为启用
+					if(status==='1'){
+						status = '2';
+						btnVal = '停用';//与
+						statusVal = '启用';
+					}else if(status==='2'){
+						status = '1';
+						btnVal = '启用';
+						statusVal = '停用';
+					}
+					statusBtnJ.attr('groupStatus',status);
+					statusBtnJ.val(btnVal);
+					statusBtnJ.parent().next().text("状态:"+statusVal);
+				}
+			});
+		},
     	//添加库存
     	_addStorage:function(){
     		var _this = this;

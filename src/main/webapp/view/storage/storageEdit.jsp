@@ -214,8 +214,20 @@
                                                         <p>库存组</p>
                                                         <p>总库存量:${stoGroup.storageTotal}</p>
                                                         <c:if test="${noDicard}">
-                                                        <p><input type="button" class="biu-btn  btn-primary  btn-auto" value="增加优先级 "></p>
-                                                        <p><input type="button" class="biu-btn  btn-primary  btn-auto" value="停用 "></p>
+                                                        <p><input type="button" groupId="${stoGroup.storageGroupId}"
+                                                                  class="biu-btn  btn-primary  btn-auto" value="增加优先级 "></p>
+                                                        <p>
+                                                            <%-- 若为启用或自动启用,则显示停用 --%>
+                                                            <c:set var="statusBtn" value="启用"/>
+                                                            <c:set var="statusVal" value="1"/>
+                                                            <c:if test="${stoGroup.state == '1' || stoGroup.state == '11'}">
+                                                                <c:set var="statusBtn" value="停用"/>
+                                                                <c:set var="statusVal" value="2"/>
+                                                            </c:if>
+                                                            <input type="button" groupId="${stoGroup.storageGroupId}"
+                                                                       groupStatus = "${statusVal}" onclick="pager._changeGroupStatus(this);"
+                                                                       class="biu-btn  btn-primary  btn-auto" value="${statusBtn}">
+                                                        </p>
                                                         </c:if>
                                                         <p>状态:${stoGroup.stateName}</p>
                                                     </li>
@@ -232,7 +244,9 @@
                                                         <li>
                                                             <p>优先级${storageMap.key}</p>
                                                             <c:if test="${noDicard}">
-                                                            <p><input type="button" class="biu-btn  btn-primary  btn-auto" id="increase" value="增加库存"></p>
+                                                            <p><input type="button" name="groupSn${stoGroup.storageGroupId}"
+                                                                      class="biu-btn  btn-primary  btn-auto" sn="${storageMap.key}"
+                                                                      id="increase" value="增加库存"></p>
                                                             </c:if>
                                                         </li>
                                                     </ul>

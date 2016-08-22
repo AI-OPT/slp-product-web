@@ -6,6 +6,7 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.NameUpReq;
+import com.ai.slp.product.api.storage.param.StoGroupStatus;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.util.AdminUtil;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,39 @@ public class StorageEditController {
         if (header!=null && !header.isSuccess()){
             responseData = new ResponseData<String>(
                     ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
+        }else
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_SUCCESS, "OK","");
+        return responseData;
+    }
+
+    /**
+     * 更新库组状态
+     * @param groupId
+     * @param status
+     * @param session
+     * @return
+     */
+    @RequestMapping("/upGroupStatus/{id}")
+    @ResponseBody
+    public ResponseData<String> upGroupStatus(
+            @PathVariable("id")String groupId,String status, HttpSession session){
+        ResponseData<String> responseData;
+        IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
+        StoGroupStatus groupStatus = new StoGroupStatus();
+        groupStatus.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        groupStatus.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        groupStatus.setOperId(AdminUtil.getAdminId(session));
+        groupStatus.setGroupId(groupId);
+        groupStatus.setState(status);
+        BaseResponse baseResponse = storageSV.chargeStorageGroupStatus(groupStatus);
+        ResponseHeader header = baseResponse.getResponseHeader();
+        //TODO...模拟成功
+//        ResponseHeader header = new ResponseHeader(true, ExceptCodeConstants.Special.SUCCESS,"");
+        //保存错误
+        if (header!=null && !header.isSuccess()){
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_FAILURE, "更新状态 "+header.getResultMessage());
         }else
             responseData = new ResponseData<String>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK","");
