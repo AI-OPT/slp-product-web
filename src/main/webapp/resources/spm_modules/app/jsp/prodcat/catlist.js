@@ -156,6 +156,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 		},
 		//提交更新
 		_updateCat:function(){
+			var _this = this;
 			var hasError = false;
 			var errMsg = "";
 			validator.execute(function(error, results, element) {
@@ -193,7 +194,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 					//获取数据成功
 					if("1"===data.statusCode){
 						//刷新当前数据
-						$("#pagination-ul .page .active").trigger("click");
+						_this._selectPageList();
 					}
 				}
 			});
@@ -212,7 +213,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 					//获取数据成功
 					if("1"===data.statusCode){
 						//刷新当前数据
-						$("#pagination-ul .page .active").trigger("click");
+						_this._selectPageList();
 					}
 				}
 			});
