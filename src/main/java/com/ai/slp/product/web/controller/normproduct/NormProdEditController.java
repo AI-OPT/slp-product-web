@@ -17,6 +17,8 @@ import com.ai.slp.product.api.productcat.param.AttrQueryForCat;
 import com.ai.slp.product.api.productcat.param.ProdCatAttrDef;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
+import com.ai.slp.product.web.constants.ProductCatConstants;
+import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -81,12 +84,35 @@ public class NormProdEditController {
      * 显示添加页面
      * @return
      */
-    @RequestMapping("/addinfo")
-    public String addinfoView(HttpServletRequest request,Model uiModel){
+    @RequestMapping("/{id}")
+    public String addinfoView(@PathVariable("id")String productCatId,Model uiModel){
+    	//根据类目ID 加载标准品的关键属性  和  销售属性   1关键属性  2销售属性  3非关键属性
+	    	//标准品关键属性 
+	    	AttrQueryForCat attrQuery = new AttrQueryForCat();
+	    	//设置类目ID
+	    	//设置属性类型
+	    	attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+	    	attrQuery.setProductCatId(productCatId);
+	    	attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
+			BaseListResponse<ProdCatAttrDef> keyAttrlist = productCatSV.queryAttrByCatAndType(attrQuery);
+			uiModel.addAttribute("keyAttrlist",keyAttrlist.getResult());
+			
+			//标准品销售属性
+			//设置类目ID
+			//设置属性类型
+			attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+	    	attrQuery.setProductCatId(productCatId);
+	    	attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
+			BaseListResponse<ProdCatAttrDef> saleAttrlist = productCatSV.queryAttrByCatAndType(attrQuery);
+			uiModel.addAttribute("saleAttrlist",saleAttrlist.getResult());
+			
+			return "normproduct/addinfo";
+			
+			
     	
     	//根据类目ID 加载标准品的关键属性  和  销售属性
 	    	//标准品关键属性
-    		AttrQueryForCat attrqueryforcat = new AttrQueryForCat();
+    	/*		AttrQueryForCat attrqueryforcat = new AttrQueryForCat();
     		String productCatId = request.getParameter("productCatId");
     		attrqueryforcat.setProductCatId(productCatId);
     		
@@ -100,9 +126,9 @@ public class NormProdEditController {
     	SysParamMultiCond paramMultiCond = new SysParamMultiCond();
     	paramMultiCond.setParamCode(ComCacheConstants.NormProduct.STATUS);
     	List<SysParam> states = cacheSV.getSysParamList(paramMultiCond);
-    	uiModel.addAttribute("state",states);
+    	uiModel.addAttribute("state",states);*/
     	
-    	return "normproduct/addinfo";
+    	//return "normproduct/addinfo";
     }
     
     /**
