@@ -34,33 +34,33 @@
             </ul>
         </div>
     </div>
-    <div class="eject-mask"></div>
+    <div class="mask" id="eject-mask"></div>
 </div>
 <!--/结束-->
 <!--编辑库存分组 弹出框  小-->
 <div class="eject-big">
-    <div class="eject-samll" id="eject-samll-1">
-        <div class="eject-samll-title">
+    <div class="eject-samll" id="up-group-name">
+        <div class="eject-medium-title">
             <p>编辑名称</p>
-            <p class="img"><A href="javascript:void(0);"></A></p>
+            <p class="img"><i class="fa fa-times" onclick="pager._closeUpGroupView();"></i></p>
         </div>
-        <div class="medium-list-form">
+        <input type="hidden" id="upGroupId">
+        <div class="form-label mt-10">
             <ul>
                 <li>
-                    <p>库存组名称</p>
-                    <p><input type="text" class="int-text int-medium"></p>
+                    <p class="word"><span>*</span>库存组名称:</p>
+                    <p><input id="upGroupName" type="text" class="int-text int-small"></p>
                 </li>
             </ul>
         </div>
-        <div class="eject-samll-confirm mt-0">
-            <ul>
-                <li><input type="button" class="slp-btn eject-small-btn" value="确认">
-                    <input type="button" class="slp-btn eject-small-btn close-btn" value="取消">
-                </li>
-            </ul>
+        <div class="row mt-15">
+            <p class="center pr-30 mt-30">
+                <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+                <input id="add-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 edit-close" value="取  消">
+            </p>
         </div>
     </div>
-    <div class="eject-mask" id="eject-mask"></div>
+    <div class="mask" id="eject-mask"></div>
 </div>
 <!--增加库存 弹出框  小-->
 <div class="eject-big">
@@ -98,7 +98,7 @@
             </ul>
         </div>
     </div>
-    <div class="eject-mask"></div>
+    <div class="mask"></div>
 </div>
 <!--/结束-->
 <!--废弃 弹出框  小-->
@@ -196,19 +196,28 @@
                                     <%--<p id="add-k" class="plus-word btn-primary"><a href="#"><i class="fa fa-plus"></i>添加库存组</a></p>--%>
                                 <%--</div>--%>
                             </header>
-                            <div class="setup-sku">
-                                <ul>
-                                    <li>
-                                        <p>库存组名称:个人库存北京地区</p>
-                                        <p id="edit"><input type="button"class="biu-btn  btn-primary  btn-auto " value="编辑名称 " /></p>
-                                        <p>总库存量:0</p>
-                                        <p><input type="button"class="biu-btn  btn-primary  btn-auto " value="设置sku " /></p>
-                                        <p><input type="button"class="biu-btn  btn-primary  btn-auto " value="增加优先级 " /></p>
-                                        <p>状态:停用</p>
-                                    </li>
-                                </ul>
-                            </div>
-
+                            <%-- 遍历库存组 --%>
+                            <c:forEach var="stoGroup" items="${storGroupList}">
+                                <div class="setup-sku">
+                                    <ul>
+                                        <li>
+                                            <p>库存组名称:${stoGroup.storageGroupName}</p>
+                                            <p><input type="button" class="biu-btn  btn-primary  btn-auto " groupId="${stoGroup.storageGroupId}"
+                                                      name="upGroupName" value="编辑名称 " /></p>
+                                            <p>总库存量:${stoGroup.storageTotal}</p>
+                                            <%--<p><input type="button" class="biu-btn  btn-primary  btn-auto " value="设置sku " /></p>--%>
+                                            <p><input type="button" class="biu-btn  btn-primary  btn-auto " value="增加优先级 " /></p>
+                                            <p>状态:${stoGroup.stateName}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <div class="row"><!--删格化-->
+                            <p class="right pr-30">
+                                <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="返  回"
+                                       onclick="javaScript:window.history.go(-1);">
+                            </p>
                         </div>
                     </div>
                         </div>
@@ -307,44 +316,12 @@
             </tr>
         </script>
 </html>
-<script src="${_slpres }/scripts/frame.js" type="text/javascript"></script>
-<script src="${_slpres }/scripts/metismenu.js"></script>
-<script type="text/javascript">
-    window.onload = function () {
-        var timer;
-        var elem = document.getElementById('elem');
-        var elem1 = document.getElementById('elem1');
-        var elem2 = document.getElementById('elem2');
-        elem2.innerHTML = elem1.innerHTML;
-        timer = setInterval(Scroll, 40);
-        function Scroll() {
-            if (elem.scrollTop >= elem1.offsetHeight) {
-                elem.scrollTop -= elem1.offsetHeight;
-            } else {
-                elem.scrollTop += 1;
-            }
-        }
-        elem.onmouseover = function () {
-            clearInterval(timer);
-        }
-        elem.onmouseout = function () {
-            timer = setInterval(Scroll, 40);
-        }
-    }
-</script>
 <script type="text/javascript">
     var pager;
     var count = '${count}';
     var standedProdId = "${standedProdId}";
     var productCatId = "${productCatId}";
     (function () {
-        <%-- 展示日历 --%>
-        $('.setup-sku mg-0').delegate('.icon-calendar', 'click', function () {
-            var calInput = $(this).parent().prev();
-            var timeId = calInput.attr('id');
-            console.log("click calendar " + timeId);
-            WdatePicker({el: timeId, readOnly: true});
-        });
         //弹出添加库存窗口储存数据
         $('#storAndStorGroup').delegate('input[name="addStorageShow"]', 'click', function () {
             var storGroupId = $(this).attr('storGroupId');
@@ -359,6 +336,17 @@
             $(".eject-big").show();
             $("#eject-samll-2").show();
             $(".eject-mask").show();
+        });
+        //编辑库存组名称
+        $('.setup-sku').delegate('input[name="upGroupName"]', 'click', function () {
+//            pager._showUpGroupView($(this));
+            var groupId=$(this).attr("groupId");
+            $("upGroupId").val(groupId);
+            var name = $(this).parent().prev().text();
+            name = name.substring(6);
+            $("#upGroupName").val(name);
+            $('#eject-mask').fadeIn(100);
+            $('#up-group-name').slideDown(200);
         });
         //增加优先级
         $('.setup-sku').delegate('input[name="addPriorityNumber"]', 'click', function () {

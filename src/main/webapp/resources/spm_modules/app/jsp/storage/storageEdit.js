@@ -32,14 +32,29 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     	events: {
     		//查询标准品
             "click #addStorGroup":"_addStorGroup",
+			"click #add-close":"_closeUpGroupView",
             "click #goBack":"_goBack",
             "click #addStorage":"_addStorage",
         },
     	//重写父类
     	setup: function () {
     		StorageEditPager.superclass.setup.call(this);
-//    		this._selectStandProd();
     	},
+		//显示编辑库存组名称
+		_showUpGroupView:function(obj){
+			var groupId=obj.attr("groupId");
+			$("upGroupId").val(groupId);
+			var name = $(this).parent().next().text();
+			name = name.substring(6);
+			$("#upGroupName").val(name);
+			$('#eject-mask').fadeIn(100);
+			$('#add-samll').slideDown(200);
+		},
+		//关闭商品编辑页面
+		_closeUpGroupView:function(){
+			$('#eject-mask').fadeOut(100);
+			$('#up-group-name').slideUp(150);
+		},
     	//判断是否是正整数
     	_isNum : function(str){
     		if(/^\d+$/.test(str)){    
@@ -166,80 +181,6 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     	//返回之前的页面
     	_goBack:function(){
     		window.history.go(-1);
-    	},
-//    	//显示库存组的库存信息
-//		_showCheckAudi:function(audiMap){
-//			var audNum = Object.keys(audiMap).length;
-//			$('#audiNum').text(audNum);
-//			//删除原来受众信息
-//			$('#audiSelectedDiv').html("");
-//			for (var key in audiMap) {
-//				$('#audiSelectedDiv').append("<p>"+audiMap[key]+"<a href=\"javascript:void(0);\"><i class=\"icon-remove-sign\" userId='"+key+"'></i></a></p>");
-//			}
-//		},
-    	// 改变商品类目
-    	_selectChange:function(osel){
-    		var _this = this;
-    		var prodCatId = osel.options[osel.selectedIndex].value;
-    		var clickId = $(osel).parent().attr('id');
-    		//获取当前ID的最后数字
-    		var index = Number(clickId.substring(10))+1;
-    		//获取下拉菜单的总个数
-    		var prodCat = document.getElementById("productCat");
-    		var length = prodCat.getElementsByTagName("select").length;
-    		if(index==length){
-    			return;
-    		}
-    		//从当前元素开始移除后面的下拉菜单
-    		for(var i=index;i<length;i++){
-    			$("#productCat"+i).remove();
-    		}
-    		ajaxController.ajax({
-				type: "post",
-				processing: false,
-				// message: "加载中，请等待...",
-				url: _base+"/prodquery/getCat",
-				data:{"prodCatId":prodCatId},
-				success: function(data){
-					if(data != null && data != 'undefined' && data.length>0){
-	            		var template = $.templates("#prodCatTemple");
-	            	    var htmlOutput = template.render(data);
-	            	    $("#"+clickId).after(htmlOutput);
-	            	}else{
-	            		_this._showMsg("获取类目信息出错:"+data.statusInfo);
-	            	}
-				}
-			});
-    	},
-    	//查询标准品
-    	_selectStandProd:function(){
-    		var _this = this;
-    		//获取下拉菜单的总个数-2即为ID后的数值
-    		var length = document.getElementsByTagName("select").length-2;
-    		var productCatId = $("#productCat"+length+" option:selected").val();
-    		var productType = $("#stanProdType").val().trim();
-    		var standedProdId = $("#stanProdId").val().trim();
-    		var standedProductName = $("#stanProdName").val().trim();
-    		var operStartTime = $("#operStartTime").val();
-    		var operEndTime = $("#operEndTime").val();
-    		$("#pagination-ul").runnerPagination({
-	 			url: _base+"/storage/normProdList",
-	 			method: "POST",
-	 			dataType: "json",
-	 			renderId:"searchStanProdData",
-	 			messageId:"showMessageDiv",
-	            data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,
-	            	"standedProductName":standedProductName,"startTime":operStartTime,"endTime":operEndTime},
-	           	pageSize: StorageEditPager.DEFAULT_PAGE_SIZE,
-	           	visiblePages:5,
-	            render: function (data) {
-	            	if(data != null && data != 'undefined' && data.length>0){
-	            		var template = $.templates("#searchStanProdTemple");
-	            	    var htmlOutput = template.render(data);
-	            	    $("#searchStanProdData").html(htmlOutput);
-	            	}
-	            }
-    		});
     	},
     	//滚动到顶部
     	_returnTop:function(){

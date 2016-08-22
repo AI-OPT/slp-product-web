@@ -7,6 +7,7 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
 import com.ai.slp.common.api.cache.param.SysParam;
+import com.ai.slp.common.api.cache.param.SysParamMultiCond;
 import com.ai.slp.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
 import com.ai.slp.product.api.normproduct.param.AttrMap;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,9 +94,11 @@ public class StorageController {
         //查询库存组和库存信息
         StorageGroupQuery storageGroupQuery = new StorageGroupQuery();
         storageGroupQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        storageGroupQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
         storageGroupQuery.setProductId(normProdInfoResponse.getProductId());
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         BaseListResponse<StorageGroupRes> storageGroupResList = storageSV.queryGroupInfoByNormProdId(storageGroupQuery);
+        Map<String,SysParam> paramMap = getStorageStatus();
         for (StorageGroupRes storageGroupRes : storageGroupResList.getResult()) {
             // 获取库存组状态名
             String state = storageGroupRes.getState();
@@ -102,14 +106,13 @@ public class StorageController {
                     ComCacheConstants.StateStorage.STORAGEGROUP_TYPR_CODE, ComCacheConstants.StateStorage.PARAM_CODE, state);
             String stateName = cacheSV.getSysParamSingle(paramSingleCond).getColumnDesc();
             storageGroupRes.setStateName(stateName);
-            // 获取库存状态名
+            // 库存组优先级
             for (Short key : storageGroupRes.getStorageList().keySet()) {
+                // 获取库存状态名
                 for (StorageRes storageRes : storageGroupRes.getStorageList().get(key)) {
-                    String storState = storageRes.getState();
-                    paramSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID,
-                            ComCacheConstants.StateStorage.STORAGE_TYPR_CODE, ComCacheConstants.StateStorage.PARAM_CODE, storState);
-                    String storStateName = cacheSV.getSysParamSingle(paramSingleCond).getColumnDesc();
-                    storageRes.setStateName(storStateName);
+                    SysParam param = paramMap.get(storageRes.getState());
+                    if (param!=null)
+                    storageRes.setStateName(param.getColumnDesc());
                 }
             }
         }
@@ -157,7 +160,6 @@ public class StorageController {
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         STOStorage storage = new STOStorage();
         storage.setOperId(AdminUtil.getAdminId(session));
-        storage.setProductCatId(request.getParameter("productCatId"));
         storage.setStorageName(request.getParameter("storageName"));
         storage.setStorageGroupId(request.getParameter("storGroupId"));
         storage.setPriorityNumber(Short.parseShort(request.getParameter("priorityNumber")));
@@ -181,5 +183,21 @@ public class StorageController {
         uiModel.addAttribute("count", productCatMap.size() - 1);
         uiModel.addAttribute("catInfoMap", productCatMap);
         return "storage/storageList";
+    }
+
+    /**
+     * 获取库存状态字典信息
+     * @return
+     */
+    private Map<String,SysParam> getStorageStatus(){
+        ICacheSV cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
+        SysParamMultiCond multiCond = new SysParamMultiCond(SysCommonConstants.COMMON_TENANT_ID,
+                ComCacheConstants.StateStorage.STORAGE_TYPR_CODE, ComCacheConstants.StateStorage.PARAM_CODE);
+        List<SysParam> sysParamList = cacheSV.getSysParamList(multiCond);
+        Map<String,SysParam> paramMap = new HashMap<>();
+        for (SysParam sysParam:sysParamList){
+            paramMap.put(sysParam.getColumnValue(),sysParam);
+        }
+        return paramMap;
     }
 }
