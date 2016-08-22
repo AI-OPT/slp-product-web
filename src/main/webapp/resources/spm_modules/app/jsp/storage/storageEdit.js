@@ -160,17 +160,22 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			});
     	},
     	//增加优先级
-    	_addPriorityNumber:function(groupId,number){
-    		number = parseInt(number)+1;
-    		if(priorityString == groupId+number){
-    			this._showMsg("请不要重复添加优先级");
+    	_addPriorityNumber:function(groupId){
+			var number = $("#groupSn"+groupId).val();
+			var name = 'stopn_'+groupId+"_"+number;
+			console.log("Tr name:"+name);
+			var stoNum = $("tr[name="+name+"]").size();
+			console.log("GroupId:"+groupId+",Number:"+number+",stoNum:"+stoNum);
+    		if(stoNum<1){
+    			alert("最高优先级下没有库存,不允许添加新的优先级");
     			return;
     		}
-    		var data = {"storageGroupId":groupId,"number":number};
+			number = parseInt(number)+1;
+			$("#groupSn"+groupId).val(number);
+    		var data = {"groupId":groupId,"priNum":number};
     		var template = $.templates("#priorityNumTemple");
     	    var htmlOutput = template.render(data);
-    	    $("#"+groupId+"priorityDemo").before(htmlOutput);
-    	    priorityString = groupId+number;
+    	    $("#groupSn"+groupId).before(htmlOutput);
     	},
     	//添加库存组
     	_addStorGroup:function(){

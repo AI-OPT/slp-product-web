@@ -214,8 +214,9 @@
                                                         <p>库存组</p>
                                                         <p>总库存量:${stoGroup.storageTotal}</p>
                                                         <c:if test="${noDicard}">
-                                                        <p><input type="button" groupId="${stoGroup.storageGroupId}"
-                                                                  class="biu-btn  btn-primary  btn-auto" value="增加优先级 "></p>
+                                                        <p><input type="button" onclick="pager._addPriorityNumber(${stoGroup.storageGroupId})"
+                                                                  class="biu-btn  btn-primary  btn-auto" value="增加优先级 ">
+                                                        </p>
                                                         <p>
                                                             <%-- 若为启用或自动启用,则显示停用 --%>
                                                             <c:set var="statusBtn" value="启用"/>
@@ -236,7 +237,11 @@
                                         </td>
                                     </tr>
                                     <%-- 优先级 --%>
+                                    <c:set value="0" var="groupSn"/>
                                     <c:forEach var="storageMap" items="${stoGroup.storageList}">
+                                        <c:if test="${groupSn < storageMap.key}">
+                                            <c:set value="${storageMap.key}" var="groupSn"/>
+                                        </c:if>
                                         <tr>
                                             <td colspan="9">
                                                 <div class="setup-sku sku-bot-none">
@@ -245,8 +250,8 @@
                                                             <p>优先级${storageMap.key}</p>
                                                             <c:if test="${noDicard}">
                                                             <p><input type="button" name="groupSn${stoGroup.storageGroupId}"
-                                                                      class="biu-btn  btn-primary  btn-auto" sn="${storageMap.key}"
-                                                                      id="increase" value="增加库存"></p>
+                                                                      class="biu-btn  btn-primary  btn-auto" pn="${storageMap.key}"
+                                                                      value="增加库存"></p>
                                                             </c:if>
                                                         </li>
                                                     </ul>
@@ -262,7 +267,7 @@
                                             <td>操作</td>
                                         </tr>
                                         <c:forEach var="storage" items="${storageMap.value}" varStatus="status">
-                                            <tr>
+                                            <tr name="stopn_${stoGroup.storageGroupId}_${storageMap.key}">
                                                 <td>${status.index + 1}</td>
                                                 <td>${storage.storageId}</td>
                                                 <td>${storage.storageName}</td>
@@ -272,27 +277,34 @@
                                                     <c:choose>
                                                         <%-- 废弃\自动废弃状态 --%>
                                                         <c:when test="${storage.state == '3' || storage.state == '31'}">
-                                                            <a href="#"  class="blue">查看</a>
+                                                            <a href="javaScript:void(0);"  class="blue">查看</a>
                                                         </c:when>
                                                         <%-- 启用\自动启用状态 --%>
                                                         <c:when test="${storage.state == '1' || storage.state == '11'}">
-                                                            <a href="#"  class="blue">编辑</a><a href="#"  class="blue">停用</a><a href="#"  class="blue">废弃</a>
+                                                            <a href="javaScript:void(0);"  class="blue">编辑</a>
+                                                            <a href="javaScript:void(0);"  class="blue">停用</a>
+                                                            <a href="javaScript:void(0);"  class="blue">废弃</a>
                                                         </c:when>
                                                         <%-- 停用状态 --%>
                                                         <c:when test="${storage.state == '2'}">
-                                                            <a href="#"  class="blue">编辑</a><a href="#"  class="blue">启用</a><a href="#"  class="blue">废弃</a>
+                                                            <a href="javaScript:void(0);"  class="blue">编辑</a>
+                                                            <a href="javaScript:void(0);"  class="blue">启用</a>
+                                                            <a href="javaScript:void(0);"  class="blue">废弃</a>
                                                         </c:when>
                                                         <%-- 自动停用状态 --%>
                                                         <c:when test="${storage.state == '21'}">
-                                                            <a href="#"  class="blue">编辑</a><a href="#"  class="blue">废弃</a>
+                                                            <a href="javaScript:void(0);"  class="blue">编辑</a><a href="#"  class="blue">废弃</a>
                                                         </c:when>
                                                     </c:choose>
                                                 </td>
                                             </tr>
                                         </c:forEach>
                                     </c:forEach>
+                                    <input type="hidden" id="groupSn${stoGroup.storageGroupId}" value="${groupSn}">
                                     </tbody>
                                 </table>
+                                <%-- 库存最高优先级 --%>
+
                             </div>
                                 <br/>
                             </c:forEach>
@@ -359,29 +371,15 @@
             </tbody>
         </script>
         <script id="priorityNumTemple" type="text/template">
-            <tr id="{{:storageGroupId }}_{{:number }}">
+            <tr>
                 <td colspan="9">
-                    <div class="setup-sku mg-0">
+                    <div class="setup-sku sku-bot-none">
                         <ul>
                             <li>
-                                <p>优先级 {{:number }}</p>
-                                <p><a href="javascript:void(0);"><img src="${_slpres }/images/down.png"/></a></p>
-                                <p><a href="javascript:void(0);"><img src="${_slpres }/images/up.png"/></a></p>
-                                <p><input name="addStorageShow" type="button" class="biu-btn btn-blue stock-btn"
-                                          id="small-eject3" value="增加库存" storGroupId="{{:storageGroupId }}"
-                                          priorityNum="{{:number }}" storageNum="0"></p>
-                                <p>
-                                    <span><input type="checkbox" class="checkbox-medium"/></span>
-                                    <span>促销活动</span>
-                                </p>
-                                <p class="eject-int">
-                                    <input type="input" class="int-text int-mini">
-                                    <a href="javascript:void(0);"><i class="icon-calendar"></i></a></p>
-                                <p class="eject-int">~</p>
-                                <p class="eject-int">
-                                    <input type="input" class="int-text int-mini">
-                                    <a href="javascript:void(0);"><i class="icon-calendar"></i></a></p>
-                                <p class="word">(没有结束时间可不填)</p>
+                                <p>优先级{{:priNum}}</p>
+                                    <p><input type="button" groupId="{{:groupId}}"
+                                              class="biu-btn  btn-primary  btn-auto" pn="{{:priNum}}"
+                                               value="增加库存"></p>
                             </li>
                         </ul>
                     </div>
@@ -391,10 +389,7 @@
                 <td>序号</td>
                 <td>库存ID</td>
                 <td>库存名称</td>
-                <td><span>*</span>虚拟库存量</td>
-                <td>生效时间</td>
-                <td>失效时间</td>
-                <td><span>*</span>最低预警库存量</td>
+                <td>库存量</td>
                 <td>状态</td>
                 <td>操作</td>
             </tr>
