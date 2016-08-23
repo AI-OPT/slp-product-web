@@ -11,7 +11,7 @@
 
 <body>
 <!-- 属性值新增弹框 -->
-
+<%-- 
 <div class="eject-big" id="addViewDiv">
 	<div class="eject-samll" id="addAttrValue-samll">
 		<!-- 新增 -->
@@ -48,7 +48,7 @@
         </div>
 	</div>	
 	<div class="mask" id="eject-mask"></div>	
-</div>
+</div> --%>
 <!-- 属性值新增弹框结束 -->
 
 
@@ -157,14 +157,14 @@
 							<h2 class="pull-left">查询结果</h2>
 						</header>
 						<div class="row"  id="addAttrValueBtn"><!--删格化-->
-                                <p class="right pr-30">
-                                    <a name="addAttrValueView" href="#" class="biu-btn  btn-primary btn-blue btn-auto  ml-5">新  增</a>
-                                </p>
-                               <%--  <p class="right pr-30">
-                                    <input id="addAttrValueBtn" name="addAttrValueView" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
-                                           value="新  增" onclick="javaScript:window.location.href = '${_base}/attrValue/addAttrValue';">
+                                <%-- <p class="right pr-30">
+                                    <a name="addAttrValueView" href="${_base}/attrManage/addAttrValue" class="biu-btn  btn-primary btn-blue btn-auto  ml-5">新  增</a>
                                 </p> --%>
-                            </div>
+                              <p class="right pr-30">
+                                    <input id="addAttrValueBtn" name="addAttrValueView" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
+                                           value="新  增" onclick="javaScript:window.location.href = '${_base}/attrManage/addAttrValue?attrId=${attrId}';">
+                              </p>
+                        </div>
 						
 						<!--标题结束-->
 							<!--table表格-->
@@ -194,8 +194,8 @@
 										<td>{{:~timesToFmatter(operTime)}}</td>
 										<td>{{:operId}}</td>
 										<td>
-											<a attrvalueDefId="{{:attrvalueDefId}}" name="editView" href="#" class="blue-border">编辑</a>
-											<a attrvalueDefId="{{:attrvalueDefId}}" name="delView" href="#" class="blue-border">删除</a>
+											<a attrvalueDefId="{{:attrvalueDefId}}" name="editView" href="javaScript:void(0)" class="blue-border">编辑</a>
+											<a attrvalueDefId="{{:attrvalueDefId}}" name="delView" href="javaScript:void(0)" class="blue-border">删除</a>
 										</td>
 									</tr>
 								</script>
@@ -214,7 +214,7 @@
 		</div>
 	</div>
 </div>
-<script id="attrAddTemplate"  type="text/template">
+<%-- <script id="attrAddTemplate"  type="text/template">
 	 <!-- 查询条件 -->
           <div class="form-label bd-bottom" data-widget="validator">
 			<input type="hidden" id="attrId" name="attrId" value="${attrId}"/>
@@ -234,7 +234,7 @@
 				</li>
 	        </ul>
 		</div>
-</script>
+</script>--%>
 </body>
 
 <script type="text/javascript">
@@ -242,15 +242,15 @@
     var attrNum = {'num':0};
     (function () {
     	<%-- 新增属性值的删除按钮 --%>
-         $('#addViewDiv').delegate("a[name='delBtn']", 'click', function () {
+        /*  $('#addViewDiv').delegate("a[name='delBtn']", 'click', function () {
             console.log("删除");
             $(this).parent().parent().parent().remove();
-        }); 
+        });  */
     	
     	<%-- 新增按钮 --%>
-    	  $('#addAttrValueBtn').delegate("a[name='addAttrValueView']", 'click', function () {
+    	 /*  $('#addAttrValueBtn').delegate("a[name='addAttrValueView']", 'click', function () {
             pager._showAddAttr();
-        });
+        }); */
     	 
     	
     	<%-- 编辑按钮 --%>

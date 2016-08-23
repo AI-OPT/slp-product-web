@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,21 +21,13 @@ import com.ai.opt.sdk.constants.ExceptCodeConstants;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
-import com.ai.slp.product.api.productcat.param.AttrDefInfo;
-import com.ai.slp.product.api.productcat.param.AttrDefParam;
-import com.ai.slp.product.api.productcat.param.AttrInfo;
-import com.ai.slp.product.api.productcat.param.AttrPam;
-import com.ai.slp.product.api.productcat.param.AttrParam;
 import com.ai.slp.product.api.productcat.param.AttrVal;
 import com.ai.slp.product.api.productcat.param.AttrValInfo;
 import com.ai.slp.product.api.productcat.param.AttrValPageQuery;
 import com.ai.slp.product.api.productcat.param.AttrValParam;
 import com.ai.slp.product.api.productcat.param.AttrValUniqueReq;
 import com.ai.slp.product.web.constants.SysCommonConstants;
-import com.ai.slp.product.web.model.prodAttr.ProdAttrInfo;
 import com.ai.slp.product.web.model.prodAttr.ProdAttrValueInfo;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
@@ -110,8 +101,8 @@ public class AttrValueController {
 	 * 进入添加属性值的页面
 	 */
 	@RequestMapping("/addAttrValue")
-	public String addAttr() {
-		
+	public String addAttr(String attrId, Model uiModel) {
+		uiModel.addAttribute("attrId", attrId);
 		return "prodAttr/addAttrValue";
 	}
 	
