@@ -190,7 +190,7 @@
 										<td>{{:valueWay}}</td>
 										<td>{{:attrValNum}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
-										<td>{{:operId}}</td>
+										<td>{{:operName}}</td>
 										<td>
 											<a attrId="{{:attrId}}" name="editView" href="#" class="blue-border">编辑</a>
 											<a attrId="{{:attrId}}" name="manageView" href="${_base}/attrManage/getAttrValue/{{:attrId}}" class="blue-border">管理属性值</a>

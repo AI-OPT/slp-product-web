@@ -91,6 +91,8 @@ dependencies {
     compile 'com.ai.slp.user:keyinfo:1.0-SNAPSHOT'
 
     compile 'com.ai.baas.smc:sysparamcache:2.0-SNAPSHOT'
+    //运营平台-用户
+    compile 'com.ai.platform.common:sysuser:1.0-SNAPSHOT'
 
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",

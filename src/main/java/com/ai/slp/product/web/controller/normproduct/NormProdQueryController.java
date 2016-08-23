@@ -1,8 +1,25 @@
 package com.ai.slp.product.web.controller.normproduct;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
 import com.ai.slp.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
@@ -13,18 +30,6 @@ import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.util.DateUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 标准品查询
@@ -61,6 +66,7 @@ public class NormProdQueryController {
 			queryBuilder(request, productRequest);
 			
 			PageInfoResponse<NormProdResponse> result = queryProductByState(productRequest);
+			
 			responseData = new ResponseData<PageInfoResponse<NormProdResponse>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
 					result);
 		} catch (Exception e) {
@@ -81,6 +87,7 @@ public class NormProdQueryController {
 		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
 		PageInfoResponse<NormProdResponse> result = normProductSV.queryNormProduct(productRequest);
 		ICacheSV cacheSV = DubboConsumerFactory.getService("iCacheSV");
+		ISysUserQuerySV sysUserQuerySV = DubboConsumerFactory.getService(ISysUserQuerySV.class);
 		SysParamSingleCond sysParamSingleCond = null;
 		for (NormProdResponse normProdResponse : result.getResult()) {
 			// 获取类型和状态
@@ -98,6 +105,28 @@ public class NormProdQueryController {
 						ComCacheConstants.NormProduct.CODE, ComCacheConstants.NormProduct.STATUS, state);
 				String stateName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 				normProdResponse.setState(stateName);
+				
+				//设置人员名称
+				SysUserQueryRequest userQuery = new SysUserQueryRequest();
+	            userQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+	            Long createId = normProdResponse.getCreateId();
+	            //设置创建者名称
+	            if(createId != null){
+	            	userQuery.setId(Long.toString(createId));
+	            	SysUserQueryResponse serInfo = sysUserQuerySV.queryUserInfo(userQuery);
+	            	if(serInfo != null){
+	            		normProdResponse.setCreateName(serInfo.getName());
+	            	}
+	            }
+	            Long operId = normProdResponse.getOperId();
+	            //设置操作者名称
+	            if(operId != null){
+	            	userQuery.setId(Long.toString(operId));
+	            	SysUserQueryResponse serInfo = sysUserQuerySV.queryUserInfo(userQuery);
+	            	if(serInfo != null){
+	            		normProdResponse.setOperName(serInfo.getName());
+	            	}
+	            }
 			}
 			
 		}

@@ -47,5 +47,8 @@
 	<!-- 库存服务 -->
 	<dubbo:reference id="iStorageSV" interface="com.ai.slp.product.api.storage.interfaces.IStorageSV"
 					 registry="slpRegistry"/>
+	<!-- 用户查询服务 -->
+	<dubbo:reference id="iSysUserQuerySV" interface="com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV"
+					 registry="slpRegistry"/>
 
 </beans>
