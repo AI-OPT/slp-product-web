@@ -63,44 +63,63 @@
     <div class="mask" id="eject-mask"></div>
 </div>
 <!--增加库存 弹出框  小-->
+<!--编辑名称弹出框-->
 <div class="eject-big">
-    <div class="eject-samll" id="eject-samll-2">
-        <div class="eject-samll-title">
-            <p>增加库存</p>
-            <p class="img"><A href="javascript:void(0);"></A></p>
+    <div class="eject-medium" id="edit-medium">
+        <div class="eject-medium-title">
+            <p>编辑名称</p>
+            <p class="img" onclick="pager._closeAddStoView();"><i class="fa fa-times"></i></p>
         </div>
-        <div class="eject-form">
+        <div class="form-label">
             <ul>
-                <li class="width-xlag">
+                <li>
                     <p class="word"><span>*</span>库存名称:</p>
-                    <p><input id="newStorageName" type="text" class="int-text int-medium"></p>
+                    <p><input type="text" class="int-text int-small"></p>
                 </li>
-                <li class="width-xlag">
-                    <p class="word"><span>*</span>虚拟库存量:</p>
-                    <p><input id="newTotalNum" type="text" class="int-text int-medium"></p>
-                </li>
-                <li class="width-xlag">
-                    <p class="word"><span>*</span>最低预警库存值:</p>
-                    <p><input id="newWarnNum" type="text" class="int-text int-medium"></p>
-                </li>
-                <li class="width-xlag">
-                    <p class="word">有效期:</p>
-                    <p><input type="text" class="int-text int-mini"><i class="icon-calendar"></i></p>
-                    <p><input type="text" class="int-text int-mini"><i class="icon-calendar"></i></p>
+            </ul>
+            <ul>
+                <li>
+                    <p class="word">虚拟库存量:</p>
+                    <p><input type="text" class="int-text int-small"></p>
                 </li>
             </ul>
         </div>
-        <div class="eject-samll-confirm mt-0">
-            <ul>
-                <li><input id="addStorage" type="button" class="slp-btn eject-small-btn mt-10" value="确认">
-                    <input type="button" class="slp-btn eject-small-btn close-btn mt-10" value="取消">
-                </li>
-            </ul>
+        <!--table表格-->
+        <div class="table-responsive clearfix">
+            <table class="table table-hover table-border table-bordered">
+                <thead>
+                <tr>
+                    <th>颜色</th>
+                    <th>内存</th>
+                    <th>版本</th>
+                    <th>sku库存量</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td rowspan="2">黑色</td>
+                    <td rowspan="2">24343433</td>
+                    <td class="new-td">移动版</td>
+                    <td class="new-td"><input type="text"  class="int-text int-mini" /></td>
+                </tr>
+                <tr>
+                    <td class="new-td">联通版</td>
+                    <td class="new-td"><input type="text"  class="int-text int-mini" /></td>
+                </tr>
+            </table>
+        </div>
+        <!--/table表格结束-->
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="right pr-30">
+                <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+                <input id="edit-close" type="button" onclick="pager._closeAddStoView();"
+                       class="biu-btn  btn-primary  btn-auto  ml-5" value="取  消">
+            </p>
         </div>
     </div>
-    <div class="mask"></div>
+    <div class="mask" id="eject-mask"></div>
 </div>
-<!--/结束-->
+<!--编辑名称弹出框  中结束-->
 <!--废弃 弹出框  小-->
 <div class="eject-big">
     <div class="eject-samll" id="eject-samll-3">
@@ -249,9 +268,11 @@
                                                         <li>
                                                             <p>优先级${storageMap.key}</p>
                                                             <c:if test="${noDicard}">
-                                                            <p><input type="button" name="groupSn${stoGroup.storageGroupId}"
+                                                            <p>
+                                                                <input type="button" name="groupSn${stoGroup.storageGroupId}"
                                                                       class="biu-btn  btn-primary  btn-auto" pn="${storageMap.key}"
-                                                                      value="增加库存"></p>
+                                                                      value="增加库存" onclick="pager._showAddStoView(${stoGroup.storageGroupId},${storageMap.key});">
+                                                            </p>
                                                             </c:if>
                                                         </li>
                                                     </ul>
@@ -379,7 +400,7 @@
                                 <p>优先级{{:priNum}}</p>
                                     <p><input type="button" groupId="{{:groupId}}"
                                               class="biu-btn  btn-primary  btn-auto" pn="{{:priNum}}"
-                                               value="增加库存"></p>
+                                               value="增加库存" onclick="pager._showAddStoView({{:groupId}},{{:priNum}});"></p>
                             </li>
                         </ul>
                     </div>

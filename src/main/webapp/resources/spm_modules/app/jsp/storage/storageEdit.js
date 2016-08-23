@@ -62,6 +62,16 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     		}
     		return false;
     	},
+		//显示添加库存
+		_showAddStoView:function(groupId,pNum){
+			$('#eject-mask').fadeIn(100);
+			$('#edit-medium').slideDown(200);
+		},
+		//关闭添加库存弹出框
+		_closeAddStoView:function(){
+			$('#eject-mask').fadeOut(100);
+			$('#edit-medium').slideUp(150);
+		},
 		//更改库存组状态
 		_changeGroupStatus:function(statusBtn){
 			var statusBtnJ = $(statusBtn);
