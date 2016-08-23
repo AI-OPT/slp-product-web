@@ -2,18 +2,14 @@ package com.ai.slp.product.web.controller.prodAttr;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.xml.resolver.apps.resolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,25 +20,21 @@ import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
 import com.ai.slp.common.api.cache.param.SysParamSingleCond;
-import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
-import com.ai.slp.product.api.normproduct.param.NormProdRequest;
-import com.ai.slp.product.api.normproduct.param.NormProdResponse;
 import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
 import com.ai.slp.product.api.productcat.param.AttrDefInfo;
 import com.ai.slp.product.api.productcat.param.AttrDefParam;
 import com.ai.slp.product.api.productcat.param.AttrInfo;
 import com.ai.slp.product.api.productcat.param.AttrPam;
 import com.ai.slp.product.api.productcat.param.AttrParam;
-import com.ai.slp.product.api.productcat.param.ProdCatInfo;
-import com.ai.slp.product.api.productcat.param.ProductCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.model.prodAttr.ProdAttrInfo;
-import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.util.AdminUtil;
-import com.ai.slp.product.web.util.DateUtil;
 import com.alibaba.fastjson.JSON;
 
 /**
@@ -114,14 +106,26 @@ public class AttrController {
 		ICacheSV cacheSV = DubboConsumerFactory.getService("iCacheSV");
 		SysParamSingleCond sysParamSingleCond = null;
 		PageInfoResponse<AttrDefInfo> result = attrAndValDefSV.queryPageAttrs(attrDefParam);
+		ISysUserQuerySV sysUserQuerySV = DubboConsumerFactory.getService(ISysUserQuerySV.class);
+		SysUserQueryRequest userQueryRequest= new SysUserQueryRequest();
 		
-		//获取输入值方式
 		for (AttrDefInfo attrDefInfo : result.getResult()) {
+			//获取输入值方式
 			if (StringUtils.isNotBlank(attrDefInfo.getValueWay())) {
 			 String valueWay = attrDefInfo.getValueWay();
 			 sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID, ComCacheConstants.ProdAttr.CODE, ComCacheConstants.ProdAttr.VALUE_WAY, valueWay);
 			 String valueWayName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 			 attrDefInfo.setValueWay(valueWayName);
+			}
+			//设置操作员名称
+			Long operId = attrDefInfo.getOperId();
+			if(operId != null){
+				userQueryRequest.setId(Long.toString(operId));
+				userQueryRequest.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+				SysUserQueryResponse userInfo = sysUserQuerySV.queryUserInfo(userQueryRequest);
+				if(userInfo != null){
+					attrDefInfo.setOperName(userInfo.getName());
+				}
 			}
 		}
 		return result;

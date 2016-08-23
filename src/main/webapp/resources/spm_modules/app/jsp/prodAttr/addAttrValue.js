@@ -60,7 +60,7 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
     	_addAttrBtn:function(){
 			attrNum['num']=attrNum['num']+1;
 			var template = $.templates("#attrAddTemplate");
-			var htmlOutput = template.render(attrValueName);
+			var htmlOutput = template.render(attrNum);
 			$("#subDiv").before(htmlOutput);
 		},
 		
@@ -85,6 +85,9 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 				var attrObj = {};
 				console.log(index+" form-label");
 				//属性名称
+				var attrId = $(this).find("input[name='attrId']")[0];
+				attrObj['attrId'] = attrId.value;
+				//属性名称
 				var attrValueName = $(this).find("input[name='attrValueName']")[0];
 				attrObj['attrValueName'] = attrValueName.value;
 				//首字母
@@ -103,7 +106,7 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 			processing: true,
 			message: "保存中，请等待...",
 			url: _base+"/attrManage/saveAttrValue",
-			data:{'attrListStr':JSON.stringify(attrArrValue)},
+			data:{'attrValueListStr':JSON.stringify(attrArrValue)},
 			success: function(data){
 				if("1"===data.statusCode){
 					//alert("保存成功");

@@ -27,11 +27,11 @@ require("twbs-pagination/jquery.twbsPagination.min");
 		element: $(".form-label")
 	});
 	validator.addItem({
-		element: "input[name=attrValueName]",
+		element: "#upAttrValueName",
 		required: true,
 		errormessageRequired:"属性值名称不能为空"
 	}).addItem({
-		element: "input[name=firstLetter]",
+		element: "#upFirstLetter",
 		required: true,
 		pattern: "[A-Z]{1}",
 		errormessagePattern:'请输入大写字母'
@@ -59,10 +59,10 @@ require("twbs-pagination/jquery.twbsPagination.min");
             "click #delAttrValueBtn":"_delAttr",
             "click #aband-close":"_closeDelConf",
             "click #delCloseImg":"_closeDelConf",
-            "click #addAttrValueButton":"_addAttrValueButton",
-            "click #addAttrValue-close":"_closeAddAttrValueDiv",
-            "click #createCloseImg":"_closeAddAttrValueDiv",
-            "click #submitAddBtn":"_saveAttrValue"
+            /*"click #addAttrValueButton":"_addAttrValueButton",*/
+            /*"click #addAttrValue-close":"_closeAddAttrValueDiv",*/
+            /*"click #createCloseImg":"_closeAddAttrValueDiv",*/
+            /*"click #submitAddBtn":"_saveAttrValue"*/
             },
     	//重写父类
     	setup: function () {
@@ -141,7 +141,7 @@ require("twbs-pagination/jquery.twbsPagination.min");
 		//提交更新
 		_updateAttr:function(){
 			var _this = this;
-			
+			validator.execute();
 			var attrvalueDefId = $("#upAttrvalueDefId").val();
 			var attrValueName = $("#upAttrValueName").val();
 			var firstLetter = $("#upFirstLetter").val();
@@ -225,20 +225,20 @@ require("twbs-pagination/jquery.twbsPagination.min");
 			$("#delAttrValueId").val('');
 		},
 		
-		//新增属性值的弹框
+		/*//新增属性值的弹框
 		_showAddAttr:function(){
 			$('#eject-mask').fadeIn(100);
 			$('#addAttrValue-samll').slideDown(200);
-		},
+		},*/
 		
-		//增加属性值输入框
+		/*//增加属性值输入框
     	_addAttrValueButton:function(){
 			attrNum['num']=attrNum['num']+1;
 			var template = $.templates("#attrAddTemplate");
 			var htmlOutput = template.render(attrNum);
 			$("#subDiv").before(htmlOutput);
-		},
-		//关闭属性值添加的弹框
+		},*/
+	/*	//关闭属性值添加的弹框
 		_closeAddAttrValueDiv:function(){
 			$('#eject-mask').fadeOut(100);
 			$('#addAttrValue-samll').slideUp(150);
@@ -246,9 +246,9 @@ require("twbs-pagination/jquery.twbsPagination.min");
 				$("#firstLetter").val("");
 				$("#upAttrValueName").val("");
 			
-		},
+		},*/
 		
-		//提交
+/*		//提交
 		_saveAttrValue:function(){
 			validator.execute(function(error, results, element) {
 			//获取from-label下的数据
@@ -285,7 +285,7 @@ require("twbs-pagination/jquery.twbsPagination.min");
 			}
 		});
 	});	
-    }
+    }*/
     	
     });
     

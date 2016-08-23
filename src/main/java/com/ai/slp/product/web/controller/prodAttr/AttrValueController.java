@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,21 +21,16 @@ import com.ai.opt.sdk.constants.ExceptCodeConstants;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParamSingleCond;
+import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
 import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
-import com.ai.slp.product.api.productcat.param.AttrDefInfo;
-import com.ai.slp.product.api.productcat.param.AttrDefParam;
-import com.ai.slp.product.api.productcat.param.AttrInfo;
-import com.ai.slp.product.api.productcat.param.AttrPam;
-import com.ai.slp.product.api.productcat.param.AttrParam;
 import com.ai.slp.product.api.productcat.param.AttrVal;
 import com.ai.slp.product.api.productcat.param.AttrValInfo;
 import com.ai.slp.product.api.productcat.param.AttrValPageQuery;
 import com.ai.slp.product.api.productcat.param.AttrValParam;
 import com.ai.slp.product.api.productcat.param.AttrValUniqueReq;
 import com.ai.slp.product.web.constants.SysCommonConstants;
-import com.ai.slp.product.web.model.prodAttr.ProdAttrInfo;
 import com.ai.slp.product.web.model.prodAttr.ProdAttrValueInfo;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
@@ -102,7 +96,25 @@ public class AttrValueController {
 	private PageInfoResponse<AttrValInfo> queryAttrByAttrvalId(AttrValPageQuery pageQuery) {
 		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
 		PageInfoResponse<AttrValInfo> result = attrAndValDefSV.queryPageAttrvalue(pageQuery);
-		
+		if(result != null){
+			List<AttrValInfo> attrValInfoList = result.getResult();
+			if(attrValInfoList != null && attrValInfoList.size()>0){
+				ISysUserQuerySV sysUserQuerySV = DubboConsumerFactory.getService(ISysUserQuerySV.class);
+				SysUserQueryRequest userQueryRequest= new SysUserQueryRequest();
+				for(AttrValInfo attrValInfo : attrValInfoList){
+					//设置操作员名称
+					Long operId = attrValInfo.getOperId();
+					if(operId != null){
+						userQueryRequest.setId(Long.toString(operId));
+						userQueryRequest.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+						SysUserQueryResponse userInfo = sysUserQuerySV.queryUserInfo(userQueryRequest);
+						if(userInfo != null){
+							attrValInfo.setOperName(userInfo.getName());
+						}
+					}
+				}
+			}
+		}
 		return result;
 	}
 	
@@ -110,8 +122,8 @@ public class AttrValueController {
 	 * 进入添加属性值的页面
 	 */
 	@RequestMapping("/addAttrValue")
-	public String addAttr() {
-		
+	public String addAttr(String attrId, Model uiModel) {
+		uiModel.addAttribute("attrId", attrId);
 		return "prodAttr/addAttrValue";
 	}
 	

@@ -58,6 +58,7 @@
 <script id="attrAddTemplate"  type="text/template">
 	 <!-- 查询条件 -->
                             <div class="form-label bd-bottom ui-form" data-widget="validator">
+								<input type="hidden" name="attrId" value="${attrId}"/>
 								<div class="title-right">
                                    <p class="plus-word btn-primary">
 
