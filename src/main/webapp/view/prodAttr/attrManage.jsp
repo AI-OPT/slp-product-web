@@ -192,7 +192,7 @@
 										<td>{{:attrValueName}}</td>
 										<td>{{:firstLetter}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
-										<td>{{:operId}}</td>
+										<td>{{:operName}}</td>
 										<td>
 											<a attrvalueDefId="{{:attrvalueDefId}}" name="editView" href="javaScript:void(0)" class="blue-border">编辑</a>
 											<a attrvalueDefId="{{:attrvalueDefId}}" name="delView" href="javaScript:void(0)" class="blue-border">删除</a>
