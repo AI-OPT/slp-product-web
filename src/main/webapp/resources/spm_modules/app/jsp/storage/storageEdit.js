@@ -264,6 +264,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     	},
 		//库存废弃
 		_changeStoStatus:function(obj){
+			var _this =this;
 			var status = $(obj).attr('statue');
 			var stoId = $(obj).attr('storageId');
 			console.log("storageId:"+stoId+",status:"+status);
@@ -285,11 +286,13 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 						$(obj).html("停用");
 						$(obj).attr("statue", stoStop);
 						$(obj).parent().prev().html("启用");
+						_this._showMsg("库存启用成功");
 					}//停用
 					else if (status === stoStop) {
 						$(obj).text("启用");
 						$(obj).attr("statue", stoActive);
 						$(obj).parent().prev().text("停用");
+						_this._showMsg("库存停用成功");
 					}
 				}
 			});
