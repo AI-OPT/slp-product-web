@@ -1,6 +1,8 @@
 package com.ai.slp.product.web.controller.storage;
 
+import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.BaseListResponse;
+import com.ai.opt.base.vo.BaseMapResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
@@ -14,13 +16,12 @@ import com.ai.slp.product.api.normproduct.param.AttrQuery;
 import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
 import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
 import com.ai.slp.product.api.product.interfaces.IProductSV;
+import com.ai.slp.product.api.product.param.SkuInfo;
 import com.ai.slp.product.api.product.param.SkuSetForProduct;
 import com.ai.slp.product.api.product.param.StoGroupInfoQuery;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
-import com.ai.slp.product.api.storage.param.StorageGroupQuery;
-import com.ai.slp.product.api.storage.param.StorageGroupRes;
-import com.ai.slp.product.api.storage.param.StorageRes;
+import com.ai.slp.product.api.storage.param.*;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.ProductCatConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
@@ -174,5 +175,53 @@ public class StorageController {
             paramMap.put(sysParam.getColumnValue(),sysParam);
         }
         return paramMap;
+    }
+    /**
+     * 获取库存下SKU库存的信息
+     * @param storageId
+     * @return
+     */
+    @RequestMapping("/skuSto/{id}")
+    @ResponseBody
+    private ResponseData<SkuSetForProduct> querySkuStorage(@PathVariable("id")String storageId,String groupId){
+        ResponseData<SkuSetForProduct> responseData;
+        IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
+        StoGroupInfoQuery infoQuery = new StoGroupInfoQuery();
+        infoQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        infoQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        infoQuery.setGroupId(groupId);
+        SkuSetForProduct skuSetForProduct = productSV.querySkuSetForGroup(infoQuery);
+        ResponseHeader header = skuSetForProduct.getResponseHeader();
+        try {
+            //保存错误
+            if (header!=null && !header.isSuccess()){
+                throw new BusinessException(header.getResultCode(),header.getResultMessage());
+            }
+            IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
+            StorageUniQuery query = new StorageUniQuery();
+            query.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+            query.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+            query.setStorageId(storageId);
+            //获取SKU库存信息
+            BaseMapResponse<String, SkuStorageInfo> mapResponse = storageSV.querySkuStorageById(query);
+            header = skuSetForProduct.getResponseHeader();
+            if (header!=null && !header.isSuccess()){
+                throw new BusinessException(header.getResultCode(),header.getResultMessage());
+            }
+            Map<String, SkuStorageInfo> infoMap = mapResponse.getResult();
+            List<SkuInfo> skuInfoList = skuSetForProduct.getSkuInfoList();
+            for (SkuInfo skuInfo:skuInfoList){
+                SkuStorageInfo info = infoMap.get(skuInfo.getSkuId());
+                if (info!=null)
+                    skuInfo.setTotalNum(info.getTotalNum());
+            }
+            responseData = new ResponseData<SkuSetForProduct>(
+                    ResponseData.AJAX_STATUS_SUCCESS, "OK",skuSetForProduct);
+        }catch (BusinessException ex){
+            responseData = new ResponseData<SkuSetForProduct>(
+                    ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+ex.getMessage());
+        }
+
+        return responseData;
     }
 }

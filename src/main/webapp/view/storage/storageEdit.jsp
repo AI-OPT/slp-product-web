@@ -72,10 +72,11 @@
 <div class="eject-big">
     <div class="eject-medium" id="edit-medium">
         <div class="eject-medium-title">
-            <p>编辑名称</p>
+            <p>编辑库存</p>
             <p class="img" onclick="pager._closeAddStoView();"><i class="fa fa-times"></i></p>
         </div>
         <div class="form-label">
+            <input type="hidden" id="storageId">
             <input type="hidden" id="stoAddGroupId">
             <input type="hidden" id="stoAddGroupPn">
             <ul>
@@ -119,6 +120,14 @@
     </div>
     <div class="mask" id="eject-mask"></div>
 </div>
+<script id="skuStoTemp" type="text/template">
+    <tr>
+        {{for valForSkuList}}
+        <td>{{:valName}}</td>
+        {{/for}}
+        <td >{{:totalNum}}</td>
+    </tr>
+</script>
 <script id="skuInfoTemp" type="text/template">
     <tr>
         {{for valForSkuList}}
@@ -128,6 +137,52 @@
                     class="int-text int-mini"  value="0" maxlength="10"/></td>
     </tr>
 </script>
+<div class="eject-big">
+    <div class="eject-medium" id="info-medium">
+        <div class="eject-medium-title">
+            <p>库存信息</p>
+            <p class="img" onclick="pager._closeStorageInfo();"><i class="fa fa-times"></i></p>
+        </div>
+        <div class="form-label center">
+            <ul>
+                <li>
+                    <p class="word">库存名称:</p>
+                    <p id="stoInfoName"></p>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <p class="word">虚拟库存量:</p>
+                    <p id="stoInfoNum"></p>
+                </li>
+            </ul>
+        </div>
+        <c:set var="isSale" value="false"/>
+        <c:if test="${!saleAttr.isEmpty()}">
+            <c:set var="isSale" value="true"/>
+            <!--table表格-->
+            <div class="table-responsive clearfix">
+                <table class="table table-hover table-border table-bordered">
+                    <thead>
+                    <tr id="attrValTr4Sto">
+                    </tr>
+                    </thead>
+                    <tbody id="skuStoInfo">
+                    </tbody>
+                </table>
+            </div>
+        </c:if>
+        <!--/table表格结束-->
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input type="button" onclick="pager._closeStorageInfo();"
+                       class="biu-btn  btn-primary  btn-auto  ml-5" value="关  闭">
+            </p>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
 <!--编辑名称弹出框  中结束-->
 <!--废弃 弹出框  小-->
 <div class="eject-big">
@@ -307,12 +362,15 @@
                                                     <c:choose>
                                                         <%-- 废弃\自动废弃状态 --%>
                                                         <c:when test="${storage.state == '3' || storage.state == '31'}">
-                                                            <a href="javaScript:void(0);"  class="blue">查看</a>
+                                                            <a href="javaScript:void(0);"  class="blue"
+                                                               storageId="${storage.storageId}" groupId="${stoGroup.storageGroupId}"
+                                                               onclick="pager._showStorageInfo(this)">查看</a>
                                                         </c:when>
                                                         <%-- 启用\自动启用状态 --%>
                                                         <c:when test="${storage.state == '1' || storage.state == '11'}">
                                                             <a href="javaScript:void(0);"  class="blue"
-                                                               storageId="${storage.storageId}">编辑</a>
+                                                               storageId="${storage.storageId}" groupId="${stoGroup.storageGroupId}"
+                                                               onclick="pager._showStorageEdit(this);">编辑</a>
                                                             <a href="javaScript:void(0);"  class="blue"
                                                                statue="${stoStop}" storageId="${storage.storageId}"
                                                                onclick="pager._changeStoStatus(this)">停用</a>
@@ -323,7 +381,8 @@
                                                         <%-- 停用状态 --%>
                                                         <c:when test="${storage.state == '2'}">
                                                             <a href="javaScript:void(0);"  class="blue"
-                                                               storageId="${storage.storageId}">编辑</a>
+                                                               storageId="${storage.storageId}" groupId="${stoGroup.storageGroupId}"
+                                                               onclick="pager._showStorageEdit(this);">编辑</a>
                                                             <a href="javaScript:void(0);"  class="blue"
                                                                statue="${stoActive}" storageId="${storage.storageId}"
                                                                onclick="pager._changeStoStatus(this)">启用</a>
@@ -333,7 +392,8 @@
                                                         </c:when>
                                                         <%-- 自动停用状态 --%>
                                                         <c:when test="${storage.state == '21'}">
-                                                            <a href="javaScript:void(0);"  class="blue">编辑</a>
+                                                            <a href="javaScript:void(0);"  class="blue"
+                                                               onclick="pager._showStorageEdit(this);">编辑</a>
                                                             <a href="#"  class="blue"
                                                                statue="${stoDiscard}" storageId="${storage.storageId}"
                                                                onclick="pager._changeStoStatus(this)">废弃</a>

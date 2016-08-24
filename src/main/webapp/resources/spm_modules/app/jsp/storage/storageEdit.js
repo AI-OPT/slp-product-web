@@ -62,6 +62,8 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			$("#stoAddGroupPn").val(pNum);
 			//若不包含销售属性,则直接返回
 			if (!hasSale){
+				//取消只读
+				$('#newTotalNum').removeAttr("readonly");
 				$('#eject-mask').fadeIn(100);
 				$('#edit-medium').slideDown(200);
 				console.log("The hasSale is "+hasSale);
@@ -293,6 +295,104 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 						$(obj).attr("statue", stoActive);
 						$(obj).parent().prev().text("停用");
 						_this._showMsg("库存停用成功");
+					}
+				}
+			});
+		},
+		//显示详情页面
+		_showStorageInfo:function(obj){
+			var storageId = $(obj).attr("storageId");
+			var groupId = $(obj).attr("groupId");
+			//数量
+			var nameTd = $(obj).parent().prev().prev();
+			$("#stoInfoNum").text(nameTd.html());
+			//名称
+			$("#stoInfoName").text(nameTd.prev().html());
+			//若不包含销售属性,则直接返回
+			if (!hasSale){
+				$('#eject-mask').fadeIn(100);
+				$('#info-medium').slideDown(200);
+				console.log("The hasSale is "+hasSale);
+				return;
+			}
+
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "获取数据中，请等待...",
+				url: _base+"/storage/skuSto/"+storageId,
+				data:{"groupId":groupId},
+				success: function(data){
+					//变更成功
+					if("1"=== data.statusCode){
+						//属性标题信息
+						var attrValTr = "";
+						var attrVal = data.data.attrInfoList;
+						$.each( attrVal, function(index,item){
+							attrValTr = attrValTr+"<th>"+item.attrName+"</th>";
+						});
+						attrValTr = attrValTr+"<th>sku库存量</th>";
+						$("#attrValTr4Sto").html(attrValTr);
+						//SKU信息
+						var template = $.templates("#skuStoTemp");
+						var htmlOutput = template.render(data.data.skuInfoList);
+						$("#skuStoInfo").html(htmlOutput);
+						$('#eject-mask').fadeIn(100);
+						$('#info-medium').slideDown(200);
+					}
+				}
+			});
+		},
+		//关闭详情页
+		_closeStorageInfo:function(){
+			$('#eject-mask').fadeOut(100);
+			$('#info-medium').slideUp(150);
+		},
+		//显示编辑页面
+		_showStorageEdit:function(obj){
+			var storageId = $(obj).attr("storageId");
+			var groupId = $(obj).attr("groupId");
+			//库存组
+			$("#stoAddGroupId").val(groupId);
+			//数量
+			var nameTd = $(obj).parent().prev().prev();
+			$("#newTotalNum").val(nameTd.html());
+			$('#newTotalNum').attr("readonly","readonly");
+			//名称
+			$("#newStorageName").val(nameTd.prev().html());
+			$("#storageId").val(storageId);
+
+			//若不包含销售属性,则直接返回
+			if (!hasSale){
+				$('#eject-mask').fadeIn(100);
+				$('#edit-medium').slideDown(200);
+				console.log("The hasSale is "+hasSale);
+				return;
+			}
+
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "获取数据中，请等待...",
+				url: _base+"/storage/skuSto/"+storageId,
+				data:{"groupId":groupId},
+				success: function(data){
+					//变更成功
+					if("1"=== data.statusCode){
+						//属性标题信息
+						var attrValTr = "";
+						var attrVal = data.data.attrInfoList;
+						$.each( attrVal, function(index,item){
+							attrValTr = attrValTr+"<th>"+item.attrName+"</th>";
+						});
+						attrValTr = attrValTr+"<th>sku库存量</th>";
+						$("#attrValTr").html(attrValTr);
+						//SKU信息
+						var template = $.templates("#skuStoTemp");
+						var htmlOutput = template.render(data.data.skuInfoList);
+						$("#skuInfo").html(htmlOutput);
+						$('#eject-mask').fadeIn(100);
+						$('#edit-medium').slideDown(200);
 					}
 				}
 			});
