@@ -307,17 +307,20 @@
                                                         <c:when test="${storage.state == '1' || storage.state == '11'}">
                                                             <a href="javaScript:void(0);"  class="blue">编辑</a>
                                                             <a href="javaScript:void(0);"  class="blue">停用</a>
-                                                            <a href="javaScript:void(0);"  class="blue">废弃</a>
+                                                            <a href="javaScript:void(0);"  class="blue"
+                                                               onclick="pager._discardSto('${storage.storageId}')">废弃</a>
                                                         </c:when>
                                                         <%-- 停用状态 --%>
                                                         <c:when test="${storage.state == '2'}">
                                                             <a href="javaScript:void(0);"  class="blue">编辑</a>
                                                             <a href="javaScript:void(0);"  class="blue">启用</a>
-                                                            <a href="javaScript:void(0);"  class="blue">废弃</a>
+                                                            <a href="javaScript:void(0);"  class="blue"
+                                                               onclick="pager._discardSto('${storage.storageId}')">废弃</a>
                                                         </c:when>
                                                         <%-- 自动停用状态 --%>
                                                         <c:when test="${storage.state == '21'}">
-                                                            <a href="javaScript:void(0);"  class="blue">编辑</a><a href="#"  class="blue">废弃</a>
+                                                            <a href="javaScript:void(0);"  class="blue">编辑</a>
+                                                            <a href="#"  class="blue" onclick="pager._discardSto('${storage.storageId}')">废弃</a>
                                                         </c:when>
                                                     </c:choose>
                                                 </td>

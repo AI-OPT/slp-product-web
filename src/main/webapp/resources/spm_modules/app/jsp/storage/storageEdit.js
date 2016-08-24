@@ -55,13 +55,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			$('#eject-mask').fadeOut(100);
 			$('#up-group-name').slideUp(150);
 		},
-    	//判断是否是正整数
-    	_isNum : function(str){
-    		if(/^\d+$/.test(str)){    
-    			return true;   
-    		}
-    		return false;
-    	},
+
 		//显示添加库存
 		_showAddStoView:function(groupId,pNum){
 			$("#stoAddGroupId").val(groupId);
@@ -268,6 +262,20 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 				}
 			});
     	},
+		//库存废弃
+		_discardSto:function(stoId){
+			ajaxController.ajax({
+				type: "get",
+				processing: true,
+				message: "操作中，请等待...",
+				url: _base+"/storage/edit/discardSto/"+stoId,
+				success: function(data){
+					if("1"===data.statusCode){
+						window.location.reload();
+					}
+				}
+			});
+		},
     	//判断字符串的长度-中文2个,英文1个
     	_getLen:function(str) {  
     	    if (str == null) return 0;  
@@ -276,6 +284,13 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     	    }  
     	    return str.replace(/[^\x00-\xff]/g,"01").length;  
     	},
+		//判断是否是正整数
+		_isNum : function(str){
+			if(/^\d+$/.test(str)){
+				return true;
+			}
+			return false;
+		},
 
     	//返回之前的页面
     	_goBack:function(){

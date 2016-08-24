@@ -5,10 +5,8 @@ import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
-import com.ai.slp.product.api.storage.param.NameUpReq;
-import com.ai.slp.product.api.storage.param.STOStorage;
-import com.ai.slp.product.api.storage.param.STOStorageGroup;
-import com.ai.slp.product.api.storage.param.StoGroupStatus;
+import com.ai.slp.product.api.storage.param.*;
+import com.ai.slp.product.web.constants.StorageConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
@@ -143,6 +141,32 @@ public class StorageEditController {
         ResponseHeader header = baseResponse.getResponseHeader();
         if (header != null && !header.isSuccess()) {
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "添加失败:" + header.getResultMessage());
+        }
+        return responseData;
+    }
+
+    /**
+     * 废弃库存
+     * @param stoId
+     * @param session
+     * @return
+     */
+    @RequestMapping("/discardSto/{id}")
+    @ResponseBody
+    public ResponseData<String> discardStorage(
+            @PathVariable("id")String stoId,HttpSession session){
+        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "废弃成功");
+        IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
+        StorageStatus storageStatus = new StorageStatus();
+        storageStatus.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        storageStatus.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        storageStatus.setStorageId(stoId);
+        storageStatus.setOperId(AdminUtil.getAdminId(session));
+        storageStatus.setState(StorageConstants.STATUS_DISCARD);
+        BaseResponse baseResponse = storageSV.chargeStorageStatus(storageStatus);
+        ResponseHeader header = baseResponse.getResponseHeader();
+        if (header != null && !header.isSuccess()) {
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "操作失败:" + header.getResultMessage());
         }
         return responseData;
     }
