@@ -100,7 +100,7 @@ define('app/jsp/normproduct/add', function (require, exports, module) {
     	_next:function(){
     		var length = document.getElementsByName("selectProductCat").length-1;
     		var productCatId = $("#selectCat"+length+" option:selected").val();
-    		window.location.href = _base+'/normprodedit/'+productCatId
+    		window.location.href = _base+'/normprodedit/addProduct?productCatId='+productCatId
     	}
     });
     

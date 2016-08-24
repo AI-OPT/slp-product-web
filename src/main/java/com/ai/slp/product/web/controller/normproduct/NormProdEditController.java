@@ -23,14 +23,21 @@ import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
+import com.ai.slp.common.api.cache.param.SysParam;
+import com.ai.slp.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
+import com.ai.slp.product.api.normproduct.param.AttrMap;
+import com.ai.slp.product.api.normproduct.param.AttrQuery;
+import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
 import com.ai.slp.product.api.normproduct.param.NormProdSaveRequest;
+import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
 import com.ai.slp.product.api.product.interfaces.IProductSV;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.AttrQueryForCat;
 import com.ai.slp.product.api.productcat.param.ProdCatAttrDef;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
+import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.ProductCatConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.AttrAndValService;
@@ -50,11 +57,11 @@ public class NormProdEditController {
 	private ProdCatService prodCatService;
 	@Autowired
     private AttrAndValService attrAndValService;
-    IProductManagerSV productManagerSV;
-    IProductSV productSV;
-    ICacheSV cacheSV;
-    INormProductSV normProductSV;
-    IProductCatSV productCatSV;
+	private IProductManagerSV productManagerSV;
+	private IProductSV productSV;
+	private ICacheSV cacheSV;
+	private INormProductSV normProductSV;
+	private IProductCatSV productCatSV;
 
     public void initConsumer() {
         if (productManagerSV == null)
@@ -97,13 +104,18 @@ public class NormProdEditController {
      * 显示添加页面
      * @return
      */
-    @RequestMapping("/{id}")
-    public String addinfoView(@PathVariable("id")String productCatId,Model uiModel){
-    	//根据类目ID 加载标准品的关键属性  和  销售属性   1关键属性  2销售属性  3非关键属性
+    @RequestMapping("/addProduct")
+    public String addinfoView(String productCatId,Model uiModel){
+    		initConsumer();
+    		//设置类目ID
+    		uiModel.addAttribute("productCatId", productCatId);
+    		//查询类目链
+            uiModel.addAttribute("catLinkList", prodCatService.queryLink(productCatId));
+            //标准品属性对象
+            uiModel.addAttribute("normProdInfo", new NormProdInfoResponse());
+    		//根据类目ID 加载标准品的关键属性  和  销售属性   1关键属性  2销售属性  3非关键属性
 	    	//标准品关键属性 
 	    	AttrQueryForCat attrQuery = new AttrQueryForCat();
-	    	//设置类目ID
-	    	//设置属性类型
 	    	attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
 	    	attrQuery.setProductCatId(productCatId);
 	    	attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
@@ -119,30 +131,63 @@ public class NormProdEditController {
 			BaseListResponse<ProdCatAttrDef> saleAttrlist = productCatSV.queryAttrByCatAndType(attrQuery);
 			uiModel.addAttribute("saleAttrlist",saleAttrlist.getResult());
 			
-			return "normproduct/addinfo";
-			
-			
-    	
-    	//根据类目ID 加载标准品的关键属性  和  销售属性
-	    	//标准品关键属性
-    	/*		AttrQueryForCat attrqueryforcat = new AttrQueryForCat();
-    		String productCatId = request.getParameter("productCatId");
-    		attrqueryforcat.setProductCatId(productCatId);
-    		
-    		IProductCatSV iProductCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
-    	//	Map<ProdCatAttrDef, List<AttrValInfo>> attrMap = iProductCatSV.queryAttrByCatAndType(attrqueryforcat);
-    		BaseListResponse<ProdCatAttrDef> catDefList = iProductCatSV.queryAttrByCatAndType(attrqueryforcat);
-//    		uiModel.addAttribute("attrAndVal", attrAndValService.getAttrAndVals(attrMap));
-	        
-	        
-    	//标准品的状态 --缓存中进行查询
-    	SysParamMultiCond paramMultiCond = new SysParamMultiCond();
-    	paramMultiCond.setParamCode(ComCacheConstants.NormProduct.STATUS);
-    	List<SysParam> states = cacheSV.getSysParamList(paramMultiCond);
-    	uiModel.addAttribute("state",states);*/
-    	
-    	//return "normproduct/addinfo";
+			return "normproduct/editinfo";
     }
+    
+    /**
+     * 显示添加页面
+     * @return
+     */
+    @RequestMapping("/{id}")
+    public String modifyinfoView(@PathVariable("id")String prodId,Model uiModel){
+    		initConsumer();
+    		//标准品ID
+            uiModel.addAttribute("standedProdId", prodId);
+            //查询标准品信息
+            NormProdUniqueReq normProdUniqueReq = new NormProdUniqueReq();
+            normProdUniqueReq.setProductId(prodId);
+            normProdUniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+            normProdUniqueReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+            INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
+            NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
+            uiModel.addAttribute("productInfo", normProdInfoResponse);
+            //查询类目链
+            String productCatId = normProdInfoResponse.getProductCatId();
+			uiModel.addAttribute("catLinkList", prodCatService.queryLink(productCatId));
+            uiModel.addAttribute("productCatId", productCatId);
+            //标准品关键属性
+            
+            //标准品关键属性 
+	    	AttrQueryForCat attrForQuery = new AttrQueryForCat();
+	    	attrForQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+	    	attrForQuery.setProductCatId(productCatId);
+	    	attrForQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
+			BaseListResponse<ProdCatAttrDef> keyAttrlist = productCatSV.queryAttrByCatAndType(attrForQuery);
+			List<ProdCatAttrDef> keyAttrList = keyAttrlist.getResult();
+			uiModel.addAttribute("keyAttrlist",keyAttrList);
+			//标准品销售属性 
+			attrForQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+			attrForQuery.setProductCatId(productCatId);
+			attrForQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
+			BaseListResponse<ProdCatAttrDef> saleAttrlist = productCatSV.queryAttrByCatAndType(attrForQuery);
+			uiModel.addAttribute("saleAttrlist",saleAttrlist.getResult());
+			
+//			//标准品关键属性值
+//            AttrQuery attrQuery = new AttrQuery();
+//            attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+//            attrQuery.setProductId(normProdInfoResponse.getProductId());
+//            attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
+//            AttrMap attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
+//            uiModel.addAttribute("keyAttrValue", attrAndValService.getAttrAndVals(attrMap));
+//            //查询销售属性值
+//            attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
+//            attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
+//            uiModel.addAttribute("saleAttrValue", attrAndValService.getAttrAndVals(attrMap));
+            
+			return "normproduct/editinfo";
+    }
+    
+    
     
     /**
      * 保存
@@ -150,8 +195,8 @@ public class NormProdEditController {
     @RequestMapping("/save")
     @ResponseBody
     public ResponseData<String> saveProductInfo(NormProdSaveRequest normInfo, HttpServletRequest request, HttpSession session){
+    	initConsumer();
     	ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
-        initConsumer();
     	//标准品名称
         normInfo.setProductName( request.getParameter("standedProductName"));
         

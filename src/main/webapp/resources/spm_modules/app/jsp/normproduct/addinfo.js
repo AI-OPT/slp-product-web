@@ -37,7 +37,7 @@ define('app/jsp/normproduct/addinfo', function (require, exports, module) {
         },
     	//重写父类
     	setup: function () {
-			normProdEditPager.superclass.setup.call(this);
+    		normProdEditPager.superclass.setup.call(this);
 		},
 		
 		//返回
