@@ -87,7 +87,7 @@
 									<li class="width-xlag">
 										<p class="word">&nbsp;</p>
 										<p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
-												  id="selectPriceList" value="查  询"></p>
+												  id="selectNormProductList" value="查  询"></p>
 									</li>
 								</ul>
 						</div>
@@ -105,12 +105,6 @@
 						<header class="main-box-header clearfix">
 							<h2 class="pull-left">查询结果</h2>
 						</header>
-						<div class="row"><!--删格化-->
-                                <p class="right pr-30">
-                                    <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
-                                           value="新  增" onclick="javaScript:window.location.href = '${_base}/normprodedit/add';">
-                                </p>
-                        </div>
 						<!--标题结束-->
 						<div class="main-box-body clearfix">
 							<!--table表格-->
@@ -142,15 +136,11 @@
 										<td>{{:productName}}</td>
 										<td>{{:catName}}</td>
 										<td>{{:productType}}</td>
-
-										<td>{{:marketPrice}}</td>
-
+										<!--  <td>{{:marketPrice}}</td>  -->
+										<td>{{:~liToYuan(marketPrice)}}</td>
 										<td>{{:state}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
-										<%--        <td>{{:operId}}</td> --%>
-                                         <td>
-											<a href="${_base}/storage/{{:productId}}" class="blue-border">添加市场价</a>
-										</td>
+										<td><a href="${_base}/marketpricequery/{{:productId}}" class="blue-border">添加市场价</a></td>
 									</tr>
 								</script>
 							</div>
@@ -186,8 +176,8 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		seajs.use('app/jsp/pricemanage/priceList', function(storageList) {
-			pager = new storageList({element : document.body});
+		seajs.use('app/jsp/marketprice/priceList', function(priceListPager) {
+			pager = new priceListPager({element : document.body});
 			pager.render();
 		});
 	})();

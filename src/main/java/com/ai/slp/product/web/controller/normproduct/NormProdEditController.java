@@ -1,26 +1,13 @@
 package com.ai.slp.product.web.controller.normproduct;
 
-import com.ai.opt.base.vo.BaseListResponse;
-import com.ai.opt.base.vo.BaseResponse;
-import com.ai.opt.base.vo.ResponseHeader;
-import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParam;
-import com.ai.slp.common.api.cache.param.SysParamMultiCond;
-import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
-import com.ai.slp.product.api.normproduct.param.NormProdSaveRequest;
-import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
-import com.ai.slp.product.api.product.interfaces.IProductSV;
-import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
-import com.ai.slp.product.api.productcat.param.AttrQueryForCat;
-import com.ai.slp.product.api.productcat.param.ProdCatAttrDef;
-import com.ai.slp.product.api.productcat.param.ProdCatInfo;
-import com.ai.slp.product.web.constants.ComCacheConstants;
-import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.constants.SysCommonConstants;
-import com.ai.slp.product.web.service.AttrAndValService;
-import com.ai.slp.product.web.service.ProdCatService;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +17,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
+import com.ai.opt.base.vo.BaseListResponse;
+import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.slp.common.api.cache.interfaces.ICacheSV;
+import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
+import com.ai.slp.product.api.normproduct.param.NormProdSaveRequest;
+import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
+import com.ai.slp.product.api.product.interfaces.IProductSV;
+import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
+import com.ai.slp.product.api.productcat.param.AttrQueryForCat;
+import com.ai.slp.product.api.productcat.param.ProdCatAttrDef;
+import com.ai.slp.product.api.productcat.param.ProdCatInfo;
+import com.ai.slp.product.web.constants.ProductCatConstants;
+import com.ai.slp.product.web.constants.SysCommonConstants;
+import com.ai.slp.product.web.service.AttrAndValService;
+import com.ai.slp.product.web.service.ProdCatService;
 
 /**
  * 对标准品进行操作
@@ -77,6 +78,18 @@ public class NormProdEditController {
 		Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
 		uiModel.addAttribute("catInfoMap", productCatMap);
+		Set<Entry<Short, List<ProdCatInfo>>> entrySet = productCatMap.entrySet();
+		String productCatValues = "";
+		for(Entry<Short, List<ProdCatInfo>> entry : entrySet){
+			List<ProdCatInfo> value = entry.getValue();
+			if(productCatValues != ""){
+				productCatValues = productCatValues + "&gt;" +value.get(0).getProductCatName();
+			}else{
+				productCatValues = value.get(0).getProductCatName();
+			}
+			
+		}
+		uiModel.addAttribute("productCatValues", productCatValues);
     	return "normproduct/add";
     }
     

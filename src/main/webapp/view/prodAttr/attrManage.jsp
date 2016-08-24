@@ -207,13 +207,18 @@
 							</div>
 							<!--分页结束-->
 							</div>
+							  <div id="subDiv" class="row pt-30">
+                            	<p class="center pr-30 mt-30">
+                                    <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                           value="返  回" onclick="javaScript:window.history.go(-1);">
+                            	</p>
+                            </div>
 						</div>
 					</div> 
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 <%-- <script id="attrAddTemplate"  type="text/template">
 	 <!-- 查询条件 -->
           <div class="form-label bd-bottom" data-widget="validator">

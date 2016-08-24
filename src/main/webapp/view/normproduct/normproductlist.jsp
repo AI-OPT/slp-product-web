@@ -21,10 +21,10 @@
 							<%-- 类目 --%>
 							<ul id="data1ProdCat">
 								<li class="col-md-12">
-									<p class="word">商品类目</p>
+									<p class="word"><span>*</span>商品类目</p>
 									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
 										<p id="productCat${status.index}">
-											<select class="select select-small" onChange="pager._selectChange(this);">
+											<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
 												<c:forEach var="info" items="${map.value}">
 													<option value="${info.productCatId}">${info.productCatName}</option>
 												</c:forEach>
@@ -33,7 +33,7 @@
 									</c:forEach>
 									<script id="prodCatTemple" type="text/template">
 										<p id="productCat{{:level}}">
-											<select class="select select-small" onChange="pager._selectChange(this);">
+											<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
 												{{for prodCatList}}
 												<option value="{{:productCatId}}">{{:productCatName}}</option>
 												{{/for}}
@@ -68,7 +68,20 @@
 										</p>
 									</li>
 								</ul>
-								<input type="hidden" id="state" value="1"/>
+								<ul>
+									<li class="col-md-6">
+										<p class="word">状态</p>
+										<p>
+											<select id="state" class="select select-medium">
+												
+											</select>
+										</p>
+									</li>
+									<li class="col-md-6">
+										<p class="word">操作员</p>
+										<p><input id="operId" type="text" class="int-text int-medium"></p>
+									</li>
+								</ul>
 								<ul>
 									<li class="col-md-6">
 										<p class="word">操作开始时间</p>
@@ -125,7 +138,7 @@
 										<th>类型</th>
 										<th>标准品状态</th>
 										<th>操作时间</th>
-										<!-- 	<td>操作人</td> -->
+										<th>操作人</th>
 										<th>操作</th>
 									</tr>
 									</thead>
@@ -143,10 +156,10 @@
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
-										<%--        <td>{{:operId}}</td> --%>
+										<td>{{:operName}}</td>
                                          <td>
 											<a href="#" class="blue">查看详情</a>
-											<a href="${_base}/storage/{{:productId}}" class="blue-border">编辑</a>
+											<a href="${_base}/normprodquery/{{:productId}}" class="blue-border">编辑</a>
                                             <a href="＃" class="blue">废弃</a>
 										</td>
 									</tr>
@@ -184,7 +197,7 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		seajs.use('app/jsp/storage/storageList', function(storageList) {
+		seajs.use('app/jsp/normproduct/normproductlist', function(storageList) {
 			pager = new storageList({element : document.body});
 			pager.render();
 		});
