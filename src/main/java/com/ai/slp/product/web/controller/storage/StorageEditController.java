@@ -6,6 +6,7 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.NameUpReq;
+import com.ai.slp.product.api.storage.param.STOStorageGroup;
 import com.ai.slp.product.api.storage.param.StoGroupStatus;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.util.AdminUtil;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -82,6 +84,32 @@ public class StorageEditController {
         }else
             responseData = new ResponseData<String>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK","");
+        return responseData;
+    }
+
+    /**
+     * 添加库存组
+     *
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping("/addGroup")
+    @ResponseBody
+    public ResponseData<String> addStorGroup(HttpServletRequest request, HttpSession session) {
+        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
+        IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
+        STOStorageGroup storageGroup = new STOStorageGroup();
+        storageGroup.setCreateId(AdminUtil.getAdminId(session));
+        storageGroup.setStandedProdId(request.getParameter("standedProdId"));
+        storageGroup.setStorageGroupName(request.getParameter("storageGroupName"));
+        storageGroup.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+
+        BaseResponse baseResponse = storageSV.createStorageGroup(storageGroup);
+        ResponseHeader header = baseResponse.getResponseHeader();
+        if (header != null && !header.isSuccess()) {
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "更新失败:" + header.getResultMessage());
+        }
         return responseData;
     }
 }

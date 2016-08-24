@@ -14,9 +14,15 @@ import com.ai.slp.product.api.normproduct.param.AttrMap;
 import com.ai.slp.product.api.normproduct.param.AttrQuery;
 import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
 import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
+import com.ai.slp.product.api.product.interfaces.IProductSV;
+import com.ai.slp.product.api.product.param.SkuSetForProduct;
+import com.ai.slp.product.api.product.param.StoGroupInfoQuery;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
-import com.ai.slp.product.api.storage.param.*;
+import com.ai.slp.product.api.storage.param.STOStorage;
+import com.ai.slp.product.api.storage.param.StorageGroupQuery;
+import com.ai.slp.product.api.storage.param.StorageGroupRes;
+import com.ai.slp.product.api.storage.param.StorageRes;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.ProductCatConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
@@ -121,32 +127,6 @@ public class StorageController {
     }
 
     /**
-     * 添加库存组
-     *
-     * @param request
-     * @param session
-     * @return
-     */
-    @RequestMapping("/addGroup")
-    @ResponseBody
-    public ResponseData<String> addStorGroup(HttpServletRequest request, HttpSession session) {
-        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
-        IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
-        STOStorageGroup storageGroup = new STOStorageGroup();
-        storageGroup.setCreateId(AdminUtil.getAdminId(session));
-        storageGroup.setStandedProdId(request.getParameter("standedProdId"));
-        storageGroup.setStorageGroupName(request.getParameter("storageGroupName"));
-        storageGroup.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-
-        BaseResponse baseResponse = storageSV.createStorageGroup(storageGroup);
-        ResponseHeader header = baseResponse.getResponseHeader();
-        if (header != null && !header.isSuccess()) {
-            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "更新失败:" + header.getResultMessage());
-        }
-        return responseData;
-    }
-
-    /**
      * 添加库存
      *
      * @param request
@@ -183,6 +163,32 @@ public class StorageController {
         uiModel.addAttribute("count", productCatMap.size() - 1);
         uiModel.addAttribute("catInfoMap", productCatMap);
         return "storage/storageList";
+    }
+
+    /**
+     * 获取库存组的SKU
+     * @param groupId
+     * @return
+     */
+    @RequestMapping("/sku/{id}")
+    @ResponseBody
+    public ResponseData<SkuSetForProduct> querySku(@PathVariable("id")String groupId){
+        ResponseData<SkuSetForProduct> responseData;
+        IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
+        StoGroupInfoQuery infoQuery = new StoGroupInfoQuery();
+        infoQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        infoQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        infoQuery.setGroupId(groupId);
+        SkuSetForProduct skuSetForProduct = productSV.querySkuSetForGroup(infoQuery);
+        ResponseHeader header = skuSetForProduct.getResponseHeader();
+        //保存错误
+        if (header!=null && !header.isSuccess()){
+            responseData = new ResponseData<SkuSetForProduct>(
+                    ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
+        }else
+            responseData = new ResponseData<SkuSetForProduct>(
+                    ResponseData.AJAX_STATUS_SUCCESS, "OK",skuSetForProduct);
+        return responseData;
     }
 
     /**

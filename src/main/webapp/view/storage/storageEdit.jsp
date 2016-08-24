@@ -71,6 +71,8 @@
             <p class="img" onclick="pager._closeAddStoView();"><i class="fa fa-times"></i></p>
         </div>
         <div class="form-label">
+            <input type="hidden" id="stoAddGroupId">
+            <input type="hidden" id="stoAddGroupPn">
             <ul>
                 <li>
                     <p class="word"><span>*</span>库存名称:</p>
@@ -80,33 +82,26 @@
             <ul>
                 <li>
                     <p class="word">虚拟库存量:</p>
-                    <p><input type="text" class="int-text int-small"></p>
+                    <p><input type="text" class="int-text int-small" <c:if test="${!saleAttr.isEmpty()}">readonly</c:if> ></p>
                 </li>
             </ul>
         </div>
+        <c:set var="isSale" value="false"/>
+    <c:if test="${!saleAttr.isEmpty()}">
+        <c:set var="isSale" value="true"/>
         <!--table表格-->
         <div class="table-responsive clearfix">
             <table class="table table-hover table-border table-bordered">
                 <thead>
-                <tr>
-                    <th>颜色</th>
-                    <th>内存</th>
-                    <th>版本</th>
-                    <th>sku库存量</th>
+                <tr id="attrValTr">
                 </tr>
                 </thead>
-                <tr>
-                    <td rowspan="2">黑色</td>
-                    <td rowspan="2">24343433</td>
-                    <td class="new-td">移动版</td>
-                    <td class="new-td"><input type="text"  class="int-text int-mini" /></td>
-                </tr>
-                <tr>
-                    <td class="new-td">联通版</td>
-                    <td class="new-td"><input type="text"  class="int-text int-mini" /></td>
-                </tr>
+                <tbody id="skuInfo">
+                </tbody>
+
             </table>
         </div>
+    </c:if>
         <!--/table表格结束-->
         <!--按钮-->
         <div class="row mt-15"><!--删格化-->
@@ -119,6 +114,14 @@
     </div>
     <div class="mask" id="eject-mask"></div>
 </div>
+<script id="skuInfoTemp" type="text/template">
+    <tr>
+        {{for valForSkuList}}
+        <td>{{:valName}}</td>
+        {{/for}}
+        <td ><input type="text"  class="int-text int-mini" /></td>
+    </tr>
+</script>
 <!--编辑名称弹出框  中结束-->
 <!--废弃 弹出框  小-->
 <div class="eject-big">
@@ -417,6 +420,8 @@
         </script>
 </html>
 <script type="text/javascript">
+    //是否有销售属性
+    var hasSale = ${isSale};
     var pager;
     var count = '${count}';
     var standedProdId = "${standedProdId}";
