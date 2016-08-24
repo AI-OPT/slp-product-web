@@ -1,4 +1,4 @@
-define('app/jsp/pricemanage/priceList', function (require, exports, module) {
+define('app/jsp/marketprice/priceList', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
@@ -20,7 +20,7 @@ define('app/jsp/pricemanage/priceList', function (require, exports, module) {
     var ajaxController = new AjaxController();
     var clickId = "";
     //定义页面组件类
-    var normproductlistPager = Widget.extend({
+    var priceListPager = Widget.extend({
     	
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -28,36 +28,33 @@ define('app/jsp/pricemanage/priceList', function (require, exports, module) {
     		clickId:""
     	},
     	Statics: {
-    		DEFAULT_PAGE_SIZE: 30
+    		DEFAULT_PAGE_SIZE: 10
     	},
     	//事件代理
     	events: {
-    		//查询在售商品
-            "click #selectPriceList":"_selectPriceList",
+    		//查询
+            "click #selectNormProductList":"_selectNormProductList"
             },
     	//重写父类
     	setup: function () {
-    		normproductlistPager.superclass.setup.call(this);
-    		this._selectPriceList();
+			priceListPager.superclass.setup.call(this);
+    		this._selectNormProductList();
     	},
     	
     	// 改变商品类目
     	_selectChange:function(osel){
-			var prodCatId = osel.options[osel.selectedIndex].value;
-			var clickId = $(osel).parent().attr('id');
-			//获取当前ID的最后数字
-			var index = Number(clickId.substring(10))+1;
-			//获取下拉菜单的总个数
-			var prodCat = document.getElementById("data1ProdCat");
-			var length = prodCat.getElementsByTagName("select").length;
-			//if(index==length){
-			//	return;
-			//}
-			//从当前元素开始移除后面的下拉菜单
-			for(var i=index;i<length;i++){
-				$("#productCat"+i).remove();
-			}
-			ajaxController.ajax({
+    		var prodCatId = osel.options[osel.selectedIndex].value;
+    		var clickId = $(osel).parent().attr('id');
+    		//获取当前ID的最后数字
+    		var index = Number(clickId.substring(10))+1;
+    		//获取下拉菜单的总个数
+    		var prodCat = document.getElementById("data1ProdCat");
+    		var length = prodCat.getElementsByTagName("select").length;
+    		//从当前元素开始移除后面的下拉菜单
+    		for(var i=index;i<length;i++){
+    			$("#productCat"+i).remove();
+    		}
+    		ajaxController.ajax({
 				type: "post",
 				processing: false,
 				// message: "加载中，请等待...",
@@ -65,11 +62,11 @@ define('app/jsp/pricemanage/priceList', function (require, exports, module) {
 				data:{"prodCatId":prodCatId},
 				success: function(data){
 					if(data != null && data != 'undefined' && data.data.length>0){
-						var template = $.templates("#prodCatTemple");
-						var htmlOutput = template.render(data.data);
-						$("#"+clickId).after(htmlOutput);
-					}else if(data.statusCode === AjaxController.AJAX_STATUS_FAILURE){
-						var d = Dialog({
+	            		var template = $.templates("#prodCatTemple");
+	            	    var htmlOutput = template.render(data.data);
+	            	    $("#"+clickId).after(htmlOutput);
+	            	}else if(data.statusCode === AjaxController.AJAX_STATUS_FAILURE){
+	            		var d = Dialog({
 							content:"获取类目信息出错:"+data.statusInfo,
 							icon:'fail',
 							okValue: '确 定',
@@ -78,17 +75,17 @@ define('app/jsp/pricemanage/priceList', function (require, exports, module) {
 							}
 						});
 						d.show();
-					}
+	            	}
 				}
 			});
     	},
     	
     	
     	//查询标准品列表
-    	_selectPriceList:function(){
+    	_selectNormProductList:function(){
     		var _this = this;
     		var div = document.getElementById("data1ProdCat");
-    		var length = document.getElementsByTagName("select").length-3;
+    		var length = document.getElementsByTagName("select").length-2;
     		var productCatId = $("#productCat"+length+" option:selected").val();
     		var productType = $("#productType").val().trim();
     		var productId = $("#standedProdId").val().trim();
@@ -99,21 +96,16 @@ define('app/jsp/pricemanage/priceList', function (require, exports, module) {
     		var operEndTime = $("#operEndTime").val().trim();
     		
     		$("#pagination-ul").runnerPagination({
-    			
-	 		//	url: _base+"/normprodquery/getNormProductList",
-	 			
+	 			url: _base+"/normprodquery/getNormProductList",
 	 			method: "POST",
 	 			dataType: "json",
 	 			renderId:"searchNormProductData",
 	 			messageId:"showMessageDiv",
-	 			
-	           /* data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName},
-	            */
 	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName,
 		 			"operStartTimeStr":operStartTime,"operEndTimeStr":operEndTime,"state":state
 		 			},
 	 			
-	           	pageSize: normproductlistPager.DEFAULT_PAGE_SIZE,
+	           	pageSize: priceListPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
@@ -133,6 +125,5 @@ define('app/jsp/pricemanage/priceList', function (require, exports, module) {
     	
     });
     
-    module.exports = normproductlistPager
+    module.exports = priceListPager;
 });
-
