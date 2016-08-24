@@ -16,7 +16,7 @@
                         <ul class="submenu">
                             <li><a href="${_base}/attr/attrList" target="mainFrame">属性及属性值管理</a></li>
                             <li><a href="${_base}/cat/query/" target="mainFrame">类目管理</a></li>
-                            <%--<li><a href="${_base}/cat/edit/addview/" target="mainFrame">类目添加</a></li>--%>
+                            <%-- <li><a href="${_base}/cat/edit/addview/" target="mainFrame">类目添加</a></li> --%>
                         </ul>
                         <!--二级菜单结束-->
                     </li>
@@ -87,7 +87,7 @@
                         </a>
                         <!--二级菜单-->
                         <ul class="submenu">
-                            <li><a href=href="${_base}/marketpricequery/list" target="mainFrame">商品市场价管理</a></li>
+                            <li><a href="${_base}/marketpricequery/list" target="mainFrame">商品市场价管理</a></li>
                             <li><a href="#">商品成本价管理</a></li>
                             <li><a href="#">商品销售价管理</a></li>
                         </ul>
