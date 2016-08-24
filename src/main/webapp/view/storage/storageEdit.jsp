@@ -105,7 +105,7 @@
         <!--/table表格结束-->
         <!--按钮-->
         <div class="row mt-15"><!--删格化-->
-            <p class="right pr-30">
+            <p class="center pr-30 mt-30">
                 <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
                 <input id="edit-close" type="button" onclick="pager._closeAddStoView();"
                        class="biu-btn  btn-primary  btn-auto  ml-5" value="取  消">
@@ -119,7 +119,7 @@
         {{for valForSkuList}}
         <td>{{:valName}}</td>
         {{/for}}
-        <td ><input type="text"  class="int-text int-mini" /></td>
+        <td ><input type="text" skuId="{{:skuId}}" class="int-text int-mini" /></td>
     </tr>
 </script>
 <!--编辑名称弹出框  中结束-->
