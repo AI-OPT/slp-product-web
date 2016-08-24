@@ -170,4 +170,31 @@ public class StorageEditController {
         return responseData;
     }
 
+    /**
+     * 变更库存名称
+     * @param stoId
+     * @param session
+     * @return
+     */
+    @RequestMapping("/stoName/{id}")
+    @ResponseBody
+    public ResponseData<String> updateStoName(
+            @PathVariable("id")String stoId,String stoName,HttpSession session){
+        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "操作成功");
+        IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
+        NameUpReq upReq = new NameUpReq();
+        StorageStatus storageStatus = new StorageStatus();
+        upReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        upReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        upReq.setId(stoId);
+        upReq.setOperId(AdminUtil.getAdminId(session));
+        upReq.setName(stoName);
+        BaseResponse baseResponse = storageSV.updateStorageName(upReq);
+        ResponseHeader header = baseResponse.getResponseHeader();
+        if (header != null && !header.isSuccess()) {
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "操作失败:" + header.getResultMessage());
+        }
+        return responseData;
+    }
+
 }

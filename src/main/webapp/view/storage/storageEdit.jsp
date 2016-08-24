@@ -112,7 +112,8 @@
         <!--按钮-->
         <div class="row mt-15"><!--删格化-->
             <p class="center pr-30 mt-30">
-                <input type="button" id="addStorage" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+                <input type="button" id="addStorage" class="biu-btn  btn-primary  btn-auto  ml-5"
+                       onclick="pager._addStorage();" value="确  认">
                 <input id="edit-close" type="button" onclick="pager._closeAddStoView();"
                        class="biu-btn  btn-primary  btn-auto  ml-5" value="取  消">
             </p>
@@ -355,7 +356,7 @@
                                             <tr name="stopn_${stoGroup.storageGroupId}_${storageMap.key}">
                                                 <td>${status.index + 1}</td>
                                                 <td>${storage.storageId}</td>
-                                                <td>${storage.storageName}</td>
+                                                <td id="stoName${storage.storageId}">${storage.storageName}</td>
                                                 <td>${storage.totalNum}</td>
                                                 <td>${storage.stateName}</td>
                                                 <td>
@@ -393,6 +394,7 @@
                                                         <%-- 自动停用状态 --%>
                                                         <c:when test="${storage.state == '21'}">
                                                             <a href="javaScript:void(0);"  class="blue"
+                                                               storageId="${storage.storageId}" groupId="${stoGroup.storageGroupId}"
                                                                onclick="pager._showStorageEdit(this);">编辑</a>
                                                             <a href="#"  class="blue"
                                                                statue="${stoDiscard}" storageId="${storage.storageId}"

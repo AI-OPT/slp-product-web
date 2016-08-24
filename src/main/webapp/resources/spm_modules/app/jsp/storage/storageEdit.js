@@ -33,8 +33,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     		//查询标准品
             "click #addStorGroup":"_addStorGroup",
 			"click #add-close":"_closeUpGroupView",
-            "click #goBack":"_goBack",
-            "click #addStorage":"_addStorage",
+            "click #goBack":"_goBack"
         },
     	//重写父类
     	setup: function () {
@@ -58,6 +57,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 
 		//显示添加库存
 		_showAddStoView:function(groupId,pNum){
+			$("#addStorage").attr("onclick","pager._addStorage();");
 			$("#stoAddGroupId").val(groupId);
 			$("#stoAddGroupPn").val(pNum);
 			//若不包含销售属性,则直接返回
@@ -350,6 +350,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 		},
 		//显示编辑页面
 		_showStorageEdit:function(obj){
+			$("#addStorage").attr("onclick","pager._saveStoName();");
 			var storageId = $(obj).attr("storageId");
 			var groupId = $(obj).attr("groupId");
 			//库存组
@@ -393,6 +394,29 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 						$("#skuInfo").html(htmlOutput);
 						$('#eject-mask').fadeIn(100);
 						$('#edit-medium').slideDown(200);
+					}
+				}
+			});
+		},
+		//变更库存名称
+		_saveStoName:function(){
+			var _this = this;
+			var stoName = $("#newStorageName").val();
+			var storageId = $("#storageId").val();
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "更新中，请等待...",
+				url: _base+"/storage/edit/stoName/"+storageId,
+				data:{"stoName":stoName},
+				success: function(data){
+					//变更成功
+					if("1"=== data.statusCode){
+						_this._closeAddStoView();
+						//属性标题信息
+						_this._showMsg("库存更新成功");
+						//变更名称
+						$("#stoName"+storageId).text(stoName);
 					}
 				}
 			});
