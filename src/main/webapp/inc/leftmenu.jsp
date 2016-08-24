@@ -93,6 +93,19 @@
                         </ul>
                         <!--二级菜单结束-->
                     </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="fa fa-usd"></i>
+                            <span>定价管理</span><i class="fa fa-chevron-circle-right drop-icon"></i>
+                        </a>
+                        <!--二级菜单-->
+                        <ul class="submenu">
+                            <li><a href=href="${_base}/marketpricequery/list" target="mainFrame">商品市场价管理</a></li>
+                            <li><a href="#">商品成本价管理</a></li>
+                            <li><a href="#">商品销售价管理</a></li>
+                        </ul>
+                        <!--二级菜单结束-->
+                    </li>
                 </ul>
             </div>
         </div>
