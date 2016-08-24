@@ -23,7 +23,6 @@
                     <p>库存组名称</p>
                     <p><input id="storageGroupName" type="text" class="int-text int-medium"></p>
                 </li>
-
             </ul>
         </div>
         <div class="eject-samll-confirm mt-0">
@@ -76,13 +75,14 @@
             <ul>
                 <li>
                     <p class="word"><span>*</span>库存名称:</p>
-                    <p><input type="text" class="int-text int-small"></p>
+                    <p><input type="text" id="newStorageName" class="int-text int-small" maxlength="60"></p>
                 </li>
             </ul>
             <ul>
                 <li>
                     <p class="word">虚拟库存量:</p>
-                    <p><input type="text" class="int-text int-small" <c:if test="${!saleAttr.isEmpty()}">readonly</c:if> ></p>
+                    <p><input type="text" id="newTotalNum" class="int-text int-small" value="0"
+                              <c:if test="${!saleAttr.isEmpty()}">readonly</c:if> maxlength="10"></p>
                 </li>
             </ul>
         </div>
@@ -98,7 +98,6 @@
                 </thead>
                 <tbody id="skuInfo">
                 </tbody>
-
             </table>
         </div>
     </c:if>
@@ -106,7 +105,7 @@
         <!--按钮-->
         <div class="row mt-15"><!--删格化-->
             <p class="center pr-30 mt-30">
-                <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+                <input type="button" id="addStorage" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
                 <input id="edit-close" type="button" onclick="pager._closeAddStoView();"
                        class="biu-btn  btn-primary  btn-auto  ml-5" value="取  消">
             </p>
@@ -119,7 +118,8 @@
         {{for valForSkuList}}
         <td>{{:valName}}</td>
         {{/for}}
-        <td ><input type="text" skuId="{{:skuId}}" class="int-text int-mini" /></td>
+        <td ><input type="text" name="skuNum" skuId="{{:skuId}}" onchange="pager._changeStorageNum(this)"
+                    class="int-text int-mini"  value="0" maxlength="10"/></td>
     </tr>
 </script>
 <!--编辑名称弹出框  中结束-->
@@ -274,7 +274,7 @@
                                                             <p>
                                                                 <input type="button" name="groupSn${stoGroup.storageGroupId}"
                                                                       class="biu-btn  btn-primary  btn-auto" pn="${storageMap.key}"
-                                                                      value="增加库存" onclick="pager._showAddStoView(${stoGroup.storageGroupId},${storageMap.key});">
+                                                                      value="增加库存" onclick="pager._showAddStoView('${stoGroup.storageGroupId}',${storageMap.key});">
                                                             </p>
                                                             </c:if>
                                                         </li>
@@ -403,7 +403,7 @@
                                 <p>优先级{{:priNum}}</p>
                                     <p><input type="button" groupId="{{:groupId}}"
                                               class="biu-btn  btn-primary  btn-auto" pn="{{:priNum}}"
-                                               value="增加库存" onclick="pager._showAddStoView({{:groupId}},{{:priNum}});"></p>
+                                               value="增加库存" onclick="pager._showAddStoView('{{:groupId}}',{{:priNum}});"></p>
                             </li>
                         </ul>
                     </div>
@@ -460,6 +460,7 @@
             console.log("groupId: " + groupId + ",priorityNum:" + priorityNum);
             pager._addPriorityNumber(groupId, priorityNum);
         });
+
         seajs.use('app/jsp/storage/storageEdit', function (StorageEditPager) {
             pager = new StorageEditPager({element: document.body});
             pager.render();

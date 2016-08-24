@@ -1,7 +1,6 @@
 package com.ai.slp.product.web.controller.storage;
 
 import com.ai.opt.base.vo.BaseListResponse;
-import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
@@ -19,7 +18,6 @@ import com.ai.slp.product.api.product.param.SkuSetForProduct;
 import com.ai.slp.product.api.product.param.StoGroupInfoQuery;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
-import com.ai.slp.product.api.storage.param.STOStorage;
 import com.ai.slp.product.api.storage.param.StorageGroupQuery;
 import com.ai.slp.product.api.storage.param.StorageGroupRes;
 import com.ai.slp.product.api.storage.param.StorageRes;
@@ -29,7 +27,6 @@ import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.controller.product.ProdQueryController;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
-import com.ai.slp.product.web.util.AdminUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +36,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,33 +121,7 @@ public class StorageController {
         return "storage/storageEdit";
     }
 
-    /**
-     * 添加库存
-     *
-     * @param request
-     * @param session
-     * @return
-     */
-    @RequestMapping("/addStorage")
-    @ResponseBody
-    public ResponseData<String> addStorage(HttpServletRequest request, HttpSession session) {
-        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
-        IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
-        STOStorage storage = new STOStorage();
-        storage.setOperId(AdminUtil.getAdminId(session));
-        storage.setStorageName(request.getParameter("storageName"));
-        storage.setStorageGroupId(request.getParameter("storGroupId"));
-        storage.setPriorityNumber(Short.parseShort(request.getParameter("priorityNumber")));
-        storage.setTotalNum(Long.parseLong(request.getParameter("totalNum")));
-        storage.setWarnNum(Long.parseLong(request.getParameter("warnNum")));
-        storage.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-        BaseResponse baseResponse = storageSV.saveStorage(storage);
-        ResponseHeader header = baseResponse.getResponseHeader();
-        if (header != null && !header.isSuccess()) {
-            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "更新失败:" + header.getResultMessage());
-        }
-        return responseData;
-    }
+
 
     /**
      * 进入页面调用-加载类目

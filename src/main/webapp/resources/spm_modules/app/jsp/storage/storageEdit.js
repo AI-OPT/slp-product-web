@@ -103,6 +103,9 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 		},
 		//关闭添加库存弹出框
 		_closeAddStoView:function(){
+			$("#newTotalNum").val("");
+			$("#stoAddGroupId").val("");
+			$("#stoAddGroupPn").val("");
 			$('#eject-mask').fadeOut(100);
 			$('#edit-medium').slideUp(150);
 		},
@@ -140,16 +143,27 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 				}
 			});
 		},
-    	//添加库存
+    	//sku数量变更,相应变化库存总数量
+		_changeStorageNum:function(obj){
+			var skuNum = $(obj).val();
+			if(!this._isNum(skuNum)){
+				this._showMsg("SKU库存数量不能小于0");
+				return;
+			}
+			var stoNum = 0;
+			$("#skuInfo input[name='skuNum']").each(function(index,item){
+				stoNum = stoNum+parseInt($(item).val());
+			});
+			$("#newTotalNum").val(stoNum);
+		},
+		//添加库存
     	_addStorage:function(){
     		var _this = this;
-    		var storGroupId = $("#saveCache").attr('storGroupId');
-        	var priorityNumber = $("#saveCache").attr('priorityNum');
+    		var storGroupId = $("#stoAddGroupId").val();
+        	var priorityNumber = $("#stoAddGroupPn").val();
         	//number用于判断当前库存组下库存数量
-        	var number = $("#saveCache").attr('number');
     		var storageName = $("#newStorageName").val();
     		var totalNum = $("#newTotalNum").val();
-    		var warnNum = $("#newWarnNum").val();
     		var length = _this._getLen(storageName);
     		//判断库存名称
     		if(storageName==null || storageName=='undefined' || length==0){
@@ -160,46 +174,48 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     			_this._showMsg("库存名称最大长度为15个字（30个字符）");
     			return;
     		}
-    		//判断库存量
-    		if(totalNum==null || totalNum=='undefined' || totalNum.length==0 ){
+
+			var skuMapStr = "";
+			//若有销售属性,则添加SKU库存数量
+			if (hasSale){
+				var stoNum = 0;
+				var skuMap = {};
+				$("#skuInfo input[name='skuNum']").each(function(index,item){
+					var skuId = $(this).attr('skuId');
+					var skuNum = $(this).val();
+					//判断是否为负数
+					if (!_this._isNum(skuNum)){
+						_this._showMsg("SKU库存数量不能小于0");
+						return;
+					}
+					skuMap[skuId] = skuNum;
+					stoNum = stoNum+parseInt($(item).val());
+				});
+				skuMapStr = JSON.stringify(skuMap);
+				console.log("SKU num string:"+skuMapStr);
+				totalNum = stoNum;
+			}
+
+			//判断库存量
+			if(totalNum==null || totalNum==undefined || totalNum.length==0 ){
     			_this._showMsg("库存量不能为空");
     			return;
-    		}
-    		//判断预警库存值
-    		if(warnNum==null || warnNum=='undefined' || warnNum.length==0){
-    			_this._showMsg("预警库存量为不为空");
-    			return;
-    		}
-    		//判断库存量和预警库存量是否为正整数
-    		if(!_this._isNum(totalNum) || !_this._isNum(warnNum)){
+    		}//判断库存量和预警库存量是否为正整数
+    		else if(!_this._isNum(totalNum)){
     			_this._showMsg("库存必须为正整数");
     			return;
     		}
-    		if(Number(totalNum) <= Number(warnNum)){
-    			_this._showMsg("预警库存量必须小于库存量");
-    			return;
-    		}
-    		//隐藏添加库存窗口
-    		$(".eject-big").hide();
-    		$("#eject-samll-2").hide();
-    		$(".eject-mask").hide();
     		ajaxController.ajax({
 				type: "post",
 				processing: true,
 				message: "添加中，请等待...",
-				url: _base+"/storage/addStorage",
-				data:{"storGroupId":storGroupId,"priorityNumber":priorityNumber,"storageName":storageName,
-					"productCatId":productCatId,"totalNum":totalNum,"warnNum":warnNum},
+				url: _base+"/storage/edit/addStorage",
+				data:{"storageGroupId":storGroupId,"priorityNumber":priorityNumber,"storageName":storageName,
+					"totalNum":stoNum,"skuNumMap":skuMapStr},
 				success: function(data){
 					if("1"===data.statusCode){
-//						var template = $.templates("#storageTemple");
-//	            	    var htmlOutput = template.render(data.data);
-//	            	    $("#"+storGroupId+priorityNumber+number).after(htmlOutput);
 						window.location.reload();
-//						window.history.go(0);
-					}else{
-						_this._showMsg("添加库存失败:"+data.statusInfo);
-	            	}
+					}
 				}
 			});
     	},
@@ -252,7 +268,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 				}
 			});
     	},
-    	//判断字符串的长度-中文2哥,英文1个
+    	//判断字符串的长度-中文2个,英文1个
     	_getLen:function(str) {  
     	    if (str == null) return 0;  
     	    if (typeof str != "string"){  
