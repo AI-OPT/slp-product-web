@@ -1,21 +1,28 @@
 package com.ai.slp.product.web.controller.pricemanage;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.protocol.ResponseDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.AmountUtils;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
 import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
@@ -26,6 +33,7 @@ import com.ai.slp.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
 import com.ai.slp.product.api.normproduct.param.AttrMap;
 import com.ai.slp.product.api.normproduct.param.AttrQuery;
+import com.ai.slp.product.api.normproduct.param.MarketPriceUpdate;
 import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
 import com.ai.slp.product.api.normproduct.param.NormProdRequest;
 import com.ai.slp.product.api.normproduct.param.NormProdResponse;
@@ -37,6 +45,8 @@ import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.controller.normproduct.NormProdQueryController;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
+import com.ai.slp.product.web.util.AmountUtil;
 import com.ai.slp.product.web.util.DateUtil;
 
 /**
@@ -46,8 +56,8 @@ import com.ai.slp.product.web.util.DateUtil;
  * @author jiawen
  *
  */
+@Controller
 @RequestMapping("/marketpricequery")
-@ResponseBody
 public class MarketPriceQueryController {
 	private static final Logger LOG = LoggerFactory.getLogger(NormProdQueryController.class);
 
@@ -95,6 +105,7 @@ public class MarketPriceQueryController {
 	 * 
 	 * @param 
 	 * @return
+	 * @throws 
 	 */
 	private PageInfoResponse<NormProdResponse> queryProductByState(NormProdRequest productRequest) {
 		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
@@ -140,6 +151,7 @@ public class MarketPriceQueryController {
 	            		normProdResponse.setOperName(serInfo.getName());
 	            	}
 	            }
+	            
 			}
 			
 		}
@@ -187,7 +199,7 @@ public class MarketPriceQueryController {
 		req.setProductId(standedProdId);
 		NormProdInfoResponse normProdResponse = normProductSV.queryProducById(req);
 		uiModel.addAttribute("normProd",normProdResponse);
-		//查询类目链
+		//查询类目
         uiModel.addAttribute("catLinkList", prodCatService.queryLink(normProdResponse.getProductCatId()));
         uiModel.addAttribute("productCatId", normProdResponse.getProductCatId());
         //商品类型
@@ -210,9 +222,34 @@ public class MarketPriceQueryController {
         attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
         attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
         uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
-		
-		return "/marketprice/addMarketPrice";
+		//查询出市场价进行转换
+        
+        
+        
+		return "marketprice/addMarketPrice";
 		
 	}
 	
+	/**
+	 * 更新市场价
+	 */
+	@RequestMapping("/updateMarketPrice")
+	@ResponseBody
+	public ResponseData<String> updateMarketPrice(MarketPriceUpdate updatePrice,HttpSession session){
+		ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"添加成功");
+		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
+		//设置租户ID 
+		updatePrice.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		//设置商户ID
+		updatePrice.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		//设置操作人
+		updatePrice.setOperId(AdminUtil.getAdminId(session));
+		//保存
+		BaseResponse response = normProductSV.updateMarketPrice(updatePrice);
+		ResponseHeader header = response.getResponseHeader();
+		if (header!=null && !header.isSuccess()){
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "添加失败:"+header.getResultMessage());
+        }
+        return responseData;
+	}
 }
