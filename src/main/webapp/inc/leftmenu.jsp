@@ -51,8 +51,9 @@
                         </a>
                         <!--二级菜单-->
                         <ul class="submenu">
-                            <li><a href="#">路由添加成本价-编辑价格</a></li>
-                            <li><a href="#">路由添加成本价</a></li>
+                            <li><a href="#" target="mainFrame">市场价管理</a></li>
+                            <li><a href="#" target="mainFrame">成本价管理</a></li>
+                            <li><a href="#" target="mainFrame">销售价管理</a></li>
                         </ul>
                         <!--二级菜单结束-->
                     </li>
@@ -64,7 +65,9 @@
                         <!--二级菜单-->
                         <ul class="submenu">
                             <li><a href="${_base}/prodquery/add" target="mainFrame">待编辑列表</a></li>
-                            <li><a href="#">路由添加成本价</a></li>
+                            <li><a href="#" target="mainFrame">仓库中列表</a></li>
+                            <li><a href="#" target="mainFrame">售中列表</a></li>
+                            <li><a href="#" target="mainFrame">已废弃列表</a></li>
                         </ul>
                         <!--二级菜单结束-->
                     </li>
@@ -75,8 +78,18 @@
                         </a>
                         <!--二级菜单-->
                         <ul class="submenu">
-                            <li><a href="#">待编辑列表</a></li>
-                            <li><a href="#">路由添加成本价</a></li>
+                            <li><a href="#">商品列表</a></li>
+                        </ul>
+                        <!--二级菜单结束-->
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="fa fa-usd"></i>
+                            <span>商品评价管理</span><i class="fa fa-chevron-circle-right drop-icon"></i>
+                        </a>
+                        <!--二级菜单-->
+                        <ul class="submenu">
+                            <li><a href="#">评价列表</a></li>
                         </ul>
                         <!--二级菜单结束-->
                     </li>
