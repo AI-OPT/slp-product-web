@@ -263,15 +263,33 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			});
     	},
 		//库存废弃
-		_discardSto:function(stoId){
+		_changeStoStatus:function(obj){
+			var status = $(obj).attr('statue');
+			var stoId = $(obj).attr('storageId');
+			console.log("storageId:"+stoId+",status:"+status);
 			ajaxController.ajax({
-				type: "get",
+				type: "post",
 				processing: true,
 				message: "操作中，请等待...",
-				url: _base+"/storage/edit/discardSto/"+stoId,
-				success: function(data){
-					if("1"===data.statusCode){
+				url: _base+"/storage/edit/status/"+stoId,
+				data:{"status":status},
+				success: function(data) {
+					//若不成功,直接返回
+					if ("1" != data.statusCode) {
+						return;
+					}//废弃
+					else if (status === stoDiscard) {
 						window.location.reload();
+					}//启用
+					else if (status === stoActive) {
+						$(obj).html("停用");
+						$(obj).attr("statue", stoStop);
+						$(obj).parent().prev().html("启用");
+					}//停用
+					else if (status === stoStop) {
+						$(obj).text("启用");
+						$(obj).attr("statue", stoActive);
+						$(obj).parent().prev().text("停用");
 					}
 				}
 			});

@@ -1,4 +1,10 @@
+<%@ page import="com.ai.slp.product.web.constants.StorageConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    request.setAttribute("stoActive",StorageConstants.STATUS_ACTIVE);
+    request.setAttribute("stoStop",StorageConstants.STATUS_STOP);
+    request.setAttribute("stoDiscard",StorageConstants.STATUS_DISCARD);
+%>
 <!doctype html>
 <html>
 <head>
@@ -305,22 +311,32 @@
                                                         </c:when>
                                                         <%-- 启用\自动启用状态 --%>
                                                         <c:when test="${storage.state == '1' || storage.state == '11'}">
-                                                            <a href="javaScript:void(0);"  class="blue">编辑</a>
-                                                            <a href="javaScript:void(0);"  class="blue">停用</a>
                                                             <a href="javaScript:void(0);"  class="blue"
-                                                               onclick="pager._discardSto('${storage.storageId}')">废弃</a>
+                                                               storageId="${storage.storageId}">编辑</a>
+                                                            <a href="javaScript:void(0);"  class="blue"
+                                                               statue="${stoStop}" storageId="${storage.storageId}"
+                                                               onclick="pager._changeStoStatus(this)">停用</a>
+                                                            <a href="javaScript:void(0);"  class="blue"
+                                                               statue="${stoDiscard}" storageId="${storage.storageId}"
+                                                               onclick="pager._changeStoStatus(this)">废弃</a>
                                                         </c:when>
                                                         <%-- 停用状态 --%>
                                                         <c:when test="${storage.state == '2'}">
-                                                            <a href="javaScript:void(0);"  class="blue">编辑</a>
-                                                            <a href="javaScript:void(0);"  class="blue">启用</a>
                                                             <a href="javaScript:void(0);"  class="blue"
-                                                               onclick="pager._discardSto('${storage.storageId}')">废弃</a>
+                                                               storageId="${storage.storageId}">编辑</a>
+                                                            <a href="javaScript:void(0);"  class="blue"
+                                                               statue="${stoActive}" storageId="${storage.storageId}"
+                                                               onclick="pager._changeStoStatus(this)">启用</a>
+                                                            <a href="javaScript:void(0);"  class="blue"
+                                                               statue="${stoDiscard}" storageId="${storage.storageId}"
+                                                               onclick="pager._changeStoStatus(this)">废弃</a>
                                                         </c:when>
                                                         <%-- 自动停用状态 --%>
                                                         <c:when test="${storage.state == '21'}">
                                                             <a href="javaScript:void(0);"  class="blue">编辑</a>
-                                                            <a href="#"  class="blue" onclick="pager._discardSto('${storage.storageId}')">废弃</a>
+                                                            <a href="#"  class="blue"
+                                                               statue="${stoDiscard}" storageId="${storage.storageId}"
+                                                               onclick="pager._changeStoStatus(this)">废弃</a>
                                                         </c:when>
                                                     </c:choose>
                                                 </td>
@@ -425,6 +441,9 @@
 <script type="text/javascript">
     //是否有销售属性
     var hasSale = ${isSale};
+    var stoActive = '${stoActive}';
+    var stoStop = '${stoStop}';
+    var stoDiscard = '${stoDiscard}';
     var pager;
     var count = '${count}';
     var standedProdId = "${standedProdId}";
