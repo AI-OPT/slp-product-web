@@ -28,7 +28,7 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
     		clickId:""
     	},
     	Statics: {
-    		DEFAULT_PAGE_SIZE: 30
+    		DEFAULT_PAGE_SIZE: 10
     	},
     	//事件代理
     	events: {
@@ -88,15 +88,15 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
     	_selectNormProductList:function(){
     		var _this = this;
     		var div = document.getElementById("data1ProdCat");
-    		var length = document.getElementsByTagName("select").length-3;
+    		var length = document.getElementsByName("selectProductCat").length-1;
     		var productCatId = $("#productCat"+length+" option:selected").val();
-    		var productType = $("#productType").val().trim();
-    		var productId = $("#standedProdId").val().trim();
-    		var productName = $("#standedProductName").val().trim();
+    		var productType = $("#productType").val()?$("#productType").val().trim():"";
+    		var productId = $("#standedProdId").val()?$("#standedProdId").val().trim():"";
+    		var productName = $("#standedProductName").val()?$("#standedProductName").val().trim():"";
     		
-    		var state = $("#state").val().trim();
-    		var operStartTime = $("#operStartTime").val().trim();
-    		var operEndTime = $("#operEndTime").val().trim();
+    		var state = $("#state").val()?$("#state").val().trim():"";
+    		var operStartTime = $("#operStartTime").val()?$("#operStartTime").val().trim():"";
+    		var operEndTime = $("#operEndTime").val()?$("#operEndTime").val().trim():"";
     		
     		$("#pagination-ul").runnerPagination({
     			
