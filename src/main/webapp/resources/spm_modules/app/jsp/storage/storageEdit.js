@@ -102,6 +102,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			$("#newTotalNum").val("");
 			$("#stoAddGroupId").val("");
 			$("#stoAddGroupPn").val("");
+			$("newStorageName").val("");
 			$('#eject-mask').fadeOut(100);
 			$('#edit-medium').slideUp(150);
 		},
