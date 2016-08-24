@@ -64,7 +64,7 @@ public class MarketPriceQueryController {
 		Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
 		uiModel.addAttribute("catInfoMap", productCatMap);
-		return "normproduct/normproductlist";
+		return "marketprice/priceList";
 	}
 	/**
 	 * 查询列表
