@@ -40,6 +40,14 @@ public class ProdCatService {
         return productCatMap;
     }
 
+    public List<ProdCatInfo> loadRootCat(){
+        IProductCatSV productCatSV = DubboConsumerFactory.getService("iProductCatSV");
+        ProductCatQuery catQuery = new ProductCatQuery();
+        catQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        // 查询同一级的类目信息
+        return productCatSV.queryCatByNameOrFirst(catQuery);
+    }
+
     public List<ProductCatInfo> queryLink(String catId){
         IProductCatSV catSV = DubboConsumerFactory.getService(IProductCatSV.class);
         //类目链

@@ -129,9 +129,9 @@ public class StorageController {
      */
     @RequestMapping(value = {"","/","/list"})
     public String editQuery(Model uiModel) {
-        Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
+        List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
         uiModel.addAttribute("count", productCatMap.size() - 1);
-        uiModel.addAttribute("catInfoMap", productCatMap);
+        uiModel.addAttribute("catInfoList", productCatMap);
         return "storage/storageList";
     }
 
