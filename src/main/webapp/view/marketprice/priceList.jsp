@@ -147,7 +147,8 @@
 										<td>{{:catName}}</td>
 										<td>{{:productType}}</td>
 										<!--  <td>{{:marketPrice}}</td>  -->
-										<td>{{:~liToYuan(marketPrice)}}</td>
+										<td>{{:~liToYuan(marketPrice)}}
+													{{:price}}</td>
 										<td>{{:state}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
 										<td></td>

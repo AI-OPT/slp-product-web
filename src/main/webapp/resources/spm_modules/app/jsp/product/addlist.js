@@ -87,6 +87,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
     	_selectProductEdit:function(){
     		var _this = this;
     		//获取下拉菜单的总个数-2即为ID后的数值
+    		var div = document.getElementById("data1ProdCat");
     		var length = document.getElementsByTagName("select").length-2;
     		var productCatId = $("#productCat"+length+" option:selected").val();
     		var productType = $("#productType").val().trim();
