@@ -1,6 +1,7 @@
 package com.ai.slp.product.web.controller.pricemanage;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.AmountUtils;
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
 import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
@@ -226,8 +228,18 @@ public class MarketPriceQueryController {
         attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
         uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
 		//查询出市场价进行转换
-        
-        
+        DecimalFormat df = new DecimalFormat("#0.00");
+        String price = normProdResponse.getMarketPrice().toString();
+        if (StringUtil.isBlank(price)) {
+        	price = "0.00";
+        	
+		}else {
+			BigDecimal input = new BigDecimal(price);
+        	BigDecimal devide = new BigDecimal(1000);
+        	Double yuanmoey = input.divide(devide).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+        	price = df.format(yuanmoey);
+		}
+        uiModel.addAttribute("price", price);
         
 		return "marketprice/addMarketPrice";
 		
