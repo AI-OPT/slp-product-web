@@ -1,7 +1,7 @@
-define('app/jsp/normproduct/addinfo', function (require, exports, module) {
+define('app/jsp/normproduct/editinfo', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
-		Events = require('arale-events/1.2.0/events'),
+	Events = require('arale-events/1.2.0/events'),
     Widget = require('arale-widget/1.2.0/widget'),
     Dialog = require("artDialog/src/dialog"),
     AjaxController = require('opt-ajax/1.0.0/index');
@@ -17,17 +17,11 @@ define('app/jsp/normproduct/addinfo', function (require, exports, module) {
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-	var prodDetail = 'prodDetail';
-	var editDom;
 
     //定义页面组件类
-    var normProdEditPager = Widget.extend({
-    	Implements:SendMessageUtil,
+    var prodEditPager = Widget.extend({
     	//属性，使用时由类的构造函数传入
     	attrs: {
-    	},
-    	Statics: {
-			DEFAULT_PAGE_SIZE: 30,
     	},
     	//事件代理
     	events: {
@@ -35,19 +29,20 @@ define('app/jsp/normproduct/addinfo', function (require, exports, module) {
 			"click #saveNormProd":"_saveNormProd",
 			"click #cancel":"_cancel"
         },
-    	//重写父类
+        //重写父类
     	setup: function () {
-    		normProdEditPager.superclass.setup.call(this);
-		},
+    		prodEditPager.superclass.setup.call(this);
+
+    	},
 		
 		//返回
 		_cancel:function(){
 			var _this = this;
 			window.history.go(-2);
-		}
+		},
 		
     	//保存标准品信息
-      	_saveNormProd:function() {
+      	_saveNormProd:function(){
 			var _this = this;
 			//验证通过,则进行保存操作.
 			if(this._checkInput() && this._convertKeyAttr() && this._convertSaleAttr){
@@ -68,87 +63,94 @@ define('app/jsp/normproduct/addinfo', function (require, exports, module) {
 		},
 		//将关键属性转换json字符串
 		_convertKeyAttr:function(){
-			var keyVal = {};
+			//var keyVal = {};
+			var attrValArray = [];
 			//获取所有
 			$("#keyAttrDiv .word").each(function(i){
 				var attrId = $(this).attr('attrId');
 				var valWay = $(this).attr('valueType');
-				var attrValArray = [];
+				//var attrValArray = [];
 				switch (valWay){
 					case '1'://下拉
-						var obj = $("#keyAttrDiv select[attrId='attrAndVal"+attrId+"']")[0];
+						var obj = $("#keyAttrDiv select[attrId='keyAttr"+attrId+"']")[0];
 						var val = obj.value;
-						attrValArray.push({'attrvalueDefId':val,'attrVal':'','attrVal2':''});
+						attrValArray.push({'attrId':attrId,'attrValId':val,'attrVal':'','attrVal2':''});
 						break;
 					case '2'://多选
-						$("#keyAttrDiv input:checkbox[attrId='attrAndVal"+attrId+"']:checked").each(function(i){
-							attrValArray.push({'attrvalueDefId':$(this).val(),'attrVal':'','attrVal2':''});
+						$("#keyAttrDiv input:checkbox[attrId='keyAttr"+attrId+"']:checked").each(function(i){
+							attrValArray.push({'attrId':attrId,'attrValId':$(this).val(),'attrVal':'','attrVal2':''});
 						});
 						break;
 					case '3'://单行输入
-						var val = $("#keyAttrDiv input[attrId='attrAndVal"+attrId+"'")[0].value;
-						attrValArray.push({'attrvalueDefId':'','attrVal':val,'attrVal2':''});
+						var val = $("#keyAttrDiv input[attrId='keyAttr"+attrId+"'")[0].value;
+						attrValArray.push({'attrId':attrId,'attrValId':'','attrVal':val,'attrVal2':''});
 						break;
 					case '4'://多行输入
-						var val = $("#keyAttrDiv textarea[attrId='attrAndVal"+attrId+"'")[0].value;
-						attrValArray.push({'attrvalueDefId':'','attrVal':val,'attrVal2':''});
+						var val = $("#keyAttrDiv textarea[attrId='keyAttr"+attrId+"'")[0].value;
+						attrValArray.push({'attrId':attrId,'attrValId':'','attrVal':val,'attrVal2':''});
 						break;
 
 				};
-				keyVal[attrId] = attrValArray;
+				//keyVal[attrId] = attrValArray;
 			});
-			var keyJsonStr = JSON.stringify(keyVal,null);
+			var keyJsonStr = JSON.stringify(attrValArray,null);
 			console.log($('#keyAttrStr').val());
 			$('#keyAttrStr').val(keyJsonStr);
 			return true;
 		},
 		//将销售属性转换json字符串
 		_convertSaleAttr:function(){
-			var saleVal = {};
+			//var saleVal = {};
+			var attrValArray = [];
 			//获取所有
 			$("#saleAttrDiv .word").each(function(i){
 				var attrId = $(this).attr('attrId');
 				var valWay = $(this).attr('valueType');
-				var attrValArray = [];
+				//var attrValArray = [];
 				switch (valWay){
 				case '1'://下拉
-					var obj = $("#saleAttrDiv select[attrId='attrAndVal"+attrId+"']")[0];
+					var obj = $("#saleAttrDiv select[attrId='saleAttr"+attrId+"']")[0];
 					var val = obj.value;
-					attrValArray.push({'attrvalueDefId':val,'attrVal':'','attrVal2':''});
+					attrValArray.push({'attrId':attrId,'attrValId':val,'attrVal':'','attrVal2':''});
 					break;
 					
 					
 				case '2'://多选
-					$("#saleAttrDiv input:checkbox[attrId='attrAndVal"+attrId+"']:checked").each(function(i){
-						attrValArray.push({'attrvalueDefId':$(this).val(),'attrVal':'','attrVal2':''});
+					$("#saleAttrDiv input:checkbox[attrId='saleAttr"+attrId+"']:checked").each(function(i){
+						attrValArray.push({'attrId':attrId,'attrValId':$(this).val(),'attrVal':'','attrVal2':''});
 					});
 					break;
 				case '3'://单行输入
-					var val = $("#saleAttrDiv input[attrId='attrAndVal"+attrId+"'")[0].value;
-					attrValArray.push({'attrvalueDefId':'','attrVal':val,'attrVal2':''});
+					var val = $("#saleAttrDiv input[attrId='saleAttr"+attrId+"'")[0].value;
+					attrValArray.push({'attrId':attrId,'attrValId':'','attrVal':val,'attrVal2':''});
 					break;
 				case '4'://多行输入
-					var val = $("#saleAttrDiv textarea[attrId='attrAndVal"+attrId+"'")[0].value;
-					attrValArray.push({'attrvalueDefId':'','attrVal':val,'attrVal2':''});
+					var val = $("#saleAttrDiv textarea[attrId='saleAttr"+attrId+"'")[0].value;
+					attrValArray.push({'attrId':attrId,'attrValId':'','attrVal':val,'attrVal2':''});
 					break;
 					
 				};
-				saleVal[attrId] = attrValArray;
+				//saleVal[attrId] = attrValArray;
 			});
-			var saleJsonStr = JSON.stringify(saleVal,null);
+			var saleJsonStr = JSON.stringify(attrValArray,null);
 			console.log($('#saleAttrStr').val());
 			$('#saleAttrStr').val(saleJsonStr);
 			return true;
 		},
 		//标准品信息保存检查
 		_checkInput:function(){
-			//标准品名称不能为空
-			var standedProductName = $('#standedProductName').val();
+			//品名称不能为空
+			var standedProductName = $('#productName').val();
 			if (standedProductName==null || standedProductName==''){
-				this._showMsg("标准品名称不能为空");
+				this._showMsg("商品名称不能为空");
 				return false;
 			}
-			
+			//类型不能为空
+			var productType = $('#productType').val();
+			if (productType==null || productType==''){
+				this._showMsg("商品类型不能为空");
+				return false;
+			}
 			//标准品状态不能为空
 			var state = $("#state").val().trim();
 			if (state==null || state=="") {
@@ -171,7 +173,6 @@ define('app/jsp/normproduct/addinfo', function (require, exports, module) {
 		}
 		
     });
-    
-    module.exports = normProdEditPager
+    module.exports = prodEditPager
 });
 

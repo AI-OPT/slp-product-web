@@ -18,6 +18,7 @@
                 <div class="row"><!--内侧框架-->
                     <div class="col-lg-12"><!--删格化-->
                         <div class="main-box clearfix"><!--白色背景-->
+                        <form id="nromProdForm" action="${_base}/normprodedit/save" method="post">
                         	<div class="main-box-body clearfix">	<!--padding20-->
                         	<div class="form-label bd-bottom">
                         		<ul>
@@ -32,14 +33,14 @@
 					            <ul>
 					                <li class="width-xlag">
 					                    <p class="word"><b class="red">*</b>商品名称</p>
-					                    <p><input name="standedProductName" type="text" class="int-text int-xlarge" value="${productInfo.productName}"/></p>
+					                    <p><input id="productName" name="productName" type="text" class="int-text int-xlarge" value="${productInfo.productName}"/></p>
 					                </li>  
 					            </ul>
 					            <ul>
 					                <li class="width-xlag">
 					                    <p class="word"><b class="red">*</b>商品类型</p>
 					                    <p>
-					                    	<select  name="productType" class="select select-medium">
+					                    	<select  id="productType" name="productType" class="select select-medium">
 					                    		<option value="">--请选择--</option>
 							                   	<option value="1" <c:if test="${productInfo.productType == '1'}">selected="selected"</c:if>>实物</option>
 							                   	<option value="2" <c:if test="${productInfo.productType == '2'}">selected="selected"</c:if>>虚拟</option>
@@ -81,7 +82,7 @@
 												<c:when test="${keyAttr.valueWay == '2'}">
 													<div class="cit-width">
 														<c:forEach var="valInfo" items="${keyAttr.attrValList}">
-															<p><input type="checkbox" class="checkbox-small" attrId="keyAttr${keyAttr.attrId}"<c:if test="${fn:contains(keyAttrSet,valInfo.attrvalueDefId)}">checked</c:if>>${valInfo.attrValueName}</p>
+															<p><input type="checkbox" class="checkbox-small" attrId="keyAttr${keyAttr.attrId}" value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(keyAttrSet,valInfo.attrvalueDefId)}">checked</c:if>>${valInfo.attrValueName}</p>
 														</c:forEach>
 													</div>
 												</c:when>
@@ -121,7 +122,7 @@
 														<select class="select select-medium" attrId="saleAttr${saleAttr.attrId}">
 															<option value="">--请选择--</option>
 															<c:forEach var="valInfo" items="${saleAttr.attrValList}">
-																<option value="${valInfo.attrvalueDefId}"<c:if test="${fn:contains(saleAttrSet,valInfo.attrvalueDefId)}">selected ="selected"</c:if>>
+																<option value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(saleAttrSet,valInfo.attrvalueDefId)}">selected ="selected"</c:if>>
 																   ${valInfo.attrValueName}
 																</option>
 															</c:forEach>
@@ -132,7 +133,7 @@
 													<c:when test="${saleAttr.valueWay == '2'}">
 														<div class="cit-width">
 															<c:forEach var="valInfo" items="${saleAttr.attrValList}">
-																<p><input type="checkbox" class="checkbox-small" attrId="saleAttr${saleAttr.attrId}"<c:if test="${fn:contains(saleAttrSet,valInfo.attrvalueDefId)}">checked</c:if>>${valInfo.attrValueName}</p>
+																<p><input type="checkbox" class="checkbox-small" attrId="saleAttr${saleAttr.attrId}" value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(saleAttrSet,valInfo.attrvalueDefId)}">checked</c:if>>${valInfo.attrValueName}</p>
 															</c:forEach>
 														</div>
 													</c:when>
@@ -164,7 +165,7 @@
 						                <li class="width-xlag">
 				                            <p class="word"><b class="red">*</b>状态</p>
 				                            <p>
-				                            	<select  name="state" class="select select-medium">
+				                            	<select id="state" name="state" class="select select-medium">
 								                   	<option value="1"<c:if test="${productInfo.state == '1'}">selected="selected"</c:if>>可使用</option>
 								                   	<option value="2"<c:if test="${productInfo.state == '2'}">selected="selected"</c:if>>不可使用</option>
 						                    	</select>
@@ -174,13 +175,14 @@
 				                 </div>
 								 <div id="subDiv" class="row pt-30">
 	                            	<p class="center pr-30 mt-30">
-	                            		<input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+	                            		<input id="saveNormProd" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
 	                                           value="提  交">
-	                                    <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
-	                                           value="返  回" onclick="javaScript:window.history.go(-1);">
+	                                    <input id="cancel" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+	                                           value="返  回">
 	                            	</p>
 	                            </div>
 	                        </div>
+	                        </form>
 	                    </div>
 	                </div>
 	            </div>
@@ -193,8 +195,8 @@
 <script type="text/javascript">
 		var pager;
 		(function () {
-			seajs.use('app/jsp/normproduct/editinfo', function (normProdEditPager) {
-				pager = new normProdEditPager({element : document.body});
+			seajs.use('app/jsp/normproduct/editinfo', function (prodEditPager) {
+				pager = new prodEditPager({element : document.body});
 				pager.render();
 			});
 		})();
