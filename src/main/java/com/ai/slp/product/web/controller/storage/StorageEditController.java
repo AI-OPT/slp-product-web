@@ -6,7 +6,6 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -41,7 +40,7 @@ public class StorageEditController {
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         NameUpReq nameUpReq = new NameUpReq();
         nameUpReq.setTenantId(AdminUtil.getTenantId());
-        nameUpReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        nameUpReq.setSupplierId(AdminUtil.getSupplierId());
         nameUpReq.setOperId(AdminUtil.getAdminId(session));
         nameUpReq.setId(groupId);
         nameUpReq.setName(groupName);
@@ -72,7 +71,7 @@ public class StorageEditController {
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         StoGroupStatus groupStatus = new StoGroupStatus();
         groupStatus.setTenantId(AdminUtil.getTenantId());
-        groupStatus.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        groupStatus.setSupplierId(AdminUtil.getSupplierId());
         groupStatus.setOperId(AdminUtil.getAdminId(session));
         groupStatus.setGroupId(groupId);
         groupStatus.setState(status);
@@ -130,7 +129,7 @@ public class StorageEditController {
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         storage.setOperId(AdminUtil.getAdminId(session));
         storage.setTenantId(AdminUtil.getTenantId());
-        storage.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        storage.setSupplierId(AdminUtil.getSupplierId());
         //若SKU库存量不为空
         if (StringUtils.isNotBlank(skuNumMap)){
             Map<String,Long> skuMap = JSON.parseObject(skuNumMap,new TypeReference<Map<String, Long>>() {});
@@ -158,7 +157,7 @@ public class StorageEditController {
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         StorageStatus storageStatus = new StorageStatus();
         storageStatus.setTenantId(AdminUtil.getTenantId());
-        storageStatus.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        storageStatus.setSupplierId(AdminUtil.getSupplierId());
         storageStatus.setStorageId(stoId);
         storageStatus.setOperId(AdminUtil.getAdminId(session));
         storageStatus.setState(status);
@@ -185,7 +184,7 @@ public class StorageEditController {
         NameUpReq upReq = new NameUpReq();
         StorageStatus storageStatus = new StorageStatus();
         upReq.setTenantId(AdminUtil.getTenantId());
-        upReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        upReq.setSupplierId(AdminUtil.getSupplierId());
         upReq.setId(stoId);
         upReq.setOperId(AdminUtil.getAdminId(session));
         upReq.setName(stoName);

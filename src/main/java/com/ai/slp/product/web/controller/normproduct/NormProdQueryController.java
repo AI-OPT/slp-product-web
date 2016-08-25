@@ -20,7 +20,6 @@ import com.ai.slp.product.api.storage.param.StorageGroupRes;
 import com.ai.slp.product.api.storage.param.StorageRes;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.util.AdminUtil;
@@ -149,9 +148,9 @@ public class NormProdQueryController {
 	 * 查询条件检查设置  
 	 */
 	private void queryBuilder(HttpServletRequest request,NormProdRequest productRequest) {
-		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		productRequest.setSupplierId(AdminUtil.getSupplierId());
 		productRequest.setTenantId(AdminUtil.getTenantId());
-		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		productRequest.setSupplierId(AdminUtil.getSupplierId());
 		if(!request.getParameter("productId").isEmpty())
 			productRequest.setStandedProdId(request.getParameter("productId"));
 		if(!request.getParameter("productName").isEmpty())
@@ -184,7 +183,7 @@ public class NormProdQueryController {
         NormProdUniqueReq normProdUniqueReq = new NormProdUniqueReq();
         normProdUniqueReq.setProductId(standedProdId);
         normProdUniqueReq.setTenantId(AdminUtil.getTenantId());
-        normProdUniqueReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        normProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
         INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
         NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
         uiModel.addAttribute("normProdInfo", normProdInfoResponse);
@@ -215,7 +214,7 @@ public class NormProdQueryController {
         //查询库存组和库存信息
         StorageGroupQuery storageGroupQuery = new StorageGroupQuery();
         storageGroupQuery.setTenantId(AdminUtil.getTenantId());
-        storageGroupQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        storageGroupQuery.setSupplierId(AdminUtil.getSupplierId());
         storageGroupQuery.setProductId(normProdInfoResponse.getProductId());
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         BaseListResponse<StorageGroupRes> storageGroupResList = storageSV.queryGroupInfoByNormProdId(storageGroupQuery);

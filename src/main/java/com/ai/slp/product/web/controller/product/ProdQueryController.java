@@ -79,7 +79,7 @@ public class ProdQueryController {
 	 * @return
 	 */
 	private PageInfoResponse<ProductEditUp> queryProductByState(ProductEditQueryReq productEditQueryReq) {
-		productEditQueryReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		productEditQueryReq.setSupplierId(AdminUtil.getSupplierId());
 		IProductManagerSV productManagerSV = DubboConsumerFactory.getService("iProductManagerSV");
 		PageInfoResponse<ProductEditUp> result = productManagerSV.queryProductEdit(productEditQueryReq);
 		ICacheSV cacheSV = DubboConsumerFactory.getService("iCacheSV");
@@ -192,7 +192,7 @@ public class ProdQueryController {
 	 */
 	private void queryBuilder(HttpServletRequest request, ProductEditQueryReq productEditQueryReq) {
 		productEditQueryReq.setTenantId(AdminUtil.getTenantId());
-		productEditQueryReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		productEditQueryReq.setSupplierId(AdminUtil.getSupplierId());
 		productEditQueryReq.setProductCatId(request.getParameter("productCatId"));
 		if(!request.getParameter("productType").isEmpty())
 			productEditQueryReq.setProductType(request.getParameter("productType"));

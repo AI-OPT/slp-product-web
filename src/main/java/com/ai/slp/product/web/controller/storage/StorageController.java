@@ -24,7 +24,6 @@ import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.controller.product.ProdQueryController;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
@@ -66,7 +65,7 @@ public class StorageController {
         NormProdUniqueReq normProdUniqueReq = new NormProdUniqueReq();
         normProdUniqueReq.setProductId(standedProdId);
         normProdUniqueReq.setTenantId(AdminUtil.getTenantId());
-        normProdUniqueReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        normProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
         INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
         NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
         uiModel.addAttribute("normProdInfo", normProdInfoResponse);
@@ -97,7 +96,7 @@ public class StorageController {
         //查询库存组和库存信息
         StorageGroupQuery storageGroupQuery = new StorageGroupQuery();
         storageGroupQuery.setTenantId(AdminUtil.getTenantId());
-        storageGroupQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        storageGroupQuery.setSupplierId(AdminUtil.getSupplierId());
         storageGroupQuery.setProductId(normProdInfoResponse.getProductId());
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         BaseListResponse<StorageGroupRes> storageGroupResList = storageSV.queryGroupInfoByNormProdId(storageGroupQuery);
@@ -148,7 +147,7 @@ public class StorageController {
         IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
         StoGroupInfoQuery infoQuery = new StoGroupInfoQuery();
         infoQuery.setTenantId(AdminUtil.getTenantId());
-        infoQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        infoQuery.setSupplierId(AdminUtil.getSupplierId());
         infoQuery.setGroupId(groupId);
         SkuSetForProduct skuSetForProduct = productSV.querySkuSetForGroup(infoQuery);
         ResponseHeader header = skuSetForProduct.getResponseHeader();
@@ -189,7 +188,7 @@ public class StorageController {
         IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
         StoGroupInfoQuery infoQuery = new StoGroupInfoQuery();
         infoQuery.setTenantId(AdminUtil.getTenantId());
-        infoQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        infoQuery.setSupplierId(AdminUtil.getSupplierId());
         infoQuery.setGroupId(groupId);
         SkuSetForProduct skuSetForProduct = productSV.querySkuSetForGroup(infoQuery);
         ResponseHeader header = skuSetForProduct.getResponseHeader();
@@ -201,7 +200,7 @@ public class StorageController {
             IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
             StorageUniQuery query = new StorageUniQuery();
             query.setTenantId(AdminUtil.getTenantId());
-            query.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+            query.setSupplierId(AdminUtil.getSupplierId());
             query.setStorageId(storageId);
             //获取SKU库存信息
             BaseMapResponse<String, SkuStorageInfo> mapResponse = storageSV.querySkuStorageById(query);

@@ -7,7 +7,6 @@ import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.util.JSonUtil;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
 import com.ai.slp.product.api.product.param.ProductInfoQuery;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.util.AdminUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,7 @@ public class prodOperateController {
 		//封装参数进行上架操作
 		ProductInfoQuery productInfoQuery = new ProductInfoQuery();
 		productInfoQuery.setTenantId(AdminUtil.getTenantId());
-		productInfoQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		productInfoQuery.setSupplierId(AdminUtil.getSupplierId());
 		productInfoQuery.setOperId(AdminUtil.getAdminId(session));
 		productInfoQuery.setProductId(productId);
 		BaseResponse baseResponse = productManagerSV.changeToInSale(productInfoQuery);
@@ -60,7 +59,7 @@ public class prodOperateController {
 		IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
 		ProductInfoQuery productInfoQuery = new ProductInfoQuery();
 		productInfoQuery.setTenantId(AdminUtil.getTenantId());
-		productInfoQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		productInfoQuery.setSupplierId(AdminUtil.getSupplierId());
 		productInfoQuery.setOperId(AdminUtil.getAdminId(session));
 		productInfoQuery.setProductId(productId);
 		BaseResponse baseResponse = productManagerSV.changeToInStore(productInfoQuery);

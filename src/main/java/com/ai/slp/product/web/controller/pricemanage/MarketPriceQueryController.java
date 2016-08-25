@@ -16,7 +16,6 @@ import com.ai.slp.product.api.normproduct.param.*;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.controller.normproduct.NormProdQueryController;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
@@ -150,9 +149,9 @@ public class MarketPriceQueryController {
 	 * 查询条件检查设置  
 	 */
 	private void queryBuilder(HttpServletRequest request,NormProdRequest productRequest) {
-		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		productRequest.setSupplierId(AdminUtil.getSupplierId());
 		productRequest.setTenantId(AdminUtil.getTenantId());
-		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		productRequest.setSupplierId(AdminUtil.getSupplierId());
 		if(!request.getParameter("productId").isEmpty())
 			productRequest.setStandedProdId(request.getParameter("productId"));
 		if(!request.getParameter("productName").isEmpty())
@@ -183,7 +182,7 @@ public class MarketPriceQueryController {
 		//根据ID查询单个商品的信息
 		NormProdUniqueReq req = new NormProdUniqueReq();
 		req.setTenantId(AdminUtil.getTenantId());
-		req.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		req.setSupplierId(AdminUtil.getSupplierId());
 		req.setProductId(standedProdId);
 		NormProdInfoResponse normProdResponse = normProductSV.queryProducById(req);
 		uiModel.addAttribute("normProd",normProdResponse);
@@ -229,7 +228,7 @@ public class MarketPriceQueryController {
 		//设置租户ID 
 		updatePrice.setTenantId(AdminUtil.getTenantId());
 		//设置商户ID
-		updatePrice.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		updatePrice.setSupplierId(AdminUtil.getSupplierId());
 		//设置操作人
 		updatePrice.setOperId(AdminUtil.getAdminId(session));
 		//保存

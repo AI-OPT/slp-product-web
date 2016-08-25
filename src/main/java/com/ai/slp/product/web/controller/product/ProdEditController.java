@@ -81,7 +81,7 @@ public class ProdEditController {
         //查询商品详情
         ProductInfoQuery infoQuery = new ProductInfoQuery();
         infoQuery.setTenantId(AdminUtil.getTenantId());
-        infoQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        infoQuery.setSupplierId(AdminUtil.getSupplierId());
         infoQuery.setProductId(prodId);
         ProductInfo productInfo = productSV.queryProductById(infoQuery);
         uiModel.addAttribute("productInfo",productInfo);

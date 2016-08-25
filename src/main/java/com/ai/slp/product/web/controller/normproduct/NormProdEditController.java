@@ -17,7 +17,6 @@ import com.ai.slp.product.api.productcat.param.AttrQueryForCat;
 import com.ai.slp.product.api.productcat.param.ProdCatAttrDef;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.util.AdminUtil;
@@ -141,7 +140,7 @@ public class NormProdEditController {
             NormProdUniqueReq normProdUniqueReq = new NormProdUniqueReq();
             normProdUniqueReq.setProductId(prodId);
             normProdUniqueReq.setTenantId(AdminUtil.getTenantId());
-            normProdUniqueReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+            normProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
             INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
             NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
             uiModel.addAttribute("productInfo", normProdInfoResponse);
