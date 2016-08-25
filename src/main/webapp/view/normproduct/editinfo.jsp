@@ -22,10 +22,10 @@
                         	<div class="form-label bd-bottom">
                         		<ul>
 					           		<li class="width-xlag">
-					                    <p class="word">类目信息</p>
-					                   <%--  <c:forEach var="catInfo" items="${catLinkList}"varStatus="stat">
+					                    <p class="word"><b class="red">*</b>类目信息</p>
+					                   	<c:forEach var="catInfo" items="${catLinkList}" varStatus="stat">
 					                    	${catInfo.productCatName}<c:if test="${!stat.last}">&gt;</c:if>
-                                    	</c:forEach> --%>
+                                    	</c:forEach>
 					                    <input type="hidden" id="productCatId" name="productCatId" value="${productCatId}"/>
 					               </li>	
 					            </ul>
@@ -40,6 +40,7 @@
 					                    <p class="word"><b class="red">*</b>商品类型</p>
 					                    <p>
 					                    	<select  name="productType" class="select select-medium">
+					                    		<option value="">--请选择--</option>
 							                   	<option value="1" <c:if test="${productInfo.productType == '1'}">selected="selected"</c:if>>实物</option>
 							                   	<option value="2" <c:if test="${productInfo.productType == '2'}">selected="selected"</c:if>>虚拟</option>
 					                    	</select>
@@ -65,6 +66,7 @@
 												<%-- 下拉选择 --%>
 												<c:when test="${keyAttr.valueWay == '1'}">
 													<select class="select select-medium" attrId="keyAttr${keyAttr.attrId}">
+														<option value="">--请选择--</option>
 														<c:forEach var="valInfo" items="${keyAttr.attrValList}">
 														<!-- <script>alert("attrvalueDefId=${valInfo.attrvalueDefId}");</script>
 														<script>alert("isOk=${fn:contains(attrValueSet,valInfo.attrvalueDefId)}");</script> -->
@@ -117,6 +119,7 @@
 													<%-- 下拉选择 --%>
 													<c:when test="${saleAttr.valueWay == '1'}">
 														<select class="select select-medium" attrId="saleAttr${saleAttr.attrId}">
+															<option value="">--请选择--</option>
 															<c:forEach var="valInfo" items="${saleAttr.attrValList}">
 																<option value="${valInfo.attrvalueDefId}"<c:if test="${fn:contains(saleAttrSet,valInfo.attrvalueDefId)}">selected ="selected"</c:if>>
 																   ${valInfo.attrValueName}
@@ -189,11 +192,8 @@
 
 <script type="text/javascript">
 		var pager;
-		var count = '${count}';
-		var prodInfoList = '${prodInfoList}';
-		var productEditInfo = '${productEditInfo}';
 		(function () {
-			seajs.use('app/jsp/normproduct/addinfo', function (normProdEditPager) {
+			seajs.use('app/jsp/normproduct/editinfo', function (normProdEditPager) {
 				pager = new normProdEditPager({element : document.body});
 				pager.render();
 			});
