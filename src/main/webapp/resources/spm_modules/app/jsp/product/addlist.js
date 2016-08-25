@@ -52,6 +52,12 @@ define('app/jsp/product/addlist', function (require, exports, module) {
     		for(var i=index;i<length;i++){
     			$("#productCat"+i).remove();
     		}
+    		
+
+    		//若为全部,则不查询.
+			if (prodCatId === '')
+				return;
+    		
     		ajaxController.ajax({
 				type: "post",
 				processing: false,
