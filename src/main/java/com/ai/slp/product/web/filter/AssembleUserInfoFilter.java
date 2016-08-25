@@ -32,7 +32,7 @@ public class AssembleUserInfoFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        if (!shouldFilter(req)) {
+        if (shouldFilter(req)) {
             chain.doFilter(req, response);
             return;
         }
@@ -105,6 +105,6 @@ public class AssembleUserInfoFilter implements Filter {
             }
         }
         return true;*/
-        return ignorSuffixStr.endsWith(uri)||ignorSuffixStr.contains(uri+",");
+        return ignorSuffixStr.contains(uri)||ignorSuffixStr.contains(uri+",");
     }
 }
