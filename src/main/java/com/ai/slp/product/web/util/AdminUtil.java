@@ -34,7 +34,7 @@ public class AdminUtil {
     }
 
     /**
-     * 获取租户标识
+     * 获取商户标识
      * @return
      */
     public static String getSupplierId(){

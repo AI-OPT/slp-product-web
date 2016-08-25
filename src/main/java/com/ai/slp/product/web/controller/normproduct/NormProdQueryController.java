@@ -1,21 +1,5 @@
 package com.ai.slp.product.web.controller.normproduct;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.ai.opt.base.vo.BaseListResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -28,12 +12,7 @@ import com.ai.slp.common.api.cache.param.SysParam;
 import com.ai.slp.common.api.cache.param.SysParamMultiCond;
 import com.ai.slp.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
-import com.ai.slp.product.api.normproduct.param.AttrMap;
-import com.ai.slp.product.api.normproduct.param.AttrQuery;
-import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
-import com.ai.slp.product.api.normproduct.param.NormProdRequest;
-import com.ai.slp.product.api.normproduct.param.NormProdResponse;
-import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
+import com.ai.slp.product.api.normproduct.param.*;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.StorageGroupQuery;
@@ -44,7 +23,22 @@ import com.ai.slp.product.web.constants.ProductCatConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
 import com.ai.slp.product.web.util.DateUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 标准品查询
@@ -112,21 +106,21 @@ public class NormProdQueryController {
 			if (StringUtils.isNotBlank(normProdResponse.getProductType())) {
 				// 获取类型
 				String productType = normProdResponse.getProductType();
-				sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID,
+				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
 						ComCacheConstants.TypeProduct.CODE, ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE,
 						productType);
 				String productTypeName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 				normProdResponse.setProductType(productTypeName);
 				// 获取状态
 				String state = normProdResponse.getState();
-				sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID,
+				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
 						ComCacheConstants.NormProduct.CODE, ComCacheConstants.NormProduct.STATUS, state);
 				String stateName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 				normProdResponse.setState(stateName);
 				
 				//设置人员名称
 				SysUserQueryRequest userQuery = new SysUserQueryRequest();
-	            userQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+	            userQuery.setTenantId(AdminUtil.getTenantId());
 	            Long createId = normProdResponse.getCreateId();
 	            //设置创建者名称
 	            if(createId != null){
@@ -156,7 +150,7 @@ public class NormProdQueryController {
 	 */
 	private void queryBuilder(HttpServletRequest request,NormProdRequest productRequest) {
 		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
-		productRequest.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		productRequest.setTenantId(AdminUtil.getTenantId());
 		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
 		if(!request.getParameter("productId").isEmpty())
 			productRequest.setStandedProdId(request.getParameter("productId"));
@@ -189,7 +183,7 @@ public class NormProdQueryController {
         //查询标准品信息
         NormProdUniqueReq normProdUniqueReq = new NormProdUniqueReq();
         normProdUniqueReq.setProductId(standedProdId);
-        normProdUniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        normProdUniqueReq.setTenantId(AdminUtil.getTenantId());
         normProdUniqueReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
         INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
         NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
@@ -199,7 +193,7 @@ public class NormProdQueryController {
         uiModel.addAttribute("productCatId", normProdInfoResponse.getProductCatId());
         //商品类型
         SysParamSingleCond paramSingleCond = new SysParamSingleCond();
-        paramSingleCond.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        paramSingleCond.setTenantId(AdminUtil.getTenantId());
         paramSingleCond.setTypeCode(ComCacheConstants.TypeProduct.CODE);
         paramSingleCond.setParamCode(ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE);
         paramSingleCond.setColumnValue(normProdInfoResponse.getProductType());
@@ -208,7 +202,7 @@ public class NormProdQueryController {
         uiModel.addAttribute("prodType", sysParam.getColumnDesc());
         //标准品关键属性
         AttrQuery attrQuery = new AttrQuery();
-        attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        attrQuery.setTenantId(AdminUtil.getTenantId());
         attrQuery.setProductId(normProdInfoResponse.getProductId());
         attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
         AttrMap attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
@@ -220,7 +214,7 @@ public class NormProdQueryController {
 
         //查询库存组和库存信息
         StorageGroupQuery storageGroupQuery = new StorageGroupQuery();
-        storageGroupQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        storageGroupQuery.setTenantId(AdminUtil.getTenantId());
         storageGroupQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
         storageGroupQuery.setProductId(normProdInfoResponse.getProductId());
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
@@ -229,7 +223,7 @@ public class NormProdQueryController {
         for (StorageGroupRes storageGroupRes : storageGroupResList.getResult()) {
             // 获取库存组状态名
             String state = storageGroupRes.getState();
-            paramSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID,
+            paramSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
                     ComCacheConstants.StateStorage.STORAGEGROUP_TYPR_CODE, ComCacheConstants.StateStorage.PARAM_CODE, state);
             String stateName = cacheSV.getSysParamSingle(paramSingleCond).getColumnDesc();
             storageGroupRes.setStateName(stateName);
@@ -253,7 +247,7 @@ public class NormProdQueryController {
      */
     private Map<String,SysParam> getStorageStatus(){
         ICacheSV cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
-        SysParamMultiCond multiCond = new SysParamMultiCond(SysCommonConstants.COMMON_TENANT_ID,
+        SysParamMultiCond multiCond = new SysParamMultiCond(AdminUtil.getTenantId(),
                 ComCacheConstants.StateStorage.STORAGE_TYPR_CODE, ComCacheConstants.StateStorage.PARAM_CODE);
         List<SysParam> sysParamList = cacheSV.getSysParamList(multiCond);
         Map<String,SysParam> paramMap = new HashMap<>();

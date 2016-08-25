@@ -80,19 +80,19 @@ public class ProdEditController {
         initConsumer();
         //查询商品详情
         ProductInfoQuery infoQuery = new ProductInfoQuery();
-        infoQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        infoQuery.setTenantId(AdminUtil.getTenantId());
         infoQuery.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
         infoQuery.setProductId(prodId);
         ProductInfo productInfo = productSV.queryProductById(infoQuery);
         uiModel.addAttribute("productInfo",productInfo);
         //查询类目链
         ProductCatUniqueReq catUniqueReq = new ProductCatUniqueReq();
-        catUniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        catUniqueReq.setTenantId(AdminUtil.getTenantId());
         catUniqueReq.setProductCatId(productInfo.getProductCatId());
         List<ProductCatInfo> catLinkList =productCatSV.queryLinkOfCatById(catUniqueReq);
         uiModel.addAttribute("catLinkList",catLinkList);
         SysParamSingleCond paramSingleCond = new SysParamSingleCond();
-        paramSingleCond.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        paramSingleCond.setTenantId(AdminUtil.getTenantId());
         paramSingleCond.setTypeCode(ComCacheConstants.TypeProduct.CODE);
         paramSingleCond.setParamCode(ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE);
         paramSingleCond.setColumnValue(productInfo.getProductType());
@@ -101,7 +101,7 @@ public class ProdEditController {
         uiModel.addAttribute("prodType",sysParam.getColumnDesc());
         //标准品关键属性
         AttrQuery attrQuery = new AttrQuery();
-        attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        attrQuery.setTenantId(AdminUtil.getTenantId());
         attrQuery.setProductId(productInfo.getStandedProdId());
         attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
         AttrMap attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
@@ -132,7 +132,7 @@ public class ProdEditController {
         uiModel.addAttribute("valPicMap",otherSet.getAttrValPics());
 
         SysParamMultiCond paramMultiCond = new SysParamMultiCond();
-        paramMultiCond.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        paramMultiCond.setTenantId(AdminUtil.getTenantId());
         paramMultiCond.setTypeCode(ComCacheConstants.TypeProduct.CODE);
         paramMultiCond.setParamCode(ComCacheConstants.TypeProduct.PROD_UNIT);
 
@@ -177,7 +177,7 @@ public class ProdEditController {
                 new TypeReference<Map<Long, List<ProdAttrValInfo>>>(){});
         ProductInfoForUpdate prodInfo = new ProductInfoForUpdate();
         BeanUtils.copyProperties(prodInfo,editInfo);
-        prodInfo.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        prodInfo.setTenantId(AdminUtil.getTenantId());
         prodInfo.setOperId(AdminUtil.getAdminId(session));
         prodInfo.setNoKeyAttrValMap(attrValMap);
         //添加省份编码

@@ -10,9 +10,9 @@ import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.*;
 import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.model.prodCat.ProdCatQuery;
 import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
 import com.ai.slp.product.web.vo.ProdQueryCatVo;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
@@ -52,13 +52,13 @@ public class CatQueryController {
             IProductCatSV productCatSV = DubboConsumerFactory.getService("iProductCatSV");
             //通过id查询当前类目信息
             ProductCatUniqueReq productCatUniqueReq = new ProductCatUniqueReq();
-            productCatUniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+            productCatUniqueReq.setTenantId(AdminUtil.getTenantId());
             productCatUniqueReq.setProductCatId(prodCatId);
             ProductCatInfo productCatInfo = productCatSV.queryByCatId(productCatUniqueReq);
             //如果当前类目有子类则查询下一级类目
             if(productCatInfo.getIsChild().equals(ProductCatConstants.ProductCat.IsChild.HAS_CHILD)){
                 ProductCatQuery catQuery = new ProductCatQuery();
-                catQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+                catQuery.setTenantId(AdminUtil.getTenantId());
                 catQuery.setParentProductCatId(prodCatId);
                 ProdCatInfo prodCatInfo = null;
                 do{
@@ -110,7 +110,7 @@ public class CatQueryController {
         IProductCatSV catSV = DubboConsumerFactory.getService(IProductCatSV.class);
         ProductCatPageQuery pageQuery = new ProductCatPageQuery();
         BeanUtils.copyProperties(pageQuery,catQuery);
-        pageQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        pageQuery.setTenantId(AdminUtil.getTenantId());
         PageInfoResponse<ProductCatInfo> catInfoPageRes = catSV.queryPageProductCat(pageQuery);
         ResponseHeader header = catInfoPageRes.getResponseHeader();
 
@@ -135,7 +135,7 @@ public class CatQueryController {
         ResponseData<ProductCatInfo> responseData;
         IProductCatSV catSV = DubboConsumerFactory.getService(IProductCatSV.class);
         ProductCatUniqueReq uniqueReq = new ProductCatUniqueReq();
-        uniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        uniqueReq.setTenantId(AdminUtil.getTenantId());
         uniqueReq.setProductCatId(catId);
         ProductCatInfo catInfo = catSV.queryByCatId(uniqueReq);
         ResponseHeader header = catInfo.getResponseHeader();
@@ -206,7 +206,7 @@ public class CatQueryController {
         //查询所有属性及属性值
         IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
         BaseInfo baseInfo = new BaseInfo();
-        baseInfo.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        baseInfo.setTenantId(AdminUtil.getTenantId());
         BaseListResponse<AttrDef> response = attrAndValDefSV.queryAllAttrAndVal(baseInfo);
         uiModel.addAttribute("attrList",response.getResult());
         uiModel.addAttribute("nowMap",nowMap);
@@ -218,7 +218,7 @@ public class CatQueryController {
                                          Set<Long> otherAttr){
         IProductCatSV catSV = DubboConsumerFactory.getService(IProductCatSV.class);
         AttrQueryForCat queryForCat = new AttrQueryForCat();
-        queryForCat.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        queryForCat.setTenantId(AdminUtil.getTenantId());
         queryForCat.setProductCatId(catId);
         queryForCat.setAttrType(queryType);
         BaseMapResponse<Long, Set<String>> mapResponse = catSV.queryAttrAndValIdByCatAndType(queryForCat);
@@ -237,7 +237,7 @@ public class CatQueryController {
 
         //关键属性
         AttrQueryForCat attrQuery = new AttrQueryForCat();
-        attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        attrQuery.setTenantId(AdminUtil.getTenantId());
         attrQuery.setProductCatId(catId);
         attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
         BaseListResponse<ProdCatAttrDef> attrMap = catSV.queryAttrByCatAndType(attrQuery);

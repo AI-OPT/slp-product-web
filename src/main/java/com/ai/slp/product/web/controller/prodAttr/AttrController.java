@@ -1,19 +1,5 @@
 package com.ai.slp.product.web.controller.prodAttr;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
@@ -26,16 +12,23 @@ import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
 import com.ai.slp.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
-import com.ai.slp.product.api.productcat.param.AttrDefInfo;
-import com.ai.slp.product.api.productcat.param.AttrDefParam;
-import com.ai.slp.product.api.productcat.param.AttrInfo;
-import com.ai.slp.product.api.productcat.param.AttrPam;
-import com.ai.slp.product.api.productcat.param.AttrParam;
+import com.ai.slp.product.api.productcat.param.*;
 import com.ai.slp.product.web.constants.ComCacheConstants;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.model.prodAttr.ProdAttrInfo;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 属性的管理 
@@ -67,7 +60,7 @@ public class AttrController {
 		try {
 			//查询条件
 //			queryBuilder(request, attrDefParam);
-			attrDefParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+			attrDefParam.setTenantId(AdminUtil.getTenantId());
 			
 			PageInfoResponse<AttrDefInfo> result = queryAttrByValueWay(attrDefParam);
 			responseData = new ResponseData<PageInfoResponse<AttrDefInfo>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
@@ -83,7 +76,7 @@ public class AttrController {
 	 * 查询条件检查设置  
 	 */
 	private void queryBuilder(HttpServletRequest request,AttrDefParam attrDefParam) {
-		attrDefParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		attrDefParam.setTenantId(AdminUtil.getTenantId());
 		attrDefParam.setValueWay(request.getParameter("valueWay"));
 		
 		if (StringUtils.isNotBlank(request.getParameter("attrId"))) {
@@ -113,7 +106,7 @@ public class AttrController {
 			//获取输入值方式
 			if (StringUtils.isNotBlank(attrDefInfo.getValueWay())) {
 			 String valueWay = attrDefInfo.getValueWay();
-			 sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID, ComCacheConstants.ProdAttr.CODE, ComCacheConstants.ProdAttr.VALUE_WAY, valueWay);
+			 sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(), ComCacheConstants.ProdAttr.CODE, ComCacheConstants.ProdAttr.VALUE_WAY, valueWay);
 			 String valueWayName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 			 attrDefInfo.setValueWay(valueWayName);
 			}
@@ -121,7 +114,7 @@ public class AttrController {
 			Long operId = attrDefInfo.getOperId();
 			if(operId != null){
 				userQueryRequest.setId(Long.toString(operId));
-				userQueryRequest.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+				userQueryRequest.setTenantId(AdminUtil.getTenantId());
 				SysUserQueryResponse userInfo = sysUserQuerySV.queryUserInfo(userQueryRequest);
 				if(userInfo != null){
 					attrDefInfo.setOperName(userInfo.getName());
@@ -154,7 +147,7 @@ public class AttrController {
 		for (ProdAttrInfo attrInfo : attrInfoList) {
 			AttrParam attrParam = new AttrParam();
 			BeanUtils.copyProperties(attrParam, attrInfo);
-			attrParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+			attrParam.setTenantId(AdminUtil.getTenantId());
 			attrParam.setOperId(AdminUtil.getAdminId(session));
 			attrParamList.add(attrParam);
 		}		
@@ -178,7 +171,7 @@ public class AttrController {
 		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
 		AttrPam attrPam = new AttrPam();
 		//设置租户ID
-		attrPam.setTenantId(SysCommonConstants.COMMON_TENANT_ID); 
+		attrPam.setTenantId(AdminUtil.getTenantId());
 		//设置属性ID
 		Long attrIdLong = Long.valueOf(attrId).longValue();
 		attrPam.setAttrId(attrIdLong);

@@ -5,10 +5,7 @@ package com.ai.slp.product.web.constants;
  * Created by jackieliu on 16/6/16.
  */
 public final class SysCommonConstants {
-    /**
-     * 公共中租户ID
-     */
-    public static final String COMMON_TENANT_ID = "SLP";
+
     /**
      * 商户标识
      * -1:自运营平台

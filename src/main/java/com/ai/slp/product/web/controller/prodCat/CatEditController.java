@@ -8,7 +8,6 @@ import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.*;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.model.prodCat.ProdCatInfo;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
@@ -60,7 +59,7 @@ public class CatEditController {
             ProductCatParam catParam = new ProductCatParam();
             System.out.println(catInfo.getProductCatName()+":"+catInfo.getParentProductCatId());
             BeanUtils.copyProperties(catParam,catInfo);
-            catParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+            catParam.setTenantId(AdminUtil.getTenantId());
             catParam.setOperId(AdminUtil.getAdminId(session));
             catParamList.add(catParam);
         }
@@ -77,7 +76,7 @@ public class CatEditController {
     @ResponseBody
     public ResponseData<String> updateCat(ProductCatParam catParam,HttpSession session){
         IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
-        catParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        catParam.setTenantId(AdminUtil.getTenantId());
         catParam.setOperId(AdminUtil.getAdminId(session));
         BaseResponse response = productCatSV.updateProductCat(catParam);
         return genResponse(response);
@@ -94,7 +93,7 @@ public class CatEditController {
     public ResponseData<String> updateCat(@PathVariable("id") String catId, HttpSession session){
         IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
         ProductCatUniqueReq uniqueReq = new ProductCatUniqueReq();
-        uniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        uniqueReq.setTenantId(AdminUtil.getTenantId());
         uniqueReq.setProductCatId(catId);
         uniqueReq.setOperId(AdminUtil.getAdminId(session));
         BaseResponse response = productCatSV.deleteProductCat(uniqueReq);
@@ -115,7 +114,7 @@ public class CatEditController {
         IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
         Map<Long,Set<String>> attrValMap = JSON.parseObject(attrMap,new TypeReference<Map<Long, Set<String>>>() {});
         ProdCatAttrAddParam addParam = new ProdCatAttrAddParam();
-        addParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        addParam.setTenantId(AdminUtil.getTenantId());
         addParam.setOperId(AdminUtil.getAdminId(session));
         addParam.setProductCatId(catId);
         addParam.setAttrType(attrType);
@@ -133,7 +132,7 @@ public class CatEditController {
     @ResponseBody
     public ResponseData<String> deleteCatAttrOrVal(ProdCatAttrVal catAttrVal,HttpSession session){
         IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
-        catAttrVal.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        catAttrVal.setTenantId(AdminUtil.getTenantId());
         catAttrVal.setOperId(AdminUtil.getAdminId(session));
         BaseResponse response = productCatSV.deleteProductCatAttrOrVal(catAttrVal);
         return genResponse(response);
@@ -146,7 +145,7 @@ public class CatEditController {
         List<ProdCatAttrUpdateParam> paramList = JSON.parseArray(catUpParamStr,ProdCatAttrUpdateParam.class);
         IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
         ProdCatAttrUpdateReq updateReq = new ProdCatAttrUpdateReq();
-        updateReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        updateReq.setTenantId(AdminUtil.getTenantId());
         updateReq.setOperId(AdminUtil.getAdminId(session));
         updateReq.setUpdateParamList(paramList);
         BaseResponse response = productCatSV.updateCatAttrAndVal(updateReq);

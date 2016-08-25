@@ -14,6 +14,7 @@ import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,14 +89,14 @@ public class ProdQueryController {
 			if (StringUtils.isNotBlank(productEditUp.getProductType())) {
 				// 获取类型
 				String productType = productEditUp.getProductType();
-				sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID,
+				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
 						ComCacheConstants.TypeProduct.CODE, ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE,
 						productType);
 				String productTypeName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 				productEditUp.setProductTypeName(productTypeName);
 				// 获取状态
 				String state = productEditUp.getState();
-				sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID,
+				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
 						ComCacheConstants.TypeProduct.CODE, "STATE", state);
 				String stateName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 				productEditUp.setStateName(stateName);
@@ -190,7 +191,7 @@ public class ProdQueryController {
 	 * @param productEditQueryReq
 	 */
 	private void queryBuilder(HttpServletRequest request, ProductEditQueryReq productEditQueryReq) {
-		productEditQueryReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		productEditQueryReq.setTenantId(AdminUtil.getTenantId());
 		productEditQueryReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
 		productEditQueryReq.setProductCatId(request.getParameter("productCatId"));
 		if(!request.getParameter("productType").isEmpty())
