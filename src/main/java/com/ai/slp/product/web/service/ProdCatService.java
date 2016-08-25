@@ -8,7 +8,7 @@ import com.ai.slp.product.api.productcat.param.ProductCatInfo;
 import com.ai.slp.product.api.productcat.param.ProductCatQuery;
 import com.ai.slp.product.api.productcat.param.ProductCatUniqueReq;
 import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.constants.SysCommonConstants;
+import com.ai.slp.product.web.util.AdminUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class ProdCatService {
     public Map<Short, List<ProdCatInfo>> loadCat() {
         IProductCatSV productCatSV = DubboConsumerFactory.getService("iProductCatSV");
         ProductCatQuery catQuery = new ProductCatQuery();
-        catQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        catQuery.setTenantId(AdminUtil.getTenantId());
         Map<Short, List<ProdCatInfo>> productCatMap = new HashMap<>();
         ProdCatInfo prodCatInfo = null;
         do {
@@ -43,7 +43,7 @@ public class ProdCatService {
     public List<ProdCatInfo> loadRootCat(){
         IProductCatSV productCatSV = DubboConsumerFactory.getService("iProductCatSV");
         ProductCatQuery catQuery = new ProductCatQuery();
-        catQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        catQuery.setTenantId(AdminUtil.getTenantId());
         // 查询同一级的类目信息
         return productCatSV.queryCatByNameOrFirst(catQuery);
     }
@@ -52,7 +52,7 @@ public class ProdCatService {
         IProductCatSV catSV = DubboConsumerFactory.getService(IProductCatSV.class);
         //类目链
         ProductCatUniqueReq uniqueReq = new ProductCatUniqueReq();
-        uniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        uniqueReq.setTenantId(AdminUtil.getTenantId());
         uniqueReq.setProductCatId(catId);
         return catSV.queryLinkOfCatById(uniqueReq);
     }

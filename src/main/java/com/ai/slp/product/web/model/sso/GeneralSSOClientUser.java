@@ -6,7 +6,8 @@ package com.ai.slp.product.web.model.sso;
  */
 public class GeneralSSOClientUser {
     private static final long serialVersionUID = -8147635836938729264L;
-
+    //租户
+    private String tenantId;
     //登录名称
     private String username;
 
@@ -18,6 +19,14 @@ public class GeneralSSOClientUser {
     private String mobile;
     //邮件
     private String email;
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
     public String getUsername() {
         return username;

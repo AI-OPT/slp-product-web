@@ -1,33 +1,12 @@
 package com.ai.slp.product.web.controller.normproduct;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.ai.opt.base.vo.BaseListResponse;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParam;
-import com.ai.slp.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
-import com.ai.slp.product.api.normproduct.param.AttrMap;
-import com.ai.slp.product.api.normproduct.param.AttrQuery;
 import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
 import com.ai.slp.product.api.normproduct.param.NormProdSaveRequest;
 import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
@@ -37,11 +16,25 @@ import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.AttrQueryForCat;
 import com.ai.slp.product.api.productcat.param.ProdCatAttrDef;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
-import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * 对标准品进行操作
@@ -116,7 +109,7 @@ public class NormProdEditController {
     		//根据类目ID 加载标准品的关键属性  和  销售属性   1关键属性  2销售属性  3非关键属性
 	    	//标准品关键属性 
 	    	AttrQueryForCat attrQuery = new AttrQueryForCat();
-	    	attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+	    	attrQuery.setTenantId(AdminUtil.getTenantId());
 	    	attrQuery.setProductCatId(productCatId);
 	    	attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
 			BaseListResponse<ProdCatAttrDef> keyAttrlist = productCatSV.queryAttrByCatAndType(attrQuery);
@@ -125,7 +118,7 @@ public class NormProdEditController {
 			//标准品销售属性
 			//设置类目ID
 			//设置属性类型
-			attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+			attrQuery.setTenantId(AdminUtil.getTenantId());
 	    	attrQuery.setProductCatId(productCatId);
 	    	attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
 			BaseListResponse<ProdCatAttrDef> saleAttrlist = productCatSV.queryAttrByCatAndType(attrQuery);
@@ -146,8 +139,8 @@ public class NormProdEditController {
             //查询标准品信息
             NormProdUniqueReq normProdUniqueReq = new NormProdUniqueReq();
             normProdUniqueReq.setProductId(prodId);
-            normProdUniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-            normProdUniqueReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+            normProdUniqueReq.setTenantId(AdminUtil.getTenantId());
+            normProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
             INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
             NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
             uiModel.addAttribute("productInfo", normProdInfoResponse);
@@ -159,14 +152,14 @@ public class NormProdEditController {
             
             //标准品关键属性 
 	    	AttrQueryForCat attrForQuery = new AttrQueryForCat();
-	    	attrForQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+	    	attrForQuery.setTenantId(AdminUtil.getTenantId());
 	    	attrForQuery.setProductCatId(productCatId);
 	    	attrForQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
 			BaseListResponse<ProdCatAttrDef> keyAttrlist = productCatSV.queryAttrByCatAndType(attrForQuery);
 			List<ProdCatAttrDef> keyAttrList = keyAttrlist.getResult();
 			uiModel.addAttribute("keyAttrlist",keyAttrList);
 			//标准品销售属性 
-			attrForQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+			attrForQuery.setTenantId(AdminUtil.getTenantId());
 			attrForQuery.setProductCatId(productCatId);
 			attrForQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
 			BaseListResponse<ProdCatAttrDef> saleAttrlist = productCatSV.queryAttrByCatAndType(attrForQuery);
@@ -174,7 +167,7 @@ public class NormProdEditController {
 			
 //			//标准品关键属性值
 //            AttrQuery attrQuery = new AttrQuery();
-//            attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+//            attrQuery.setTenantId(AdminUtil.getTenantId());
 //            attrQuery.setProductId(normProdInfoResponse.getProductId());
 //            attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
 //            AttrMap attrMap = normProductSV.queryAttrByNormProduct(attrQuery);

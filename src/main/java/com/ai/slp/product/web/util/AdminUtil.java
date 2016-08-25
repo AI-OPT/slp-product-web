@@ -30,11 +30,11 @@ public class AdminUtil {
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
         GeneralSSOClientUser user = (GeneralSSOClientUser)session.getAttribute(SSOClientConstants.USER_SESSION_KEY);
 
-        return "SLP";
+        return "changhong";
     }
 
     /**
-     * 获取租户标识
+     * 获取商户标识
      * @return
      */
     public static String getSupplierId(){

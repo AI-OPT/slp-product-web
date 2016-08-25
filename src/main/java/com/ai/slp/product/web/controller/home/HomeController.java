@@ -10,6 +10,7 @@ import com.ai.paas.ipaas.PaasRuntimeException;
 import com.ai.paas.ipaas.image.IImageClient;
 import com.ai.paas.ipaas.image.ImageSizeIllegalException;
 import com.ai.slp.product.web.constants.SysCommonConstants;
+import com.ai.slp.product.web.util.AdminUtil;
 import com.ai.slp.product.web.vo.ImgFileInfoVo;
 import com.ai.slp.user.api.keyinfo.interfaces.IUcKeyInfoSV;
 import com.ai.slp.user.api.keyinfo.param.QueryGroupInfoRequest;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
@@ -94,10 +96,11 @@ public class HomeController {
 
 	@RequestMapping("/queryuser")
 	@ResponseBody
-	public ResponseData<PageInfoResponse<UcGroupKeyInfoVo>> queryUserList(Integer pageSize, Integer pageNo, String userType, String userName){
+	public ResponseData<PageInfoResponse<UcGroupKeyInfoVo>> queryUserList(
+			Integer pageSize, Integer pageNo, String userType, String userName, HttpSession session){
 		ResponseData<PageInfoResponse<UcGroupKeyInfoVo>> responseData;
 		QueryGroupInfoRequest infoRequest = new QueryGroupInfoRequest();
-		infoRequest.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		infoRequest.setTenantId(AdminUtil.getTenantId());
 		infoRequest.setPageNo(pageNo);
 		infoRequest.setPageSize(pageSize);
 		infoRequest.setCustName(userName);

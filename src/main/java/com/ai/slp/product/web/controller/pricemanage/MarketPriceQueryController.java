@@ -3,13 +3,30 @@ package com.ai.slp.product.web.controller.pricemanage;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
+import com.ai.slp.common.api.cache.interfaces.ICacheSV;
+import com.ai.slp.common.api.cache.param.SysParam;
+import com.ai.slp.common.api.cache.param.SysParamSingleCond;
+import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
+import com.ai.slp.product.api.productcat.param.ProdCatInfo;
+import com.ai.slp.product.web.constants.ComCacheConstants;
+import com.ai.slp.product.web.constants.ProductCatConstants;
+import com.ai.slp.product.web.controller.normproduct.NormProdQueryController;
+import com.ai.slp.product.web.service.AttrAndValService;
+import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
+import com.ai.slp.product.web.util.DateUtil;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.protocol.ResponseDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +36,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ai.opt.base.vo.BaseResponse;
-import com.ai.opt.base.vo.PageInfoResponse;
-import com.ai.opt.base.vo.ResponseHeader;
-import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.util.AmountUtils;
 import com.ai.opt.sdk.util.StringUtil;
-import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
-import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
-import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
-import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParam;
-import com.ai.slp.common.api.cache.param.SysParamSingleCond;
-import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
 import com.ai.slp.product.api.normproduct.param.AttrMap;
 import com.ai.slp.product.api.normproduct.param.AttrQuery;
 import com.ai.slp.product.api.normproduct.param.MarketPriceUpdate;
@@ -40,16 +44,6 @@ import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
 import com.ai.slp.product.api.normproduct.param.NormProdRequest;
 import com.ai.slp.product.api.normproduct.param.NormProdResponse;
 import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
-import com.ai.slp.product.api.productcat.param.ProdCatInfo;
-import com.ai.slp.product.web.constants.ComCacheConstants;
-import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.constants.SysCommonConstants;
-import com.ai.slp.product.web.controller.normproduct.NormProdQueryController;
-import com.ai.slp.product.web.service.AttrAndValService;
-import com.ai.slp.product.web.service.ProdCatService;
-import com.ai.slp.product.web.util.AdminUtil;
-import com.ai.slp.product.web.util.AmountUtil;
-import com.ai.slp.product.web.util.DateUtil;
 
 /**
  * 
@@ -123,21 +117,21 @@ public class MarketPriceQueryController {
 			if (StringUtils.isNotBlank(normProdResponse.getProductType())) {
 				// 获取类型
 				String productType = normProdResponse.getProductType();
-				sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID,
+				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
 						ComCacheConstants.TypeProduct.CODE, ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE,
 						productType);
 				String productTypeName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 				normProdResponse.setProductType(productTypeName);
 				// 获取状态
 				String state = normProdResponse.getState();
-				sysParamSingleCond = new SysParamSingleCond(SysCommonConstants.COMMON_TENANT_ID,
+				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
 						ComCacheConstants.NormProduct.CODE, ComCacheConstants.NormProduct.STATUS, state);
 				String stateName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 				normProdResponse.setState(stateName);
 				
 				//设置人员名称
 				SysUserQueryRequest userQuery = new SysUserQueryRequest();
-	            userQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+	            userQuery.setTenantId(AdminUtil.getTenantId());
 	            Long createId = normProdResponse.getCreateId();
 	            //设置创建者名称
 	            if(createId != null){
@@ -167,9 +161,9 @@ public class MarketPriceQueryController {
 	 * 查询条件检查设置  
 	 */
 	private void queryBuilder(HttpServletRequest request,NormProdRequest productRequest) {
-		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
-		productRequest.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-		productRequest.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		productRequest.setSupplierId(AdminUtil.getSupplierId());
+		productRequest.setTenantId(AdminUtil.getTenantId());
+		productRequest.setSupplierId(AdminUtil.getSupplierId());
 		if(!request.getParameter("productId").isEmpty())
 			productRequest.setStandedProdId(request.getParameter("productId"));
 		if(!request.getParameter("productName").isEmpty())
@@ -199,8 +193,8 @@ public class MarketPriceQueryController {
 		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
 		//根据ID查询单个商品的信息
 		NormProdUniqueReq req = new NormProdUniqueReq();
-		req.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-		req.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		req.setTenantId(AdminUtil.getTenantId());
+		req.setSupplierId(AdminUtil.getSupplierId());
 		req.setProductId(standedProdId);
 		NormProdInfoResponse normProdResponse = normProductSV.queryProducById(req);
 		uiModel.addAttribute("normProd",normProdResponse);
@@ -209,7 +203,7 @@ public class MarketPriceQueryController {
         uiModel.addAttribute("productCatId", normProdResponse.getProductCatId());
         //商品类型
         SysParamSingleCond paramSingleCond = new SysParamSingleCond();
-        paramSingleCond.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        paramSingleCond.setTenantId(AdminUtil.getTenantId());
         paramSingleCond.setTypeCode(ComCacheConstants.TypeProduct.CODE);
         paramSingleCond.setParamCode(ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE);
         paramSingleCond.setColumnValue(normProdResponse.getProductType());
@@ -218,7 +212,7 @@ public class MarketPriceQueryController {
         uiModel.addAttribute("prodType", sysParam.getColumnDesc());
         //标准品关键属性
         AttrQuery attrQuery = new AttrQuery();
-        attrQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        attrQuery.setTenantId(AdminUtil.getTenantId());
         attrQuery.setProductId(normProdResponse.getProductId());
         attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
         AttrMap attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
@@ -254,9 +248,9 @@ public class MarketPriceQueryController {
 		ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"添加成功");
 		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
 		//设置租户ID 
-		updatePrice.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		updatePrice.setTenantId(AdminUtil.getTenantId());
 		//设置商户ID
-		updatePrice.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+		updatePrice.setSupplierId(AdminUtil.getSupplierId());
 		//设置操作人
 		updatePrice.setOperId(AdminUtil.getAdminId(session));
 		//保存

@@ -6,7 +6,6 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
-import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -40,8 +39,8 @@ public class StorageEditController {
         ResponseData<String> responseData;
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         NameUpReq nameUpReq = new NameUpReq();
-        nameUpReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-        nameUpReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        nameUpReq.setTenantId(AdminUtil.getTenantId());
+        nameUpReq.setSupplierId(AdminUtil.getSupplierId());
         nameUpReq.setOperId(AdminUtil.getAdminId(session));
         nameUpReq.setId(groupId);
         nameUpReq.setName(groupName);
@@ -71,8 +70,8 @@ public class StorageEditController {
         ResponseData<String> responseData;
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         StoGroupStatus groupStatus = new StoGroupStatus();
-        groupStatus.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-        groupStatus.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        groupStatus.setTenantId(AdminUtil.getTenantId());
+        groupStatus.setSupplierId(AdminUtil.getSupplierId());
         groupStatus.setOperId(AdminUtil.getAdminId(session));
         groupStatus.setGroupId(groupId);
         groupStatus.setState(status);
@@ -106,7 +105,7 @@ public class StorageEditController {
         storageGroup.setCreateId(AdminUtil.getAdminId(session));
         storageGroup.setStandedProdId(request.getParameter("standedProdId"));
         storageGroup.setStorageGroupName(request.getParameter("storageGroupName"));
-        storageGroup.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+        storageGroup.setTenantId(AdminUtil.getTenantId());
 
         BaseResponse baseResponse = storageSV.createStorageGroup(storageGroup);
         ResponseHeader header = baseResponse.getResponseHeader();
@@ -129,8 +128,8 @@ public class StorageEditController {
         ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         storage.setOperId(AdminUtil.getAdminId(session));
-        storage.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-        storage.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        storage.setTenantId(AdminUtil.getTenantId());
+        storage.setSupplierId(AdminUtil.getSupplierId());
         //若SKU库存量不为空
         if (StringUtils.isNotBlank(skuNumMap)){
             Map<String,Long> skuMap = JSON.parseObject(skuNumMap,new TypeReference<Map<String, Long>>() {});
@@ -157,8 +156,8 @@ public class StorageEditController {
         ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "操作成功");
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         StorageStatus storageStatus = new StorageStatus();
-        storageStatus.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-        storageStatus.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        storageStatus.setTenantId(AdminUtil.getTenantId());
+        storageStatus.setSupplierId(AdminUtil.getSupplierId());
         storageStatus.setStorageId(stoId);
         storageStatus.setOperId(AdminUtil.getAdminId(session));
         storageStatus.setState(status);
@@ -184,8 +183,8 @@ public class StorageEditController {
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         NameUpReq upReq = new NameUpReq();
         StorageStatus storageStatus = new StorageStatus();
-        upReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
-        upReq.setSupplierId(SysCommonConstants.COMMON_SUPPLIER_ID);
+        upReq.setTenantId(AdminUtil.getTenantId());
+        upReq.setSupplierId(AdminUtil.getSupplierId());
         upReq.setId(stoId);
         upReq.setOperId(AdminUtil.getAdminId(session));
         upReq.setName(stoName);

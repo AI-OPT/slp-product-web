@@ -1,19 +1,5 @@
 package com.ai.slp.product.web.controller.prodAttr;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
@@ -25,15 +11,22 @@ import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
 import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
 import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
 import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
-import com.ai.slp.product.api.productcat.param.AttrVal;
-import com.ai.slp.product.api.productcat.param.AttrValInfo;
-import com.ai.slp.product.api.productcat.param.AttrValPageQuery;
-import com.ai.slp.product.api.productcat.param.AttrValParam;
-import com.ai.slp.product.api.productcat.param.AttrValUniqueReq;
-import com.ai.slp.product.web.constants.SysCommonConstants;
+import com.ai.slp.product.api.productcat.param.*;
 import com.ai.slp.product.web.model.prodAttr.ProdAttrValueInfo;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 属性值管理
@@ -68,7 +61,7 @@ public class AttrValueController {
 		try {
 			//查询条件
 		//	queryBuilder(request, pageQuery);
-			pageQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+			pageQuery.setTenantId(AdminUtil.getTenantId());
 			
 			PageInfoResponse<AttrValInfo> result = queryAttrByAttrvalId(pageQuery);
 			responseData = new ResponseData<PageInfoResponse<AttrValInfo>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
@@ -84,7 +77,7 @@ public class AttrValueController {
 	
 	/*private void queryBuilder(HttpServletRequest request, AttrValPageQuery pageQuery) {
 		//设置租户ID
-		pageQuery.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		pageQuery.setTenantId(AdminUtil.getTenantId());
 		
 		if (StringUtils.isNotBlank(request.getParameter("attrvalueDefId"))) {
 			pageQuery.setAttrvalueDefId(request.getParameter("attrvalueDefId"));
@@ -106,7 +99,7 @@ public class AttrValueController {
 					Long operId = attrValInfo.getOperId();
 					if(operId != null){
 						userQueryRequest.setId(Long.toString(operId));
-						userQueryRequest.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+						userQueryRequest.setTenantId(AdminUtil.getTenantId());
 						SysUserQueryResponse userInfo = sysUserQuerySV.queryUserInfo(userQueryRequest);
 						if(userInfo != null){
 							attrValInfo.setOperName(userInfo.getName());
@@ -141,7 +134,7 @@ public class AttrValueController {
 			AttrValParam attrValParam = new AttrValParam();
 			BeanUtils.copyProperties(attrValParam, attrValueInfo);
 			//补全属性值的字段
-			attrValParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+			attrValParam.setTenantId(AdminUtil.getTenantId());
 			attrValParam.setOperId(AdminUtil.getAdminId(session));
 			attrValueList.add(attrValParam);
 		}
@@ -166,7 +159,7 @@ public class AttrValueController {
 		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
 		AttrValUniqueReq attrValUniqueReq = new AttrValUniqueReq();
 		//设置租户
-		attrValUniqueReq.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		attrValUniqueReq.setTenantId(AdminUtil.getTenantId());
 		//设置属性值ID
 		attrValUniqueReq.setAttrvalueDefId(attrvalueDefId);
 		//查询结果
@@ -193,7 +186,7 @@ public class AttrValueController {
 		ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
 		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
 		//设置租户ID
-		attrValParam.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		attrValParam.setTenantId(AdminUtil.getTenantId());
 		//设置操作人ID
 		attrValParam.setOperId(AdminUtil.getAdminId(session));
 		
@@ -214,7 +207,7 @@ public class AttrValueController {
 		ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "删除成功");
 		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
 		//设置租户ID
-		attrVal.setTenantId(SysCommonConstants.COMMON_TENANT_ID);
+		attrVal.setTenantId(AdminUtil.getTenantId());
 		//设置操作人ID
 		attrVal.setOperId(AdminUtil.getAdminId(session));
 		//设置属性值ID
