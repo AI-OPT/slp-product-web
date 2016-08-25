@@ -1,10 +1,12 @@
 package com.ai.slp.product.web.model.sso;
 
+import java.io.Serializable;
+
 /**
  * SSOUser 单点登录成功后的User实体
  * Created by jackieliu on 16/8/19.
  */
-public class GeneralSSOClientUser {
+public class GeneralSSOClientUser implements Serializable {
     private static final long serialVersionUID = -8147635836938729264L;
     //租户
     private String tenantId;
