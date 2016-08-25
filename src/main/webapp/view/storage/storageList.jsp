@@ -18,29 +18,7 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!-- 查询条件 -->
 						<div class="form-label">
-							<%-- 类目 --%>
-							<ul id="data1ProdCat">
-								<li class="col-md-12">
-									<p class="word">商品类目</p>
-										<p id="productCat0">
-											<select class="select select-small" onChange="pager._selectChange(this);">
-													<option value="">全部</option>
-												<c:forEach var="info" items="${catInfoList}">
-													<option value="${info.productCatId}">${info.productCatName}</option>
-												</c:forEach>
-											</select>
-										</p>
-									<script id="prodCatTemple" type="text/template">
-										<p id="productCat{{:level}}">
-											<select class="select select-small" onChange="pager._selectChange(this);">
-												{{for prodCatList}}
-												<option value="{{:productCatId}}">{{:productCatName}}</option>
-												{{/for}}
-											</select>
-										</p>
-									</script>
-								</li>
-							</ul>
+
 							<ul>
 								<li class="col-md-12">
 									<p class="word">商品名称</p>
@@ -79,6 +57,29 @@
 										<p><input type="text" class="int-text int-medium" id="operEndTime">
 											<span class="time"> <i class="fa  fa-calendar" ></i></span>
 										</p>
+									</li>
+								</ul>
+								<%-- 类目 --%>
+								<ul id="data1ProdCat">
+									<li class="col-md-12">
+										<p class="word">商品类目</p>
+										<p id="productCat0">
+											<select class="select select-small" onChange="pager._selectChange(this);">
+												<option value="">全部</option>
+												<c:forEach var="info" items="${catInfoList}">
+													<option value="${info.productCatId}">${info.productCatName}</option>
+												</c:forEach>
+											</select>
+										</p>
+										<script id="prodCatTemple" type="text/template">
+											<p id="productCat{{:level}}">
+												<select class="select select-small" onChange="pager._selectChange(this);">
+													{{for prodCatList}}
+													<option value="{{:productCatId}}">{{:productCatName}}</option>
+													{{/for}}
+												</select>
+											</p>
+										</script>
 									</li>
 								</ul>
 							</div>

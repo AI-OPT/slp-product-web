@@ -87,7 +87,7 @@
             </ul>
             <ul>
                 <li>
-                    <p class="word">虚拟库存量:</p>
+                    <p class="word">库存量:</p>
                     <p><input type="text" id="newTotalNum" class="int-text int-small" value="0"
                               <c:if test="${!saleAttr.isEmpty()}">readonly</c:if> maxlength="10"></p>
                 </li>
@@ -153,7 +153,7 @@
             </ul>
             <ul>
                 <li>
-                    <p class="word">虚拟库存量:</p>
+                    <p class="word">库存量:</p>
                     <p id="stoInfoNum"></p>
                 </li>
             </ul>
