@@ -34,10 +34,10 @@
 					             	<li class="col-md-12 ui-form-item">
 					             		<p class="word"><span>*</span>属性值输入方式</p>
 					             		<p>
-					                    	<select  name="valueWay" class="select select-medium">
+					                    	<select id="test" name="valueWay" class="select select-medium">
 							                   	<option value="1">下拉单选</option>
 							                   	<option value="2">多选</option>
-							                   	 <option value="3">可输入文本框(单行)</option>
+							                   	<option value="3">可输入文本框(单行)</option>
 							                   	<option value="4">可输入文本框(多行)</option>
 							                   	<option value="5">日期时间</option>
 							                   	<option value="6">日期时间段</option> 
@@ -79,6 +79,7 @@
 									
 									</p>
                                 </div>
+								<input name="num{{:num}}" type="hidden" class="int-text int-medium">
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性名称</p>
@@ -93,7 +94,7 @@
 					             	<li class="col-md-12 ui-form-item">
 					             		<p class="word"><span>*</span>属性值输入方式</p>
 					             		<p>
-					                    	<select name="valueWay{{:num}}" class="select select-medium">
+					                    	<select id="test" name="valueWay" class="select select-medium">
 							                   	<option value="1">下拉单选</option>
 							                   	<option value="2">多选</option>
 							                   	<option value="3">可输入文本框(单行)</option>
