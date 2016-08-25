@@ -93,8 +93,7 @@
 					             	<li class="col-md-12 ui-form-item">
 					             		<p class="word"><span>*</span>属性值输入方式</p>
 					             		<p>
-					                    	<select  name="valueWay{{:num}}" class="select select-medium ui-form-item">
-							                   	<option value="">全部</option>
+					                    	<select name="valueWay{{:num}}" class="select select-medium">
 							                   	<option value="1">下拉单选</option>
 							                   	<option value="2">多选</option>
 							                   	<option value="3">可输入文本框(单行)</option>

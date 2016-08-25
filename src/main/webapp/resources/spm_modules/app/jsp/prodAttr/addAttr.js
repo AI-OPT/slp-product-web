@@ -90,6 +90,9 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 				//首字母
 				var firstLetter = $(this).find("input[name='firstLetter']")[0];
 				attrObj['firstLetter'] = firstLetter.value;
+				//输入值方式
+				var valueWay = $(this).find("select[name='valueWay']")[0];
+				attrObj['valueWay'] = valueWay.value;
 				attrArr.push(attrObj);
 			});
 		
