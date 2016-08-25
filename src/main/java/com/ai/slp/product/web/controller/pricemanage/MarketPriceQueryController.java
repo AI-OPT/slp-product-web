@@ -253,6 +253,19 @@ public class MarketPriceQueryController {
 		updatePrice.setSupplierId(AdminUtil.getSupplierId());
 		//设置操作人
 		updatePrice.setOperId(AdminUtil.getAdminId(session));
+		//将页面获取的以元为单位的金额转换为以厘为单位的金额
+		Long longprice = updatePrice.getMarketPrice();
+		String price = longprice.toString();
+		 if (StringUtil.isBlank(price)) {
+	        	updatePrice.setMarketPrice(0);
+			}else {
+				BigDecimal bdm = new BigDecimal(price);
+				BigDecimal result = (bdm.setScale(2, BigDecimal.ROUND_DOWN)).multiply(new BigDecimal(1000));
+				Long value = result.longValue();
+				updatePrice.setMarketPrice(value);
+			}
+		
+		
 		//保存
 		BaseResponse response = normProductSV.updateMarketPrice(updatePrice);
 		ResponseHeader header = response.getResponseHeader();
