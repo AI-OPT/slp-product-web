@@ -54,6 +54,9 @@ define('app/jsp/marketprice/priceList', function (require, exports, module) {
     		for(var i=index;i<length;i++){
     			$("#productCat"+i).remove();
     		}
+    		//若为全部,则不查询.
+			if (prodCatId === '')
+				return;
     		ajaxController.ajax({
 				type: "post",
 				processing: false,
@@ -81,7 +84,7 @@ define('app/jsp/marketprice/priceList', function (require, exports, module) {
     	},
     	
     	
-    	//查询标准品列表
+    	//查询商品列表
     	_selectNormProductList:function(){
     		var _this = this;
     		var div = document.getElementById("data1ProdCat");

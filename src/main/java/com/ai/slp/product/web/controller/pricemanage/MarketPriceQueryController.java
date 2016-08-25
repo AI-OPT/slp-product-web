@@ -71,9 +71,12 @@ public class MarketPriceQueryController {
 	 */
 	@RequestMapping("/list")
 	public String editQuery(Model uiModel) {
-		Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
+		/*Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
-		uiModel.addAttribute("catInfoMap", productCatMap);
+		uiModel.addAttribute("catInfoMap", productCatMap);*/
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
+        uiModel.addAttribute("count", productCatMap.size() - 1);
+        uiModel.addAttribute("catInfoList", productCatMap);
 		return "marketprice/priceList";
 	}
 	/**
