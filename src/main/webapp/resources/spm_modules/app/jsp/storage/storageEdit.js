@@ -289,13 +289,13 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 						$(obj).html("停用");
 						$(obj).attr("statue", stoStop);
 						$(obj).parent().prev().html("启用");
-						_this._showMsg("库存启用成功");
+						_this._showSuccessMsg("库存启用成功");
 					}//停用
 					else if (status === stoStop) {
 						$(obj).text("启用");
 						$(obj).attr("statue", stoActive);
 						$(obj).parent().prev().text("停用");
-						_this._showMsg("库存停用成功");
+						_this._showSuccessMsg("库存停用成功");
 					}
 				}
 			});
@@ -415,7 +415,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 					if("1"=== data.statusCode){
 						_this._closeAddStoView();
 						//属性标题信息
-						_this._showMsg("库存更新成功");
+						_this._showSuccessMsg("库存更新成功");
 						//变更名称
 						$("#stoName"+storageId).text(stoName);
 					}
@@ -447,10 +447,22 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     		var container = $('.wrapper-right');
     		container.scrollTop(0);//滚动到div 顶部
     	},
-    	_showMsg:function(msg){
+    	_showSuccessMsg:function(msg){
 			var msg = Dialog({
 				title: '提示',
-				icon:'prompt',
+				icon:'success',
+				content:msg,
+				okValue: '确 定',
+				ok:function(){
+					this.close();
+				}
+			});
+			msg.showModal();
+		},
+		_showMsg:function(msg){
+			var msg = Dialog({
+				title: '提示',
+				icon:'fail',
 				content:msg,
 				okValue: '确 定',
 				ok:function(){

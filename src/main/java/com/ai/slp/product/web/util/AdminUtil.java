@@ -29,8 +29,7 @@ public class AdminUtil {
     public static String getTenantId(){
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
         GeneralSSOClientUser user = (GeneralSSOClientUser)session.getAttribute(SSOClientConstants.USER_SESSION_KEY);
-
-        return "changhong";
+        return user.getTenantId();
     }
 
     /**
@@ -38,7 +37,7 @@ public class AdminUtil {
      * @return
      */
     public static String getSupplierId(){
-        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+//        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
         return "-1";
     }
 }
