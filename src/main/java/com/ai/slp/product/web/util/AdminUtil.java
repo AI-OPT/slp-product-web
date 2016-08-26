@@ -29,8 +29,7 @@ public class AdminUtil {
     public static String getTenantId(){
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
         GeneralSSOClientUser user = (GeneralSSOClientUser)session.getAttribute(SSOClientConstants.USER_SESSION_KEY);
-
-        return "changhong";
+        return user.getTenantId();
     }
 
     /**
