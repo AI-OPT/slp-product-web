@@ -37,7 +37,7 @@ public class AdminUtil {
      * @return
      */
     public static String getSupplierId(){
-        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+//        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
         return "-1";
     }
 }
