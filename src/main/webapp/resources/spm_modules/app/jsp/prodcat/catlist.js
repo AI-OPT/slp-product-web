@@ -164,7 +164,25 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 				if (!error){
 					return;
 				}
+				hasError = true;
+				$.each(results,function(n,value){
+					if (value[1]!=null && value[1]!=undefined){
+						errMsg = value[1];
+						return;
+					}
+				});
 			});
+			if (errMsg!= "")
+				new Dialog({
+					content:errMsg,
+					icon:'warning',
+					okValue: '确 定',
+					ok:function(){
+						this.close();
+					}
+				}).show();
+			if (hasError)
+				return;
 			var _this = this;
 			var catId = $("#upCatId").val();//类目标识
 			var parentId = $("#parentCatId").val();//父类目
