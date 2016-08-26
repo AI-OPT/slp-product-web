@@ -254,7 +254,7 @@ public class MarketPriceQueryController {
 		//设置操作人
 		updatePrice.setOperId(AdminUtil.getAdminId(session));
 		//将页面获取的以元为单位的金额转换为以厘为单位的金额
-		Long longprice = updatePrice.getMarketPrice();
+		Double longprice = (double) updatePrice.getMarketPrice();
 		String price = longprice.toString();
 		 if (StringUtil.isBlank(price)) {
 	        	updatePrice.setMarketPrice(0);
