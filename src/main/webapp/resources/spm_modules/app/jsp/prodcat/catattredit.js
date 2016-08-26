@@ -32,6 +32,7 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
         },
         //删除属性或属性值
         _delAttrOfVal:function(id,objType){
+            var _this = this;
             ajaxController.ajax({
                 type: "post",
                 processing: true,
@@ -40,14 +41,19 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
                 data: {'id':id,'productCatId': catId,'objType':objType},
                 success: function (data) {
                     if ("1" === data.statusCode) {
-                        //
-                        alert("删除成功");
+                        _this._showSuccessMsg("删除成功");
+                        if (objType === '1'){
+                            $("#attrTbody1_"+id).remove();
+                        }else if(objType === '2'){
+                            $("#attrValTr2_"+id).remove();
+                        }
                     }
                 }
             });
         },
         //提交添加
         _submitCatList:function() {
+            var _this=this;
             var attrMap = {};
             var catUpParams = [];
             //获取所有是否上传图片
@@ -88,10 +94,22 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
                 data: {'catUpParamStr': JSON.stringify(catUpParams)},
                 success: function (data) {
                     if ("1" === data.statusCode) {
-                        alert("保存成功");
+                        window.history.go(-1);
                     }
                 }
             });
+        },
+        //显示成功信息
+        _showSuccessMsg:function(msg){
+            var d = Dialog({
+                content:msg,
+                icon:'success',
+                okValue: '确 定',
+                ok:function(){
+                    this.close();
+                }
+            });
+            d.show();
         }
     });
 

@@ -64,7 +64,7 @@
 									<li class="col-md-12">
 										<p class="word">商品类目</p>
 										<p id="productCat0">
-											<select class="select select-small" onChange="pager._selectChange(this);">
+											<select id="catFirst" class="select select-small" onChange="pager._selectChange(this);">
 												<option value="">全部</option>
 												<c:forEach var="info" items="${catInfoList}">
 													<option value="${info.productCatId}">${info.productCatName}</option>
@@ -137,7 +137,7 @@
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
-										<td></td>
+										<td>{{:operName}}</td>
 										<%--        <td>{{:operId}}</td>
                                                  <td><a href="#" class="blue">查看详情</a><a href="#" class="red">编辑</a><a href="＃" class="blue">废弃</a></td>
                                           --%>
@@ -177,6 +177,7 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
+		$("#catFirst").val("");//设置类目为全部.
 		seajs.use('app/jsp/storage/storageList', function(storageList) {
 			pager = new storageList({element : document.body});
 			pager.render();

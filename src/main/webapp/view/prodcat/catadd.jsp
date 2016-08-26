@@ -26,7 +26,7 @@
                                     <li class="col-md-12 ui-form-item">
                                         <p class="word"><span>*</span>类目名称</p>
                                         <p><input name="productCatName" type="text" class="int-text int-medium"
-                                                  required maxlength="100">
+                                                  required maxlength="20">
                                         </p>
                                     </li>
                                 </ul>
@@ -85,7 +85,7 @@
         <ul>
             <li class="col-md-12 ui-form-item">
                 <p class="word"><span>*</span>类目名称</p>
-                <p><input name="productCatName" type="text" class="int-text int-medium" required maxlength="100"></p>
+                <p><input name="productCatName" type="text" class="int-text int-medium" required maxlength="20"></p>
             </li>
         </ul>
         <ul>

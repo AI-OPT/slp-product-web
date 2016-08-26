@@ -13,8 +13,9 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     require("app/util/jsviews-ext");
     require("opt-paging/aiopt.pagination");
     require("twbs-pagination/jquery.twbsPagination.min");
-   
-    
+
+	require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
+	require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
     var SendMessageUtil = require("app/util/sendMessage");
 	Validator.addRule('upperCaseRule', /^[A-Z]{1}$/, '请输入大写字母');
 	var validator = new Validator({
@@ -172,7 +173,14 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 				});
 			});
 			if (errMsg!= "")
-				alert(errMsg);
+				new Dialog({
+					content:errMsg,
+					icon:'warning',
+					okValue: '确 定',
+					ok:function(){
+						this.close();
+					}
+				}).show();
 			if (hasError)
 				return;
 			var _this = this;

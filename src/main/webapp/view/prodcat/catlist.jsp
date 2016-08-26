@@ -42,14 +42,14 @@
             <p>更新类目</p>
             <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
-        <div class="form-label">
+        <div class="form-label" data-widget="validator">
             <input type="hidden" name="productCatId" id="upCatId">
             <input type="hidden" name="parentProductCatId" id="parentCatId">
             <ul>
                 <li>
                     <p class="word"><span>*</span>类目名称:</p>
                     <p><input id="upCatName" type="text" class="int-text int-small"
-                              name="productCatName" maxlength="100"></p>
+                              name="productCatName" maxlength="20"></p>
                 </li>
                 <li>
                     <p class="word"><span>*</span>名称首字母(大写):</p>
@@ -63,7 +63,7 @@
                     <p><input id="upSerialNum" type="text" class="int-text int-small"
                               name="serialNumber" maxlength="4"></p>
                 </li>
-                <li >
+                <li>
                     <p class="word">是否存在子分类:</p>
                     <p><input id="upIsChildY" name="isChild" type="radio" value="Y"></p><p>是</p>
                     <p><input id="upIsChildN" name="isChild" type="radio" value="N"></p><p>否</p>
@@ -141,10 +141,12 @@
 
                             </header>
                             <div class="row"><!--删格化-->
+                                <c:set var="secondParentCat" value=""/>
                                 <p class="left pl-40">
                                     上级类目:<c:forEach var="catInfo" items="${catLink}"
-                                               varStatus="stat">${catInfo.productCatName}<c:if
-                                            test="${!stat.last}">&gt;</c:if></c:forEach>
+                                               varStatus="stat"> ${catInfo.productCatName}<c:if
+                                            test="${!stat.last}">&gt;
+                                    <c:set var="secondParentCat" value="${catInfo.productCatId}"/></c:if></c:forEach>
                                 </p>
                                 <p class="right pr-30">
                                     <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
@@ -198,6 +200,14 @@
                                 </div>
                                 <!--分页结束-->
                             </div>
+                            <c:if test="${parentProductCatId!=null && parentProductCatId!=''}">
+                            <div  class="row pt-30"><!--删格化-->
+                                <p class="center pr-30">
+                                    <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                           value="返  回" onclick="goSecondParent();">
+                                </p>
+                            </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -231,5 +241,8 @@
             pager.render();
         });
     })();
+    function goSecondParent(){
+        self.location="${_base}/cat/query?parentProductCatId=${secondParentCat}";
+    };
 </script>
 </html>

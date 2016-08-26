@@ -65,7 +65,7 @@
                                         <table width="20%" border="0">
                                             <tr class="click">
                                                 <td width="2%" class="ahref border-bot-none">
-                                                    <A href="#"><i class="fa fa-plus"></i></A></td>
+                                                    <A href="javaScript:void(0);"><i class="fa fa-plus"></i></A></td>
                                                 <td width="1%" class="ctr1 border-bot-none">
                                                     <input name="attrCheck" type="checkbox" class="margin-checkbox"
                                                     <c:if test="${isCheck}">checked="true"</c:if> value="${attr.attrId}">
@@ -150,22 +150,11 @@
     (function () {
         <%-- 属性值点击 --%>
         $('#attrDivView').delegate("input:checkbox[name='valCheck']", 'click', function () {
-            var attrId= $(this).attr("attrId");
-            var attrVal = $(this).val();
-            console.log("attrId:"+attrId+",attrVal:"+attrVal+",click");
-            <%-- 若属性值选中,则属性也选中 --%>
-            if($(this).is(':checked')){
-                $("input:checkbox[name='attrCheck'][value='"+attrId+"']").prop("checked",true);
-            }
+            pager._clickAttrVal($(this));
         });
         <%-- 属性点击 --%>
         $('#attrDivView').delegate("input:checkbox[name='attrCheck']",'click',function(){
-            var attrId = $(this).val();
-            console.log("attrId:"+attrId+",click");
-            <%-- 若属性取消选择,则属性值也取消 --%>
-            if(!$(this).is(':checked')){
-                $("input:checkbox[name='valCheck'][attrId='"+attrId+"']").prop("checked",false);
-            }
+            pager._clickAttr($(this));
         });
 
         seajs.use('app/jsp/prodcat/catattrall', function (catattrallPage) {

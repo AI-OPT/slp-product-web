@@ -73,7 +73,7 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 			var catArr = [];
 			var hasError = false;
 			//获取所有的form-label下的input
-			$("#addViewDiv > .form-label ").each(function (index, form) {
+			$("#addViewDiv > .form-label.bd-bottom ").each(function (index, form) {
 				var validator = new Validator({
 					element: $(this)
 				});
