@@ -49,7 +49,7 @@
                 <li>
                     <p class="word"><span>*</span>类目名称:</p>
                     <p><input id="upCatName" type="text" class="int-text int-small"
-                              name="productCatName" maxlength="90"></p>
+                              name="productCatName" maxlength="20"></p>
                 </li>
                 <li>
                     <p class="word"><span>*</span>名称首字母(大写):</p>
