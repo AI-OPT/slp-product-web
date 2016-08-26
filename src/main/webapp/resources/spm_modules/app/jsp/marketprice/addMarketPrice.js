@@ -44,8 +44,12 @@ define('app/jsp/marketprice/addMarketPrice', function (require, exports, module)
     	_saveMarketPrice:function(){
     		var _this=this;
     		var productId = $("#productId").val();
-    		var marketPrice=$("#marketPrice").val();
-    		
+    		var price=$("#marketPrice").val();
+    		if (price=="" && price==null && price=="0.00" && price=="0.0") {
+    			var marketPrice = "0";
+			}else {
+				var marketPrice = price*1000;
+			}
     		ajaxController.ajax({
 				type: "post",
 				processing: true,
@@ -57,27 +61,30 @@ define('app/jsp/marketprice/addMarketPrice', function (require, exports, module)
 				success: function(data){
 					if("1"===data.statusCode){
 						//window.location.reload();
-						_this._showConf();
-						//_this._showMsg();
+						_this._showSuccessMsg("市场价更新成功");
 						//window.history.go(-1)
 					}
 				}
 			});
     	},
-    	
-    	//确认提示框
-		_showConf:function(){
-			$('#eject-mask').fadeIn(100);
-			$('#aband-small').slideDown(200);
+    	_showSuccessMsg:function(msg){
+    		var _this=this;
+			var msg = Dialog({
+				title: '提示',
+				icon:'success',
+				content:msg,
+				okValue: '确 定',
+				ok:function(){
+					//this.close();
+					window.history.go(-1);
+				}
+			});
+			msg.showModal();
 		},
 		
     	//返回之前的页面
     	_goBack:function(){
     		window.history.go(-1);
-    	},
-    	//回显市场价
-    	_showMarketPrice:function(){
-    		
     	},
     	
     	//滚动到顶部
