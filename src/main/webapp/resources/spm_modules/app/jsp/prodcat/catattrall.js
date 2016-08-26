@@ -30,6 +30,37 @@ define('app/jsp/prodcat/catattrall', function (require, exports, module) {
         setup: function () {
             catattrallPage.superclass.setup.call(this);
         },
+        //属性点击事件
+        _clickAttr:function(obj){
+            var attrId = obj.val();
+            console.log("attrId:"+attrId+",click");
+            // 若属性取消选择,则属性值也取消
+            var check = true;
+            if(!obj.is(':checked')){
+                check = false;
+            }
+            $("input:checkbox[name='valCheck'][attrId='"+attrId+"']").prop("checked",check);
+        },
+        //属性值点击事件
+        _clickAttrVal:function(obj){
+            var attrId= obj.attr("attrId");
+            var attrVal = obj.val();
+            console.log("attrId:"+attrId+",attrVal:"+attrVal+",click");
+            // 若属性值取消,则属性也取消 --%>
+            if(!obj.is(':checked')){
+                $("input:checkbox[name='attrCheck'][value='"+attrId+"']").prop("checked",false);
+                return;
+            }
+            // 若属性值选中,则判断属性是否选中 --%>
+
+            //获取属性值数量
+            var valNum = $("input:checkbox[name='valCheck'][attrId='" + attrId + "']").size();
+            //获取选中属性值数量
+            var checkNum = $("input:checkbox:checked[name='valCheck'][attrId='" + attrId + "']").size();
+            if (valNum == checkNum) {
+                $("input:checkbox[name='attrCheck'][value='" + attrId + "']").prop("checked", true);
+            }
+        },
         //提交添加
         _submitCatList:function() {
             var attrMap = {};
@@ -37,14 +68,31 @@ define('app/jsp/prodcat/catattrall', function (require, exports, module) {
             $("input:checkbox[name=attrCheck]:checked").each(function (index, form) {
                 var attrId = $(this).val();
                 var valArr = [];
-                //获取选中的属性值
-                $("input:checkbox[name=valCheck][attrId="+attrId+"]:checked").each(function(index,form){
-                    valArr.push($(this).val());
-                });
                 console.log("attrId:"+attrId);
-                console.log("attrVal:"+valArr.toString());
                 attrMap[attrId] = valArr;
             });
+            //获取选中的属性值
+            $("input:checkbox[name=valCheck]:checked").each(function(index,form){
+                var attrId = $(this).attr('attrId');
+                var valArr = attrMap[attrId];
+                if (!valArr || typeof(valArr)==="undefined")
+                    valArr = [];
+                valArr.push($(this).val());
+                attrMap[attrId] = valArr;
+                console.log("attrId:"+attrId+",attrVal:"+$(this).val());
+            });
+            if (attrMap.length <1){
+                new Dialog({
+                    content:"未选择任何属性值",
+                    icon:'warning',
+                    okValue: '确 定',
+                    ok:function(){
+                        this.close();
+                    }
+                }).show();
+                return;
+            }
+
             ajaxController.ajax({
                 type: "post",
                 processing: true,

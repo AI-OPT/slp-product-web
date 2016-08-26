@@ -150,22 +150,11 @@
     (function () {
         <%-- 属性值点击 --%>
         $('#attrDivView').delegate("input:checkbox[name='valCheck']", 'click', function () {
-            var attrId= $(this).attr("attrId");
-            var attrVal = $(this).val();
-            console.log("attrId:"+attrId+",attrVal:"+attrVal+",click");
-            <%-- 若属性值选中,则属性也选中 --%>
-            if($(this).is(':checked')){
-                $("input:checkbox[name='attrCheck'][value='"+attrId+"']").prop("checked",true);
-            }
+            pager._clickAttrVal($(this));
         });
         <%-- 属性点击 --%>
         $('#attrDivView').delegate("input:checkbox[name='attrCheck']",'click',function(){
-            var attrId = $(this).val();
-            console.log("attrId:"+attrId+",click");
-            <%-- 若属性取消选择,则属性值也取消 --%>
-            if(!$(this).is(':checked')){
-                $("input:checkbox[name='valCheck'][attrId='"+attrId+"']").prop("checked",false);
-            }
+            pager._clickAttr($(this));
         });
 
         seajs.use('app/jsp/prodcat/catattrall', function (catattrallPage) {
