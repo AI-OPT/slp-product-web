@@ -94,7 +94,7 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
                 data: {'catUpParamStr': JSON.stringify(catUpParams)},
                 success: function (data) {
                     if ("1" === data.statusCode) {
-                        _this._showSuccessMsg("保存成功");
+                        window.history.go(-1);
                     }
                 }
             });
