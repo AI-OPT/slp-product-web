@@ -150,7 +150,7 @@
 										<td>{{:~liToYuan(marketPrice)}}</td>
 										<td>{{:state}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
-										<td></td>
+										<td>{{:operName}}</td>
 										<td><a href="${_base}/marketpricequery/{{:productId}}" class="blue-border">添加市场价</a></td>
 									</tr>
 								</script>
