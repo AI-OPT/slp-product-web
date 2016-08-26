@@ -42,6 +42,11 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
                 success: function (data) {
                     if ("1" === data.statusCode) {
                         _this._showSuccessMsg("删除成功");
+                        if (objType === '1'){
+                            $("#attrTbody1_"+id).remove();
+                        }else if(objType === '2'){
+                            $("#attrValTr2_"+id).remove();
+                        }
                     }
                 }
             });

@@ -59,7 +59,7 @@
                                     </tr>
 
                                     <c:forEach var="attr" items="${keyAttr}">
-                                        <tbody>
+                                        <tbody id="attrTbody1_${attr.catAttrId}">
                                     <!--点击展开-->
                                     <tr>
                                         <td colspan="1" class="click right-none">
@@ -85,7 +85,7 @@
                                         <td colspan="2" >
                                             <table width="100%" border="0" >
                                                 <c:forEach items="${attr.attrValList}" var="attrVal">
-                                                <tr class="border-bot-none">
+                                                <tr id="attrValTr2_${attrVal.catAttrValId}" class="border-bot-none">
                                                     <td  width="45%" class="right-text">${attrVal.attrValueName}
                                                         <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                     <td  width="55%">
@@ -124,7 +124,7 @@
 
                                     <!--点击展开-->
                                     <c:forEach var="attr" items="${saleAttr}">
-                                    <tbody>
+                                    <tbody id="attrTbody1_${attr.catAttrId}">
                                         <!--点击展开-->
                                         <tr>
                                             <td colspan="1" class="click right-none">
@@ -158,7 +158,7 @@
                                                 <td colspan="3" >
                                                     <table width="100%" border="0" >
                                                         <c:forEach items="${attr.attrValList}" var="attrVal">
-                                                            <tr class="border-bot-none">
+                                                            <tr id="attrValTr2_${attrVal.catAttrValId}" class="border-bot-none">
                                                                 <td  width="45%" class="right-text">${attrVal.attrValueName}
                                                                     <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                                 <td  width="55%">
@@ -194,7 +194,7 @@
                                         </thead>
                                     </tr>
                                     <c:forEach var="attr" items="${noKeyAttr}">
-                                        <tbody>
+                                        <tbody id="attrTbody1_${attr.catAttrId}">
                                         <!--点击展开-->
                                         <tr>
                                             <td colspan="1" class="click right-none">
@@ -221,7 +221,7 @@
                                                 <td colspan="2" >
                                                     <table width="100%" border="0" >
                                                         <c:forEach items="${attr.attrValList}" var="attrVal">
-                                                            <tr class="border-bot-none">
+                                                            <tr id="attrValTr2_${attrVal.catAttrValId}" class="border-bot-none">
                                                                 <td  width="45%" class="right-text">${attrVal.attrValueName}
                                                                     <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                                 <td  width="55%">
