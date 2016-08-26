@@ -222,9 +222,11 @@ public class MarketPriceQueryController {
         attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
         uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
 		//查询出市场价进行转换
+        String price;
+        if (normProdResponse.getMarketPrice() != null) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        String price = normProdResponse.getMarketPrice().toString();
-        if (StringUtil.isBlank(price)) {
+        price = normProdResponse.getMarketPrice().toString();
+        if (StringUtil.isBlank(normProdResponse.getMarketPrice().toString())) {
         	price = "0.00";
         	
 		}else {
@@ -234,6 +236,10 @@ public class MarketPriceQueryController {
         	price = df.format(yuanmoey);
 		}
         uiModel.addAttribute("price", price);
+        }else {
+        	price = "0.00";
+        	uiModel.addAttribute("price", price);
+		}
         
 		return "marketprice/addMarketPrice";
 		
@@ -254,9 +260,8 @@ public class MarketPriceQueryController {
 		//设置操作人
 		updatePrice.setOperId(AdminUtil.getAdminId(session));
 		//将页面获取的以元为单位的金额转换为以厘为单位的金额
-		Double longprice = (double) updatePrice.getMarketPrice();
-		String price = longprice.toString();
-		 if (StringUtil.isBlank(price)) {
+		/*double price = updatePrice.getMarketPrice();
+		 if (StringUtils.isBlank(String.valueOf(price))) {
 	        	updatePrice.setMarketPrice(0);
 			}else {
 				BigDecimal bdm = new BigDecimal(price);
@@ -264,7 +269,7 @@ public class MarketPriceQueryController {
 				Long value = result.longValue();
 				updatePrice.setMarketPrice(value);
 			}
-		
+		*/
 		
 		//保存
 		BaseResponse response = normProductSV.updateMarketPrice(updatePrice);
