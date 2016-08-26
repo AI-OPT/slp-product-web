@@ -137,7 +137,7 @@
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
-										<td></td>
+										<td>{{:operName}}</td>
 										<%--        <td>{{:operId}}</td>
                                                  <td><a href="#" class="blue">查看详情</a><a href="#" class="red">编辑</a><a href="＃" class="blue">废弃</a></td>
                                           --%>
