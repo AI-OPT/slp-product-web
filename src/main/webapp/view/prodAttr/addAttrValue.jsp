@@ -32,14 +32,19 @@
 									</li>
 					             </ul>
 					             
-					             <div class="title-right">
+					             <!-- <div class="title-right">
 					             	<p id="addAttrBtn" class="plus-word btn-primary" >
 					             		 <a href="javaScript:void(0);"><i class="fa fa-plus"></i>新  增</a>
 					             	</p>
-					             </div>
+					             </div> -->
                             </div> 
-                            
-                            <div id="subDiv" class="row pt-30">
+                            <div id="subDiv" class="form-label">
+                            <div class="left row title-right">
+                                <p id="addAttrBtn" class="plus-word btn-primary">
+                                    <a href="javaScript:void(0);"><i class="fa fa-plus"></i>新  增</a></p>
+                            </div>
+                            </div>
+                            <div  class="row pt-30">
                             	<p class="center pr-30 mt-30">
                             		<input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
                                            value="提  交">
