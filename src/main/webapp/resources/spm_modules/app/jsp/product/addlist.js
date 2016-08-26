@@ -36,8 +36,55 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 			addlistPager.superclass.setup.call(this);
     		this._selectProductEdit();
     	},
+    	
+    	
     	// 改变商品类目
     	_selectChange:function(osel){
+    		var prodCatId = osel.options[osel.selectedIndex].value;
+    		var clickId = $(osel).parent().attr('id');
+    		//获取当前ID的最后数字
+    		var index = Number(clickId.substring(10))+1;
+    		//获取下拉菜单的总个数
+    		var prodCat = document.getElementById("data1ProdCat");
+    		var length = prodCat.getElementsByTagName("select").length;
+    		//从当前元素开始移除后面的下拉菜单
+    		for(var i=index;i<length;i++){
+    			$("#productCat"+i).remove();
+    		}
+    		
+    		//若为全部,则不查询.
+			if (prodCatId === '')
+				return;
+			
+    		ajaxController.ajax({
+				type: "post",
+				processing: false,
+				// message: "加载中，请等待...",
+				url: _base+"/cat/query/child",
+				data:{"prodCatId":prodCatId},
+				success: function(data){
+					if(data != null && data != 'undefined' && data.data.length>0){
+	            		var template = $.templates("#prodCatTemple");
+	            	    var htmlOutput = template.render(data.data);
+	            	    $("#"+clickId).after(htmlOutput);
+	            	}else if(data.statusCode === AjaxController.AJAX_STATUS_FAILURE){
+	            		var d = Dialog({
+							content:"获取类目信息出错:"+data.statusInfo,
+							icon:'fail',
+							okValue: '确 定',
+							ok:function(){
+								this.close();
+							}
+						});
+						d.show();
+	            	}
+				}
+			});
+    	},
+    	
+    	
+    	// 改变商品类目
+   /* 	_selectChange:function(osel){
     		var prodCatId = osel.options[osel.selectedIndex].value;
     		var clickId = $(osel).parent().attr('id');
     		//获取当前ID的最后数字
@@ -82,17 +129,54 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 	            	}
 				}
 			});
-    	},
-    	//查询未编辑商品
+    	},*/
+    	//查询列表
     	_selectProductEdit:function(){
+    		var _this = this;
+    		var div = document.getElementById("data1ProdCat");
+    		var length = document.getElementsByTagName("select").length-2;
+    		var productCatId = $("#productCat"+length+" option:selected").val();
+    		
+    		var productType = $("#productType").val().trim();
+    		var productId = $("#productId").val().trim();
+    		var productName = $("#productName").val().trim();
+    		
+    		
+    		$("#pagination-ul").runnerPagination({
+	 			url: _base+"/prodquery/getProductList",
+	 			method: "POST",
+	 			dataType: "json",
+	 			renderId:"searchProductData",
+	 			messageId:"showMessageDiv",
+	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName},
+	 			
+	 			pageSize: addlistPager.DEFAULT_PAGE_SIZE,
+	           	visiblePages:5,
+	            render: function (data) {
+	            	if(data != null && data != 'undefined' && data.length>0){
+	            		var template = $.templates("#searchProductTemple");
+	            	    var htmlOutput = template.render(data);
+	            	    $("#searchProductData").html(htmlOutput);
+	            	}
+	            	_this._returnTop();
+	            }
+    		});
+    	},
+    	
+    	
+    	//查询未编辑商品
+    /*	_selectProductEdit:function(){
     		var _this = this;
     		//获取下拉菜单的总个数-2即为ID后的数值
     		var div = document.getElementById("data1ProdCat");
     		var length = document.getElementsByTagName("select").length-2;
+    		
     		var productCatId = $("#productCat"+length+" option:selected").val();
+    		
     		var productType = $("#productType").val().trim();
     		var productId = $("#productId").val().trim();
     		var productName = $("#productName").val().trim();
+    		
     		$("#pagination-ul").runnerPagination({
 	 			url: _base+"/prodquery/getProductList",
 	 			method: "POST",
@@ -111,7 +195,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 	            	_this._returnTop();
 	            }
     		});
-    	},
+    	},*/
     	//滚动到顶部
     	_returnTop:function(){
     		var container = $('.wrapper-right');
