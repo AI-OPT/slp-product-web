@@ -1,5 +1,10 @@
 package com.ai.slp.product.web.controller.pricemanage;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
@@ -12,7 +17,6 @@ import com.ai.slp.common.api.cache.interfaces.ICacheSV;
 import com.ai.slp.common.api.cache.param.SysParam;
 import com.ai.slp.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
-import com.ai.slp.product.api.normproduct.param.*;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.ProductCatConstants;
@@ -21,6 +25,7 @@ import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.ai.slp.product.web.util.DateUtil;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +36,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
+import com.ai.opt.sdk.util.StringUtil;
+import com.ai.slp.product.api.normproduct.param.AttrMap;
+import com.ai.slp.product.api.normproduct.param.AttrQuery;
+import com.ai.slp.product.api.normproduct.param.MarketPriceUpdate;
+import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
+import com.ai.slp.product.api.normproduct.param.NormProdRequest;
+import com.ai.slp.product.api.normproduct.param.NormProdResponse;
+import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
 
 /**
  * 
@@ -58,9 +67,12 @@ public class MarketPriceQueryController {
 	 */
 	@RequestMapping("/list")
 	public String editQuery(Model uiModel) {
-		Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
+		/*Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
-		uiModel.addAttribute("catInfoMap", productCatMap);
+		uiModel.addAttribute("catInfoMap", productCatMap);*/
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
+        uiModel.addAttribute("count", productCatMap.size() - 1);
+        uiModel.addAttribute("catInfoList", productCatMap);
 		return "marketprice/priceList";
 	}
 	/**
@@ -210,8 +222,18 @@ public class MarketPriceQueryController {
         attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
         uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
 		//查询出市场价进行转换
-        
-        
+        DecimalFormat df = new DecimalFormat("#0.00");
+        String price = normProdResponse.getMarketPrice().toString();
+        if (StringUtil.isBlank(price)) {
+        	price = "0.00";
+        	
+		}else {
+			BigDecimal input = new BigDecimal(price);
+        	BigDecimal devide = new BigDecimal(1000);
+        	Double yuanmoey = input.divide(devide).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+        	price = df.format(yuanmoey);
+		}
+        uiModel.addAttribute("price", price);
         
 		return "marketprice/addMarketPrice";
 		
@@ -231,6 +253,19 @@ public class MarketPriceQueryController {
 		updatePrice.setSupplierId(AdminUtil.getSupplierId());
 		//设置操作人
 		updatePrice.setOperId(AdminUtil.getAdminId(session));
+		//将页面获取的以元为单位的金额转换为以厘为单位的金额
+		Double longprice = (double) updatePrice.getMarketPrice();
+		String price = longprice.toString();
+		 if (StringUtil.isBlank(price)) {
+	        	updatePrice.setMarketPrice(0);
+			}else {
+				BigDecimal bdm = new BigDecimal(price);
+				BigDecimal result = (bdm.setScale(2, BigDecimal.ROUND_DOWN)).multiply(new BigDecimal(1000));
+				Long value = result.longValue();
+				updatePrice.setMarketPrice(value);
+			}
+		
+		
 		//保存
 		BaseResponse response = normProductSV.updateMarketPrice(updatePrice);
 		ResponseHeader header = response.getResponseHeader();

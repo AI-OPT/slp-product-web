@@ -37,6 +37,7 @@ define('app/jsp/marketprice/addMarketPrice', function (require, exports, module)
     	//重写父类
     	setup: function () {
     		addMarketPricePager.superclass.setup.call(this);
+    		this._showMarketPrice();
     	},
     	
     	//保存
@@ -74,6 +75,11 @@ define('app/jsp/marketprice/addMarketPrice', function (require, exports, module)
     	_goBack:function(){
     		window.history.go(-1);
     	},
+    	//回显市场价
+    	_showMarketPrice:function(){
+    		
+    	},
+    	
     	//滚动到顶部
     	_returnTop:function(){
     		var container = $('.wrapper-right');

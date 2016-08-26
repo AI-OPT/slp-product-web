@@ -23,15 +23,14 @@
 							<ul id="data1ProdCat">
 								<li>
 									<p class="word">商品类目</p>
-									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
-										<p id="productCat${status.index}">
+									<p id="productCat0">
 											<select class="select select-small" onChange="pager._selectChange(this);">
-												<c:forEach var="info" items="${map.value}">
+													<option value="">全部</option>
+												<c:forEach var="info" items="${catInfoList}">
 													<option value="${info.productCatId}">${info.productCatName}</option>
 												</c:forEach>
 											</select>
-										</p>
-									</c:forEach>
+									</p>
 									<script id="prodCatTemple" type="text/template">
 										<p id="productCat{{:level}}">
 											<select class="select select-small" onChange="pager._selectChange(this);">

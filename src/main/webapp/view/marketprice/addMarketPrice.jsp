@@ -104,7 +104,7 @@
                             	<ul class="big-word">
                                     <li class="col-md-6">
                                         <p class="word">市场价：</p>
-                                        <p><input id="marketPrice" type="text" value="${normProd.marketPrice}" class="int-text int-medium"></p>
+                                        <p><input id="marketPrice" type="text" value="${price}" class="int-text int-medium"> (元)</p>
                                     </li>
                                 </ul>
                             </div>

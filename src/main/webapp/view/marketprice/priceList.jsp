@@ -22,7 +22,15 @@
 							<ul id="data1ProdCat">
 								<li class="col-md-12">
 									<p class="word">商品类目</p>
-									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
+										<p id="productCat0">
+											<select class="select select-small" onChange="pager._selectChange(this);">
+													<option value="">全部</option>
+												<c:forEach var="info" items="${catInfoList}">
+													<option value="${info.productCatId}">${info.productCatName}</option>
+												</c:forEach>
+											</select>
+										</p>
+								<%-- 	<c:forEach var="map" items="${catInfoMap}" varStatus="status">
 										<p id="productCat${status.index}">
 											<select class="select select-small" onChange="pager._selectChange(this);">
 												<c:forEach var="info" items="${map.value}">
@@ -30,7 +38,9 @@
 												</c:forEach>
 											</select>
 										</p>
-									</c:forEach>
+									</c:forEach> --%>
+									
+									
 									<script id="prodCatTemple" type="text/template">
 										<p id="productCat{{:level}}">
 											<select class="select select-small" onChange="pager._selectChange(this);">
@@ -44,7 +54,7 @@
 							</ul>
 							<ul>
 								<li class="col-md-12">
-									<p class="word">标准品名称</p>
+									<p class="word">商品名称</p>
 									<p><input id="standedProductName" type="text" class="int-text int-medium"></p>
 									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
 									</p>
@@ -54,11 +64,11 @@
 							<div id="selectDiv" class="open" style="display:none;">
 								<ul>
 									<li class="col-md-6">
-										<p class="word">标准品ID</p>
+										<p class="word">商品ID</p>
 										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
 									</li>
 									<li class="col-md-6">
-										<p class="word">标准品类型</p>
+										<p class="word">商品类型</p>
 										<p>
 											<select id="productType" class="select select-medium">
 												<option value="">全部</option>
@@ -113,14 +123,14 @@
 									<thead>
 									<tr>
 										<th>序号</th>
-										<th>标准品ID</th>
-										<th>标准品名称</th>
+										<th>商品ID</th>
+										<th>商品名称</th>
 										<th>所属类目</th>
 										<th>类型</th>
 										<th>市场价</th>
-										<th>标准品状态</th>
+										<th>商品状态</th>
 										<th>操作时间</th>
-										<!-- 	<td>操作人</td> -->
+										<th>操作人</th>
 										<th>操作</th>
 									</tr>
 									</thead>
@@ -140,6 +150,7 @@
 										<td>{{:~liToYuan(marketPrice)}}</td>
 										<td>{{:state}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
+										<td>{{:operName}}</td>
 										<td><a href="${_base}/marketpricequery/{{:productId}}" class="blue-border">添加市场价</a></td>
 									</tr>
 								</script>
