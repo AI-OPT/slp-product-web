@@ -65,7 +65,7 @@
                                         <table width="20%" border="0">
                                             <tr class="click">
                                                 <td width="2%" class="ahref border-bot-none">
-                                                    <A href="#"><i class="fa fa-plus"></i></A></td>
+                                                    <A href="javaScript:void(0);"><i class="fa fa-plus"></i></A></td>
                                                 <td width="1%" class="ctr1 border-bot-none">
                                                     <input name="attrCheck" type="checkbox" class="margin-checkbox"
                                                     <c:if test="${isCheck}">checked="true"</c:if> value="${attr.attrId}">

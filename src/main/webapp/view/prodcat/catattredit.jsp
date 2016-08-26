@@ -66,7 +66,9 @@
                                             <!--点击行为层-->
                                             <table width="40%" border="0"  class="table-border">
                                                 <tr class="click">
-                                                    <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
+                                                    <td width="2%" class="ahref border-bot-none">
+                                                        <A href="javaScript:void(0);"><i class="fa fa-plus"></i></A>
+                                                    </td>
                                                     <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
                                                     <td width="1%" ><i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i></td>
                                                 </tr>
@@ -131,7 +133,9 @@
                                                 <!--点击行为层-->
                                                 <table width="40%" border="0"  class="table-border">
                                                     <tr class="click">
-                                                        <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
+                                                        <td width="2%" class="ahref border-bot-none">
+                                                            <A href="javaScript:void(0);"><i class="fa fa-plus"></i></A>
+                                                        </td>
                                                         <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
                                                         <td width="1%" ><i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i></td>
                                                     </tr>
@@ -201,7 +205,9 @@
                                                 <!--点击行为层-->
                                                 <table width="40%" border="0"  class="table-border">
                                                     <tr class="click">
-                                                        <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
+                                                        <td width="2%" class="ahref border-bot-none">
+                                                            <A href="javaScript:void(0);"><i class="fa fa-plus"></i></A>
+                                                        </td>
                                                         <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
                                                         <%-- 1:属性  2:属性值 --%>
                                                         <td width="1%" ><i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i></td>
