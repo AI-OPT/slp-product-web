@@ -13,8 +13,9 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     require("app/util/jsviews-ext");
     require("opt-paging/aiopt.pagination");
     require("twbs-pagination/jquery.twbsPagination.min");
-   
-    
+
+	require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
+	require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
     var SendMessageUtil = require("app/util/sendMessage");
 	Validator.addRule('upperCaseRule', /^[A-Z]{1}$/, '请输入大写字母');
 	var validator = new Validator({
@@ -163,18 +164,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 				if (!error){
 					return;
 				}
-				hasError = true;
-				$.each(results,function(n,value){
-					if (value[1]!=null && value[1]!=undefined){
-						errMsg = value[1];
-						return;
-					}
-				});
 			});
-			if (errMsg!= "")
-				alert(errMsg);
-			if (hasError)
-				return;
 			var _this = this;
 			var catId = $("#upCatId").val();//类目标识
 			var parentId = $("#parentCatId").val();//父类目
