@@ -38,10 +38,11 @@
                 <div class="col-lg-12"><!--删格化-->
                     <div id="mainBoxDiv" class="main-box clearfix"><!--白色背景-->
                         <!--标题-->
+                        <c:set var="parnetCat" value=""/>
                         <header class="main-box-header clearfix">
                             <h5 class="pull-left">所属类目：<c:forEach var="catInfo" items="${catLink}"
                                                                   varStatus="stat">${catInfo.productCatName}<c:if
-                                    test="${!stat.last}">&gt;</c:if></c:forEach></h5>
+                                    test="${!stat.last}">&gt;<c:set var="parnetCat" value="${catInfo.productCatId}"></c:set> </c:if></c:forEach></h5>
                         </header>
                         <input type="hidden" name="catId" id="catId" value="${catId}">
                         <!--标题结束-->
@@ -246,7 +247,7 @@
                             <p class="right pr-30">
                                 <input id="sumBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="保  存"/>
                                 <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="返  回"
-                                       onclick="javaScript:window.history.go(-1);">
+                                       onclick="pager._backList();">
                             </p>
                         </div>
                     </div>
@@ -261,6 +262,7 @@
 <script>
     var pager;
     var catId = "${catId}";
+    var parnetCat = "${parnetCat}";
     var catNum = {'num':0};
     (function () {
         <%-- 属性删除按钮 --%>
