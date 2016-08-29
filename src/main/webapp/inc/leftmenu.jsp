@@ -67,7 +67,7 @@
                             <li><a href="${_base}/prodquery/add" target="mainFrame">待编辑列表</a></li>
                             <li><a href="${_base}/prodquery/stayUp" target="mainFrame">仓库中列表</a></li>
                             <li><a href="${_base}/prodquery/insale" target="mainFrame">售中列表</a></li>
-                            <li><a href="#" target="mainFrame">已废弃列表</a></li>
+                            <li><a href="${_base}/prodquery/scrap" target="mainFrame">已废弃列表</a></li>
                         </ul>
                         <!--二级菜单结束-->
                     </li>
