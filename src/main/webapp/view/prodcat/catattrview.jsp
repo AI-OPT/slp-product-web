@@ -32,8 +32,8 @@
                                 <table width="100%" border="0" class="table table-hover  table-bordered table-special">
                                     <tr class="bj">
                                         <thead>
-                                        <th width="40%" class="right-none text-c"  align="center">属性</th>
-                                        <th width="60%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
+                                        <th width="60%" class="right-none text-c"  align="center">属性</th>
+                                        <th width="40%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
                                         </thead>
                                     </tr>
 
@@ -45,8 +45,7 @@
                                             <!--点击行为层-->
                                             <table width="40%" border="0"  class="table-border">
                                                 <tr class="click">
-                                                    <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
-                                                    <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
+                                                    <td style="min-width:2%;"  class="ctr border-bot-none"><A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}</td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -84,8 +83,8 @@
                                 <table width="100%" border="0" class="table table-hover  table-bordered table-special">
                                     <tr class="bj">
                                         <thead>
-                                        <th width="40%" class="right-none text-c"  align="center">属性</th>
-                                        <th width="60%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
+                                        <th width="60%" class="right-none text-c"  align="center">属性</th>
+                                        <th width="40%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
                                         </thead>
                                     </tr>
 
@@ -98,8 +97,7 @@
                                                 <!--点击行为层-->
                                                 <table width="40%" border="0"  class="table-border">
                                                     <tr class="click">
-                                                        <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
-                                                        <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
+                                                        <td style="min-width:2%;"  class="ctr border-bot-none"><A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}</td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -136,8 +134,8 @@
                                 <table width="100%" border="0" class="table table-hover  table-bordered table-special">
                                     <tr class="bj">
                                         <thead>
-                                        <th width="40%" class="right-none text-c"  align="center">属性</th>
-                                        <th width="60%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
+                                        <th width="60%" class="right-none text-c"  align="center">属性</th>
+                                        <th width="40%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
                                         </thead>
                                     </tr>
                                     <c:forEach var="attr" items="${noKeyAttr}">
@@ -148,8 +146,7 @@
                                                 <!--点击行为层-->
                                                 <table width="40%" border="0"  class="table-border">
                                                     <tr class="click">
-                                                        <td width="2%" class="ahref border-bot-none"><A href="#"><i class="fa fa-plus"></i></A></td>
-                                                        <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
+                                                        <td style="min-width:2%;"  class="ctr border-bot-none"><A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}</td>
                                                     </tr>
                                                 </table>
                                             </td>

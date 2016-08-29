@@ -53,8 +53,8 @@
                                 <table width="100%" border="0" class="table table-hover  table-bordered table-special">
                                     <tr class="bj">
                                         <thead>
-                                        <th width="40%" class="right-none text-c"  align="center">属性</th>
-                                        <th width="60%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
+                                        <th width="60%" class="right-none text-c"  align="center">属性</th>
+                                        <th width="40%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
                                         </thead>
                                     </tr>
 
@@ -64,13 +64,11 @@
                                     <tr>
                                         <td colspan="1" class="click right-none">
                                             <!--点击行为层-->
-                                            <table width="40%" border="0"  class="table-border">
+                                            <table width="60%" border="0"  class="table-border">
                                                 <tr class="click">
-                                                    <td width="2%" class="ahref border-bot-none">
-                                                        <A href="javaScript:void(0);"><i class="fa fa-plus"></i></A>
+                                                    <td style="min-width:2%;"  class="ctr border-bot-none">
+                                                        <A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}<i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i>
                                                     </td>
-                                                    <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
-                                                    <td width="1%" ><i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -118,9 +116,9 @@
                                 <table width="100%" border="0" class="table table-hover  table-bordered table-special">
                                     <tr class="bj">
                                         <thead>
-                                        <th width="30%" class="right-none text-c"  align="center">属性</th>
-                                        <th width="40%" class="left-none right-none text-c" align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
-                                        <th width="30%" class="left-none right-none text-c" >是否需要上传图片</th>
+                                        <th width="60%" class="right-none text-c"  align="center">属性</th>
+                                        <th width="30%" class="left-none right-none text-c" align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
+                                        <th width="10%" class="left-none right-none text-c" >是否需要上传图片</th>
                                         </thead>
                                     </tr>
 
@@ -131,13 +129,11 @@
                                         <tr>
                                             <td colspan="1" class="click right-none">
                                                 <!--点击行为层-->
-                                                <table width="40%" border="0"  class="table-border">
+                                                <table width="60%" border="0"  class="table-border">
                                                     <tr class="click">
-                                                        <td width="2%" class="ahref border-bot-none">
-                                                            <A href="javaScript:void(0);"><i class="fa fa-plus"></i></A>
+                                                        <td style="min-width:2%;"  class="ctr border-bot-none">
+                                                            <A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}<i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i>
                                                         </td>
-                                                        <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
-                                                        <td width="1%" ><i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i></td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -203,14 +199,11 @@
                                         <tr>
                                             <td colspan="1" class="click right-none">
                                                 <!--点击行为层-->
-                                                <table width="40%" border="0"  class="table-border">
+                                                <table width="60%" border="0"  class="table-border">
                                                     <tr class="click">
-                                                        <td width="2%" class="ahref border-bot-none">
-                                                            <A href="javaScript:void(0);"><i class="fa fa-plus"></i></A>
+                                                        <td style="min-width:2%;"  class="ctr border-bot-none">
+                                                            <A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}<i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i>
                                                         </td>
-                                                        <td width="2%" class="ctr border-bot-none">${attr.attrName}</td>
-                                                        <%-- 1:属性  2:属性值 --%>
-                                                        <td width="1%" ><i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i></td>
                                                     </tr>
                                                 </table>
                                             </td>

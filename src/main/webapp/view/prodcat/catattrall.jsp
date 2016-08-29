@@ -62,15 +62,15 @@
                                 <tr>
                                     <td colspan="2" class="click">
                                         <!--点击行为层-->
-                                        <table width="20%" border="0">
+                                        <table width="100%" border="0">
                                             <tr class="click">
                                                 <td width="2%" class="ahref border-bot-none">
                                                     <A href="javaScript:void(0);"><i class="fa fa-plus"></i></A></td>
-                                                <td width="1%" class="ctr1 border-bot-none">
+                                                <td width="1%" class="ctr1 text-c border-bot-none">
                                                     <input name="attrCheck" type="checkbox" class="margin-checkbox"
                                                     <c:if test="${isCheck}">checked="true"</c:if> value="${attr.attrId}">
                                                 </td>
-                                                <td width="1%" class="ctr border-bot-none">${attr.attrName}</td>
+                                                <td width="20%" class="ctr text-l border-bot-none">${attr.attrName}</td>
                                             </tr>
                                         </table>
                                     </td>
