@@ -2,7 +2,6 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
-		Validator = require("arale-validator/0.10.2/index"),
 	    Dialog = require("optDialog/src/dialog"),
 	    Paging = require('paging/0.0.1/paging-debug'),
 	    AjaxController = require('opt-ajax/1.0.0/index');
@@ -14,31 +13,14 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     require("opt-paging/aiopt.pagination");
     require("twbs-pagination/jquery.twbsPagination.min");
 
-	require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
-	require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
+	require("jquery-validation/1.15.1/jquery.validate");
+	require("app/util/aiopt-validate-ext");
     var SendMessageUtil = require("app/util/sendMessage");
-	Validator.addRule('upperCaseRule', /^[A-Z]{1}$/, '请输入大写字母');
-	var validator = new Validator({
-		element: $(".form-label")[0]
-	});
-	validator.addItem({
-		element: $('#upCatName'),
-		required: true,
-		errormessageRequired:"类目名称不能为空"
-	}).addItem({
-		element: $('#upFletter'),
-		required: true,
-		rule:'upperCaseRule',
-		errormessage:'请输入名称首字母(大写)',
-	}).addItem({
-		element: $('#upSerialNum'),
-		required: true,
-		rule:'number min{min:1} max{max:10000}',
-		errormessage:'请输入1至10000的数字',
-	});
+
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     var clickId = "";
+	var upValidator;
     //定义页面组件类
     var catListPager = Widget.extend({
     	
@@ -64,9 +46,51 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     	setup: function () {
 			catListPager.superclass.setup.call(this);
 			this._selectPageList();
+			upValidator = this._initValidator();
+			$(":input").bind("focusout",function(){
+				upValidator.element(this);
+			});
     	},
-    	
-    	
+		//初始化表单验证
+    	_initValidator:function(){
+			return $("#upCatForm").validate({
+				rules:{
+					productCatName:{
+						required: true,
+						maxlength: 20
+					},
+					firstLetter:{
+						required: true,
+						maxlength:1,
+						regexp:/^[A-Z]+$/
+					},
+					upSerialNum:{
+						required:true,
+						digits:true,
+						min:1,
+						max:999
+					}
+				},
+				messages:{
+					productCatName:{
+						required:"类目名称不能为空",
+						maxlength:"类目名称不能超过20位(一个汉字占2位)"
+					},
+					firstLetter:{
+						required:"名称首字母不能为空",
+						maxlength:"必须为大写名称首字母",
+						regexp:"必须为大写字母"
+					},
+					upSerialNum:{
+						required:"排序不能为空",
+						digits:"必须为1至999的整数",
+						min:"必须为1至999的整数",
+						max:"必须为1至999的整数"
+					}
+				}
+			});
+
+		},
     	//查询
     	_selectPageList:function(){
     		var _this = this;
@@ -118,9 +142,9 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 						$("#upSerialNum").val(catInfo.serialNumber);//序列号
 						//是否有子目录
 						if ( catInfo.isChild == "Y")
-							$("#upIsChildY").attr("checked",true);
+							$("#isChildVal").html("是");
 						else
-							$("#upIsChildN").attr("checked",true);
+							$("#isChildVal").html("否");
 						$('#eject-mask').fadeIn(100);
 						$('#increase-samll').slideDown(200);
 					}
@@ -145,9 +169,8 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 			$("#upCatName").val("");//类目名称
 			$("#upFletter").val("");//首字母
 			$("#upSerialNum").val("");//序列号
-			//是否有子目录
-			$("input[name=isChild][value=´Y´]").removeAttr("checked");
-			$("input[name=isChild][value=´N´]").removeAttr("checked");
+			$("#upIsChile").val("");//是否有子分类
+			upValidator.resetForm();
 		},
 		//关闭确认提示框
 		_closeDelConf:function(){
@@ -157,31 +180,8 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 		},
 		//提交更新
 		_updateCat:function(){
-			var _this = this;
-			var hasError = false;
-			var errMsg = "";
-			validator.execute(function(error, results, element) {
-				if (!error){
-					return;
-				}
-				hasError = true;
-				$.each(results,function(n,value){
-					if (value[1]!=null && value[1]!=undefined){
-						errMsg = value[1];
-						return;
-					}
-				});
-			});
-			if (errMsg!= "")
-				new Dialog({
-					content:errMsg,
-					icon:'warning',
-					okValue: '确 定',
-					ok:function(){
-						this.close();
-					}
-				}).show();
-			if (hasError)
+			//验证不通过,则不处理
+			if (upValidator.valid()!=true)
 				return;
 			var _this = this;
 			var catId = $("#upCatId").val();//类目标识

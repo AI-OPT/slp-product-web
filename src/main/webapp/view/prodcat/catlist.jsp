@@ -42,7 +42,8 @@
             <p>更新类目</p>
             <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
-        <div class="form-label" data-widget="validator">
+        <div class="form-label ml-50">
+            <form id="upCatForm">
             <input type="hidden" name="productCatId" id="upCatId">
             <input type="hidden" name="parentProductCatId" id="parentCatId">
             <ul>
@@ -51,6 +52,8 @@
                     <p><input id="upCatName" type="text" class="int-text int-small"
                               name="productCatName" maxlength="20"></p>
                 </li>
+            </ul>
+            <ul>
                 <li>
                     <p class="word"><span>*</span>名称首字母(大写):</p>
                     <p><input id="upFletter" type="text" class="int-text int-small"
@@ -61,14 +64,17 @@
                 <li>
                     <p class="word"><span>*</span>排序:</p>
                     <p><input id="upSerialNum" type="text" class="int-text int-small"
-                              name="serialNumber" maxlength="4"></p>
-                </li>
-                <li>
-                    <p class="word">是否存在子分类:</p>
-                    <p><input id="upIsChildY" name="isChild" type="radio" value="Y"></p><p>是</p>
-                    <p><input id="upIsChildN" name="isChild" type="radio" value="N"></p><p>否</p>
+                              name="upSerialNum" maxlength="3"></p>
                 </li>
             </ul>
+            <ul>
+                <li>
+                    <input type="hidden" id="upIsChile" name="upIsChile">
+                    <p class="word">是否存在子分类:</p>
+                    <p id="isChildVal"></p>
+                </li>
+            </ul>
+            </form>
         </div>
         <!--按钮-->
         <div class="row mt-15"><!--删格化-->
