@@ -99,6 +99,19 @@ public class ProdQueryController {
 	}
 	
 	/**
+	 * 进入查询废弃的页面 
+	 * 加载类目
+	 */
+	@RequestMapping("/scrap")
+	public String scrapListQuery(Model uiModel){
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
+		uiModel.addAttribute("count", productCatMap.size() - 1);
+		uiModel.addAttribute("catInfoList", productCatMap);
+		return "product/scraplist";
+		
+	}
+	
+	/**
 	 * 根据状态不同查询商品
 	 * 
 	 * @param productEditQueryReq
@@ -291,6 +304,32 @@ public class ProdQueryController {
 			// 设置状态，62停用下架.
 			List<String> stateList = new ArrayList<>();
 			stateList.add("62");
+			productEditQueryReq.setStateList(stateList);
+			PageInfoResponse<ProductEditUp> result = queryProductByState(productEditQueryReq);
+			responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
+					result);
+		} catch (Exception e) {
+			responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(ResponseData.AJAX_STATUS_FAILURE,
+					"获取信息异常");
+			LOG.error("获取信息出错：", e);
+		}
+		return responseData;
+	}
+	
+	
+	/**
+	 * 查询 废弃商品
+	 */
+	@RequestMapping("/getScrapList")
+	@ResponseBody
+	public ResponseData<PageInfoResponse<ProductEditUp>> getScrap(HttpServletRequest request,ProductEditQueryReq productEditQueryReq){
+		ResponseData<PageInfoResponse<ProductEditUp>> responseData = null;
+		try {
+			//查询条件
+			queryBuilder(request, productEditQueryReq);
+			// 设置状态，7废弃
+			List<String> stateList = new ArrayList<>();
+			stateList.add("7");
 			productEditQueryReq.setStateList(stateList);
 			PageInfoResponse<ProductEditUp> result = queryProductByState(productEditQueryReq);
 			responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
