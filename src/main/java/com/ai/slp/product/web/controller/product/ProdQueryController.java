@@ -59,9 +59,13 @@ public class ProdQueryController {
 	 */
 	@RequestMapping("/storprod")
 	public String storProdQuery(Model uiModel) {
-		Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
+		/*Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
-		uiModel.addAttribute("catInfoMap", productCatMap);
+		uiModel.addAttribute("catInfoMap", productCatMap);*/
+		
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
+        uiModel.addAttribute("count", productCatMap.size() - 1);
+        uiModel.addAttribute("catInfoList", productCatMap);
 		return "product/storprodlist";
 	}
 	
@@ -71,12 +75,29 @@ public class ProdQueryController {
 	 */
 	@RequestMapping("/insale")
 	public String inSalelistQuery(Model uiModel) {
-		Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
+		/*Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
-		uiModel.addAttribute("catInfoMap", productCatMap);
+		uiModel.addAttribute("catInfoMap", productCatMap);*/
+		
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
+        uiModel.addAttribute("count", productCatMap.size() - 1);
+        uiModel.addAttribute("catInfoList", productCatMap);
 		return "product/insalelist";
 	}
 
+	/**
+	 * 进入查询在仓库中的页面    ---仓库中（审核通过、手动下架放入）
+	 * 加载类目
+	 */
+	@RequestMapping("/stayUp")
+	public String stayUpListQuery(Model uiModel){
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
+		uiModel.addAttribute("count", productCatMap.size() - 1);
+		uiModel.addAttribute("catInfoList", productCatMap);
+		
+		return "product/stayuplist";
+	}
+	
 	/**
 	 * 根据状态不同查询商品
 	 * 
