@@ -134,3 +134,20 @@ $(function () {
 		$(this).parents().children('.newly-build-onclick').slideToggle(100);
     });
 });	
+
+
+//头部点击2 
+ $(function () {
+    var st = 100;
+    $('.center-hind').mouseenter(function () {
+		$('.showbj').show(1);
+    })
+		$(".showbj").click(function () {
+                $(this).hide(1);
+            });
+			
+		$('.center-hind').mouseleave(function () {
+        $('.showbj').hide(1);
+	
+    });	
+  });
