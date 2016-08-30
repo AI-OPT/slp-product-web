@@ -19,6 +19,7 @@
                     <div class="col-lg-12"><!--删格化-->
                         <div class="main-box clearfix"><!--白色背景-->
                         <form id="nromProdForm" action="${_base}/normprodedit/save" method="post">
+                        	<input type="hidden" id="productId" name="productId" value="${productInfo.productId}"/>
                         	<div class="main-box-body clearfix">	<!--padding20-->
                         	<div class="form-label bd-bottom">
                         		<ul>
@@ -111,6 +112,7 @@
                             </header> 
                             <!--标题结束--> 
 				        	<div class="form-label  bd-bottom" data-widget="validator" id="saleAttrDiv"> 
+				        		<input type="hidden" id="saleAttrStr" name="saleAttrStr">
 					        	<c:forEach var="saleAttr" items="${saleAttrlist}">
 										<ul>
 											<li class="width-xlag">

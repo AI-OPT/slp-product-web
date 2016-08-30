@@ -45,7 +45,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
       	_saveNormProd:function(){
 			var _this = this;
 			//验证通过,则进行保存操作.
-			if(this._checkInput() && this._convertKeyAttr() && this._convertSaleAttr){
+			if(this._checkInput() && this._convertKeyAttr() && this._convertSaleAttr()){
 				ajaxController.ajax({
 					type: "post",
 					processing: true,

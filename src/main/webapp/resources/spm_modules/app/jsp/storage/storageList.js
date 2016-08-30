@@ -98,8 +98,8 @@ define('app/jsp/storage/storageList', function (require, exports, module) {
     		var productName = $("#standedProductName").val().trim();
     		
     		var state = $("#state").val().trim();
-    		var operStartTime = $("#operStartTime").val().trim();
-    		var operEndTime = $("#operEndTime").val().trim();
+    		//var operStartTime = $("#operStartTime").val().trim();
+    		//var operEndTime = $("#operEndTime").val().trim();
     		
     		$("#pagination-ul").runnerPagination({
     			
@@ -113,9 +113,8 @@ define('app/jsp/storage/storageList', function (require, exports, module) {
 	 			
 	           /* data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName},
 	            */
-	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName,
-		 			"operStartTimeStr":operStartTime,"operEndTimeStr":operEndTime,"state":state
-		 			},
+	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,
+					"productName":productName,"state":state },
 	 			
 	           	pageSize: storageList.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
