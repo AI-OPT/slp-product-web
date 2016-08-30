@@ -158,8 +158,8 @@
 										<td>{{:~timesToFmatter(operTime)}}</td>
 										<td>{{:operName}}</td>
                                          <td>
-											<a href="#" class="blue">查看详情</a>
-											<a href="${_base}/normprodquery/{{:productId}}" class="blue-border">编辑</a>
+											<a href="${_base}/normprodquery/{{:productId}}" class="blue">查看详情</a>
+											<a href="${_base}/normprodedit/{{:productId}}" class="blue-border">编辑</a>
                                             <a href="＃" class="blue">废弃</a>
 										</td>
 									</tr>
