@@ -141,6 +141,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 						$("#upFletter").val(catInfo.firstLetter);//首字母
 						$("#upSerialNum").val(catInfo.serialNumber);//序列号
 						//是否有子目录
+						$("#upIsChile").val(catInfo.isChild);
 						if ( catInfo.isChild == "Y")
 							$("#isChildVal").html("是");
 						else
@@ -189,7 +190,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 			var catName = $("#upCatName").val();//类目名称
 			var fLetter = $("#upFletter").val();//首字母
 			var sn = $("#upSerialNum").val();//序列号
-			var isChild = $('input:radio[name=isChild]:checked').val();
+			var isChild = $("#upIsChile").val();
 			this._closeEditDiv();
 			ajaxController.ajax({
 				type: "post",
