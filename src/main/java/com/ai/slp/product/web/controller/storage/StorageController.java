@@ -19,6 +19,7 @@ import com.ai.slp.product.api.product.interfaces.IProductSV;
 import com.ai.slp.product.api.product.param.SkuInfo;
 import com.ai.slp.product.api.product.param.SkuSetForProduct;
 import com.ai.slp.product.api.product.param.StoGroupInfoQuery;
+import com.ai.slp.product.api.product.param.StorageInfoQuery;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
@@ -186,11 +187,11 @@ public class StorageController {
     private ResponseData<SkuSetForProduct> querySkuStorage(@PathVariable("id")String storageId,String groupId){
         ResponseData<SkuSetForProduct> responseData;
         IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
-        StoGroupInfoQuery infoQuery = new StoGroupInfoQuery();
+        StorageInfoQuery infoQuery = new StorageInfoQuery();
         infoQuery.setTenantId(AdminUtil.getTenantId());
         infoQuery.setSupplierId(AdminUtil.getSupplierId());
-        infoQuery.setGroupId(groupId);
-        SkuSetForProduct skuSetForProduct = productSV.querySkuSetForGroup(infoQuery);
+        infoQuery.setStorageId(storageId);
+        SkuSetForProduct skuSetForProduct = productSV.querySkuSetForStorage(infoQuery);
         ResponseHeader header = skuSetForProduct.getResponseHeader();
         try {
             //保存错误
