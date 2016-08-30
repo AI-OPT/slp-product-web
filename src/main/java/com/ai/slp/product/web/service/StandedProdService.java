@@ -26,7 +26,7 @@ public class StandedProdService {
     private ProdCatService prodCatService;
     @Autowired
     private AttrAndValService attrAndValService;
-    public void getInfo(String standedProdId,Model uiModel){
+    public NormProdInfoResponse getInfo(String standedProdId,Model uiModel){
         //标准品ID
         uiModel.addAttribute("standedProdId", standedProdId);
         //查询标准品信息
@@ -60,5 +60,7 @@ public class StandedProdService {
         attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
         attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
         uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
+
+        return normProdInfoResponse;
     }
 }
