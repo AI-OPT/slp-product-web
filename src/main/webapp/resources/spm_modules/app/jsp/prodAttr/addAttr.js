@@ -35,7 +35,7 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
     	events: {
     		//保存
     		"click #addAttrBtn":"_addAttrBtn",
-            "click #submitAddBtn":"_saveAttr",
+            "click #submitAddAttrBtn":"_saveAttr",
             },
     	//重写父类
     	setup: function () {
@@ -70,10 +70,10 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 			//获取from-label下的数据
 			var attrArr = [];
 			var hasError = false;
-			$("#addViewDiv > .form-label ").each(function(index,form){
+			$("#addViewDiv > .form-label.bd-bottom ").each(function(index,form){
 				
 				var validator = new Validator({
-					element: $(this)
+					element: $(form)
 				});
 				_this._addValidator(validator);
 				validator.execute(function(error, results, element) {
@@ -83,7 +83,7 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 				});
 				
 				var attrObj = {};
-				console.log(index+" form-label");
+				console.log(index + " form-label");
 				//属性名称
 				var attrName = $(this).find("input[name='attrName']")[0];
 				attrObj['attrName'] = attrName.value;
