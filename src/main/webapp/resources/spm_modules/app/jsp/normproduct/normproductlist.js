@@ -130,6 +130,36 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
     		var container = $('.wrapper-right');
     		container.scrollTop(0);//滚动到div 顶部
     	},
+    	_isDiscardDialog:function(productId){
+    		var _this = this;
+    		var d = Dialog({
+				content:"确定废弃该标准品吗？废弃后不可再使用",
+				icon:'help',
+				okValue: '确 定',
+				ok:function(){
+					this.close();
+					_this._discardProduct(productId);
+				},
+				cancelValue: '取消',
+				cancel: function () {
+					this.close();
+				}
+			});
+			d.show();
+    	},
+    	_discardProduct:function(productId){
+    		var _this = this;
+    		ajaxController.ajax({
+				type: "post",
+				processing: true,
+				// message: "加载中，请等待...",
+				url: _base+"/normprodedit/discard",
+				data:{"prodId":productId},
+				success: function(data){
+					_this._selectNormProductList();
+				}
+			});
+    	}
     	
     });
     

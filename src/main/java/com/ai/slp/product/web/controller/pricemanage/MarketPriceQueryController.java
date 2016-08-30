@@ -1,31 +1,28 @@
 package com.ai.slp.product.web.controller.pricemanage;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
 import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
 import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParam;
 import com.ai.slp.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
+import com.ai.slp.product.api.normproduct.param.MarketPriceUpdate;
+import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
+import com.ai.slp.product.api.normproduct.param.NormProdRequest;
+import com.ai.slp.product.api.normproduct.param.NormProdResponse;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
-import com.ai.slp.product.web.constants.ProductCatConstants;
 import com.ai.slp.product.web.controller.normproduct.NormProdQueryController;
-import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.service.StandedProdService;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.ai.slp.product.web.util.DateUtil;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,14 +33,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ai.opt.sdk.util.StringUtil;
-import com.ai.slp.product.api.normproduct.param.AttrMap;
-import com.ai.slp.product.api.normproduct.param.AttrQuery;
-import com.ai.slp.product.api.normproduct.param.MarketPriceUpdate;
-import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
-import com.ai.slp.product.api.normproduct.param.NormProdRequest;
-import com.ai.slp.product.api.normproduct.param.NormProdResponse;
-import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * 
@@ -59,8 +53,8 @@ public class MarketPriceQueryController {
 
 	@Autowired
 	private ProdCatService prodCatService;
-    @Autowired
-    private AttrAndValService attrAndValService;
+	@Autowired
+	StandedProdService standedProdService;
 	
 	/**
 	 * 加载类目
@@ -190,37 +184,7 @@ public class MarketPriceQueryController {
 	 */
 	@RequestMapping("/{id}")
     public String storageEdit(@PathVariable("id") String standedProdId, Model uiModel) {
-		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
-		//根据ID查询单个商品的信息
-		NormProdUniqueReq req = new NormProdUniqueReq();
-		req.setTenantId(AdminUtil.getTenantId());
-		req.setSupplierId(AdminUtil.getSupplierId());
-		req.setProductId(standedProdId);
-		NormProdInfoResponse normProdResponse = normProductSV.queryProducById(req);
-		uiModel.addAttribute("normProd",normProdResponse);
-		//查询类目
-        uiModel.addAttribute("catLinkList", prodCatService.queryLink(normProdResponse.getProductCatId()));
-        uiModel.addAttribute("productCatId", normProdResponse.getProductCatId());
-        //商品类型
-        SysParamSingleCond paramSingleCond = new SysParamSingleCond();
-        paramSingleCond.setTenantId(AdminUtil.getTenantId());
-        paramSingleCond.setTypeCode(ComCacheConstants.TypeProduct.CODE);
-        paramSingleCond.setParamCode(ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE);
-        paramSingleCond.setColumnValue(normProdResponse.getProductType());
-        ICacheSV cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
-        SysParam sysParam = cacheSV.getSysParamSingle(paramSingleCond);
-        uiModel.addAttribute("prodType", sysParam.getColumnDesc());
-        //标准品关键属性
-        AttrQuery attrQuery = new AttrQuery();
-        attrQuery.setTenantId(AdminUtil.getTenantId());
-        attrQuery.setProductId(normProdResponse.getProductId());
-        attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
-        AttrMap attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
-        uiModel.addAttribute("keyAttr", attrAndValService.getAttrAndVals(attrMap));
-        //查询销售属性
-        attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
-        attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
-        uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
+		NormProdInfoResponse normProdResponse = standedProdService.getInfo(standedProdId,uiModel);
 		//查询出市场价进行转换
         String price;
         if (normProdResponse.getMarketPrice() != null) {
@@ -228,7 +192,6 @@ public class MarketPriceQueryController {
         price = normProdResponse.getMarketPrice().toString();
         if (StringUtil.isBlank(normProdResponse.getMarketPrice().toString())) {
         	price = "0.00";
-        	
 		}else {
 			BigDecimal input = new BigDecimal(price);
         	BigDecimal devide = new BigDecimal(1000);

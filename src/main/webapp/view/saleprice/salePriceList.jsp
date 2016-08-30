@@ -18,30 +18,7 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!-- 查询条件 -->
 						<div class="form-label">
-							<%-- 类目 --%>
-							<ul id="data1ProdCat">
-								<li class="col-md-12">
-									<p class="word"><span>*</span>商品类目</p>
-									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
-										<p id="productCat${status.index}">
-											<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
-												<c:forEach var="info" items="${map.value}">
-													<option value="${info.productCatId}">${info.productCatName}</option>
-												</c:forEach>
-											</select>
-										</p>
-									</c:forEach>
-									<script id="prodCatTemple" type="text/template">
-										<p id="productCat{{:level}}">
-											<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
-												{{for prodCatList}}
-												<option value="{{:productCatId}}">{{:productCatName}}</option>
-												{{/for}}
-											</select>
-										</p>
-									</script>
-								</li>
-							</ul>
+
 							<ul>
 								<li class="col-md-12">
 									<p class="word">商品名称</p>
@@ -68,31 +45,28 @@
 										</p>
 									</li>
 								</ul>
-								<ul>
-									<li class="col-md-6">
-										<p class="word">状态</p>
-										<p>
-											<select id="state" class="select select-medium">
-												
+								<input type="hidden" id="state" value="1"/>
+								<%-- 类目 --%>
+								<ul id="data1ProdCat">
+									<li class="col-md-12">
+										<p class="word">商品类目</p>
+										<p id="productCat0">
+											<select id="catFirst" class="select select-small" onChange="pager._selectChange(this);">
+												<option value="">全部</option>
+												<c:forEach var="info" items="${catInfoList}">
+													<option value="${info.productCatId}">${info.productCatName}</option>
+												</c:forEach>
 											</select>
 										</p>
-									</li>
-									<li class="col-md-6">
-										<p class="word">操作员</p>
-										<p><input id="operId" type="text" class="int-text int-medium"></p>
-									</li>
-								</ul>
-								<ul>
-									<li class="col-md-6">
-										<p class="word">操作开始时间</p>
-										<p><input type="text" class="int-text int-medium" id="operStartTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
-									</li>
-									<li class="col-md-6">
-										<p class="word">操作结束时间</p>
-										<p><input type="text" class="int-text int-medium" id="operEndTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span>
-										</p>
+										<script id="prodCatTemple" type="text/template">
+											<p id="productCat{{:level}}">
+												<select class="select select-small" onChange="pager._selectChange(this);">
+													{{for prodCatList}}
+													<option value="{{:productCatId}}">{{:productCatName}}</option>
+													{{/for}}
+												</select>
+											</p>
+										</script>
 									</li>
 								</ul>
 							</div>
@@ -118,12 +92,6 @@
 						<header class="main-box-header clearfix">
 							<h2 class="pull-left">查询结果</h2>
 						</header>
-						<div class="row"><!--删格化-->
-                                <p class="right pr-30">
-                                    <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
-                                           value="新  增" onclick="javaScript:window.location.href = '${_base}/normprodedit/add';">
-                                </p>
-                        </div>
 						<!--标题结束-->
 						<div class="main-box-body clearfix">
 							<!--table表格-->
@@ -137,8 +105,6 @@
 										<th>所属类目</th>
 										<th>类型</th>
 										<th>商品状态</th>
-										<th>操作时间</th>
-										<th>操作人</th>
 										<th>操作</th>
 									</tr>
 									</thead>
@@ -155,13 +121,7 @@
 										<td>{{:catName}}</td>
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
-										<td>{{:~timesToFmatter(operTime)}}</td>
-										<td>{{:operName}}</td>
-                                         <td>
-											<a href="${_base}/normprodquery/{{:productId}}" class="blue-border">查看详情</a>
-											<a href="${_base}/normprodedit/{{:productId}}" class="blue-border">编辑</a>
-                                            <a href="javaScript:void(0)" onclick="pager._isDiscardDialog({{:productId}})" class="blue-border">废弃</a>
-										</td>
+										<td><a href="${_base}/storage/{{:productId}}" class="blue-border">编辑</a></td>
 									</tr>
 								</script>
 							</div>
@@ -197,10 +157,12 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		seajs.use('app/jsp/normproduct/normproductlist', function(storageList) {
-			pager = new storageList({element : document.body});
+		$("#catFirst").val("");//设置类目为全部.
+		seajs.use('app/jsp/saleprice/salePriceList', function(salePriceList) {
+			pager = new salePriceList({element : document.body});
 			pager.render();
 		});
 	})();
 </script>
 </html>
+

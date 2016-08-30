@@ -102,7 +102,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			$("#newTotalNum").val("");
 			$("#stoAddGroupId").val("");
 			$("#stoAddGroupPn").val("");
-			$("newStorageName").val("");
+			$("#newStorageName").val("");
 			$('#eject-mask').fadeOut(100);
 			$('#edit-medium').slideUp(150);
 		},
@@ -183,6 +183,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 					//判断是否为负数
 					if (!_this._isNum(skuNum)){
 						_this._showMsg("SKU库存数量不能小于0");
+						stoNum = null;
 						return;
 					}
 					skuMap[skuId] = skuNum;
