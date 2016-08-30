@@ -10,11 +10,6 @@ import com.ai.slp.common.api.cache.interfaces.ICacheSV;
 import com.ai.slp.common.api.cache.param.SysParam;
 import com.ai.slp.common.api.cache.param.SysParamMultiCond;
 import com.ai.slp.common.api.cache.param.SysParamSingleCond;
-import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
-import com.ai.slp.product.api.normproduct.param.AttrMap;
-import com.ai.slp.product.api.normproduct.param.AttrQuery;
-import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
-import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
 import com.ai.slp.product.api.product.interfaces.IProductSV;
 import com.ai.slp.product.api.product.param.SkuInfo;
 import com.ai.slp.product.api.product.param.SkuSetForProduct;
@@ -24,10 +19,10 @@ import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
 import com.ai.slp.product.web.constants.ComCacheConstants;
-import com.ai.slp.product.web.constants.ProductCatConstants;
 import com.ai.slp.product.web.controller.product.ProdQueryController;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.service.StandedProdService;
 import com.ai.slp.product.web.util.AdminUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +46,8 @@ public class StorageController {
     private ProdCatService prodCatService;
     @Autowired
     private AttrAndValService attrAndValService;
+    @Autowired
+    private StandedProdService standedProdService;
 
     /**
      * 显示标准品库存编辑页面
@@ -60,53 +57,24 @@ public class StorageController {
      */
     @RequestMapping("/{id}")
     public String storageEdit(@PathVariable("id") String standedProdId, Model uiModel) {
-        //标准品ID
-        uiModel.addAttribute("standedProdId", standedProdId);
-        //查询标准品信息
-        NormProdUniqueReq normProdUniqueReq = new NormProdUniqueReq();
-        normProdUniqueReq.setProductId(standedProdId);
-        normProdUniqueReq.setTenantId(AdminUtil.getTenantId());
-        normProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
-        INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
-        NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
-        uiModel.addAttribute("normProdInfo", normProdInfoResponse);
-        //查询类目链
-        uiModel.addAttribute("catLinkList", prodCatService.queryLink(normProdInfoResponse.getProductCatId()));
-        uiModel.addAttribute("productCatId", normProdInfoResponse.getProductCatId());
-        //商品类型
-        SysParamSingleCond paramSingleCond = new SysParamSingleCond();
-        paramSingleCond.setTenantId(AdminUtil.getTenantId());
-        paramSingleCond.setTypeCode(ComCacheConstants.TypeProduct.CODE);
-        paramSingleCond.setParamCode(ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE);
-        paramSingleCond.setColumnValue(normProdInfoResponse.getProductType());
-        ICacheSV cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
-        SysParam sysParam = cacheSV.getSysParamSingle(paramSingleCond);
-        uiModel.addAttribute("prodType", sysParam.getColumnDesc());
-        //标准品关键属性
-        AttrQuery attrQuery = new AttrQuery();
-        attrQuery.setTenantId(AdminUtil.getTenantId());
-        attrQuery.setProductId(normProdInfoResponse.getProductId());
-        attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
-        AttrMap attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
-        uiModel.addAttribute("keyAttr", attrAndValService.getAttrAndVals(attrMap));
-        //查询销售属性
-        attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
-        attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
-        uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
+        standedProdService.getInfo(standedProdId,uiModel);
 
         //查询库存组和库存信息
         StorageGroupQuery storageGroupQuery = new StorageGroupQuery();
         storageGroupQuery.setTenantId(AdminUtil.getTenantId());
         storageGroupQuery.setSupplierId(AdminUtil.getSupplierId());
-        storageGroupQuery.setProductId(normProdInfoResponse.getProductId());
+        storageGroupQuery.setProductId(standedProdId);
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         BaseListResponse<StorageGroupRes> storageGroupResList = storageSV.queryGroupInfoByNormProdId(storageGroupQuery);
         Map<String,SysParam> paramMap = getStorageStatus();
+        ICacheSV cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
+        SysParamSingleCond paramSingleCond = new SysParamSingleCond();
+        paramSingleCond.setTenantId(AdminUtil.getTenantId());
+        paramSingleCond.setTypeCode(ComCacheConstants.StateStorage.STORAGEGROUP_TYPR_CODE);
+        paramSingleCond.setParamCode(ComCacheConstants.StateStorage.PARAM_CODE);
         for (StorageGroupRes storageGroupRes : storageGroupResList.getResult()) {
             // 获取库存组状态名
-            String state = storageGroupRes.getState();
-            paramSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
-                    ComCacheConstants.StateStorage.STORAGEGROUP_TYPR_CODE, ComCacheConstants.StateStorage.PARAM_CODE, state);
+            paramSingleCond.setColumnValue(storageGroupRes.getState());
             String stateName = cacheSV.getSysParamSingle(paramSingleCond).getColumnDesc();
             storageGroupRes.setStateName(stateName);
             // 库存组优先级
@@ -115,7 +83,7 @@ public class StorageController {
                 for (StorageRes storageRes : storageGroupRes.getStorageList().get(key)) {
                     SysParam param = paramMap.get(storageRes.getState());
                     if (param!=null)
-                    storageRes.setStateName(param.getColumnDesc());
+                        storageRes.setStateName(param.getColumnDesc());
                 }
             }
         }
