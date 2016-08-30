@@ -94,10 +94,14 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
                 data: {'catUpParamStr': JSON.stringify(catUpParams)},
                 success: function (data) {
                     if ("1" === data.statusCode) {
-                        window.history.go(-1);
+                        _this._backList();
                     }
                 }
             });
+        },
+        //回退到列表页面
+        _backList:function(){
+            window.location.href=_base+"/cat/query?parentProductCatId="+parnetCat;
         },
         //显示成功信息
         _showSuccessMsg:function(msg){
