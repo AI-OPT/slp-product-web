@@ -46,19 +46,6 @@
 									</li>
 								</ul>
 								<input type="hidden" id="state" value="1"/>
-								<ul>
-									<li class="col-md-6">
-										<p class="word">操作开始时间</p>
-										<p><input type="text" class="int-text int-medium" id="operStartTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
-									</li>
-									<li class="col-md-6">
-										<p class="word">操作结束时间</p>
-										<p><input type="text" class="int-text int-medium" id="operEndTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span>
-										</p>
-									</li>
-								</ul>
 								<%-- 类目 --%>
 								<ul id="data1ProdCat">
 									<li class="col-md-12">
@@ -118,8 +105,6 @@
 										<th>所属类目</th>
 										<th>类型</th>
 										<th>商品状态</th>
-										<th>操作时间</th>
-										<th>操作人</th>
 										<th>操作</th>
 									</tr>
 									</thead>
@@ -136,11 +121,6 @@
 										<td>{{:catName}}</td>
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
-										<td>{{:~timesToFmatter(operTime)}}</td>
-										<td>{{:operName}}</td>
-										<%--        <td>{{:operId}}</td>
-                                                 <td><a href="#" class="blue">查看详情</a><a href="#" class="red">编辑</a><a href="＃" class="blue">废弃</a></td>
-                                          --%>
 										<td><a href="${_base}/storage/{{:productId}}" class="blue-border">编辑</a></td>
 									</tr>
 								</script>
