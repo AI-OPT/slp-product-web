@@ -3,6 +3,7 @@ package com.ai.slp.product.web.controller.product;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.image.IImageClient;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
@@ -59,9 +60,13 @@ public class ProdQueryController {
 	 */
 	@RequestMapping("/storprod")
 	public String storProdQuery(Model uiModel) {
-		Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
+		/*Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
-		uiModel.addAttribute("catInfoMap", productCatMap);
+		uiModel.addAttribute("catInfoMap", productCatMap);*/
+		
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
+        uiModel.addAttribute("count", productCatMap.size() - 1);
+        uiModel.addAttribute("catInfoList", productCatMap);
 		return "product/storprodlist";
 	}
 	
@@ -71,12 +76,42 @@ public class ProdQueryController {
 	 */
 	@RequestMapping("/insale")
 	public String inSalelistQuery(Model uiModel) {
-		Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
+		/*Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
-		uiModel.addAttribute("catInfoMap", productCatMap);
+		uiModel.addAttribute("catInfoMap", productCatMap);*/
+		
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
+        uiModel.addAttribute("count", productCatMap.size() - 1);
+        uiModel.addAttribute("catInfoList", productCatMap);
 		return "product/insalelist";
 	}
 
+	/**
+	 * 进入查询在仓库中的页面    ---仓库中（审核通过、手动下架放入）
+	 * 加载类目
+	 */
+	@RequestMapping("/stayUp")
+	public String stayUpListQuery(Model uiModel){
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
+		uiModel.addAttribute("count", productCatMap.size() - 1);
+		uiModel.addAttribute("catInfoList", productCatMap);
+		
+		return "product/stayuplist";
+	}
+	
+	/**
+	 * 进入查询废弃的页面 
+	 * 加载类目
+	 */
+	@RequestMapping("/scrap")
+	public String scrapListQuery(Model uiModel){
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
+		uiModel.addAttribute("count", productCatMap.size() - 1);
+		uiModel.addAttribute("catInfoList", productCatMap);
+		return "product/scraplist";
+		
+	}
+	
 	/**
 	 * 根据状态不同查询商品
 	 * 
@@ -148,8 +183,15 @@ public class ProdQueryController {
 			queryBuilder(request, productEditQueryReq);
 			// 设置状态，新增：0；未编辑1.
 			List<String> stateList = new ArrayList<>();
-			stateList.add("0");
-			stateList.add("1");
+			if (StringUtil.isBlank(request.getParameter("state"))) {
+				stateList.add("0");
+				stateList.add("1");
+				stateList.add("2");
+				stateList.add("3");
+				stateList.add("4");
+			}else {
+				stateList.add(request.getParameter("state"));
+			}
 			productEditQueryReq.setStateList(stateList);
 			PageInfoResponse<ProductEditUp> result = queryProductByState(productEditQueryReq);
 			responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
@@ -270,6 +312,32 @@ public class ProdQueryController {
 			// 设置状态，62停用下架.
 			List<String> stateList = new ArrayList<>();
 			stateList.add("62");
+			productEditQueryReq.setStateList(stateList);
+			PageInfoResponse<ProductEditUp> result = queryProductByState(productEditQueryReq);
+			responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
+					result);
+		} catch (Exception e) {
+			responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(ResponseData.AJAX_STATUS_FAILURE,
+					"获取信息异常");
+			LOG.error("获取信息出错：", e);
+		}
+		return responseData;
+	}
+	
+	
+	/**
+	 * 查询 废弃商品
+	 */
+	@RequestMapping("/getScrapList")
+	@ResponseBody
+	public ResponseData<PageInfoResponse<ProductEditUp>> getScrap(HttpServletRequest request,ProductEditQueryReq productEditQueryReq){
+		ResponseData<PageInfoResponse<ProductEditUp>> responseData = null;
+		try {
+			//查询条件
+			queryBuilder(request, productEditQueryReq);
+			// 设置状态，7废弃
+			List<String> stateList = new ArrayList<>();
+			stateList.add("7");
 			productEditQueryReq.setStateList(stateList);
 			PageInfoResponse<ProductEditUp> result = queryProductByState(productEditQueryReq);
 			responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",

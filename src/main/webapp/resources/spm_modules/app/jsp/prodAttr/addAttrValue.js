@@ -70,7 +70,7 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 			//获取from-label下的数据
 			var attrArrValue = [];
 			var hasError = false;
-			$("#addViewDiv > .form-label ").each(function(index,form){
+			$("#addViewDiv > .form-label.bd-bottom ").each(function(index,form){
 				
 				var validator = new Validator({
 					element: $(this)

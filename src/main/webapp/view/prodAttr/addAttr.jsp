@@ -60,7 +60,7 @@
                             </div>
                             <div  class="row pt-30">
                             	<p class="center pr-30 mt-30">
-                            		<input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                            		<input id="submitAddAttrBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
                                            value="提  交">
                                     <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
                                            value="返  回" onclick="javaScript:window.history.go(-1);">

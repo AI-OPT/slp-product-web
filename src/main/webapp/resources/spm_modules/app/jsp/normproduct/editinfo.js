@@ -41,7 +41,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 			window.history.go(-2);
 		},
 		
-    	//保存标准品信息
+    	//保存商品信息
       	_saveNormProd:function(){
 			var _this = this;
 			//验证通过,则进行保存操作.
@@ -54,8 +54,27 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 					data:$('#nromProdForm').serializeArray(),
 					success: function(data){
 						if("1"===data.statusCode){
-							//保存成功,回退到进入的列表页
-							window.history.go(-2);
+							var d = Dialog({
+								content:data.statusInfo,
+								icon:'success',
+								okValue: '确 定',
+								ok:function(){
+									this.close();
+									//保存成功,回退到进入的列表页
+									window.history.go(-2);
+								}
+							});
+							d.show();
+						}else{
+							var d = Dialog({
+								content:data.statusInfo,
+								icon:'fail',
+								okValue: '确 定',
+								ok:function(){
+									this.close();
+								}
+							});
+							d.show();
 						}
 					}
 				});
@@ -113,8 +132,6 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 					var val = obj.value;
 					attrValArray.push({'attrId':attrId,'attrValId':val,'attrVal':'','attrVal2':''});
 					break;
-					
-					
 				case '2'://多选
 					$("#saleAttrDiv input:checkbox[attrId='saleAttr"+attrId+"']:checked").each(function(i){
 						attrValArray.push({'attrId':attrId,'attrValId':$(this).val(),'attrVal':'','attrVal2':''});
@@ -137,7 +154,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 			$('#saleAttrStr').val(saleJsonStr);
 			return true;
 		},
-		//标准品信息保存检查
+		//商品信息保存检查
 		_checkInput:function(){
 			//品名称不能为空
 			var standedProductName = $('#productName').val();
@@ -151,10 +168,10 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 				this._showMsg("商品类型不能为空");
 				return false;
 			}
-			//标准品状态不能为空
+			//商品状态不能为空
 			var state = $("#state").val().trim();
 			if (state==null || state=="") {
-				this._showMsg("请选择标准品状态");
+				this._showMsg("请选择商品状态");
 				return false;
 			}
 			

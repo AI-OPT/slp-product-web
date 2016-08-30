@@ -21,16 +21,17 @@
                         <form id="nromProdForm" action="${_base}/normprodedit/save" method="post">
                         	<input type="hidden" id="productId" name="productId" value="${productInfo.productId}"/>
                         	<div class="main-box-body clearfix">	<!--padding20-->
-                        	<div class="form-label bd-bottom">
-                        		<ul>
-					           		<li class="width-xlag">
-					                    <p class="word"><b class="red">*</b>类目信息</p>
-					                   	<c:forEach var="catInfo" items="${catLinkList}" varStatus="stat">
+                        	<!--标题开始--> 
+					        <header class="main-box-header clearfix ">
+                            	<h5 class="pull-left">
+                            	类目信息：<c:forEach var="catInfo" items="${catLinkList}" varStatus="stat">
 					                    	${catInfo.productCatName}<c:if test="${!stat.last}">&gt;</c:if>
                                     	</c:forEach>
-					                    <input type="hidden" id="productCatId" name="productCatId" value="${productCatId}"/>
-					               </li>	
-					            </ul>
+                            	</h5>
+                            </header> 
+                            <!--标题结束-->
+                        	<div class="form-label bd-bottom">
+					            <input type="hidden" id="productCatId" name="productCatId" value="${productCatId}"/>
 					            <ul>
 					                <li class="width-xlag">
 					                    <p class="word"><b class="red">*</b>商品名称</p>
@@ -165,7 +166,7 @@
 	                            <div class="form-label  bd-bottom"> 
 		                            <ul>
 						                <li class="width-xlag">
-				                            <p class="word"><b class="red">*</b>状态</p>
+				                            <p class="word"><b class="red">*</b>状态：</p>
 				                            <p>
 				                            	<select id="state" name="state" class="select select-medium">
 								                   	<option value="1"<c:if test="${productInfo.state == '1'}">selected="selected"</c:if>>可使用</option>
@@ -178,7 +179,7 @@
 								 <div id="subDiv" class="row pt-30">
 	                            	<p class="center pr-30 mt-30">
 	                            		<input id="saveNormProd" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
-	                                           value="提  交">
+	                                           value="保  存">
 	                                    <input id="cancel" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
 	                                           value="返  回">
 	                            	</p>
