@@ -1,29 +1,10 @@
 package com.ai.slp.product.web.controller.normproduct;
 
-import com.ai.opt.base.vo.BaseListResponse;
-import com.ai.opt.base.vo.PageInfoResponse;
-import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
-import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
-import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
-import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParam;
-import com.ai.slp.common.api.cache.param.SysParamMultiCond;
-import com.ai.slp.common.api.cache.param.SysParamSingleCond;
-import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
-import com.ai.slp.product.api.normproduct.param.*;
-import com.ai.slp.product.api.productcat.param.ProdCatInfo;
-import com.ai.slp.product.api.storage.interfaces.IStorageSV;
-import com.ai.slp.product.api.storage.param.StorageGroupQuery;
-import com.ai.slp.product.api.storage.param.StorageGroupRes;
-import com.ai.slp.product.api.storage.param.StorageRes;
-import com.ai.slp.product.web.constants.ComCacheConstants;
-import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.service.AttrAndValService;
-import com.ai.slp.product.web.service.ProdCatService;
-import com.ai.slp.product.web.util.AdminUtil;
-import com.ai.slp.product.web.util.DateUtil;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,10 +15,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
+import com.ai.slp.common.api.cache.interfaces.ICacheSV;
+import com.ai.slp.common.api.cache.param.SysParam;
+import com.ai.slp.common.api.cache.param.SysParamSingleCond;
+import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
+import com.ai.slp.product.api.normproduct.param.AttrMap;
+import com.ai.slp.product.api.normproduct.param.AttrQuery;
+import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
+import com.ai.slp.product.api.normproduct.param.NormProdRequest;
+import com.ai.slp.product.api.normproduct.param.NormProdResponse;
+import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
+import com.ai.slp.product.api.productcat.param.ProdCatInfo;
+import com.ai.slp.product.web.constants.ComCacheConstants;
+import com.ai.slp.product.web.constants.ProductCatConstants;
+import com.ai.slp.product.web.service.AttrAndValService;
+import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
+import com.ai.slp.product.web.util.DateUtil;
 
 /**
  * 标准品查询
@@ -186,6 +186,10 @@ public class NormProdQueryController {
         normProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
         INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
         NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
+        //设置操作人姓名
+        Long operId = normProdInfoResponse.getOperId();
+        String operName = getOperName(operId);
+        normProdInfoResponse.setOperName(operName);
         uiModel.addAttribute("normProdInfo", normProdInfoResponse);
         //查询类目链
         uiModel.addAttribute("catLinkList", prodCatService.queryLink(normProdInfoResponse.getProductCatId()));
@@ -210,50 +214,22 @@ public class NormProdQueryController {
         attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
         attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
         uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
-
-        //查询库存组和库存信息
-        StorageGroupQuery storageGroupQuery = new StorageGroupQuery();
-        storageGroupQuery.setTenantId(AdminUtil.getTenantId());
-        storageGroupQuery.setSupplierId(AdminUtil.getSupplierId());
-        storageGroupQuery.setProductId(normProdInfoResponse.getProductId());
-        IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
-        BaseListResponse<StorageGroupRes> storageGroupResList = storageSV.queryGroupInfoByNormProdId(storageGroupQuery);
-        Map<String,SysParam> paramMap = getStorageStatus();
-        for (StorageGroupRes storageGroupRes : storageGroupResList.getResult()) {
-            // 获取库存组状态名
-            String state = storageGroupRes.getState();
-            paramSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
-                    ComCacheConstants.StateStorage.STORAGEGROUP_TYPR_CODE, ComCacheConstants.StateStorage.PARAM_CODE, state);
-            String stateName = cacheSV.getSysParamSingle(paramSingleCond).getColumnDesc();
-            storageGroupRes.setStateName(stateName);
-            // 库存组优先级
-            for (Short key : storageGroupRes.getStorageList().keySet()) {
-                // 获取库存状态名
-                for (StorageRes storageRes : storageGroupRes.getStorageList().get(key)) {
-                    SysParam param = paramMap.get(storageRes.getState());
-                    if (param!=null)
-                    storageRes.setStateName(param.getColumnDesc());
-                }
-            }
-        }
-        uiModel.addAttribute("storGroupList", storageGroupResList.getResult());
-        return "storage/storageEdit";
+        return "normproduct/info";
     }
-
-    /**
-     * 获取库存状态字典信息
-     * @return
-     */
-    private Map<String,SysParam> getStorageStatus(){
-        ICacheSV cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
-        SysParamMultiCond multiCond = new SysParamMultiCond(AdminUtil.getTenantId(),
-                ComCacheConstants.StateStorage.STORAGE_TYPR_CODE, ComCacheConstants.StateStorage.PARAM_CODE);
-        List<SysParam> sysParamList = cacheSV.getSysParamList(multiCond);
-        Map<String,SysParam> paramMap = new HashMap<>();
-        for (SysParam sysParam:sysParamList){
-            paramMap.put(sysParam.getColumnValue(),sysParam);
+    
+    private String getOperName(Long operId){
+    	String name=null;
+    	//设置操作者名称
+        if(operId != null){
+        	SysUserQueryRequest userQuery = new SysUserQueryRequest();
+            userQuery.setTenantId(AdminUtil.getTenantId());
+        	userQuery.setId(Long.toString(operId));
+        	ISysUserQuerySV sysUserQuerySV = DubboConsumerFactory.getService(ISysUserQuerySV.class);
+        	SysUserQueryResponse serInfo = sysUserQuerySV.queryUserInfo(userQuery);
+        	if(serInfo != null){
+        		name = serInfo.getName();
+        	}
         }
-        return paramMap;
+        return name;
     }
-	
 }
