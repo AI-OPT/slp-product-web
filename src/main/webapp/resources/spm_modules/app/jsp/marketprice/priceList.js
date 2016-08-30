@@ -97,8 +97,8 @@ define('app/jsp/marketprice/priceList', function (require, exports, module) {
     		var productName = $("#standedProductName").val().trim();
     		
     		var state = $("#state").val().trim();
-    		var operStartTime = $("#operStartTime").val().trim();
-    		var operEndTime = $("#operEndTime").val().trim();
+    		/*var operStartTime = $("#operStartTime").val().trim();
+    		var operEndTime = $("#operEndTime").val().trim();*/
     		
     		$("#pagination-ul").runnerPagination({
 	 			url: _base+"/normprodquery/getNormProductList",
@@ -107,7 +107,7 @@ define('app/jsp/marketprice/priceList', function (require, exports, module) {
 	 			renderId:"searchNormProductData",
 	 			messageId:"showMessageDiv",
 	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName,
-		 			"operStartTimeStr":operStartTime,"operEndTimeStr":operEndTime,"state":state
+		 			"state":state
 		 			},
 	 			
 	           	pageSize: priceListPager.DEFAULT_PAGE_SIZE,
