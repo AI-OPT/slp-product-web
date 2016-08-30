@@ -93,7 +93,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
     		var length = document.getElementsByTagName("select").length-2;
     		var productCatId = $("#productCat"+length+" option:selected").val();
     		var productType = $("#productType").val().trim();
-    		var productId = $("#productId").val().trim();
+    		var standedProdId = $("#standedProdId").val().trim();
     		var productName = $("#productName").val().trim();
     		
     		
@@ -103,7 +103,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 	 			dataType: "json",
 	 			renderId:"searchNormProductData",
 	 			messageId:"showMessageDiv",
-	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName
+	 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName
 		 			},
 	 			
 	           	pageSize: addlistPager.DEFAULT_PAGE_SIZE,

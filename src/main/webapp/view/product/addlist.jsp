@@ -33,7 +33,7 @@
 								<ul>
 									<li class="col-md-4">
 										<p class="word">商品ID</p>
-										<p><input id="productId" type="text" class="int-text int-medium"></p>
+										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
 									</li>
 									<li class="col-md-4">
 										<p class="word">商品类型</p>
@@ -204,7 +204,8 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
 									<tr>
-											<td>{{:prodId}}</td>
+											<!-- <td>{{:prodId}}</td> -->
+											<td>{{:standedProdId}}</td>
 											<td>{{:productCatName}}</td>
 											<td>{{:productTypeName}}</td>
 											{{if picUrl==null || picUrl==""}}
