@@ -189,7 +189,7 @@ public class NormProdEditController {
 	public ResponseData<String> saveProductInfo(NormProdSaveRequest normInfo, HttpServletRequest request,
 			HttpSession session) {
 		// initConsumer();
-		ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
+		ResponseData<String> responseData = null;
 
 		List<AttrValRequest> attrValList = new LinkedList<AttrValRequest>();
 		Gson gson = new Gson();
@@ -212,17 +212,35 @@ public class NormProdEditController {
 		normInfo.setSupplierId(AdminUtil.getSupplierId());
 		normInfo.setCreateId(AdminUtil.getAdminId(session));
 		normInfo.setOperId(AdminUtil.getAdminId(session));
-		// 保存
-		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
-		BaseResponse response = normProductSV.createProductInfo(normInfo);
 		
 		System.out.println("<<<<<<<<<<<<数据>>>>>>>>>>>>:"+JSonUtil.toJSon(normInfo));
-
-		ResponseHeader header = response.getResponseHeader();
-		// 保存错误
-		if (header != null && !header.isSuccess()) {
-			responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
-					"更新失败:" + header.getResultMessage());
+		
+		// 保存
+		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
+		if(StringUtil.isBlank(normInfo.getProductId())){
+			BaseResponse response = normProductSV.createProductAndStoGroup(normInfo);
+			if(response != null){
+				ResponseHeader header = response.getResponseHeader();
+				// 保存错误
+				if (header != null && !header.isSuccess()) {
+					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+							"添加失败:" + header.getResultMessage());
+				}else{
+					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
+				}
+			}
+		}else{
+			BaseResponse response = normProductSV.updateProductAndStoGroup(normInfo);	
+			if(response != null){
+				ResponseHeader header = response.getResponseHeader();
+				// 保存错误
+				if (header != null && !header.isSuccess()) {
+					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+							"更新失败:" + header.getResultMessage());
+				}else{
+					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "更新成功");
+				}
+			}
 		}
 		return responseData;
 	}
