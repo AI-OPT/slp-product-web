@@ -3,6 +3,7 @@ package com.ai.slp.product.web.controller.product;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.image.IImageClient;
 import com.ai.slp.common.api.cache.interfaces.ICacheSV;
@@ -182,8 +183,15 @@ public class ProdQueryController {
 			queryBuilder(request, productEditQueryReq);
 			// 设置状态，新增：0；未编辑1.
 			List<String> stateList = new ArrayList<>();
-			stateList.add("0");
-			stateList.add("1");
+			if (StringUtil.isBlank(request.getParameter("state"))) {
+				stateList.add("0");
+				stateList.add("1");
+				stateList.add("2");
+				stateList.add("3");
+				stateList.add("4");
+			}else {
+				stateList.add(request.getParameter("state"));
+			}
 			productEditQueryReq.setStateList(stateList);
 			PageInfoResponse<ProductEditUp> result = queryProductByState(productEditQueryReq);
 			responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
