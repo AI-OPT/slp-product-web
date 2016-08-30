@@ -23,22 +23,17 @@ import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.paas.ipaas.util.JSonUtil;
 import com.ai.paas.ipaas.util.StringUtil;
-import com.ai.slp.common.api.cache.interfaces.ICacheSV;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
 import com.ai.slp.product.api.normproduct.param.AttrValRequest;
 import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
 import com.ai.slp.product.api.normproduct.param.NormProdSaveRequest;
 import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
-import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
-import com.ai.slp.product.api.product.interfaces.IProductSV;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.AttrQueryForCat;
 import com.ai.slp.product.api.productcat.param.ProdCatAttrDef;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.google.gson.Gson;
@@ -57,21 +52,10 @@ public class NormProdEditController {
 	private static final Logger LOG = LoggerFactory.getLogger(NormProdEditController.class);
 	@Autowired
 	private ProdCatService prodCatService;
-	@Autowired
-	private AttrAndValService attrAndValService;
-	private IProductManagerSV productManagerSV;
-	private IProductSV productSV;
-	private ICacheSV cacheSV;
 	private INormProductSV normProductSV;
 	private IProductCatSV productCatSV;
 
 	public void initConsumer() {
-		if (productManagerSV == null)
-			productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
-		if (productSV == null)
-			productSV = DubboConsumerFactory.getService(IProductSV.class);
-		if (cacheSV == null)
-			cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
 		if (normProductSV == null)
 			normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
 		if (productCatSV == null)
@@ -154,14 +138,12 @@ public class NormProdEditController {
 		normProdUniqueReq.setProductId(prodId);
 		normProdUniqueReq.setTenantId(AdminUtil.getTenantId());
 		normProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
-		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
 		NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
 		uiModel.addAttribute("productInfo", normProdInfoResponse);
 		// 查询类目链
 		String productCatId = normProdInfoResponse.getProductCatId();
 		uiModel.addAttribute("catLinkList", prodCatService.queryLink(productCatId));
 		uiModel.addAttribute("productCatId", productCatId);
-		// 标准品关键属性
 
 		// 标准品关键属性
 		AttrQueryForCat attrForQuery = new AttrQueryForCat();
@@ -188,7 +170,6 @@ public class NormProdEditController {
 	@ResponseBody
 	public ResponseData<String> saveProductInfo(NormProdSaveRequest normInfo, HttpServletRequest request,
 			HttpSession session) {
-		// initConsumer();
 		ResponseData<String> responseData = null;
 
 		List<AttrValRequest> attrValList = new LinkedList<AttrValRequest>();
@@ -210,11 +191,10 @@ public class NormProdEditController {
 		normInfo.setAttrValList(attrValList);
 		normInfo.setTenantId(AdminUtil.getTenantId());
 		normInfo.setSupplierId(AdminUtil.getSupplierId());
-		normInfo.setCreateId(AdminUtil.getAdminId(session));
 		normInfo.setOperId(AdminUtil.getAdminId(session));
 		// 保存
-		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
 		if(StringUtil.isBlank(normInfo.getProductId())){
+			normInfo.setCreateId(AdminUtil.getAdminId(session));
 			BaseResponse response = normProductSV.createProductAndStoGroup(normInfo);
 			if(response != null){
 				ResponseHeader header = response.getResponseHeader();
@@ -240,5 +220,28 @@ public class NormProdEditController {
 			}
 		}
 		return responseData;
+	}
+	
+	/**
+	 * 废弃标准品
+	 * @param prodId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/discard")
+	@ResponseBody
+	public ResponseData<String> discardProduct(String prodId, HttpSession session ){
+		initConsumer();
+		NormProdUniqueReq paramNormProdUniqueReq = new NormProdUniqueReq();
+		paramNormProdUniqueReq.setOperId(AdminUtil.getAdminId(session));
+		paramNormProdUniqueReq.setTenantId(AdminUtil.getTenantId());
+		paramNormProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
+		paramNormProdUniqueReq.setProductId(prodId);
+		BaseResponse discardProduct = normProductSV.discardProduct(paramNormProdUniqueReq );
+		if(discardProduct.getResponseHeader().isSuccess()){
+			return new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "操作成功");
+		}else{
+			return new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, discardProduct.getResponseHeader().getResultMessage());
+		}
 	}
 }

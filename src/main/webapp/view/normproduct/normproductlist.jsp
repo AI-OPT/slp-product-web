@@ -160,7 +160,7 @@
                                          <td>
 											<a href="${_base}/normprodquery/{{:productId}}" class="blue-border">查看详情</a>
 											<a href="${_base}/normprodedit/{{:productId}}" class="blue-border">编辑</a>
-                                            <a href="＃" class="blue-border">废弃</a>
+                                            <a href="javaScript:void(0)" onclick="pager._isDiscardDialog({{:productId}})" class="blue-border">废弃</a>
 										</td>
 									</tr>
 								</script>
