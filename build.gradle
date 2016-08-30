@@ -87,7 +87,7 @@ dependencies {
     //销售商品
     compile 'com.ai.slp.product:product:1.1.0-SNAPSHOT'
     //公共缓存
-    compile 'com.ai.slp.common:cache:1.0-SNAPSHOT'
+    compile 'com.ai.platform.common:cache:1.0-SNAPSHOT'
     //jersey
     compile 'org.glassfish.jersey.core:jersey-client:2.9.1'
     //用户
