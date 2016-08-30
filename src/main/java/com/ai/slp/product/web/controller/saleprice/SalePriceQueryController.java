@@ -1,5 +1,9 @@
 package com.ai.slp.product.web.controller.saleprice;
 
+import com.ai.slp.product.web.service.StandedProdService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/saleprice/query")
 public class SalePriceQueryController {
+    private static Logger logger = LoggerFactory.getLogger(SalePriceQueryController.class);
 
+    @Autowired
+    StandedProdService standedProdService;
     /**
      * 商品列表页
      * @return
@@ -29,6 +36,8 @@ public class SalePriceQueryController {
      */
     @RequestMapping("/{id}")
     public String editView(@PathVariable("id")String id, Model uiModel){
+        standedProdService.getInfo(id,uiModel);
+
 
         return "/saleprice/salePriceEdit";
     }
