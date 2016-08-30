@@ -212,9 +212,6 @@ public class NormProdEditController {
 		normInfo.setSupplierId(AdminUtil.getSupplierId());
 		normInfo.setCreateId(AdminUtil.getAdminId(session));
 		normInfo.setOperId(AdminUtil.getAdminId(session));
-		
-		System.out.println("<<<<<<<<<<<<数据>>>>>>>>>>>>:"+JSonUtil.toJSon(normInfo));
-		
 		// 保存
 		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
 		if(StringUtil.isBlank(normInfo.getProductId())){

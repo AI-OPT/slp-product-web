@@ -84,7 +84,7 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
     	},
     	
     	
-    	//查询标准品列表
+    	//查询商品列表
     	_selectNormProductList:function(){
     		var _this = this;
     		var div = document.getElementById("data1ProdCat");

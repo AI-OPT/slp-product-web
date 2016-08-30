@@ -169,7 +169,7 @@
 				           	<div class="add-commodity-title">
 				           		<ul>
 				           			<li>您当前选择的是：<a href="#">登山野营/旅行装备</a>><a href="#">户外露营/野炊装备</a>><a href="#">帐篷/天幕/帐篷配件</a></li>
-				           			<li class="color-word">（标准品一旦生成，类目信息不可更改，请谨慎选择类目信息）</li>
+				           			<li class="color-word">（商品一旦生成，类目信息不可更改，请谨慎选择类目信息）</li>
 				           		</ul>
 				           	</div>
 				            
