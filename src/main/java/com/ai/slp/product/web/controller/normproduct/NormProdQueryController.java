@@ -1,10 +1,23 @@
 package com.ai.slp.product.web.controller.normproduct;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.platform.common.api.cache.interfaces.ICacheSV;
+import com.ai.platform.common.api.cache.param.SysParam;
+import com.ai.platform.common.api.cache.param.SysParamSingleCond;
+import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
+import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
+import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
+import com.ai.slp.product.api.normproduct.param.*;
+import com.ai.slp.product.api.productcat.param.ProdCatInfo;
+import com.ai.slp.product.web.constants.ComCacheConstants;
+import com.ai.slp.product.web.constants.ProductCatConstants;
+import com.ai.slp.product.web.service.AttrAndValService;
+import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
+import com.ai.slp.product.web.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,29 +28,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ai.opt.base.vo.PageInfoResponse;
-import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
-import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
-import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
-import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParam;
-import com.ai.slp.common.api.cache.param.SysParamSingleCond;
-import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
-import com.ai.slp.product.api.normproduct.param.AttrMap;
-import com.ai.slp.product.api.normproduct.param.AttrQuery;
-import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
-import com.ai.slp.product.api.normproduct.param.NormProdRequest;
-import com.ai.slp.product.api.normproduct.param.NormProdResponse;
-import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
-import com.ai.slp.product.api.productcat.param.ProdCatInfo;
-import com.ai.slp.product.web.constants.ComCacheConstants;
-import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.service.AttrAndValService;
-import com.ai.slp.product.web.service.ProdCatService;
-import com.ai.slp.product.web.util.AdminUtil;
-import com.ai.slp.product.web.util.DateUtil;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 标准品查询

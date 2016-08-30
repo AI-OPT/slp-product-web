@@ -1,9 +1,9 @@
 package com.ai.slp.product.web.service;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParam;
-import com.ai.slp.common.api.cache.param.SysParamSingleCond;
+import com.ai.platform.common.api.cache.interfaces.ICacheSV;
+import com.ai.platform.common.api.cache.param.SysParam;
+import com.ai.platform.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
 import com.ai.slp.product.api.normproduct.param.AttrMap;
 import com.ai.slp.product.api.normproduct.param.AttrQuery;
