@@ -30,13 +30,60 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
     	},
     	//事件代理
     	events: {
-            "click #goBack":"_goBack"
+            "click #goBack":"_goBack",
+			"click #submitAddBtn":"_upNoSkuPrice"
         },
     	//重写父类
     	setup: function () {
 			salePriceEditPage.superclass.setup.call(this);
     	},
-
+		//更新没有SKU的销售价
+		_upNoSkuPrice:function(){
+			var _this = this;
+			var priceArry = [];
+			var hasError = false;
+			//查询所有的价格信息
+			$("input:text[name='salePrice']").each(function(index,item){
+				var priceVal = $(item).val();
+				if (priceVal == null || priceVal.trim().length === 0)
+					return true;
+				if (priceVal!=null && isNaN(priceVal)){
+					_this._showMsg("价格必须为数字,如:123,12.45");
+					hasError = true;
+					return false;
+				}
+				var salePrice = {};
+				salePrice['groupId']=$(item).attr('groupId');
+				salePrice['PriorityNumber']=$(item).attr('stoSn');
+				salePrice['salePrice']=priceVal;
+				priceArry.push(salePrice);
+			});
+			if (hasError==true){
+				request;
+			}
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "更新数据中，请等待...",
+				url: _base+"/saleprice/edit/nosku/",
+				data:{"salePriceStr":JSON.stringify(priceArry)},
+				success: function(data){
+					//变更成功
+					if("1"=== data.statusCode){
+						Dialog({
+							title: '提示',
+							icon:'success',
+							content:data.statusInfo,
+							okValue: '确 定',
+							ok:function(){
+								this.close();
+								window.location.reload();//刷新当前页面.
+							}
+						}).show();
+					}
+				}
+			});
+		},
 		//显示添加库存
 		_showAddStoView:function(groupId,pNum){
 			$("#addStorage").attr("onclick","pager._addStorage();");
@@ -88,40 +135,7 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 			$('#eject-mask').fadeOut(100);
 			$('#edit-medium').slideUp(150);
 		},
-		//更改库存组状态
-		_changeGroupStatus:function(statusBtn){
-			var statusBtnJ = $(statusBtn);
-			var groupId = statusBtnJ.attr("groupId");
-			var status = statusBtnJ.attr("groupStatus");
-			ajaxController.ajax({
-				type: "post",
-				processing: true,
-				message: "状态变更中，请等待...",
-				url: _base+"/storage/edit/upGroupStatus/"+groupId,
-				data:{"status":status},
-				success: function(data){
-					//变更成功
-					if("1"!= data.statusCode){
-						return;
-					}
-					var btnVal = '';
-					var statusVal = '';
-					//若变更为启用
-					if(status==='1'){
-						status = '2';
-						btnVal = '停用';//与
-						statusVal = '启用';
-					}else if(status==='2'){
-						status = '1';
-						btnVal = '启用';
-						statusVal = '停用';
-					}
-					statusBtnJ.attr('groupStatus',status);
-					statusBtnJ.val(btnVal);
-					statusBtnJ.parent().next().text("状态:"+statusVal);
-				}
-			});
-		},
+
     	//sku数量变更,相应变化库存总数量
 		_changeStorageNum:function(obj){
 			var skuNum = $(obj).val();
@@ -135,154 +149,7 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 			});
 			$("#newTotalNum").val(stoNum);
 		},
-		//添加库存
-    	_addStorage:function(){
-    		var _this = this;
-    		var storGroupId = $("#stoAddGroupId").val();
-        	var priorityNumber = $("#stoAddGroupPn").val();
-        	//number用于判断当前库存组下库存数量
-    		var storageName = $("#newStorageName").val();
-    		var totalNum = $("#newTotalNum").val();
-    		var length = _this._getLen(storageName);
-    		//判断库存名称
-    		if(storageName==null || storageName=='undefined' || length==0){
-    			_this._showMsg("库存名称不能为空");
-    			return;
-    		}
-    		if(length>30){
-    			_this._showMsg("库存名称最大长度为15个字（30个字符）");
-    			return;
-    		}
 
-			var skuMapStr = "";
-			//若有销售属性,则添加SKU库存数量
-			if (hasSale){
-				var stoNum = 0;
-				var skuMap = {};
-				$("#skuInfo input[name='skuNum']").each(function(index,item){
-					var skuId = $(this).attr('skuId');
-					var skuNum = $(this).val();
-					//判断是否为负数
-					if (!_this._isNum(skuNum)){
-						_this._showMsg("SKU库存数量不能小于0");
-						stoNum = null;
-						return;
-					}
-					skuMap[skuId] = skuNum;
-					stoNum = stoNum+parseInt($(item).val());
-				});
-				skuMapStr = JSON.stringify(skuMap);
-				console.log("SKU num string:"+skuMapStr);
-				totalNum = stoNum;
-			}
-
-			//判断库存量
-			if(totalNum==null || totalNum==undefined || totalNum.length==0 ){
-    			_this._showMsg("库存量不能为空");
-    			return;
-    		}//判断库存量和预警库存量是否为正整数
-    		else if(!_this._isNum(totalNum)){
-    			_this._showMsg("库存必须为正整数");
-    			return;
-    		}
-    		ajaxController.ajax({
-				type: "post",
-				processing: true,
-				message: "添加中，请等待...",
-				url: _base+"/storage/edit/addStorage",
-				data:{"storageGroupId":storGroupId,"priorityNumber":priorityNumber,"storageName":storageName,
-					"totalNum":stoNum,"skuNumMap":skuMapStr},
-				success: function(data){
-					if("1"===data.statusCode){
-						window.location.reload();
-					}
-				}
-			});
-    	},
-    	//增加优先级
-    	_addPriorityNumber:function(groupId){
-			var number = $("#groupSn"+groupId).val();
-			var name = 'stopn_'+groupId+"_"+number;
-			console.log("Tr name:"+name);
-			var stoNum = $("tr[name="+name+"]").size();
-			console.log("GroupId:"+groupId+",Number:"+number+",stoNum:"+stoNum);
-    		if(stoNum<1){
-    			alert("最高优先级下没有库存,不允许添加新的优先级");
-    			return;
-    		}
-			number = parseInt(number)+1;
-			$("#groupSn"+groupId).val(number);
-    		var data = {"groupId":groupId,"priNum":number};
-    		var template = $.templates("#priorityNumTemple");
-    	    var htmlOutput = template.render(data);
-    	    $("#groupSn"+groupId).before(htmlOutput);
-    	},
-    	//添加库存组
-    	_addStorGroup:function(){
-    		var _this = this;
-    		var storageGroupName = $("#storageGroupName").val();
-    		var length = _this._getLen(storageGroupName);
-    		if(length == 0 || length>30){
-    			_this._showMsg("库存组名称不能为空且最大长度为15个字（30个字符）");
-    			return;
-    		}
-    		$(".eject-big").hide();
-    		$(".eject-samll").hide();
-    		$(".eject-mask").hide();
-    		ajaxController.ajax({
-				type: "post",
-				processing: true,
-				message: "添加中，请等待...",
-				url: _base+"/storage/addGroup",
-				data:{"standedProdId":standedProdId,"storageGroupName":storageGroupName},
-				success: function(data){
-					if("1"===data.statusCode){
-//	            		var template = $.templates("#storGroupTemple");
-//	            	    var htmlOutput = template.render(data.data);
-//	            	    $("#storGroupMarked").before(htmlOutput);
-						window.location.reload();
-//						window.history.go(0);
-					}else{
-						_this._showMsg("添加库存组失败:"+data.statusInfo);
-	            	}
-				}
-			});
-    	},
-		//库存废弃
-		_changeStoStatus:function(obj){
-			var _this =this;
-			var status = $(obj).attr('statue');
-			var stoId = $(obj).attr('storageId');
-			console.log("storageId:"+stoId+",status:"+status);
-			ajaxController.ajax({
-				type: "post",
-				processing: true,
-				message: "操作中，请等待...",
-				url: _base+"/storage/edit/status/"+stoId,
-				data:{"status":status},
-				success: function(data) {
-					//若不成功,直接返回
-					if ("1" != data.statusCode) {
-						return;
-					}//废弃
-					else if (status === stoDiscard) {
-						window.location.reload();
-					}//启用
-					else if (status === stoActive) {
-						$(obj).html("停用");
-						$(obj).attr("statue", stoStop);
-						$(obj).parent().prev().html("启用");
-						_this._showSuccessMsg("库存启用成功");
-					}//停用
-					else if (status === stoStop) {
-						$(obj).text("启用");
-						$(obj).attr("statue", stoActive);
-						$(obj).parent().prev().text("停用");
-						_this._showSuccessMsg("库存停用成功");
-					}
-				}
-			});
-		},
 		//显示详情页面
 		_showStorageInfo:function(obj){
 			var storageId = $(obj).attr("storageId");

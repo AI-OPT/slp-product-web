@@ -1,10 +1,4 @@
-<%@ page import="com.ai.slp.product.web.constants.StorageConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    request.setAttribute("stoActive",StorageConstants.STATUS_ACTIVE);
-    request.setAttribute("stoStop",StorageConstants.STATUS_STOP);
-    request.setAttribute("stoDiscard",StorageConstants.STATUS_DISCARD);
-%>
 <!doctype html>
 <html>
 <head>
@@ -18,6 +12,8 @@
 <body>
 <!--增加库存 弹出框  小-->
 <!--编辑名称弹出框-->
+<c:set var="isSale" value="false"/>
+<c:set var="setPrice" value="false"/>
 <div class="eject-big">
     <div class="eject-medium" id="edit-medium">
         <div class="eject-medium-title">
@@ -42,7 +38,6 @@
                 </li>
             </ul>
         </div>
-        <c:set var="isSale" value="false"/>
     <c:if test="${!saleAttr.isEmpty()}">
         <c:set var="isSale" value="true"/>
         <!--table表格-->
@@ -107,7 +102,7 @@
                 </li>
             </ul>
         </div>
-        <c:set var="isSale" value="false"/>
+
         <c:if test="${!saleAttr.isEmpty()}">
             <c:set var="isSale" value="true"/>
             <!--table表格-->
@@ -206,6 +201,7 @@
                                 </c:forEach>
                             </div>
                             <c:if test="${!saleAttr.isEmpty()}">
+                                <c:set var="isSale" value="true"/>
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品销售属性</h5>
                             </header>
@@ -234,7 +230,7 @@
                                         <th>总库存量</th>
                                         <th>库存ID</th>
                                         <th>库存名称</th>
-                                        <%--<th>状态</th>--%>
+                                        <th>状态</th>
                                         <th>优先级</th>
                                         <th>销售价(元)</th>
                                     </tr>
@@ -255,23 +251,42 @@
                                             </c:if>
                                             <td>${storage.storageId}</td>
                                             <td>${storage.storageName}</td>
-                                            <%--<td></td>--%>
+                                            <td>${stoStatusMap.get(storage.state).columnDesc}</td>
                                             <c:if test="${status.index == 0}">
                                             <td rowspan="${snNum}">${storageSn.key}</td>
-                                            <td rowspan="${snNum}"></td>
+                                            <td rowspan="${snNum}">
+                                                <c:choose>
+                                                    <c:when test="${isSale==true}">
+                                                        <a href="javaScritp:void(0);" class="blue-border"
+                                                           groupId="${groupInfo.storageGroupId}" stoSn="${storageSn.key}">设置</a>
+                                                    </c:when>
+                                                    <%-- 无销售属性 --%>
+                                                    <c:when test="${storage.salePrice!=null}">
+                                                        <fmt:formatNumber value="${storage.salePrice/1000}" pattern="#,##0.00#"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:set var="setPrice" value="true"/>
+                                                        <input name="salePrice" type="text"  class="int-text int-mini"
+                                                               groupId="${groupInfo.storageGroupId}" stoSn="${storageSn.key}">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                             </c:if>
                                         </tr>
                                             </c:forEach>
                                         </c:forEach>
                                     </c:forEach>
                                     </tbody>
-
                                 </table>
                                 <div id="showMessageDiv"></div>
                             </div>
                         </div>
                         <div class="row"><!--删格化-->
-                            <p class="right pr-30">
+                            <p class="center pr-30">
+                                <c:if test="${setPrice==true}">
+                                    <input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5"
+                                           value="提  交" />
+                                </c:if>
                                 <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="返  回"
                                        onclick="javaScript:window.history.go(-1);">
                             </p>
