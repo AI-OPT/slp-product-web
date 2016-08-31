@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -202,6 +203,7 @@ public class NormProdEditController {
 				if (header != null && !header.isSuccess()) {
 					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
 							"添加失败:" + header.getResultMessage());
+					LOG.error("获取信息出错：", header.getResultMessage());
 				}else{
 					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
 				}
@@ -214,6 +216,7 @@ public class NormProdEditController {
 				if (header != null && !header.isSuccess()) {
 					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
 							"更新失败:" + header.getResultMessage());
+					LOG.error("获取信息出错：", header.getResultMessage());
 				}else{
 					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "更新成功");
 				}
@@ -230,7 +233,7 @@ public class NormProdEditController {
 	 */
 	@RequestMapping("/discard")
 	@ResponseBody
-	public ResponseData<String> discardProduct(String prodId, HttpSession session ){
+	public ResponseData<String> discardProduct(@PathParam("prodId") String prodId, HttpSession session ){
 		initConsumer();
 		NormProdUniqueReq paramNormProdUniqueReq = new NormProdUniqueReq();
 		paramNormProdUniqueReq.setOperId(AdminUtil.getAdminId(session));
@@ -241,6 +244,7 @@ public class NormProdEditController {
 		if(discardProduct.getResponseHeader().isSuccess()){
 			return new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "操作成功");
 		}else{
+			LOG.error("获取信息出错：", discardProduct.getResponseHeader().getResultMessage());
 			return new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, discardProduct.getResponseHeader().getResultMessage());
 		}
 	}
