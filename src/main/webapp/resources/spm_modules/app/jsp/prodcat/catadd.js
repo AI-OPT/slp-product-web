@@ -62,39 +62,6 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 				errormessage:'请输入1至10000的数字',
 			});
 		},*/
-   /* 	_initValidator:function(validator){
-			var formValidator=$("#prodCatForm").validate({
-    			rules: {
-    				productCatName: {
-    					required:true,
-    					maxlength:20
-    					},
-    				firstLetter: {
-    					required:true,
-    					regexp: /^[A-Z]{1}$/
-    					},
-    				serialNumber: {
-    					required: true,
-    					range:[1,999]
-    				}
-    			},
-    			messages: {
-    				productCatName: {
-    					required:"类目名称不能为空",
-    					maxlength:"最大长度{0}"
-    				},
-    				firstLetter: {
-    					required:"名称首字母不能为空",
-    					regexp:"请输入大写的名称首字母"
-    				},
-    				serialNumber: {
-    					required: "排序不能为空",
-    					range: "请输入1至999的数字"
-    				}
-    			}
-    		});
-    		return formValidator;
-		},*/
 		//增加类目
 		_addCatTemp:function(){
 			catNum['num']=catNum['num']+1;
@@ -130,13 +97,13 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 				if (parentCatId != null & parentCatId != '')
 					catObj['parentProductCatId'] = parentCatId;
 				//类目名
-				var catName = $(this).find("input[for='productCatName"+index+"']")[0];
+				var catName = $(this).find("input[name='productCatName"+index+"']")[0];
 				catObj['productCatName'] = catName.value;
 				//首字母
-				var fLetter = $(this).find("input[for='firstLetter"+index+"']")[0];
+				var fLetter = $(this).find("input[name='firstLetter"+index+"']")[0];
 				catObj['firstLetter'] = fLetter.value;
 				//排序
-				var sn = $(this).find("input[for='serialNumber"+index+"']")[0];
+				var sn = $(this).find("input[name='serialNumber"+index+"']")[0];
 				catObj['serialNumber'] = sn.value;
 				//是否有子分类
 				var isChild = $(this).find("input[type='radio']:checked")[0];
