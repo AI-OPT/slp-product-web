@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 商城商品管理查询 Created by jackieliu on 16/6/16.
@@ -44,10 +43,6 @@ public class ProdQueryController {
 	 */
 	@RequestMapping("/add")
 	public String editQuery(Model uiModel) {
-		/*Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
-		uiModel.addAttribute("count", productCatMap.size() - 1);
-		uiModel.addAttribute("catInfoMap", productCatMap);*/
-		
 		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
         uiModel.addAttribute("count", productCatMap.size() - 1);
         uiModel.addAttribute("catInfoList", productCatMap);
@@ -60,10 +55,6 @@ public class ProdQueryController {
 	 */
 	@RequestMapping("/storprod")
 	public String storProdQuery(Model uiModel) {
-		/*Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
-		uiModel.addAttribute("count", productCatMap.size() - 1);
-		uiModel.addAttribute("catInfoMap", productCatMap);*/
-		
 		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
         uiModel.addAttribute("count", productCatMap.size() - 1);
         uiModel.addAttribute("catInfoList", productCatMap);
@@ -76,10 +67,6 @@ public class ProdQueryController {
 	 */
 	@RequestMapping("/insale")
 	public String inSalelistQuery(Model uiModel) {
-		/*Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
-		uiModel.addAttribute("count", productCatMap.size() - 1);
-		uiModel.addAttribute("catInfoMap", productCatMap);*/
-		
 		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
         uiModel.addAttribute("count", productCatMap.size() - 1);
         uiModel.addAttribute("catInfoList", productCatMap);
@@ -132,17 +119,14 @@ public class ProdQueryController {
 				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
 						ComCacheConstants.TypeProduct.CODE, ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE,
 						productType);
-//				SysParam sysParamSingle = cacheSV.getSysParamSingle(sysParamSingleCond);
-//				productEditUp.setProductTypeName(sysParamSingle.getColumnDesc());
-				//System.out.println(sysParamSingle.getColumnDesc());
-				//String productTypeName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
-				//productEditUp.setProductTypeName(productTypeName);
+				String productTypeName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
+				productEditUp.setProductTypeName(productTypeName);
 			}
 			if (StringUtils.isNotBlank(productEditUp.getState())) {
 				// 获取状态
 				String state = productEditUp.getState();
 				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
-						ComCacheConstants.TypeProduct.CODE, "STATE", state);
+						ComCacheConstants.TypeProduct.CODE, ComCacheConstants.TypeProduct.PROC_STATUS, state);
 				String stateName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 				productEditUp.setStateName(stateName);
 			}
