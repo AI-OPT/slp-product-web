@@ -223,14 +223,52 @@
                                 </c:forEach>
                             </div>
                             </c:if>
-                            <header class="main-box-header clearfix">
-                                <h5 class="pull-left">库存设置</h5>
-                                <%--<div class="title-right">--%>
-                                    <%--<p id="add-k" class="plus-word btn-primary"><a href="#"><i class="fa fa-plus"></i>添加库存组</a></p>--%>
-                                <%--</div>--%>
-                            </header>
                             <%-- 遍历库存组 --%>
+                            <div class="form-label table-responsive clearfix">
+                                <table class="table table-hover table-border table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>库存组ID</th>
+                                        <th>库存组名称</th>
+                                        <th>总库存量</th>
+                                        <th>库存ID</th>
+                                        <th>库存名称</th>
+                                        <%--<th>状态</th>--%>
+                                        <th>优先级</th>
+                                        <th>销售价(元)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="searchNormProductData">
+                                    <c:set var="itemGroup" value=""/>
+                                    <c:forEach var="groupInfo" items="${groupList}" varStatus="status">
+                                        <c:forEach var="storageSn" items="${groupInfo.storageList}">
+                                            <c:set var="snNum" value="${storageSn.value.size()}"/>
+                                            <c:forEach var="storage" items="${storageSn.value}" varStatus="status">
+                                        <tr>
+                                            <c:if test="${itemGroup != groupInfo.storageGroupId}">
+                                                <c:set var="itemGroup" value="${groupInfo.storageGroupId}"/>
+                                            <td rowspan="${groupInfo.storageNum}">${status.index+1}</td>
+                                            <td rowspan="${groupInfo.storageNum}">${groupInfo.storageGroupId}</td>
+                                            <td rowspan="${groupInfo.storageNum}">${groupInfo.storageGroupName}</td>
+                                            <td rowspan="${groupInfo.storageNum}">${groupInfo.storageTotal}</td>
+                                            </c:if>
+                                            <td>${storage.storageId}</td>
+                                            <td>${storage.storageName}</td>
+                                            <%--<td></td>--%>
+                                            <c:if test="${status.index == 0}">
+                                            <td rowspan="${snNum}">${storageSn.key}</td>
+                                            <td rowspan="${snNum}"></td>
+                                            </c:if>
+                                        </tr>
+                                            </c:forEach>
+                                        </c:forEach>
+                                    </c:forEach>
+                                    </tbody>
 
+                                </table>
+                                <div id="showMessageDiv"></div>
+                            </div>
                         </div>
                         <div class="row"><!--删格化-->
                             <p class="right pr-30">
