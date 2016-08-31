@@ -18,30 +18,6 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!-- 查询条件 -->
 						<div class="form-label">
-							<%-- 类目 --%>
-							<ul id="data1ProdCat">
-								<li class="col-md-12">
-									<p class="word"><span>*</span>商品类目</p>
-									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
-										<p id="productCat${status.index}">
-											<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
-												<c:forEach var="info" items="${map.value}">
-													<option value="${info.productCatId}">${info.productCatName}</option>
-												</c:forEach>
-											</select>
-										</p>
-									</c:forEach>
-									<script id="prodCatTemple" type="text/template">
-										<p id="productCat{{:level}}">
-											<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
-												{{for prodCatList}}
-												<option value="{{:productCatId}}">{{:productCatName}}</option>
-												{{/for}}
-											</select>
-										</p>
-									</script>
-								</li>
-							</ul>
 							<ul>
 								<li class="col-md-12">
 									<p class="word">商品名称</p>
@@ -58,25 +34,25 @@
 										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
 									</li>
 									<li class="col-md-6">
-										<p class="word">商品类型</p>
-										<p>
-											<select id="productType" class="select select-medium">
-												<option value="">全部</option>
-												<option value="1">实物</option>
-												<option value="2">虚拟</option>
-											</select>
-										</p>
-									</li>
-								</ul>
-								<ul>
-									<li class="col-md-6">
-										<p class="word">状态</p>
+										<p class="word">商品状态</p>
 										<p>
 											<select id="state" class="select select-medium">
 												<option value="">全部</option>
 												<option value="1">可使用</option>
 												<option value="2">不可使用</option>
 												<option value="0">废弃</option>
+											</select>
+										</p>
+									</li>
+								</ul>
+								<ul>
+									<li class="col-md-6">
+										<p class="word">商品类型</p>
+										<p>
+											<select id="productType" class="select select-medium">
+												<option value="">全部</option>
+												<option value="1">实物</option>
+												<option value="2">虚拟</option>
 											</select>
 										</p>
 									</li>
@@ -98,6 +74,31 @@
 										</p>
 									</li>
 								</ul> -->
+								<%-- 类目 --%>
+							<ul id="data1ProdCat">
+								<li class="col-md-12">
+									<p class="word"><span>*</span>商品类目</p>
+									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
+										<p id="productCat${status.index}">
+											<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
+												<c:if test="${status.index==0}"><option value="">全部</option></c:if>
+												<c:forEach var="info" items="${map.value}">
+													<option value="${info.productCatId}">${info.productCatName}</option>
+												</c:forEach>
+											</select>
+										</p>
+									</c:forEach>
+									<script id="prodCatTemple" type="text/template">
+										<p id="productCat{{:level}}">
+											<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
+												{{for prodCatList}}
+												<option value="{{:productCatId}}">{{:productCatName}}</option>
+												{{/for}}
+											</select>
+										</p>
+									</script>
+								</li>
+							</ul>
 							</div>
 								<ul>
 									<li class="width-xlag">
