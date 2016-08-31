@@ -3,7 +3,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
     var $=require('jquery'),
 	Events = require('arale-events/1.2.0/events'),
     Widget = require('arale-widget/1.2.0/widget'),
-    Dialog = require("artDialog/src/dialog"),
+    Dialog = require("optDialog/src/dialog"),
     AjaxController = require('opt-ajax/1.0.0/index');
 	require("ckeditor/ckeditor.js")
     require("jsviews/jsrender.min");
