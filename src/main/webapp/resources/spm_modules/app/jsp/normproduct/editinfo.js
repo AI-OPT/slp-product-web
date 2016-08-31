@@ -13,6 +13,10 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
     
     require("opt-paging/aiopt.pagination");
     require("twbs-pagination/jquery.twbsPagination.min");
+    
+    require("jquery-validation/1.15.1/jquery.validate");
+	require("app/util/aiopt-validate-ext");
+    
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
@@ -32,20 +36,33 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
         //重写父类
     	setup: function () {
     		prodEditPager.superclass.setup.call(this);
-
     	},
-		
 		//返回
 		_cancel:function(){
 			var _this = this;
 			window.history.go(-2);
 		},
-		
     	//保存商品信息
       	_saveNormProd:function(){
 			var _this = this;
-			//验证通过,则进行保存操作.
-			if(this._checkInput() && this._convertKeyAttr() && this._convertSaleAttr()){
+			var formValidator=$("#nromProdForm").validate({
+				errorPlacement: function(error, element) {
+					if (element.is(":checkbox")){
+						$("#error_" + element.attr( "name" )+"_title").append( error );
+					}
+				    else{
+				    	$("#error_" + element.attr( "name" )).append( error );
+				    } 
+				}
+			});
+			$.extend($.validator.messages, {  
+			    required: '该项为必填项'
+			});  
+			if(!formValidator.form()){
+				return;
+			}
+			//验证通过,则进行保存操作.this._checkInput() &&
+			if(this._convertKeyAttr() && this._convertSaleAttr()){
 				ajaxController.ajax({
 					type: "post",
 					processing: true,

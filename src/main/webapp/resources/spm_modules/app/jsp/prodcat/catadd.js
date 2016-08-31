@@ -13,8 +13,12 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 	//require("jquery-validation/1.15.1/jquery.validate");
 	//require("jquery-validation/1.15.1/additional-methods");
 	//require("jquery-validation/1.15.1/localization/messages_zh");
-	require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
-	require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
+	//require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
+	//require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
+    
+    require("jquery-validation/1.15.1/jquery.validate");
+	require("app/util/aiopt-validate-ext");
+    
     var SendMessageUtil = require("app/util/sendMessage");
 
     //实例化AJAX控制处理对象
@@ -40,7 +44,7 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
     	setup: function () {
 			catAddPager.superclass.setup.call(this);
     	},
-		//添加输入验证
+		/*//添加输入验证
 		_addValidator:function(validator){
 			validator.addItem({
 				element: "input[name=productCatName]",
@@ -57,7 +61,40 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 				rule:'number min{min:1} max{max:10000}',
 				errormessage:'请输入1至10000的数字',
 			});
-		},
+		},*/
+   /* 	_initValidator:function(validator){
+			var formValidator=$("#prodCatForm").validate({
+    			rules: {
+    				productCatName: {
+    					required:true,
+    					maxlength:20
+    					},
+    				firstLetter: {
+    					required:true,
+    					regexp: /^[A-Z]{1}$/
+    					},
+    				serialNumber: {
+    					required: true,
+    					range:[1,999]
+    				}
+    			},
+    			messages: {
+    				productCatName: {
+    					required:"类目名称不能为空",
+    					maxlength:"最大长度{0}"
+    				},
+    				firstLetter: {
+    					required:"名称首字母不能为空",
+    					regexp:"请输入大写的名称首字母"
+    				},
+    				serialNumber: {
+    					required: "排序不能为空",
+    					range: "请输入1至999的数字"
+    				}
+    			}
+    		});
+    		return formValidator;
+		},*/
 		//增加类目
 		_addCatTemp:function(){
 			catNum['num']=catNum['num']+1;
@@ -72,9 +109,14 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 			var parentCatId = $('#parentProductCatId').val();
 			var catArr = [];
 			var hasError = false;
+			//var validateForm = this._initValidator();
+			var validateForm = $("#prodCatForm").validate();
+			if(!validateForm.form()){
+				return;
+			}
 			//获取所有的form-label下的input
 			$("#addViewDiv > .form-label.bd-bottom ").each(function (index, form) {
-				var validator = new Validator({
+				/*var validator = new Validator({
 					element: $(this)
 				});
 				_this._addValidator(validator);
@@ -82,19 +124,19 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 					if (error){
 						hasError = true;
 					}
-				});
+				});*/
 				var catObj = {};
 				console.log(index + " form-label");
 				if (parentCatId != null & parentCatId != '')
 					catObj['parentProductCatId'] = parentCatId;
 				//类目名
-				var catName = $(this).find("input[name='productCatName']")[0];
+				var catName = $(this).find("input[for='productCatName"+index+"']")[0];
 				catObj['productCatName'] = catName.value;
 				//首字母
-				var fLetter = $(this).find("input[name='firstLetter']")[0];
+				var fLetter = $(this).find("input[for='firstLetter"+index+"']")[0];
 				catObj['firstLetter'] = fLetter.value;
 				//排序
-				var sn = $(this).find("input[name='serialNumber']")[0];
+				var sn = $(this).find("input[for='serialNumber"+index+"']")[0];
 				catObj['serialNumber'] = sn.value;
 				//是否有子分类
 				var isChild = $(this).find("input[type='radio']:checked")[0];
@@ -102,8 +144,8 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 				catArr.push(catObj);
 			});
 			console.log("No error");
-			if (hasError)
-				return;
+			/*if (hasError)
+				return;*/
 			console.log("cat arr lengeth " + catArr.length);
 			ajaxController.ajax({
 				type: "post",
