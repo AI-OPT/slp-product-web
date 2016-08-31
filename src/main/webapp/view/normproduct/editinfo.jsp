@@ -35,7 +35,7 @@
 					            <ul>
 					                <li class="width-xlag">
 					                    <p class="word"><b class="red">*</b>商品名称</p>
-					                    <p><input required id="productName" name="productName" type="text" class="int-text int-xlarge  value="${productInfo.productName}"/></p>
+					                    <p><input required id="productName" name="productName" type="text" maxlength='200' class="int-text int-xlarge"  value="${productInfo.productName}"/></p>
 					               	 	<p id="error_productName"></p> 
 					                </li> 
 					            </ul>

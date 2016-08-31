@@ -26,28 +26,28 @@
                                 <ul>
                                     <li class="col-md-12 ui-form-item">
                                         <p class="word"><span>*</span>类目名称</p>
-                                        <p><input name="productCatName0" for="productCatName0" type="text" class="int-text int-medium" maxlength="20" required data-msg-required="类目名称不能为空">
+                                        <p><input name="productCatName0" type="text" class="int-text int-medium" maxlength="20" required data-msg-required="类目名称不能为空">
                                         </p>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="col-md-12 ui-form-item">
                                         <p class="word"><span>*</span>名称首字母(大写)</p>
-                                        <p><input name="firstLetter0" for="firstLetter0" type="text" class="int-text int-medium" maxlength='1' required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}" data-msg-regexp="请输入大写的名称首字母"></p>
+                                        <p><input name="firstLetter0" type="text" class="int-text int-medium" maxlength='1' required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}" data-msg-regexp="请输入大写的名称首字母"></p>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="col-md-12 ui-form-item">
                                         <p class="word"><span>*</span>排序</p>
-                                        <p><input name="serialNumber0" for="serialNumber0" type="text" class="int-text int-medium" required data-msg-required="排序不能为空" range="[1,99]" data-msg-range="请输入1至999的数字"></p>
+                                        <p><input name="serialNumber0" type="text" class="int-text int-medium" required data-msg-required="排序不能为空" range="[1,99]" data-msg-range="请输入1至999的数字"></p>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="col-md-12 ui-form-item">
                                         <p class="word"><span>*</span>是否存在子分类</p>
-                                        <p><input name="isChild0" for="isChild0" type="radio" value="Y"></p>
+                                        <p><input name="isChild0" type="radio" value="Y"></p>
                                         <p>是</p>
-                                        <p><input name="isChild0" for="isChild0" type="radio" value="N" checked="true"></p>
+                                        <p><input name="isChild0" type="radio" value="N" checked="true"></p>
                                         <p>否</p>
                                     </li>
                                 </ul>
@@ -85,19 +85,19 @@
         <ul>
             <li class="col-md-12 ui-form-item">
                 <p class="word"><span>*</span>类目名称</p>
-                <p><input name="productCatName{{:num}}" for="productCatName{{:num}}" type="text" class="int-text int-medium" maxlength="20" required data-msg-required="类目名称不能为空"></p>
+                <p><input name="productCatName{{:num}}" type="text" class="int-text int-medium" maxlength="20" required data-msg-required="类目名称不能为空"></p>
             </li>
         </ul>
         <ul>
             <li class="col-md-12 ui-form-item">
                 <p class="word"><span>*</span>名称首字母(大写)</p>
-                <p><input name="firstLetter{{:num}}" for="firstLetter{{:num}}" type="text" class="int-text int-medium" maxlength="1" required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}" data-msg-regexp="请输入大写的名称首字母"></p>
+                <p><input name="firstLetter{{:num}}" type="text" class="int-text int-medium" maxlength="1" required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}" data-msg-regexp="请输入大写的名称首字母"></p>
             </li>
         </ul>
         <ul>
             <li class="col-md-12 ui-form-item">
                 <p class="word"><span>*</span>排序</p>
-                <p><input name="serialNumber{{:num}}" for="serialNumber{{:num}}" type="text" class="int-text int-medium" required data-msg-required="排序不能为空" range="[1,99]" data-msg-range="请输入1至999的数字"></p>
+                <p><input name="serialNumber{{:num}}" type="text" class="int-text int-medium" required data-msg-required="排序不能为空" range="[1,99]" data-msg-range="请输入1至999的数字"></p>
             </li>
         </ul>
         <ul>
