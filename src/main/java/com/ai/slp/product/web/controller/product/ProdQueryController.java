@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商城商品管理查询 Created by jackieliu on 16/6/16.
@@ -131,8 +132,13 @@ public class ProdQueryController {
 				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
 						ComCacheConstants.TypeProduct.CODE, ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE,
 						productType);
-				String productTypeName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
-				productEditUp.setProductTypeName(productTypeName);
+//				SysParam sysParamSingle = cacheSV.getSysParamSingle(sysParamSingleCond);
+//				productEditUp.setProductTypeName(sysParamSingle.getColumnDesc());
+				//System.out.println(sysParamSingle.getColumnDesc());
+				//String productTypeName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
+				//productEditUp.setProductTypeName(productTypeName);
+			}
+			if (StringUtils.isNotBlank(productEditUp.getState())) {
 				// 获取状态
 				String state = productEditUp.getState();
 				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
@@ -242,8 +248,8 @@ public class ProdQueryController {
 		productEditQueryReq.setProductCatId(request.getParameter("productCatId"));
 		if(!request.getParameter("productType").isEmpty())
 			productEditQueryReq.setProductType(request.getParameter("productType"));
-		if(!request.getParameter("productId").isEmpty())
-			productEditQueryReq.setProdId(request.getParameter("productId"));
+		/*if(!request.getParameter("productId").isEmpty())
+			productEditQueryReq.setProdId(request.getParameter("productId"));*/
 		if(!request.getParameter("productName").isEmpty())
 			productEditQueryReq.setProdName(request.getParameter("productName"));
 	}
@@ -258,9 +264,15 @@ public class ProdQueryController {
 		try {
 			//查询条件
 			queryBuilder(request, productEditQueryReq);
-			// 设置状态，6仓库中（审核通过、手动下架放入）.
+			// 设置状态，6待上架（审核通过、手动下架放入）.61售罄下架.62库存暂停商品
 			List<String> stateList = new ArrayList<>();
-			stateList.add("6");
+			if (StringUtil.isBlank(request.getParameter("state"))) {
+				stateList.add("6");
+				stateList.add("61");
+				stateList.add("62");
+			}else {
+				stateList.add(request.getParameter("state"));
+			}
 			productEditQueryReq.setStateList(stateList);
 			PageInfoResponse<ProductEditUp> result = queryProductByState(productEditQueryReq);
 			responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",

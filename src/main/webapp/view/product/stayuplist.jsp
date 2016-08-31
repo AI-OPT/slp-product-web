@@ -10,6 +10,25 @@
 </head>
 
 <body>
+<!--确认是否上架弹出框 -->
+	<div class="eject-big">
+	<div class="eject-samll">
+		<div class="eject-samll-title">
+			<p>上架操作确认</p>
+			<p class="img"><A href="#"></A></p>
+		</div>
+		<!--确认上架-->
+		<div class="eject-samll-confirm">
+			<ul>
+			<li class="word">确定要将商品上架进行销售吗?</li>
+			<li><input id="upConfirm" type="button"  class="slp-btn eject-small-btn" value="确认"><input type="button"  class="slp-btn eject-small-btn close-btn" value="取消"></li>		
+			</ul>
+		</div>
+	</div>	
+	<div class="eject-mask"></div>	
+	</div>
+<!--确认是否上架弹出框 结束-->
+
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
 	<div class="row"><!--外围框架-->
 		<div class="col-lg-12"><!--删格化-->
@@ -17,72 +36,80 @@
 				<div class="col-lg-12"><!--删格化-->
 					<div class="main-box clearfix"><!--白色背景-->
 						<!-- 查询条件 -->
+						
 						<div class="form-label">
-							<%-- 类目 --%>
-							<ul id="data1ProdCat">
+
+							<ul>
 								<li class="col-md-12">
-									<p class="word">商品类目</p>
+									<p class="word">商品名称</p>
+									<p><input id="productName" type="text" class="int-text int-medium"></p>
+									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
+									</p>
+								</li>
+							</ul>
+							<!--点击展开-->
+							<div id="selectDiv" class="open" style="display:none;">
+								<ul>
+									<li class="col-md-4">
+										<p class="word">商品ID</p>
+										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
+									</li>
+									<li class="col-md-4">
+										<p class="word">商品类型</p>
+										<p>
+											<select id="productType" class="select select-medium">
+												<option value="">全部</option>
+												<option value="1">实物</option>
+												<option value="2">虚拟</option>
+											</select>
+										</p>
+									</li>
+									<li class="col-md-4">
+										<p class="word">商品状态</p>
+										<p>
+											<select id="state" class="select select-medium">
+												<option value="">全部</option>
+												<option value="6">待上架</option>
+												<option value="61">售罄下架</option>
+												<option value="62">库存暂停下架</option>
+											</select>
+										</p>
+									</li>
+								</ul>
+								<input type="hidden" id="state" value="1"/>
+								<%-- 类目 --%>
+								<ul id="data1ProdCat">
+									<li class="col-md-12">
+										<p class="word">商品类目</p>
 										<p id="productCat0">
-											<select class="select select-small" onChange="pager._selectChange(this);">
-													<option value="">全部</option>
+											<select id="catFirst" class="select select-small" onChange="pager._selectChange(this);">
+												<option value="">全部</option>
 												<c:forEach var="info" items="${catInfoList}">
 													<option value="${info.productCatId}">${info.productCatName}</option>
 												</c:forEach>
 											</select>
 										</p>
-								<%-- 	<c:forEach var="map" items="${catInfoMap}" varStatus="status">
-										<p id="productCat${status.index}">
-											<select class="select select-small" onChange="pager._selectChange(this);">
-												<c:forEach var="info" items="${map.value}">
-													<option value="${info.productCatId}">${info.productCatName}</option>
-												</c:forEach>
-											</select>
-										</p>
-									</c:forEach> --%>
-									
-									
-									<script id="prodCatTemple" type="text/template">
-										<p id="productCat{{:level}}">
-											<select class="select select-small" onChange="pager._selectChange(this);">
-												{{for prodCatList}}
-												<option value="{{:productCatId}}">{{:productCatName}}</option>
-												{{/for}}
-											</select>
-										</p>
-									</script>
-								</li>
-							</ul>
-							 <ul>
-	                            <li class="col-md-6">
-	                                <p class="word">商品名称</p>
-	                                <p><input id="productName" type="text" class="int-text int-medium"></p>
-	                            </li>
-	                            <li>
-	                                <p class="word">商品ID</p>
-	                                <p><input id="productId" type="text" class="int-text int-medium"></p>
-	                            </li>
-							</ul>
-							 <ul>
-	                        	<li class="col-md-6">
-	                                <p class="word">商品类型</p>
-	                                <p>
-		                                <select id="productType" class="select select-medium">
-		                                	<option value="">全部</option>
-		                                	<option value="1">实物</option>
-		                                	<option value="2">虚拟</option>
-		                                </select>
-	                                </p>
-	                            </li>
-	                            
-	                        </ul>
-							<ul>
-								<li class="width-xlag">
-									<p class="word">&nbsp;</p>
-									<p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
-											  id="selectProductList" value="查  询"></p>
-								</li>
-							</ul>
+										<script id="prodCatTemple" type="text/template">
+											<p id="productCat{{:level}}">
+												<select class="select select-small" onChange="pager._selectChange(this);">
+													{{for prodCatList}}
+													<option value="{{:productCatId}}">{{:productCatName}}</option>
+													{{/for}}
+												</select>
+											</p>
+										</script>
+									</li>
+								</ul>
+							</div>
+								<ul>
+									<li class="width-xlag">
+										<p class="word">&nbsp;</p>
+										<p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
+												  id="selectProductList" value="查  询"></p>
+									</li>
+								</ul>
 						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -110,7 +137,7 @@
 										<th>预览图</th>
 										<th width="30%">商品名称</th>
 										<th>状态</th>
-										<th>生成时间</th>
+										<!-- <th>生成时间</th> -->
 										<th>操作</th>
 									</tr>
 									</thead>
@@ -121,7 +148,8 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
 									<tr>
-											<td>{{:prodId}}</td>
+											<!-- <td>{{:prodId}}</td> -->
+											<td>{{:standedProdId}}</td>
 											<td>{{:productCatName}}</td>
 											<td>{{:productTypeName}}</td>
 											{{if picUrl==null || picUrl==""}}
@@ -131,10 +159,10 @@
 											{{/if}}
 											<td>{{:prodName}}</td>
 											<td>{{:stateName}}</td>
-											<td>{{:~timesToFmatter(createTime)}}</td>
+											<!-- <td>{{:~timesToFmatter(createTime)}}</td> -->
 											<td>
 												<div>
-													<p><a id="{{:prodId}}" href="#" class="blue-border">上架</a></p> 
+													<p><a id="{{:standedProdId}}" href="#" class="blue-border">上架</a></p> 
 													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
 												</div>
 											</td>
@@ -161,7 +189,18 @@
 	var prodInfoList = '${prodInfoList}';
 	var productEditInfo = '${productEditInfo}';
 	(function () {
-		seajs.use('app/jsp/product/storprodlist', function(addlistPager) {
+		<%-- 高级区域 --%>
+		$(".form-label ul li .sos a").click(function () {
+			$(".open ").slideToggle(100);
+			$(".nav-form ").toggleClass("reorder remove");
+		});
+		$('#searchNormProductData').delegate('.blue-border','click',function(){
+			console.log('standedProdId:'+$(this).attr('id'));
+			clickId = $(this).attr('id');
+			pager._showUpConfirm($(this).attr('id'));
+			/* pager._prodToInSale($(this).attr('id')); */
+		});
+		seajs.use('app/jsp/product/stayuplist', function(addlistPager) {
 			pager = new addlistPager({element : document.body});
 			pager.render();
 		});

@@ -35,19 +35,21 @@
 					            <ul>
 					                <li class="width-xlag">
 					                    <p class="word"><b class="red">*</b>商品名称</p>
-					                    <p><input id="productName" name="productName" type="text" class="int-text int-xlarge" value="${productInfo.productName}"/></p>
-					                </li>  
+					                    <p><input required id="productName" name="productName" type="text" maxlength='200' class="int-text int-xlarge"  value="${productInfo.productName}"/></p>
+					               	 	<p id="error_productName"></p> 
+					                </li> 
 					            </ul>
 					            <ul>
 					                <li class="width-xlag">
 					                    <p class="word"><b class="red">*</b>商品类型</p>
 					                    <p>
-					                    	<select  id="productType" name="productType" class="select select-medium">
+					                    	<select required id="productType" name="productType" class="select select-medium >
 					                    		<option value="">--请选择--</option>
 							                   	<option value="1" <c:if test="${productInfo.productType == '1'}">selected="selected"</c:if>>实物</option>
 							                   	<option value="2" <c:if test="${productInfo.productType == '2'}">selected="selected"</c:if>>虚拟</option>
 					                    	</select>
 					                    </p>
+					                	<p id="error_productType"></p> 
 					                </li>  
 					            </ul> 
 					        </div> 
@@ -64,11 +66,12 @@
 									<ul>
 										<li class="width-xlag">
 											<p class="word" attrId="${keyAttr.attrId}" valueType="${keyAttr.valueWay}"><b class="red">*</b>${keyAttr.attrName}</p>
+											<p id="error_keyAttr${keyAttr.attrId}_title"></p>
 											<c:set var="keyAttrSet" value="${productInfo.attrAndValueIds.get(keyAttr.attrId)}"/>
-											<c:choose>
+											<p><c:choose>
 												<%-- 下拉选择 --%>
 												<c:when test="${keyAttr.valueWay == '1'}">
-													<select class="select select-medium" attrId="keyAttr${keyAttr.attrId}">
+													<select required class="select select-medium" attrId="keyAttr${keyAttr.attrId}" name="keyAttr${keyAttr.attrId}">
 														<option value="">--请选择--</option>
 														<c:forEach var="valInfo" items="${keyAttr.attrValList}">
 														<!-- <script>alert("attrvalueDefId=${valInfo.attrvalueDefId}");</script>
@@ -84,22 +87,23 @@
 												<c:when test="${keyAttr.valueWay == '2'}">
 													<div class="cit-width">
 														<c:forEach var="valInfo" items="${keyAttr.attrValList}">
-															<p><input type="checkbox" class="checkbox-small" attrId="keyAttr${keyAttr.attrId}" value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(keyAttrSet,valInfo.attrvalueDefId)}">checked</c:if>>${valInfo.attrValueName}</p>
+															<p><input required type="checkbox" class="checkbox-small" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(keyAttrSet,valInfo.attrvalueDefId)}">checked</c:if>>${valInfo.attrValueName}</p>
 														</c:forEach>
 													</div>
 												</c:when>
 												
 												<%--单行输入--%>
 												<c:when test="${keyAttr.valueWay  == '3'}">
-													<p><input type="text" class="int-text int-xlarge" attrId="keyAttr${keyAttr.attrId}" maxlength="100" value="${keyAttrSet[0]}"></p>
+													<p><input required type="text" class="int-text int-xlarge" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" maxlength="100" value="${keyAttrSet[0]}"></p>
 												</c:when>
 												
 												<%--多行输入--%>
 												<c:when test="${attr.valueWay == '4'}">
-													<p><textarea class="textarea-xlarge" maxlength="100"attrId="keyAttr${keyAttr.attrId}" value="${keyAttrSet[0]}"></textarea></p>
+													<p><textarea required class="textarea-xlarge  maxlength="100" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" value="${keyAttrSet[0]}"></textarea></p>
 												</c:when>
 												
-											</c:choose>
+											</c:choose></p>
+											<p id="error_keyAttr${keyAttr.attrId}"></p>
 										</li>
 									</ul>
 								</c:forEach>
@@ -118,11 +122,12 @@
 										<ul>
 											<li class="width-xlag">
 												<p class="word" attrId="${saleAttr.attrId}" valueType="${saleAttr.valueWay}"><b class="red">*</b>${saleAttr.attrName}</p>
+												<p id="error_saleAttr${saleAttr.attrId}_title"></p>
 												<c:set var="saleAttrSet" value="${productInfo.attrAndValueIds.get(saleAttr.attrId)}"/>
-												<c:choose>
+												<p><c:choose>
 													<%-- 下拉选择 --%>
 													<c:when test="${saleAttr.valueWay == '1'}">
-														<select class="select select-medium" attrId="saleAttr${saleAttr.attrId}">
+														<select required class="select select-medium" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}">
 															<option value="">--请选择--</option>
 															<c:forEach var="valInfo" items="${saleAttr.attrValList}">
 																<option value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(saleAttrSet,valInfo.attrvalueDefId)}">selected ="selected"</c:if>>
@@ -136,22 +141,23 @@
 													<c:when test="${saleAttr.valueWay == '2'}">
 														<div class="cit-width">
 															<c:forEach var="valInfo" items="${saleAttr.attrValList}">
-																<p><input type="checkbox" class="checkbox-small" attrId="saleAttr${saleAttr.attrId}" value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(saleAttrSet,valInfo.attrvalueDefId)}">checked</c:if>>${valInfo.attrValueName}</p>
+																<p><input required type="checkbox" class="checkbox-small" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(saleAttrSet,valInfo.attrvalueDefId)}">checked</c:if>>${valInfo.attrValueName}</p>
 															</c:forEach>
 														</div>
 													</c:when>
 													
 													<%--单行输入--%>
 													<c:when test="${saleAttr.valueWay  == '3'}">
-														<p><input type="text" class="int-text int-xlarge" attrId="saleAttr${saleAttr.attrId}" maxlength="100" value="${saleAttrSet[0]}"></p>
+														<p><input required type="text" class="int-text int-xlarge" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" maxlength="100" value="${saleAttrSet[0]}"></p>
 													</c:when>
 													
 													<%--多行输入--%>
 													<c:when test="${saleAttr.valueWay == '4'}">
-														<p><textarea class="int-text textarea-xlarge" maxlength="100"attrId="saleAttr${saleAttr.attrId}" value="${saleAttrSet[0]}"></textarea></p>
+														<p><textarea required class="int-text textarea-xlarge" maxlength="100" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" value="${saleAttrSet[0]}"></textarea></p>
 													</c:when>
 													
-												</c:choose>
+												</c:choose></p>
+												<p id="error_saleAttr${saleAttr.attrId}"></p>
 											</li>
 										</ul>
 									</c:forEach>
@@ -168,7 +174,7 @@
 						                <li class="width-xlag">
 				                            <p class="word"><b class="red">*</b>状态：</p>
 				                            <p>
-				                            	<select id="state" name="state" class="select select-medium">
+				                            	<select required id="state" name="state" class="select select-medium">
 								                   	<option value="1"<c:if test="${productInfo.state == '1'}">selected="selected"</c:if>>可使用</option>
 								                   	<option value="2"<c:if test="${productInfo.state == '2'}">selected="selected"</c:if>>不可使用</option>
 						                    	</select>

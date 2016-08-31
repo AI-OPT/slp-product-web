@@ -1,4 +1,4 @@
-define('app/jsp/product/storprodlist', function (require, exports, module) {
+define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    'use strict';
 	    var $=require('jquery'),
 		    Widget = require('arale-widget/1.2.0/widget'),
@@ -93,7 +93,7 @@ define('app/jsp/product/storprodlist', function (require, exports, module) {
 	    		var length = document.getElementsByTagName("select").length-2;
 	    		var productCatId = $("#productCat"+length+" option:selected").val();
 	    		var productType = $("#productType").val().trim();
-	    		var productId = $("#productId").val().trim();
+	    		var standedProdId = $("#standedProdId").val().trim();
 	    		var productName = $("#productName").val().trim();
 	    		
 	    		
@@ -103,7 +103,7 @@ define('app/jsp/product/storprodlist', function (require, exports, module) {
 		 			dataType: "json",
 		 			renderId:"searchNormProductData",
 		 			messageId:"showMessageDiv",
-		 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName
+		 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName
 			 			},
 		 			
 		           	pageSize: addlistPager.DEFAULT_PAGE_SIZE,
@@ -118,6 +118,29 @@ define('app/jsp/product/storprodlist', function (require, exports, module) {
 		            }
 	    		});
 	    	},
+	    	
+	    	//确认上架弹框
+	    	//弹出上架确认提示框
+	    	_showUpConfirm:function(prodId){
+	    		$(".eject-big").show();
+	    		$(".eject-samll").show();
+	    		$(".eject-mask").show();
+	    		clickId = prodId;
+	    	},
+	    	_showSuccessMsg:function(msg){
+	    		var _this=this;
+				var msg = Dialog({
+					title: '提示',
+					icon:'prompt',
+					content:msg,
+					okValue: '确 定',
+					ok:function(){
+						//this.close();
+						window.history.go(-1);
+					}
+				});
+				msg.showModal();
+			},
 	    	//滚动到顶部
 	    	_returnTop:function(){
 	    		var container = $('.wrapper-right');

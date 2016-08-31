@@ -99,12 +99,12 @@
                             </div>
                             </c:if>
                             <!-- 市场价 -->
-                            <div class="form-label  bd-bottom">
-                            	<input type="hidden" id="productId" value="${normProd.productId}">
+                            <div class="form-label  bd-bottom" data-widget="validator">
+                            	<input type="hidden" name="productId" id="productId" value="${standedProdId}">
                             	<ul class="big-word">
                                     <li class="col-md-6">
                                         <p class="word">市场价：</p>
-                                        <p><input id="marketPrice" type="text" value="${price}" class="int-text int-medium"> (元)</p>
+                                        <p><input name="marketPrice" id="marketPrice" type="text" value="${price}" class="int-text int-medium"> (元)</p>
                                     </li>
                                 </ul>
                             </div>
