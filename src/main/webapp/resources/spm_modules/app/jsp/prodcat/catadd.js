@@ -15,10 +15,10 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 	//require("jquery-validation/1.15.1/localization/messages_zh");
 	//require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
 	//require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
-    
+
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
-    
+
     var SendMessageUtil = require("app/util/sendMessage");
 
     //实例化AJAX控制处理对象
