@@ -20,7 +20,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     var ajaxController = new AjaxController();
     var clickId = "";
     //定义页面组件类
-    var addlistPager = Widget.extend({
+    var insalelist = Widget.extend({
     	
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -37,7 +37,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
             },
     	//重写父类
     	setup: function () {
-			addlistPager.superclass.setup.call(this);
+    		insalelist.superclass.setup.call(this);
     		this._selectProductList();
     	},
     	
@@ -89,8 +89,8 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     	//查询商品列表
     	_selectProductList:function(){
     		var _this = this;
-    		var div = document.getElementById("data1ProdCat");
-    		var length = document.getElementsByTagName("select").length-1;
+    		var div = $("#data1ProdCat");
+    		var length = document.getElementsByTagName("select").length-2;
     		var productCatId = $("#productCat"+length+" option:selected").val();
     		var productType = $("#productType").val().trim();
     		var standedProdId = $("#standedProdId").val().trim();
@@ -101,14 +101,16 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     		
     		$("#pagination-ul").runnerPagination({
 	 			url: _base+"/prodquery/getInsaleList",
-	 			method: "POST",
+	 			method: "post",
 	 			dataType: "json",
 	 			renderId:"searchNormProductData",
 	 			messageId:"showMessageDiv",
-	 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName,
-		 			"upStartTime":upStartTime,"upEndTime":upEndTime},
+//	 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName,
+//		 			"upStartTime":upStartTime,"upEndTime":upEndTime},
+		 		data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName,
+		 			"upStartTimeStr":upStartTime,"upEndTimeStr":upEndTime},
 	 			
-	           	pageSize: addlistPager.DEFAULT_PAGE_SIZE,
+	           	pageSize: insalelist.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
@@ -128,7 +130,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     	
     });
     
-    module.exports = addlistPager;
+    module.exports = insalelist;
 });
 
 
