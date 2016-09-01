@@ -1,4 +1,4 @@
-define('app/jsp/normproduct/normproductlist', function (require, exports, module) {
+define('app/jsp/costprice/productlist', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
@@ -38,42 +38,21 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
     	//重写父类
     	setup: function () {
     		normproductlistPager.superclass.setup.call(this);
-    		this._clearQueryParams();
     		this._selectNormProductList();
     	},
-    	//清空查询条件
-    	_clearQueryParams:function(){
-    		var productType = $("#productType").val("");
-    		var productId = $("#standedProdId").val("");
-    		var productName = $("#standedProductName").val("");
-    		var state = $("#state").val("");
-    		//清空商品类目
-    		var prodCat = document.getElementById("data1ProdCat");
-			var length = prodCat.getElementsByTagName("select").length;
-			//从当前元素开始移除后面的下拉菜单
-			for(var i=1;i<length;i++){
-				$("#productCat"+i).remove();
-			}
-			$("#productCat0 option[value='']").attr("selected",true);
-    	},
+    	
     	// 改变商品类目
     	_selectChange:function(osel){
+			var prodCatId = osel.options[osel.selectedIndex].value;
 			var clickId = $(osel).parent().attr('id');
 			//获取当前ID的最后数字
 			var index = Number(clickId.substring(10))+1;
 			//获取下拉菜单的总个数
 			var prodCat = document.getElementById("data1ProdCat");
 			var length = prodCat.getElementsByTagName("select").length;
-			//if(index==length){
-			//	return;
-			//}
 			//从当前元素开始移除后面的下拉菜单
 			for(var i=index;i<length;i++){
 				$("#productCat"+i).remove();
-			}
-			var prodCatId = osel.options[osel.selectedIndex].value;
-			if(prodCatId == ""){
-				return;
 			}
 			ajaxController.ajax({
 				type: "post",
@@ -109,13 +88,10 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
     		var productType = $("#productType").val()?$("#productType").val().trim():"";
     		var productId = $("#standedProdId").val()?$("#standedProdId").val().trim():"";
     		var productName = $("#standedProductName").val()?$("#standedProductName").val().trim():"";
-    		var state = $("#state").val()?$("#state").val().trim():"";
-//    		var operStartTime = $("#operStartTime").val()?$("#operStartTime").val().trim():"";
-//    		var operEndTime = $("#operEndTime").val()?$("#operEndTime").val().trim():"";
     		
     		$("#pagination-ul").runnerPagination({
     			
-	 			url: _base+"/normprodquery/getNormProductList",
+	 			url: _base+"/costprice/getProductList",
 	 			
 	 			method: "POST",
 	 			dataType: "json",
@@ -124,9 +100,8 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
 	 			
 	           /* data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName},
 	            */
-	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName,
-		 			"state":state
-		 			},
+	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName
+		 		},
 	 			
 	           	pageSize: normproductlistPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
@@ -144,37 +119,6 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
     	_returnTop:function(){
     		var container = $('.wrapper-right');
     		container.scrollTop(0);//滚动到div 顶部
-    	},
-    	//废弃操作
-    	_isDiscardDialog:function(productId){
-    		var _this = this;
-    		var d = Dialog({
-				content:"确定废弃该标准品吗？废弃后不可再使用",
-				icon:'help',
-				okValue: '确 定',
-				ok:function(){
-					this.close();
-					_this._discardProduct(productId);
-				},
-				cancelValue: '取消',
-				cancel: function () {
-					this.close();
-				}
-			});
-			d.show();
-    	},
-    	_discardProduct:function(productId){
-    		var _this = this;
-    		ajaxController.ajax({
-				type: "post",
-				processing: true,
-				// message: "加载中，请等待...",
-				url: _base+"/normprodedit/discard",
-				data:{"prodId":productId},
-				success: function(data){
-					_this._selectNormProductList();
-				}
-			});
     	}
     	
     });

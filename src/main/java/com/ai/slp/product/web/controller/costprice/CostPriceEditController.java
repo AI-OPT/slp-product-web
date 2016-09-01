@@ -1,4 +1,4 @@
-package com.ai.slp.product.web.controller.normproduct;
+package com.ai.slp.product.web.controller.costprice;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -45,10 +45,10 @@ import com.google.gson.reflect.TypeToken;
  *
  */
 @Controller
-@RequestMapping("/normprodedit")
-public class NormProdEditController {
+@RequestMapping("/costpriceedit")
+public class CostPriceEditController {
 
-	private static final Logger LOG = LoggerFactory.getLogger(NormProdEditController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(CostPriceEditController.class);
 	@Autowired
 	private ProdCatService prodCatService;
 	private INormProductSV normProductSV;
