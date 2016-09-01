@@ -3,8 +3,6 @@ package com.ai.slp.product.web.controller.normproduct;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -74,18 +72,18 @@ public class NormProdEditController {
 		Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
 		uiModel.addAttribute("catInfoMap", productCatMap);
-		Set<Entry<Short, List<ProdCatInfo>>> entrySet = productCatMap.entrySet();
-		String productCatValues = "";
-		for (Entry<Short, List<ProdCatInfo>> entry : entrySet) {
-			List<ProdCatInfo> value = entry.getValue();
-			if (productCatValues != "") {
-				productCatValues = productCatValues + "&gt;" + value.get(0).getProductCatName();
-			} else {
-				productCatValues = value.get(0).getProductCatName();
-			}
-
-		}
-		uiModel.addAttribute("productCatValues", productCatValues);
+//		Set<Entry<Short, List<ProdCatInfo>>> entrySet = productCatMap.entrySet();
+//		String productCatValues = "";
+//		for (Entry<Short, List<ProdCatInfo>> entry : entrySet) {
+//			List<ProdCatInfo> value = entry.getValue();
+//			if (productCatValues != "") {
+//				productCatValues = productCatValues + "&gt;" + value.get(0).getProductCatName();
+//			} else {
+//				productCatValues = value.get(0).getProductCatName();
+//			}
+//
+//		}
+//		uiModel.addAttribute("productCatValues", productCatValues);
 		return "normproduct/add";
 	}
 
