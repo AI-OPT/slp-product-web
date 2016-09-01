@@ -68,7 +68,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 								ok:function(){
 									this.close();
 									//保存成功,回退到进入的列表页
-									window.history.go(-2);
+									window.location.href = _base+'/normprodquery/list';
 								}
 							});
 							d.show();
