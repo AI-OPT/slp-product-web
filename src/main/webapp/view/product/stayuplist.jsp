@@ -213,8 +213,8 @@
             pager._showAddAttr();
         });
 		
-		seajs.use('app/jsp/product/stayuplist', function(addlistPager) {
-			pager = new addlistPager({element : document.body});
+		seajs.use('app/jsp/product/stayuplist', function(stayuplistPager) {
+			pager = new stayuplistPager({element : document.body});
 			pager.render();
 		});
 	})();
