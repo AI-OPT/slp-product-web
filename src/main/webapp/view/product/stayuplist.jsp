@@ -11,22 +11,26 @@
 
 <body>
 <!--确认是否上架弹出框 -->
-	<div class="eject-big">
-	<div class="eject-samll">
+<div class="eject-big" id="addViewDiv">
+	<div class="eject-samll" id="addAttrValue-samll">
+		<!-- 确认 -->
+		<div class="eject-medium-title">
+            <p id="createCloseImg" class="img"><i class="fa fa-times"></i></p>
+        </div>
 		<div class="eject-samll-title">
 			<p>上架操作确认</p>
 			<p class="img"><A href="#"></A></p>
 		</div>
-		<!--确认上架-->
-		<div class="eject-samll-confirm">
-			<ul>
-			<li class="word">确定要将商品上架进行销售吗?</li>
-			<li><input id="upConfirm" type="button"  class="slp-btn eject-small-btn" value="确认"><input type="button"  class="slp-btn eject-small-btn close-btn" value="取消"></li>		
-			</ul>
-		</div>
+		<!-- 按钮 -->
+        <div id="subDiv" class="row mt-15"><!-- 删格化 -->
+            <p class="center pr-30 mt-30">
+                <input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="提  交">
+                <input id="addBtn-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
+            </p>
+        </div>
 	</div>	
-	<div class="eject-mask"></div>	
-	</div>
+	<div class="mask" id="eject-mask"></div>	
+</div>
 <!--确认是否上架弹出框 结束-->
 
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
@@ -160,12 +164,23 @@
 											<td>{{:prodName}}</td>
 											<td>{{:stateName}}</td>
 											<!-- <td>{{:~timesToFmatter(createTime)}}</td> -->
+
+
+											{{if state=="6"}}
 											<td>
 												<div>
-													<p><a id="{{:standedProdId}}" href="#" class="blue-border">上架</a></p> 
+													<p><a name="addBtnView" id="{{:standedProdId}}" href="#" class="blue-border">上架销售</a></p> 
 													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
 												</div>
 											</td>
+											{{else}}
+											<td>
+												<div>
+													<p><a name="#" id="#" href="#" class="blue-border">查看商品</a></p> 
+													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
+												</div>
+											</td>
+											{{/if}}
 										</tr>
 								</script>
 							</div>
@@ -194,12 +209,11 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		$('#searchNormProductData').delegate('.blue-border','click',function(){
-			console.log('standedProdId:'+$(this).attr('id'));
-			clickId = $(this).attr('id');
-			pager._showUpConfirm($(this).attr('id'));
-			/* pager._prodToInSale($(this).attr('id')); */
-		});
+		
+		$('#searchNormProductData').delegate("a[name='addBtnView']", 'click', function () {
+            pager._showAddAttr();
+        });
+		
 		seajs.use('app/jsp/product/stayuplist', function(addlistPager) {
 			pager = new addlistPager({element : document.body});
 			pager.render();
