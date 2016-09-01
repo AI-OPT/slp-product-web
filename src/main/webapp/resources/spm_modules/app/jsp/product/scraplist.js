@@ -90,7 +90,7 @@ define('app/jsp/product/scraplist', function (require, exports, module) {
 	    	_selectProductList:function(){
 	    		var _this = this;
 	    		var div = document.getElementById("data1ProdCat");
-	    		var length = document.getElementsByTagName("select").length-2;
+	    		var length = document.getElementsByTagName("select").length-3;
 	    		var productCatId = $("#productCat"+length+" option:selected").val();
 	    		var productType = $("#productType").val().trim();
 	    		var productId = $("#productId").val().trim();
