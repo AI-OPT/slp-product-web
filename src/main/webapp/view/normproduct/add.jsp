@@ -38,6 +38,7 @@
 									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
 										<p id="productCat${status.index}">
 											<select name="selectProductCat" id="selectCat${status.index}" class="select select-small" onChange="pager._selectChange(this);">
+												<c:if test="${status.index==0}"><option value="">--请选择--</option></c:if>
 												<c:forEach var="info" items="${map.value}">
 													<option value="${info.productCatId}">${info.productCatName}</option>
 												</c:forEach>

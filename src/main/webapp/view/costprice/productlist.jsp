@@ -34,19 +34,6 @@
 										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
 									</li>
 									<li class="col-md-6">
-										<p class="word">商品状态</p>
-										<p>
-											<select id="state" class="select select-medium">
-												<option value="">全部</option>
-												<option value="1">可使用</option>
-												<option value="2">不可使用</option>
-												<option value="0">废弃</option>
-											</select>
-										</p>
-									</li>
-								</ul>
-								<ul>
-									<li class="col-md-6">
 										<p class="word">商品类型</p>
 										<p>
 											<select id="productType" class="select select-medium">
@@ -56,24 +43,7 @@
 											</select>
 										</p>
 									</li>
-									<!-- <li class="col-md-6">
-										<p class="word">操作员</p>
-										<p><input id="operId" type="text" class="int-text int-medium"></p>
-									</li> -->
 								</ul>
-								<!-- <ul>
-									<li class="col-md-6">
-										<p class="word">操作开始时间</p>
-										<p><input type="text" class="int-text int-medium" id="operStartTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
-									</li>
-									<li class="col-md-6">
-										<p class="word">操作结束时间</p>
-										<p><input type="text" class="int-text int-medium" id="operEndTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span>
-										</p>
-									</li>
-								</ul> -->
 								<%-- 类目 --%>
 							<ul id="data1ProdCat">
 								<li class="col-md-12">
@@ -122,12 +92,6 @@
 						<header class="main-box-header clearfix">
 							<h2 class="pull-left">查询结果</h2>
 						</header>
-						<div class="row"><!--删格化-->
-                                <p class="right pr-30">
-                                    <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
-                                           value="新  增" onclick="javaScript:window.location.href = '${_base}/normprodedit/add';">
-                                </p>
-                        </div>
 						<!--标题结束-->
 						<div class="main-box-body clearfix">
 							<!--table表格-->
@@ -140,9 +104,6 @@
 										<th>商品名称</th>
 										<th>所属类目</th>
 										<th>类型</th>
-										<th>商品状态</th>
-										<!-- <th>操作时间</th>
-										<th>操作人</th> -->
 										<th>操作</th>
 									</tr>
 									</thead>
@@ -159,12 +120,8 @@
 										<td>{{:catName}}</td>
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
-										<!-- <td>{{:~timesToFmatter(operTime)}}</td>
-										<td>{{:operName}}</td> -->
-                                         <td>
-											<a href="${_base}/normprodquery/{{:productId}}" class="blue-border">查看详情</a>
+                                        <td>
 											<a href="${_base}/normprodedit/{{:productId}}" class="blue-border">编辑</a>
-                                            <a href="javaScript:void(0)" onclick="pager._isDiscardDialog('{{:productId}}')" class="blue-border">废弃</a>
 										</td>
 									</tr>
 								</script>
@@ -189,20 +146,13 @@
 	var prodInfoList = '${prodInfoList}';
 	var productEditInfo = '${productEditInfo}';
 	(function () {
-		<%-- 展示日历 --%>
-		/* $('#selectDiv').delegate('.fa-calendar','click',function(){
-			var calInput = $(this).parent().prev();
-			var timeId = calInput.attr('id');
-			console.log("click calendar "+timeId);
-			WdatePicker({el:timeId,readOnly:true});
-		}); */
 		<%-- 高级区域 --%>
 		$(".form-label ul li .sos a").click(function () {
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		seajs.use('app/jsp/normproduct/normproductlist', function(storageList) {
-			pager = new storageList({element : document.body});
+		seajs.use('app/jsp/costprice/productlist', function(productListPage) {
+			pager = new productListPage({element : document.body});
 			pager.render();
 		});
 	})();
