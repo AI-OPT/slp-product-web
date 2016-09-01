@@ -18,71 +18,80 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!-- 查询条件 -->
 						<div class="form-label">
-							<%-- 类目 --%>
-							<ul id="data1ProdCat">
+
+							<ul>
 								<li class="col-md-12">
-									<p class="word">商品类目</p>
+									<p class="word">商品名称</p>
+									<p><input id="productName" type="text" class="int-text int-medium"></p>
+									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
+									</p>
+								</li>
+							</ul>
+							<!--点击展开-->
+							<div id="selectDiv" class="open" style="display:none;">
+								<ul>
+									<li class="col-md-6">
+										<p class="word">商品ID</p>
+										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
+									</li>
+									<li class="col-md-6">
+										<p class="word">商品类型</p>
+										<p>
+											<select id="productType" class="select select-medium">
+												<option value="">全部</option>
+												<option value="1">实物</option>
+												<option value="2">虚拟</option>
+											</select>
+										</p>
+									</li>
+								</ul>
+								<input type="hidden" id="state" value="1"/>
+								<ul>
+									<li class="col-md-6">
+										<p class="word">上架开始时间</p>
+										<p><input type="text" class="int-text int-medium" id="upStartTime">
+											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
+									</li>
+									<li class="col-md-6">
+										<p class="word">上架结束时间</p>
+										<p><input type="text" class="int-text int-medium" id="upEndTime">
+											<span class="time"> <i class="fa  fa-calendar" ></i></span>
+										</p>
+									</li>
+								</ul>
+								<%-- 类目 --%>
+								<ul id="data1ProdCat">
+									<li class="col-md-12">
+										<p class="word">商品类目</p>
 										<p id="productCat0">
-											<select class="select select-small" onChange="pager._selectChange(this);">
-													<option value="">全部</option>
+											<select id="catFirst" class="select select-small" onChange="pager._selectChange(this);">
+												<option value="">全部</option>
 												<c:forEach var="info" items="${catInfoList}">
 													<option value="${info.productCatId}">${info.productCatName}</option>
 												</c:forEach>
 											</select>
 										</p>
-								<%-- 	<c:forEach var="map" items="${catInfoMap}" varStatus="status">
-										<p id="productCat${status.index}">
-											<select class="select select-small" onChange="pager._selectChange(this);">
-												<c:forEach var="info" items="${map.value}">
-													<option value="${info.productCatId}">${info.productCatName}</option>
-												</c:forEach>
-											</select>
-										</p>
-									</c:forEach> --%>
-									
-									
-									<script id="prodCatTemple" type="text/template">
-										<p id="productCat{{:level}}">
-											<select class="select select-small" onChange="pager._selectChange(this);">
-												{{for prodCatList}}
-												<option value="{{:productCatId}}">{{:productCatName}}</option>
-												{{/for}}
-											</select>
-										</p>
-									</script>
-								</li>
-							</ul>
-							 <ul>
-	                            <li class="col-md-6">
-	                                <p class="word">商品名称</p>
-	                                <p><input id="productName" type="text" class="int-text int-medium"></p>
-	                            </li>
-	                            <li>
-	                                <p class="word">商品ID</p>
-	                                <p><input id="productId" type="text" class="int-text int-medium"></p>
-	                            </li>
-							</ul>
-							 <ul>
-	                        	<li class="col-md-6">
-	                                <p class="word">商品类型</p>
-	                                <p>
-		                                <select id="productType" class="select select-medium">
-		                                	<option value="">全部</option>
-		                                	<option value="1">实物</option>
-		                                	<option value="2">虚拟</option>
-		                                </select>
-	                                </p>
-	                            </li>
-	                            
-	                        </ul>
-							<ul>
-								<li class="width-xlag">
-									<p class="word">&nbsp;</p>
-									<p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
-											  id="selectProductList" value="查  询"></p>
-								</li>
-							</ul>
+										<script id="prodCatTemple" type="text/template">
+											<p id="productCat{{:level}}">
+												<select class="select select-small" onChange="pager._selectChange(this);">
+													{{for prodCatList}}
+													<option value="{{:productCatId}}">{{:productCatName}}</option>
+													{{/for}}
+												</select>
+											</p>
+										</script>
+									</li>
+								</ul>
+							</div>
+								<ul>
+									<li class="width-xlag">
+										<p class="word">&nbsp;</p>
+										<p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
+												  id="selectProductList" value="查  询"></p>
+									</li>
+								</ul>
 						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -110,7 +119,7 @@
 										<th>预览图</th>
 										<th width="30%">商品名称</th>
 										<th>状态</th>
-										<th>生成时间</th>
+										<th>上架时间</th>
 										<th>操作</th>
 									</tr>
 									</thead>
@@ -121,7 +130,7 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
 									<tr>
-											<td>{{:prodId}}</td>
+											<td>{{:standedProdId}}</td>
 											<td>{{:productCatName}}</td>
 											<td>{{:productTypeName}}</td>
 											{{if picUrl==null || picUrl==""}}
@@ -161,6 +170,18 @@
 	var prodInfoList = '${prodInfoList}';
 	var productEditInfo = '${productEditInfo}';
 	(function () {
+		<%-- 展示日历 --%>
+		$('#selectDiv').delegate('.fa-calendar','click',function(){
+			var calInput = $(this).parent().prev();
+			var timeId = calInput.attr('id');
+			console.log("click calendar "+timeId);
+			WdatePicker({el:timeId,readOnly:true});
+		});
+		<%-- 高级区域 --%>
+		$(".form-label ul li .sos a").click(function () {
+			$(".open ").slideToggle(100);
+			$(".nav-form ").toggleClass("reorder remove");
+		});
 		seajs.use('app/jsp/product/insalelist', function(addlistPager) {
 			pager = new addlistPager({element : document.body});
 			pager.render();
