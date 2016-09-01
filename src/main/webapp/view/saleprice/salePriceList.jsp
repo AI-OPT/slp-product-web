@@ -121,7 +121,7 @@
 										<td>{{:catName}}</td>
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
-										<td><a href="${_base}/storage/{{:productId}}" class="blue-border">编辑</a></td>
+										<td><a href="${_base}/saleprice/query/{{:productId}}" class="blue-border">编辑销售价</a></td>
 									</tr>
 								</script>
 							</div>

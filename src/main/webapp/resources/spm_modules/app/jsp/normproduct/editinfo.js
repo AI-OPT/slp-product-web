@@ -3,7 +3,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
     var $=require('jquery'),
 	Events = require('arale-events/1.2.0/events'),
     Widget = require('arale-widget/1.2.0/widget'),
-    Dialog = require("artDialog/src/dialog"),
+    Dialog = require("optDialog/src/dialog"),
     AjaxController = require('opt-ajax/1.0.0/index');
 	require("ckeditor/ckeditor.js")
     require("jsviews/jsrender.min");
@@ -31,17 +31,11 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
     	events: {
 			//保存数据
 			"click #saveNormProd":"_saveNormProd",
-			"click #cancel":"_cancel"
         },
         //重写父类
     	setup: function () {
     		prodEditPager.superclass.setup.call(this);
     	},
-		//返回
-		_cancel:function(){
-			var _this = this;
-			window.history.go(-2);
-		},
     	//保存商品信息
       	_saveNormProd:function(){
 			var _this = this;
@@ -99,13 +93,11 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 		},
 		//将关键属性转换json字符串
 		_convertKeyAttr:function(){
-			//var keyVal = {};
 			var attrValArray = [];
 			//获取所有
 			$("#keyAttrDiv .word").each(function(i){
 				var attrId = $(this).attr('attrId');
 				var valWay = $(this).attr('valueType');
-				//var attrValArray = [];
 				switch (valWay){
 					case '1'://下拉
 						var obj = $("#keyAttrDiv select[attrId='keyAttr"+attrId+"']")[0];
@@ -127,7 +119,6 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 						break;
 
 				};
-				//keyVal[attrId] = attrValArray;
 			});
 			var keyJsonStr = JSON.stringify(attrValArray,null);
 			console.log($('#keyAttrStr').val());
@@ -136,13 +127,11 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 		},
 		//将销售属性转换json字符串
 		_convertSaleAttr:function(){
-			//var saleVal = {};
 			var attrValArray = [];
 			//获取所有
 			$("#saleAttrDiv .word").each(function(i){
 				var attrId = $(this).attr('attrId');
 				var valWay = $(this).attr('valueType');
-				//var attrValArray = [];
 				switch (valWay){
 				case '1'://下拉
 					var obj = $("#saleAttrDiv select[attrId='saleAttr"+attrId+"']")[0];
@@ -164,7 +153,6 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 					break;
 					
 				};
-				//saleVal[attrId] = attrValArray;
 			});
 			var saleJsonStr = JSON.stringify(attrValArray,null);
 			console.log($('#saleAttrStr').val());

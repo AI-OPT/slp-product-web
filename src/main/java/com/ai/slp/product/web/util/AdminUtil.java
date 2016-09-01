@@ -23,6 +23,15 @@ public class AdminUtil {
     }
 
     /**
+     * 获取管理员标识
+     * @return
+     */
+    public static Long getAdminId(){
+        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+        return getAdminId(session);
+    }
+
+    /**
      * 获取用户租户标识
      * @return
      */

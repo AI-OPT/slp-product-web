@@ -6,10 +6,9 @@ import com.ai.opt.base.vo.BaseMapResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParam;
-import com.ai.slp.common.api.cache.param.SysParamMultiCond;
-import com.ai.slp.common.api.cache.param.SysParamSingleCond;
+import com.ai.platform.common.api.cache.interfaces.ICacheSV;
+import com.ai.platform.common.api.cache.param.SysParam;
+import com.ai.platform.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.product.interfaces.IProductSV;
 import com.ai.slp.product.api.product.param.SkuInfo;
 import com.ai.slp.product.api.product.param.SkuSetForProduct;
@@ -20,9 +19,9 @@ import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.controller.product.ProdQueryController;
-import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.service.StandedProdService;
+import com.ai.slp.product.web.service.StorageService;
 import com.ai.slp.product.web.util.AdminUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +32,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,9 +43,9 @@ public class StorageController {
     @Autowired
     private ProdCatService prodCatService;
     @Autowired
-    private AttrAndValService attrAndValService;
-    @Autowired
     private StandedProdService standedProdService;
+    @Autowired
+    private StorageService storageService;
 
     /**
      * 显示标准品库存编辑页面
@@ -66,7 +64,7 @@ public class StorageController {
         storageGroupQuery.setProductId(standedProdId);
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         BaseListResponse<StorageGroupRes> storageGroupResList = storageSV.queryGroupInfoByNormProdId(storageGroupQuery);
-        Map<String,SysParam> paramMap = getStorageStatus();
+        Map<String,SysParam> paramMap = storageService.getStorageStatus();
         ICacheSV cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
         SysParamSingleCond paramSingleCond = new SysParamSingleCond();
         paramSingleCond.setTenantId(AdminUtil.getTenantId());
@@ -128,22 +126,6 @@ public class StorageController {
             responseData = new ResponseData<SkuSetForProduct>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK",skuSetForProduct);
         return responseData;
-    }
-
-    /**
-     * 获取库存状态字典信息
-     * @return
-     */
-    private Map<String,SysParam> getStorageStatus(){
-        ICacheSV cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
-        SysParamMultiCond multiCond = new SysParamMultiCond(AdminUtil.getTenantId(),
-                ComCacheConstants.StateStorage.STORAGE_TYPR_CODE, ComCacheConstants.StateStorage.PARAM_CODE);
-        List<SysParam> sysParamList = cacheSV.getSysParamList(multiCond);
-        Map<String,SysParam> paramMap = new HashMap<>();
-        for (SysParam sysParam:sysParamList){
-            paramMap.put(sysParam.getColumnValue(),sysParam);
-        }
-        return paramMap;
     }
     /**
      * 获取库存下SKU库存的信息

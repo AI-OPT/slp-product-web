@@ -15,15 +15,15 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 	//require("jquery-validation/1.15.1/localization/messages_zh");
 	//require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
 	//require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
-    
+
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
-    
+
     var SendMessageUtil = require("app/util/sendMessage");
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-	Validator.addRule('upperCaseRule', /^[A-Z]{1}$/, '请输入大写字母');
+	//Validator.addRule('upperCaseRule', /^[A-Z]{1}$/, '请输入大写字母');
     //定义页面组件类
     var catAddPager = Widget.extend({
     	
@@ -81,6 +81,7 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 			if(!validateForm.form()){
 				return;
 			}
+			var delCount = 0;//标记下表的位移
 			//获取所有的form-label下的input
 			$("#addViewDiv > .form-label.bd-bottom ").each(function (index, form) {
 				/*var validator = new Validator({
@@ -92,18 +93,23 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 						hasError = true;
 					}
 				});*/
+				var addIndex = index;
+				if($.inArray(index+"", delNumArray)!=-1){
+					delCount++;
+					addIndex = addIndex + delCount;
+				}
 				var catObj = {};
-				console.log(index + " form-label");
+				console.log(addIndex + " form-label");
 				if (parentCatId != null & parentCatId != '')
 					catObj['parentProductCatId'] = parentCatId;
 				//类目名
-				var catName = $(this).find("input[name='productCatName"+index+"']")[0];
+				var catName = $(this).find("input[name='productCatName"+addIndex+"']")[0];
 				catObj['productCatName'] = catName.value;
 				//首字母
-				var fLetter = $(this).find("input[name='firstLetter"+index+"']")[0];
+				var fLetter = $(this).find("input[name='firstLetter"+addIndex+"']")[0];
 				catObj['firstLetter'] = fLetter.value;
 				//排序
-				var sn = $(this).find("input[name='serialNumber"+index+"']")[0];
+				var sn = $(this).find("input[name='serialNumber"+addIndex+"']")[0];
 				catObj['serialNumber'] = sn.value;
 				//是否有子分类
 				var isChild = $(this).find("input[type='radio']:checked")[0];

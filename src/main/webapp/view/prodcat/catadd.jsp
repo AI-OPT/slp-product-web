@@ -80,7 +80,7 @@
     <div class="form-label bd-bottom ui-form" data-widget="validator">
         <div class="title-right">
             <p class="plus-word btn-primary">
-                <a href="javaScript:void(0);" name="delBtn"><i class="fa fa-times"></i>删  除</a></p>
+                <a href="javaScript:void(0);" name="delBtn" num="{{:num}}"><i class="fa fa-times"></i>删  除</a></p>
         </div>
         <ul>
             <li class="col-md-12 ui-form-item">
@@ -115,11 +115,13 @@
 <script type="text/javascript">
     var pager;
     var catNum = {'num':0};
+    var delNumArray = [];
     (function () {
         <%-- 删除按钮 --%>
         $('#addViewDiv').delegate("a[name='delBtn']", 'click', function () {
             console.log("删除");
             <%--p  div(.title-right) div(.form-label) --%>
+            delNumArray.push($(this).attr('num'));
             $(this).parent().parent().parent().remove();
         });
 

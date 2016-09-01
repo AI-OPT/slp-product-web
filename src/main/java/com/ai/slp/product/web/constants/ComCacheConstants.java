@@ -43,7 +43,10 @@ public final class ComCacheConstants {
          * 运营商
          */
         public static final String BASIC_ORG_ID = "BASIC_ORG_ID";
+
+		public static final String PROC_STATUS = "STATE";
     }
+
     /**
      * 库存和库存组状态
      */

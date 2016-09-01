@@ -7,9 +7,8 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.image.IImageClient;
-import com.ai.slp.common.api.cache.interfaces.ICacheSV;
-import com.ai.slp.common.api.cache.param.SysParam;
-import com.ai.slp.common.api.cache.param.SysParamSingleCond;
+import com.ai.platform.common.api.cache.interfaces.ICacheSV;
+import com.ai.platform.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
 import com.ai.slp.product.api.product.param.ProductEditQueryReq;
 import com.ai.slp.product.api.product.param.ProductEditUp;
@@ -33,7 +32,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 商城商品管理查询 Created by jackieliu on 16/6/16.
@@ -132,11 +130,10 @@ public class ProdQueryController {
 				// 获取状态
 				String state = productEditUp.getState();
 				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
-						ComCacheConstants.TypeProduct.CODE, "STATE", state);
+						ComCacheConstants.TypeProduct.CODE, ComCacheConstants.TypeProduct.PROC_STATUS, state);
 				String stateName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 				productEditUp.setStateName(stateName);
 			}
-			
 			// 产生图片地址
 			if (StringUtils.isNotBlank(productEditUp.getVfsId())) {
 				String attrImageSize = "80x80";
