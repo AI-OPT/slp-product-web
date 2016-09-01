@@ -187,7 +187,7 @@
 	                            		<input id="saveNormProd" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
 	                                           value="保  存">
 	                                    <input id="cancel" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
-	                                           value="返  回">
+	                                           value="返  回" onclick="javaScript:window.history.go(-1);">
 	                            	</p>
 	                            </div>
 	                        </div>
