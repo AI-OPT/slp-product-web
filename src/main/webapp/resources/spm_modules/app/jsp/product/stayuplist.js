@@ -33,7 +33,10 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    	//事件代理
 	    	events: {
 	    		//查询
-	            "click #selectProductList":"_selectProductList"
+	            "click #selectProductList":"_selectProductList",
+	            "click #addBtn-close":"_closeDiv",
+	            "click #createCloseImg":"_closeDiv",
+	            "click #submitAddBtn":"_prodToInSale",//上架操作
 	            },
 	    	//重写父类
 	    	setup: function () {
@@ -120,14 +123,55 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    	},
 	    	
 	    	//确认上架弹框
-	    	//弹出上架确认提示框
-	    	_showUpConfirm:function(prodId){
-	    		$(".eject-big").show();
-	    		$(".eject-samll").show();
-	    		$(".eject-mask").show();
-	    		clickId = prodId;
+	    	_showAddAttr:function(){
+				$('#eject-mask').fadeIn(100);
+				$('#addAttrValue-samll').slideDown(200);
+			},
+	    	
+			//关闭弹框
+			_closeDiv:function(){
+				$('#eject-mask').fadeOut(100);
+				$('#addAttrValue-samll').slideUp(150);
+				
+			},
+			//上架销售
+	    	_prodToInSale: function(){
+	    		var _this = this;
+	    		var standedProdId = clickId;
+	    		ajaxController.ajax({
+					type: "post",
+					processing: false,
+					message: "上架中，请等待...",
+					url: _base+"/prodOperate/prodToSale",
+					data:{"standedProdId":standedProdId},
+					success: function(data){
+						if("1"===data.statusCode){
+							_this._selectStayUpProd();
+							var d = Dialog({
+								content:"上架成功.",
+								icon:'success',
+								okValue: '确 定',
+								ok:function(){
+									this.close();
+								}
+							});
+							d.show();
+		            	}else{
+		            		var d = Dialog({
+								content:"上架失败:"+data.statusInfo,
+								icon:'fail',
+								okValue: '确 定',
+								ok:function(){
+									this.close();
+								}
+							});
+							d.show();
+		            	}
+					}
+				});
 	    	},
-	    	_showSuccessMsg:function(msg){
+			
+	    	/*_showSuccessMsg:function(msg){
 	    		var _this=this;
 				var msg = Dialog({
 					title: '提示',
@@ -140,7 +184,7 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 					}
 				});
 				msg.showModal();
-			},
+			},*/
 	    	//滚动到顶部
 	    	_returnTop:function(){
 	    		var container = $('.wrapper-right');

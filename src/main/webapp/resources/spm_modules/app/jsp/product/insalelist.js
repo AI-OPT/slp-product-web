@@ -90,11 +90,13 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     	_selectProductList:function(){
     		var _this = this;
     		var div = document.getElementById("data1ProdCat");
-    		var length = document.getElementsByTagName("select").length-2;
+    		var length = document.getElementsByTagName("select").length-1;
     		var productCatId = $("#productCat"+length+" option:selected").val();
     		var productType = $("#productType").val().trim();
-    		var productId = $("#productId").val().trim();
+    		var standedProdId = $("#standedProdId").val().trim();
     		var productName = $("#productName").val().trim();
+    		var upStartTime = $("#upStartTime").val().trim();
+    		var upEndTime = $("#upEndTime").val().trim();
     		
     		
     		$("#pagination-ul").runnerPagination({
@@ -103,8 +105,8 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
 	 			dataType: "json",
 	 			renderId:"searchNormProductData",
 	 			messageId:"showMessageDiv",
-	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName
-		 			},
+	 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName,
+		 			"upStartTime":upStartTime,"upEndTime":upEndTime},
 	 			
 	           	pageSize: addlistPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
@@ -159,7 +161,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
 
 
 
-
+//keke
 
 /*define('app/jsp/product/insalelist', function (require, exports, module) {
     'use strict';

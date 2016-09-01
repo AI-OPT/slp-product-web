@@ -1,5 +1,6 @@
 package com.ai.slp.product.web.controller.product;
 
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -11,11 +12,14 @@ import com.ai.platform.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
 import com.ai.slp.product.api.product.param.ProductEditQueryReq;
 import com.ai.slp.product.api.product.param.ProductEditUp;
+import com.ai.slp.product.api.product.param.ProductQueryInSale;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.util.AdminUtil;
+import com.ai.slp.product.web.util.DateUtil;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -199,18 +203,36 @@ public class ProdQueryController {
 	 */
 	@RequestMapping("/getInsaleList")
 	@ResponseBody
-	private ResponseData<PageInfoResponse<ProductEditUp>> queryinsaleProduct(HttpServletRequest request,ProductEditQueryReq productEditQueryReq) {
+	private ResponseData<PageInfoResponse<ProductEditUp>> queryinsaleProduct(HttpServletRequest request,ProductQueryInSale queryInSale) {
 		ResponseData<PageInfoResponse<ProductEditUp>> responseData = null;
 		try {
 			//查询条件
-			queryBuilder(request, productEditQueryReq);
-			/*productEditQueryReq.setTenantId("SLP");
-			productEditQueryReq.setProductCatId(request.getParameter("productCatId"));*/
+			queryInSale.setTenantId(AdminUtil.getTenantId());
+			queryInSale.setSupplierId(AdminUtil.getSupplierId());
+			queryInSale.setProductCatId(request.getParameter("productCatId"));
+			if(!request.getParameter("productType").isEmpty())
+				queryInSale.setProductType(request.getParameter("productType"));
+			if(!request.getParameter("productName").isEmpty())
+				queryInSale.setProdName(request.getParameter("productName"));
+			if(!request.getParameter("standedProdId").isEmpty())
+				queryInSale.setProdName(request.getParameter("standedProdId"));
+			
+			if (StringUtils.isNotBlank(request.getParameter("upStartTime"))) {
+				String startTime = request.getParameter("upStartTime")+" 00:00:00";
+				queryInSale.setUpStartTime(DateUtil.getTimestamp(startTime, "yyyy-MM-dd HH:mm:ss"));
+			}
+			
+			if (StringUtils.isNotBlank(request.getParameter("upEndTime"))) {
+					String endTime = request.getParameter("upEndTime")+" 23:59:59";
+					queryInSale.setUpEndTime(DateUtil.getTimestamp(endTime, "yyyy-MM-dd HH:mm:ss"));
+				}
+			
 			// 设置商品状态为新增和未编辑
 			List<String> stateList = new ArrayList<>();
 			stateList.add("5");
-			productEditQueryReq.setStateList(stateList);
-			PageInfoResponse<ProductEditUp> result = queryProductByState(productEditQueryReq);
+			queryInSale.setStateList(stateList);
+			PageInfoResponse<ProductEditUp> result = queryProductInSale(queryInSale);
+			
 			responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(ResponseData.AJAX_STATUS_SUCCESS, "查询成功",
 					result);
 		} catch (Exception e) {
@@ -221,6 +243,45 @@ public class ProdQueryController {
 		return responseData;
 	}
 
+	private PageInfoResponse<ProductEditUp> queryProductInSale(ProductQueryInSale queryInSale) {
+		queryInSale.setSupplierId(AdminUtil.getSupplierId());
+		IProductManagerSV productManagerSV = DubboConsumerFactory.getService("iProductManagerSV");
+		PageInfoResponse<ProductEditUp> result = productManagerSV.searchInSale(queryInSale);
+		ICacheSV cacheSV = DubboConsumerFactory.getService("iCacheSV");
+		SysParamSingleCond sysParamSingleCond = null;
+		for (ProductEditUp productEditUp : result.getResult()) {
+			// 获取类型和状态
+			if (StringUtils.isNotBlank(productEditUp.getProductType())) {
+				// 获取类型
+				String productType = productEditUp.getProductType();
+				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
+						ComCacheConstants.TypeProduct.CODE, ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE,
+						productType);
+				String productTypeName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
+				productEditUp.setProductTypeName(productTypeName);
+			}
+			if (StringUtils.isNotBlank(productEditUp.getState())) {
+				// 获取状态
+				String state = productEditUp.getState();
+				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(),
+						ComCacheConstants.TypeProduct.CODE, "STATE", state);
+				String stateName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
+				productEditUp.setStateName(stateName);
+			}
+			
+			// 产生图片地址
+			if (StringUtils.isNotBlank(productEditUp.getVfsId())) {
+				String attrImageSize = "80x80";
+				String vfsId = productEditUp.getVfsId();
+				String picType = productEditUp.getPicType();
+				String imageUrl = getImageUrl(attrImageSize, vfsId, picType);
+				productEditUp.setPicUrl(imageUrl);
+			}
+		}
+		return result;
+	}
+	
+	
 	/**
 	 * 查询条件检查设置
 	 * @param request
@@ -236,6 +297,7 @@ public class ProdQueryController {
 			productEditQueryReq.setProdId(request.getParameter("productId"));*/
 		if(!request.getParameter("productName").isEmpty())
 			productEditQueryReq.setProdName(request.getParameter("productName"));
+		
 	}
 	/**
 	 * 点击查询按钮调用方法-获取待上架商品
