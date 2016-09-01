@@ -8,7 +8,11 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 	require("ckeditor/ckeditor.js")
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
+    require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
+    
+    require("opt-paging/aiopt.pagination");
+    require("twbs-pagination/jquery.twbsPagination.min");
     
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");

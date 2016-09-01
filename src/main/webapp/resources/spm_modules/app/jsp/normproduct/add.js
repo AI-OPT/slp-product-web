@@ -6,10 +6,7 @@ define('app/jsp/normproduct/add', function (require, exports, module) {
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
-    require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
-    require("twbs-pagination/jquery.twbsPagination.min");
-   
     
     var SendMessageUtil = require("app/util/sendMessage");
     
@@ -32,8 +29,18 @@ define('app/jsp/normproduct/add', function (require, exports, module) {
     	//重写父类
     	setup: function () {
     		addPager.superclass.setup.call(this);
+    		this._clearProdCat();
     	},
-    	
+    	//清空类目
+    	_clearProdCat:function(){
+    		$("#productCatValues").html("您当前选择的商品类别是：");
+			var prodCat = document.getElementById("dataProdCat");
+			$("#productCat0   option[value='']").attr("selected",true);
+			var length = prodCat.getElementsByTagName("select").length;
+			for(var i=1;i<length;i++){
+				$("#productCat"+i).remove();
+			}
+    	},
     	// 改变商品类目
     	_selectChange:function(osel){
 			var prodCatId = osel.options[osel.selectedIndex].value;
@@ -115,13 +122,6 @@ define('app/jsp/normproduct/add', function (require, exports, module) {
 				});
 				d.show();
     		}else{
-    			$("#productCatValues").html("您当前选择的商品类别是：");
-    			var prodCat = document.getElementById("dataProdCat");
-    			$("#productCat0   option[value='']").attr("selected",true);
-    			var length = prodCat.getElementsByTagName("select").length;
-    			for(var i=1;i<length;i++){
-    				$("#productCat"+i).remove();
-    			}
     			window.location.href = _base+'/normprodedit/addProduct?productCatId='+productCatId
     		}
     	}
