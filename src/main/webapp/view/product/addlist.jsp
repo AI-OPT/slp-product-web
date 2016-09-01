@@ -105,67 +105,6 @@
 								</ul>
 						</div>
 						
-						
-						
-						
-						
-						
-						
-						<%-- <div class="form-label">
-							类目
-							<ul id="data1ProdCat">
-								<li class="col-md-12">
-									<p class="word">商品类目</p>
-										<p id="productCat0">
-											<select class="select select-small" onChange="pager._selectChange(this);">
-													<option value="">全部</option>
-												<c:forEach var="info" items="${catInfoList}">
-													<option value="${info.productCatId}">${info.productCatName}</option>
-												</c:forEach>
-											</select>
-										</p>
-									<script id="prodCatTemple" type="text/template">
-										<p id="productCat{{:level}}">
-											<select class="select select-small" onChange="pager._selectChange(this);">
-												{{for prodCatList}}
-												<option value="{{:productCatId}}">{{:productCatName}}</option>
-												{{/for}}
-											</select>
-										</p>
-									</script>
-								</li>
-							</ul>
-							 <ul>
-	                            <li class="col-md-6">
-	                                <p class="word">商品名称</p>
-	                                <p><input id="productName" type="text" class="int-text int-medium"></p>
-	                            </li>
-	                            <li>
-	                                <p class="word">商品ID</p>
-	                                <p><input id="productId" type="text" class="int-text int-medium"></p>
-	                            </li>
-							</ul>
-							 <ul>
-	                        	<li class="col-md-6">
-	                                <p class="word">商品类型</p>
-	                                <p>
-		                                <select id="productType" class="select select-medium">
-		                                	<option value="">全部</option>
-		                                	<option value="1">实物</option>
-		                                	<option value="2">虚拟</option>
-		                                </select>
-	                                </p>
-	                            </li>
-	                            
-	                        </ul>
-							<ul>
-								<li class="width-xlag">
-									<p class="word">&nbsp;</p>
-									<p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
-											  id="selectProductList" value="查  询"></p>
-								</li>
-							</ul>
-						</div> --%>
 					</div>
 				</div>
 			</div>
@@ -204,7 +143,6 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
 									<tr>
-											<!-- <td>{{:prodId}}</td> -->
 											<td>{{:standedProdId}}</td>
 											<td>{{:productCatName}}</td>
 											<td>{{:productTypeName}}</td>
