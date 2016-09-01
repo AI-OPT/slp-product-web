@@ -80,7 +80,6 @@
 										</p>
 									</li>
 								</ul>
-								<input type="hidden" id="state" value="1"/>
 								<%-- 类目 --%>
 								<ul id="data1ProdCat">
 									<li class="col-md-12">
