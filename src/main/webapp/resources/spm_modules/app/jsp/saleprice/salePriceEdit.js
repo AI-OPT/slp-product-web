@@ -55,7 +55,7 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 				var salePrice = {};
 				salePrice['groupId']=$(item).attr('groupId');
 				salePrice['PriorityNumber']=$(item).attr('stoSn');
-				salePrice['salePrice']=priceVal;
+				salePrice['salePrice']=priceVal*1000;
 				priceArry.push(salePrice);
 			});
 			if (hasError==true){

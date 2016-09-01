@@ -1,6 +1,7 @@
 package com.ai.slp.product.web.controller.saleprice;
 
 import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
@@ -42,7 +43,15 @@ public class SalePriceEditController {
         salePriceReq.setOperId(AdminUtil.getAdminId());
         List<StoNoSkuSalePrice> salePriceList = JSON.parseArray(salePriceStr,StoNoSkuSalePrice.class);
         salePriceReq.setStorageSalePrice(salePriceList);
-//        BaseResponse baseResponse = storageSV.updateMultiStorageSalePrice(salePriceReq);
+        BaseResponse baseResponse = storageSV.updateMultiStorageSalePrice(salePriceReq);
+        //保存错误
+        ResponseHeader header = baseResponse.getResponseHeader();
+        if (header!=null && !header.isSuccess()){
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_FAILURE, "更新销售价失败:"+header.getResultMessage());
+        }else
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_SUCCESS, "OK","");
         return responseData;
     }
 
@@ -62,6 +71,14 @@ public class SalePriceEditController {
         Map<String,Long> priceMap = JSON.parseObject(skuPriceStr,new TypeReference<Map<String,Long>>(){});
         skuSalePrice.setStorageSalePrice(priceMap);
         BaseResponse baseResponse = storageSV.updateSkuStorageSalePrice(skuSalePrice);
+        //保存错误
+        ResponseHeader header = baseResponse.getResponseHeader();
+        if (header!=null && !header.isSuccess()){
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_FAILURE, "更新销售价失败:"+header.getResultMessage());
+        }else
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_SUCCESS, "OK","");
         return responseData;
     }
 }
