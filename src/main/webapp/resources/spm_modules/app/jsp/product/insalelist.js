@@ -33,7 +33,10 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     	//事件代理
     	events: {
     		//查询
-            "click #selectProductList":"_selectProductList"
+            "click #selectProductList":"_selectProductList",
+            "click #submitBtn":"_prodToDownSale",//商品下架
+            "click #addBtn-close":"_closeConf",
+            "click #createCloseImg":"_closeConf",
             },
     	//重写父类
     	setup: function () {
@@ -122,6 +125,51 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
 	            }
     		});
     	},
+    	
+    	//确认下架提示弹框
+    	_showDownSale:function(productId){
+    		$('#eject-mask').fadeIn(100);
+			$('#aband-small').slideDown(200);
+			console.log("downsale id is "+ productId);
+			$("#downsaleId").val(productId);
+    	},
+
+    	//关闭确认提示框
+    	_closeConf:function(){
+    		console.log("close conf")
+    		$('#eject-mask').fadeOut(100);
+			$('#aband-small').slideUp(150);
+    	},
+    	
+    	//商品下架
+    	_prodToDownSale:function(){
+    		var _this = this;
+    		var productId = $("#downsaleId").val();
+    		_this._closeConf();
+    		ajaxController.ajax({
+    			type: "post",
+    			processing: false,
+    			message: "下架中,请等待...",
+    			url: _base+"/prodOperate/prodInStore",
+    			data:{"productId":productId},
+    			success: function(data){
+    				if ("1"===data.statusCode) {
+    					var d = Dialog({
+    						content:"下架成功.",
+							icon:'success',
+							okValue: '确 定',
+							ok:function(){
+								this.close();
+								_this._selectProductList();
+							}
+    					});
+    					d.show();
+					}
+    			}
+    		});
+    		
+    	},
+    	
     	//滚动到顶部
     	_returnTop:function(){
     		var container = $('.wrapper-right');
