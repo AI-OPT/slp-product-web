@@ -220,11 +220,13 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     	//增加优先级
     	_addPriorityNumber:function(groupId){
 			var number = $("#groupSn"+groupId).val();
+			if (number==null || typeof (number)==undefined)
+				number = 0;
 			var name = 'stopn_'+groupId+"_"+number;
 			console.log("Tr name:"+name);
 			var stoNum = $("tr[name="+name+"]").size();
 			console.log("GroupId:"+groupId+",Number:"+number+",stoNum:"+stoNum);
-    		if(stoNum<1){
+    		if(number>0 && stoNum<1){
     			alert("最高优先级下没有库存,不允许添加新的优先级");
     			return;
     		}
