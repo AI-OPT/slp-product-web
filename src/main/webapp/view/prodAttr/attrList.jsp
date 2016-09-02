@@ -12,29 +12,31 @@
 <body>
 <!-- 点击编辑按钮弹框 -->
 <div class="eject-big">
-	<div class="eject-samll" id="increase-samll">
+	<div class="eject-medium" id="increase-samll">
 		<!--编辑-->
 		<div class="eject-medium-title">
             <p>更新属性</p>
             <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
 		<div class="form-label">
+		<form id="prodAttrForm">
 						<p><input type="hidden" id="upAttrId"  class="int-text int-medium"></p>
 	           <ul>	
 	               <li>
-	                   <p class="word">属性名称</p>
-	                   <p><input id="upAttrName" type="text" class="int-text int-medium"></p>
+	                   <p class="word"><span>*</span>属性名称</p>
+	                   <p><input id="upAttrName" type="text" class="int-text int-medium" maxlength="20"></p>
 	               </li>
 	           </ul>
 	           <ul>	
 	               <li>
-	                   <p class="word">属性名称首字母(大写)</p>
-	                   <p><input id="upFirstLetter" type="text" class="int-text int-medium"></p>
+	                   <p class="word"><span>*</span>属性名称首字母(大写)</p>
+	                   <p><input id="upFirstLetter" type="text" class="int-text int-medium" maxlength="1" required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
+                                                  data-msg-regexp="请输入大写字母" val-tag="firstLetter"></p>
 	               </li>
 	           </ul>
               <ul> 
                 <li>
-                   <p class="word">属性值输入方式</p>
+                   <p class="word"><span>*</span>属性值输入方式</p>
                    <!-- 1.下拉单选 2.多选 3.可输入文本框（单行）4.可输入文本框（多行）
 								   5.日期时间 6.日期时间段 -->
                    <p>
@@ -50,6 +52,7 @@
                    </p>
               	 </li>
           	 </ul>
+         </form> 	 
 		</div>
 		<!--按钮-->
         <div class="row mt-15"><!--删格化-->
@@ -168,9 +171,9 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th>序号</th>
+										<th width="5%">序号</th>
 										<th>属性ID</th>
-										<th>属性名称</th>
+										<th width="20%">属性名称</th>
 										<th>输入值方式</th>
 										<th>属性值数量</th>
 										<th>操作时间</th>
