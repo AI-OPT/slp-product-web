@@ -78,7 +78,7 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
 			ajaxController.ajax({
 				type: "post",
 				processing: false,
-				// message: "加载中，请等待...",
+				message: "加载中，请等待...",
 				url: _base+"/cat/query/child",
 				data:{"prodCatId":prodCatId},
 				success: function(data){

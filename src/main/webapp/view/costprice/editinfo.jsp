@@ -84,47 +84,50 @@
                             
                             <!--标题开始--> 
 						    <header class="main-box-header clearfix ">
-	                           <h5 class="pull-left">商品状态</h5>
+	                           <h5 class="pull-left">成本价</h5>
 	                        </header> 
-	                         <!--标题结束--> 
-	                         <div class="form-label  bd-bottom"> 
-		                         <ul>
-						             <li class="width-xlag">
-				                        <p class="word">状态：</p>
-				                        <p>
-				                        	<c:if test="${normProdInfo.state == '0'}">废弃</c:if>
-				                            <c:if test="${normProdInfo.state == '1'}">可使用</c:if>
-				                            <c:if test="${normProdInfo.state == '2'}">不可使用</c:if>
-				                        </p>
-				                     </li>
-				                 </ul>
-				             </div>
-                        <!--标题开始--> 
-	                         <!--标题结束--> 
-	                         <div class="form-label  bd-bottom"> 
-		                         <ul>
-						             <li class="width-xlag">
-						             	<c:choose>
-							             	<c:when test="${normProdInfo.state == '0'}">
-							             		<p class="word">废弃人：</p>
-							             		<p>${normProdInfo.operName}</p>
-							             		<p class="word">废弃时间：</p>
-							             		<p>${normProdInfo.operTime}</p>
-											</c:when>  
-											     
-											<c:otherwise>
-					                        	<p class="word">添加人：</p>
-						                        <p>${normProdInfo.operName}</p>
-						                        <p class="word">添加时间：</p>
-							             		<p>${normProdInfo.operTime}</p>
-											</c:otherwise>
-				                        </c:choose>
-				                     </li>
-				                 </ul>
-				             </div>
+	                        <div class="main-box-body clearfix">
+							<!--table表格-->
+							<div class="table-responsive clearfix">
+								<table class="table table-hover table-border table-bordered">
+									<thead>
+									<tr>
+										<th>序号</th>
+										<th>商品ID</th>
+										<th>商品名称</th>
+										<th>仓库ID</th>
+										<th>仓库名称</th>
+										<th>供货量</th>
+										<th>成本价(元)</th>
+									</tr>
+									</thead>
+									<tbody id="searchProdRouteData">
+									</tbody>
+								</table>
+								<div id="showMessageDiv"></div>
+								<script id="searchProdRouteTemple" type="text/template">
+									<tr>
+										<td>{{:#index+1}}</td>
+										<td>{{:productId}}</td>
+										<td>{{:supplyName}}</td>
+										<td>{{:routeId}}</td>
+										<td>{{:routeName}}</td>
+										<td>{{:usableNum}}</td>
+                                        <td></td>
+									</tr>
+								</script>
+							</div>
+							<!--分页-->
+							<div class="paging">
+								<ul id="pagination-ul">
+								</ul>
+							</div>
+							<!--分页结束-->
+						 </div>
                         </div>
                         <div id="subDiv" class="row pt-30">
 	                            	<p class="center pr-30 mt-30">
+	                            <input id="saveBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="保  存">
                                 <input type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="返  回"
                                        onclick="javaScript:window.history.go(-1);">
                             </p>
@@ -140,4 +143,14 @@
 </div>
 <!-- footer -->
 </body>
+<script type="text/javascript">
+	var pager;
+	var standedProdId = '${standedProdId}';
+	(function () {
+		seajs.use('app/jsp/costprice/editinfo', function(costpricePage) {
+			pager = new costpricePage({element : document.body});
+			pager.render();
+		});
+	})();
+</script>
 </html>

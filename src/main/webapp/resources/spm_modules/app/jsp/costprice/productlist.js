@@ -38,9 +38,23 @@ define('app/jsp/costprice/productlist', function (require, exports, module) {
     	//重写父类
     	setup: function () {
     		normproductlistPager.superclass.setup.call(this);
+    		this._clearQueryParams();
     		this._selectNormProductList();
     	},
-    	
+    	//清空查询条件
+    	_clearQueryParams:function(){
+    		var productType = $("#productType").val("");
+    		var productId = $("#standedProdId").val("");
+    		var productName = $("#standedProductName").val("");
+    		//清空商品类目
+    		var prodCat = document.getElementById("data1ProdCat");
+			var length = prodCat.getElementsByTagName("select").length;
+			//从当前元素开始移除后面的下拉菜单
+			for(var i=1;i<length;i++){
+				$("#productCat"+i).remove();
+			}
+			$("#productCat0 option[value='']").attr("selected",true);
+    	},
     	// 改变商品类目
     	_selectChange:function(osel){
 			var prodCatId = osel.options[osel.selectedIndex].value;
@@ -57,7 +71,7 @@ define('app/jsp/costprice/productlist', function (require, exports, module) {
 			ajaxController.ajax({
 				type: "post",
 				processing: false,
-				// message: "加载中，请等待...",
+				message: "加载中，请等待...",
 				url: _base+"/cat/query/child",
 				data:{"prodCatId":prodCatId},
 				success: function(data){
@@ -98,8 +112,6 @@ define('app/jsp/costprice/productlist', function (require, exports, module) {
 	 			renderId:"searchNormProductData",
 	 			messageId:"showMessageDiv",
 	 			
-	           /* data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName},
-	            */
 	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName
 		 		},
 	 			

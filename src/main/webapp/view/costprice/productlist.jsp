@@ -119,9 +119,8 @@
 										<td>{{:productName}}</td>
 										<td>{{:catName}}</td>
 										<td>{{:productType}}</td>
-										<td>{{:state}}</td>
                                         <td>
-											<a href="${_base}/normprodedit/{{:productId}}" class="blue-border">编辑</a>
+											<a href="${_base}/costprice/{{:productId}}" class="blue-border">编辑</a>
 										</td>
 									</tr>
 								</script>

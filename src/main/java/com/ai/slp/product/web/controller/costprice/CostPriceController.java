@@ -16,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.platform.common.api.cache.interfaces.ICacheSV;
 import com.ai.platform.common.api.cache.param.SysParam;
 import com.ai.platform.common.api.cache.param.SysParamSingleCond;
-import com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV;
-import com.ai.platform.common.api.sysuser.param.SysUserQueryRequest;
-import com.ai.platform.common.api.sysuser.param.SysUserQueryResponse;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
 import com.ai.slp.product.api.normproduct.param.AttrMap;
 import com.ai.slp.product.api.normproduct.param.AttrQuery;
@@ -38,6 +36,14 @@ import com.ai.slp.product.web.constants.ProductConstants;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.util.AdminUtil;
+import com.ai.slp.route.api.routeprodsupplymanage.interfaces.IRouteProdSupplyManageSV;
+import com.ai.slp.route.api.routeprodsupplymanage.param.CostPriceUpdateListRequest;
+import com.ai.slp.route.api.routeprodsupplymanage.param.CostPriceUpdateResponse;
+import com.ai.slp.route.api.routeprodsupplymanage.param.CostPriceUpdateVo;
+import com.ai.slp.route.api.routeprodsupplymanage.param.StandedProdIdPageSearchRequest;
+import com.ai.slp.route.api.routeprodsupplymanage.param.StandedProdRoutePageSearchResponse;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * 标准品查询
@@ -46,8 +52,8 @@ import com.ai.slp.product.web.util.AdminUtil;
  */
 @Controller
 @RequestMapping("/costprice")
-public class CostPriceQueryController {
-	private static final Logger LOG = LoggerFactory.getLogger(CostPriceQueryController.class);
+public class CostPriceController {
+	private static final Logger LOG = LoggerFactory.getLogger(CostPriceController.class);
 
 	@Autowired
 	private ProdCatService prodCatService;
@@ -173,11 +179,11 @@ public class CostPriceQueryController {
 		normProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
 		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
 		NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
-		// 设置操作人姓名
-		Long operId = normProdInfoResponse.getOperId();
-		String operName = getOperName(operId);
-		normProdInfoResponse.setOperName(operName);
-		uiModel.addAttribute("normProdInfo", normProdInfoResponse);
+		// // 设置操作人姓名
+		// Long operId = normProdInfoResponse.getOperId();
+		// String operName = getOperName(operId);
+		// normProdInfoResponse.setOperName(operName);
+		// uiModel.addAttribute("normProdInfo", normProdInfoResponse);
 		// 查询类目链
 		uiModel.addAttribute("catLinkList", prodCatService.queryLink(normProdInfoResponse.getProductCatId()));
 		uiModel.addAttribute("productCatId", normProdInfoResponse.getProductCatId());
@@ -201,22 +207,85 @@ public class CostPriceQueryController {
 		attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
 		attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
 		uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
-		return "normproduct/info";
+		// 查询成本价列表
+		return "costprice/editinfo";
 	}
 
-	private String getOperName(Long operId) {
-		String name = null;
-		// 设置操作者名称
-		if (operId != null) {
-			SysUserQueryRequest userQuery = new SysUserQueryRequest();
-			userQuery.setTenantId(AdminUtil.getTenantId());
-			userQuery.setId(Long.toString(operId));
-			ISysUserQuerySV sysUserQuerySV = DubboConsumerFactory.getService(ISysUserQuerySV.class);
-			SysUserQueryResponse serInfo = sysUserQuerySV.queryUserInfo(userQuery);
-			if (serInfo != null) {
-				name = serInfo.getName();
-			}
+	// private String getOperName(Long operId) {
+	// String name = null;
+	// // 设置操作者名称
+	// if (operId != null) {
+	// SysUserQueryRequest userQuery = new SysUserQueryRequest();
+	// userQuery.setTenantId(AdminUtil.getTenantId());
+	// userQuery.setId(Long.toString(operId));
+	// ISysUserQuerySV sysUserQuerySV =
+	// DubboConsumerFactory.getService(ISysUserQuerySV.class);
+	// SysUserQueryResponse serInfo = sysUserQuerySV.queryUserInfo(userQuery);
+	// if (serInfo != null) {
+	// name = serInfo.getName();
+	// }
+	// }
+	// return name;
+	// }
+	
+	/**
+	 * 查询仓库列
+	 * 
+	 * @param
+	 * @return
+	 */
+	@RequestMapping("/prodRouteList")
+	@ResponseBody
+	public ResponseData<StandedProdRoutePageSearchResponse> queryStandedProdRouteList(StandedProdIdPageSearchRequest queryRequest) {
+		ResponseData<StandedProdRoutePageSearchResponse> responseData = null;
+		try {
+			IRouteProdSupplyManageSV  routeProdSupplyManageSV = DubboConsumerFactory.getService(IRouteProdSupplyManageSV .class);
+			StandedProdRoutePageSearchResponse prodRoutePageResponse = routeProdSupplyManageSV.queryStandedProdRoutePageSearch (queryRequest);
+			responseData = new ResponseData<StandedProdRoutePageSearchResponse>(ResponseData.AJAX_STATUS_SUCCESS,
+					"查询成功", prodRoutePageResponse);
+		} catch (Exception e) {
+			responseData = new ResponseData<StandedProdRoutePageSearchResponse>(ResponseData.AJAX_STATUS_FAILURE,
+					"获取信息异常");
+			LOG.error("获取信息出错：", e);
 		}
-		return name;
+		return responseData;
 	}
+	
+	/**
+	 * 保存成本价
+	 * 
+	 * @param
+	 * @return
+	 */
+	@RequestMapping("/save")
+	@ResponseBody
+	public ResponseData<String> saveProductCostPrice(String costPriceList) {
+		ResponseData<String> responseData = null;
+		CostPriceUpdateListRequest paramCostPriceUpdateListRequest = new CostPriceUpdateListRequest();
+		Gson gson = new Gson();
+		List<CostPriceUpdateVo> costPriceUpdateVoList = gson.fromJson(costPriceList, new TypeToken<List<CostPriceUpdateVo>>(){}.getType());
+		if(costPriceUpdateVoList != null && costPriceUpdateVoList.size()>0){
+//			for(CostPriceUpdateVo costPriceUpdateVo:costPriceUpdateVoList){
+//				costPriceUpdateVo.setTenantId(AdminUtil.getTenantId());
+//			}
+			paramCostPriceUpdateListRequest.setVoList(costPriceUpdateVoList);
+			try {
+				IRouteProdSupplyManageSV routeProdSupplyManageSV = DubboConsumerFactory.getService(IRouteProdSupplyManageSV .class);
+				CostPriceUpdateResponse updateCostPrice = routeProdSupplyManageSV.updateCostPrice(paramCostPriceUpdateListRequest);
+				ResponseHeader responseHeader = updateCostPrice.getResponseHeader();
+				if(responseHeader.isSuccess()){
+					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"保存成功");
+				}else{
+					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"保存失败");
+				}
+			} catch (Exception e) {
+				responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"保存失败");
+				LOG.error("获取信息出错：", e);
+			}
+		}else{
+			responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"无数据");
+		}
+		return responseData;
+	}
+	
 }
