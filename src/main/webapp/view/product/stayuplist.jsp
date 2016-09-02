@@ -11,25 +11,27 @@
 
 <body>
 <!--确认是否上架弹出框 -->
-<div class="eject-big" id="addViewDiv">
-	<div class="eject-samll" id="addAttrValue-samll">
-		<!-- 确认 -->
-		<div class="eject-medium-title">
+<div class="eject-big">
+    <div class="eject-samll" id="aband-small">
+        <input type="hidden" id="insaleId">
+        <div class="eject-medium-title">
+            <p>确认上架</p>
             <p id="createCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
-		<div class="eject-samll-title">
-			<p>上架操作确认</p>
-			<p class="img"><A href="#"></A></p>
-		</div>
-		<!-- 按钮 -->
-        <div id="subDiv" class="row mt-15"><!-- 删格化 -->
+
+        <div class="eject-medium-complete">
+            <p><img src="${uedroot}/images/eject-icon-prompt.png"></p>
+            <p class="word">确定上架销售吗？</p>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
             <p class="center pr-30 mt-30">
-                <input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="提  交">
+                <input id="submitBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
                 <input id="addBtn-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
             </p>
         </div>
-	</div>	
-	<div class="mask" id="eject-mask"></div>	
+    </div>
+    <div class="mask" id="eject-mask"></div>
 </div>
 <!--确认是否上架弹出框 结束-->
 
@@ -168,7 +170,7 @@
 											{{if state=="6"}}
 											<td>
 												<div>
-													<p><a name="addBtnView" id="{{:standedProdId}}" href="#" class="blue-border">上架销售</a></p> 
+													<p><a name="insaleBtnView" prodId="{{:prodId}}" href="#" class="blue-border">上架销售</a></p> 
 													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
 												</div>
 											</td>
@@ -208,9 +210,11 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		
-		$('#searchNormProductData').delegate("a[name='addBtnView']", 'click', function () {
-            pager._showAddAttr();
+		<%-- 上架确认框 --%>
+		$('#searchNormProductData').delegate("a[name='insaleBtnView']", 'click', function () {
+			var productId = $(this).attr('prodId');
+            console.log("编辑链接:"+productId);
+            pager._showInSale(productId);
         });
 		
 		seajs.use('app/jsp/product/stayuplist', function(stayuplistPager) {
