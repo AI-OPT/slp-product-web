@@ -99,14 +99,16 @@
                             </div>
                             </c:if>
                             <!-- 市场价 -->
-                            <div class="form-label  bd-bottom" data-widget="validator">
-                            	<input type="hidden" name="productId" id="productId" value="${standedProdId}">
-                            	<ul class="big-word">
-                                    <li class="col-md-6">
-                                        <p class="word">市场价：</p>
-                                        <p><input name="marketPrice" id="marketPrice" type="text" value="${price}" class="int-text int-medium"> (元)</p>
-                                    </li>
-                                </ul>
+                            <div class="form-label bd-bottom ui-form" data-widget="validator">
+                            	<form id="prodForm" action="${_base}/marketpricequery/updateMarketPrice" method="post">
+	                            	<input type="hidden" name="productId" id="productId" value="${standedProdId}">
+	                            	<ul class="big-word">
+	                                    <li class="col-md-6">
+	                                        <p class="word">市场价：</p>
+	                                        <p><input name="marketPrice" id="marketPrice" type="text" value="${price}" class="int-text int-medium" regexp="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$" data-msg-regexp="请输入正确市场价"> (元)</p>
+	                                    </li>
+	                                </ul>
+                                </form>
                             </div>
                         </div>
                         <div id="subDiv" class="row pt-30">

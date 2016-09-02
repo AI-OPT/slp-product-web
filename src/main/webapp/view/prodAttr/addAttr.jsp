@@ -23,7 +23,7 @@
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性名称</p>
-					                    <p><input name="attrName" type="text" class="int-text int-medium"></p>
+					                    <p><input name="attrName" type="text" class="int-text int-medium" maxlength="20"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>名称首字母(大写)</p>
@@ -88,7 +88,7 @@
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性名称</p>
-					                    <p><input name="attrName" type="text" class="int-text int-medium"></p>
+					                    <p><input name="attrName" type="text" class="int-text int-medium" maxlength="20"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>属性名称首字母</p>

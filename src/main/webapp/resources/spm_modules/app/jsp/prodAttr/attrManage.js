@@ -14,13 +14,15 @@ require("bootstrap-paginator/bootstrap-paginator.min");
 require("app/util/jsviews-ext");
 require("opt-paging/aiopt.pagination");
 require("twbs-pagination/jquery.twbsPagination.min");
-
+require("jquery-validation/1.15.1/jquery.validate");
+require("app/util/aiopt-validate-ext");
     
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-   // var clickId = "";
+    var clickId = "";
+    var upValidator;
     
   //表单校验对象
 	var validator = new Validator({
@@ -68,7 +70,45 @@ require("twbs-pagination/jquery.twbsPagination.min");
     	setup: function () {
     		attrlistPager.superclass.setup.call(this);
     		this._selectAttrValueList();
+    		upValidator = this._initValidator();
+			$(":input").bind("focusout",function(){
+				upValidator.element(this);
+			});
     	},
+    	//初始化表单验证
+    	_initValidator:function(){
+			return $("#prodAttrValueForm").validate({
+				rules:{
+					productCatName:{
+						required: true,
+						maxlength: 20
+					},
+					firstLetter:{
+						required: true,
+						maxlength:1,
+						regexp:/^[A-Z]+$/
+					},
+					upSerialNum:{
+						required:true,
+						digits:true,
+						min:1,
+						max:999
+					}
+				},
+				messages:{
+					productCatName:{
+						required:"名称不能为空",
+						maxlength:"名称不能超过20位(一个汉字占2位)"
+					},
+					firstLetter:{
+						required:"名称首字母不能为空",
+						maxlength:"必须为大写名称首字母",
+						regexp:"必须为大写字母"
+					}
+				}
+			});
+
+		},
     	
     	//查询列表
     	_selectAttrValueList:function(){
@@ -140,6 +180,8 @@ require("twbs-pagination/jquery.twbsPagination.min");
 		},
 		//提交更新
 		_updateAttr:function(){
+			if (upValidator.valid()!=true)
+				return;
 			var _this = this;
 			validator.execute();
 			var attrvalueDefId = $("#upAttrvalueDefId").val();

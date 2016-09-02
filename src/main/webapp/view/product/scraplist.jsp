@@ -160,8 +160,8 @@
 	var prodInfoList = '${prodInfoList}';
 	var productEditInfo = '${productEditInfo}';
 	(function () {
-		seajs.use('app/jsp/product/scraplist', function(addlistPager) {
-			pager = new addlistPager({element : document.body});
+		seajs.use('app/jsp/product/scraplist', function(scraplistPager) {
+			pager = new scraplistPager({element : document.body});
 			pager.render();
 		});
 	})();

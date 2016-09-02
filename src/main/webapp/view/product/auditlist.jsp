@@ -10,29 +10,6 @@
 </head>
 
 <body>
-<!--确认是否上架弹出框 -->
-<div class="eject-big" id="addViewDiv">
-	<div class="eject-samll" id="addAttrValue-samll">
-		<!-- 确认 -->
-		<div class="eject-medium-title">
-            <p id="createCloseImg" class="img"><i class="fa fa-times"></i></p>
-        </div>
-		<div class="eject-samll-title">
-			<p>上架操作确认</p>
-			<p class="img"><A href="#"></A></p>
-		</div>
-		<!-- 按钮 -->
-        <div id="subDiv" class="row mt-15"><!-- 删格化 -->
-            <p class="center pr-30 mt-30">
-                <input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="提  交">
-                <input id="addBtn-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
-            </p>
-        </div>
-	</div>	
-	<div class="mask" id="eject-mask"></div>	
-</div>
-<!--确认是否上架弹出框 结束-->
-
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
 	<div class="row"><!--外围框架-->
 		<div class="col-lg-12"><!--删格化-->
@@ -73,10 +50,22 @@
 										<p>
 											<select id="state" class="select select-medium">
 												<option value="">全部</option>
-												<option value="6">待上架</option>
-												<option value="61">售罄下架</option>
-												<option value="62">库存暂停下架</option>
+												<option value="3">审核中</option>
+												<option value="4">被拒绝</option>
 											</select>
+										</p>
+									</li>
+								</ul>
+								<ul>
+									<li class="col-md-4">
+										<p class="word">操作开始时间</p>
+										<p><input type="text" class="int-text int-medium" id="operStartTime">
+											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
+									</li>
+									<li class="col-md-4">
+										<p class="word">操作结束时间</p>
+										<p><input type="text" class="int-text int-medium" id="operEndTime">
+											<span class="time"> <i class="fa  fa-calendar" ></i></span>
 										</p>
 									</li>
 								</ul>
@@ -140,7 +129,7 @@
 										<th>预览图</th>
 										<th width="30%">商品名称</th>
 										<th>状态</th>
-										<!-- <th>生成时间</th> -->
+										<th>操作时间</th>
 										<th>操作</th>
 									</tr>
 									</thead>
@@ -151,7 +140,6 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
 									<tr>
-											<!-- <td>{{:prodId}}</td> -->
 											<td>{{:standedProdId}}</td>
 											<td>{{:productCatName}}</td>
 											<td>{{:productTypeName}}</td>
@@ -162,25 +150,14 @@
 											{{/if}}
 											<td>{{:prodName}}</td>
 											<td>{{:stateName}}</td>
-											<!-- <td>{{:~timesToFmatter(createTime)}}</td> -->
-
-
-											{{if state=="6"}}
+											<td>{{:~timesToFmatter(operTime)}}</td>
 											<td>
 												<div>
-													<p><a name="addBtnView" id="{{:standedProdId}}" href="#" class="blue-border">上架销售</a></p> 
-													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
+													<p><a href="#" class="blue-border">审核商品</a></p>
+													<p><a href="#" class="blue-border">查看商品</a></p>
 												</div>
 											</td>
-											{{else}}
-											<td>
-												<div>
-													<p><a name="#" id="#" href="#" class="blue-border">查看商品</a></p> 
-													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
-												</div>
-											</td>
-											{{/if}}
-										</tr>
+									</tr>
 								</script>
 							</div>
 							<!--分页-->
@@ -203,18 +180,20 @@
 	var prodInfoList = '${prodInfoList}';
 	var productEditInfo = '${productEditInfo}';
 	(function () {
+		<%-- 展示日历 --%>
+		$('#selectDiv').delegate('.fa-calendar','click',function(){
+			var calInput = $(this).parent().prev();
+			var timeId = calInput.attr('id');
+			console.log("click calendar "+timeId);
+			WdatePicker({el:timeId,readOnly:true});
+		});
 		<%-- 高级区域 --%>
 		$(".form-label ul li .sos a").click(function () {
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		
-		$('#searchNormProductData').delegate("a[name='addBtnView']", 'click', function () {
-            pager._showAddAttr();
-        });
-		
-		seajs.use('app/jsp/product/stayuplist', function(stayuplistPager) {
-			pager = new stayuplistPager({element : document.body});
+		seajs.use('app/jsp/product/auditlist', function(auditlistPager) {
+			pager = new auditlistPager({element : document.body});
 			pager.render();
 		});
 	})();

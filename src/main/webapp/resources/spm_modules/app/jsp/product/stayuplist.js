@@ -20,7 +20,7 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    var ajaxController = new AjaxController();
 	    var clickId = "";
 	    //定义页面组件类
-	    var addlistPager = Widget.extend({
+	    var stayuplistPager = Widget.extend({
 	    	
 	    	Implements:SendMessageUtil,
 	    	//属性，使用时由类的构造函数传入
@@ -40,7 +40,7 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	            },
 	    	//重写父类
 	    	setup: function () {
-				addlistPager.superclass.setup.call(this);
+				stayuplistPager.superclass.setup.call(this);
 	    		this._selectProductList();
 	    	},
 	    	
@@ -93,7 +93,7 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    	_selectProductList:function(){
 	    		var _this = this;
 	    		var div = document.getElementById("data1ProdCat");
-	    		var length = document.getElementsByTagName("select").length-2;
+	    		var length = document.getElementsByTagName("select").length-3;
 	    		var productCatId = $("#productCat"+length+" option:selected").val();
 	    		var productType = $("#productType").val().trim();
 	    		var standedProdId = $("#standedProdId").val().trim();
@@ -109,7 +109,7 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 		 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName
 			 			},
 		 			
-		           	pageSize: addlistPager.DEFAULT_PAGE_SIZE,
+		           	pageSize: stayuplistPager.DEFAULT_PAGE_SIZE,
 		           	visiblePages:5,
 		            render: function (data) {
 		            	if(data != null && data != 'undefined' && data.length>0){
@@ -193,5 +193,5 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    	
 	    });
 	    
-	    module.exports = addlistPager;
+	    module.exports = stayuplistPager;
 	});
