@@ -97,6 +97,7 @@ define('app/jsp/product/auditlist', function (require, exports, module) {
     		var productName = $("#productName").val().trim();
     		var operStartTime = $("#operStartTime").val().trim(); 
     		var operEndTime = $("#operEndTime").val().trim();
+    		var state = $("#state").val().trim();
     		
     		$("#pagination-ul").runnerPagination({
 	 			url: _base+"/prodquery/getAuditList",
@@ -105,7 +106,7 @@ define('app/jsp/product/auditlist', function (require, exports, module) {
 	 			renderId:"searchNormProductData",
 	 			messageId:"showMessageDiv",
 	 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName,
-		 			"operStartTimeStr":operStartTime,"operEndTimeStr":operEndTime},
+		 			"operStartTimeStr":operStartTime,"operEndTimeStr":operEndTime,"state":state},
 	 			
 	           	pageSize: auditlistPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
