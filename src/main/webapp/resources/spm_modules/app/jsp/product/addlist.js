@@ -95,7 +95,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
     		var productType = $("#productType").val().trim();
     		var standedProdId = $("#standedProdId").val().trim();
     		var productName = $("#productName").val().trim();
-    		
+    		var state = $("#state").val().trim();
     		
     		$("#pagination-ul").runnerPagination({
 	 			url: _base+"/prodquery/getProductList",
@@ -103,8 +103,8 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 	 			dataType: "json",
 	 			renderId:"searchNormProductData",
 	 			messageId:"showMessageDiv",
-	 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName
-		 			},
+	 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName,
+		 			"state":state},
 	 			
 	           	pageSize: addlistPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,

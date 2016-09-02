@@ -1,5 +1,6 @@
 package com.ai.slp.product.web.controller.costprice;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -42,6 +44,7 @@ import com.ai.slp.route.api.routeprodsupplymanage.param.CostPriceUpdateResponse;
 import com.ai.slp.route.api.routeprodsupplymanage.param.CostPriceUpdateVo;
 import com.ai.slp.route.api.routeprodsupplymanage.param.StandedProdIdPageSearchRequest;
 import com.ai.slp.route.api.routeprodsupplymanage.param.StandedProdRoutePageSearchResponse;
+import com.ai.slp.route.api.routeprodsupplymanage.param.StandedProdRouteVo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -179,11 +182,6 @@ public class CostPriceController {
 		normProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
 		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
 		NormProdInfoResponse normProdInfoResponse = normProductSV.queryProducById(normProdUniqueReq);
-		// // 设置操作人姓名
-		// Long operId = normProdInfoResponse.getOperId();
-		// String operName = getOperName(operId);
-		// normProdInfoResponse.setOperName(operName);
-		// uiModel.addAttribute("normProdInfo", normProdInfoResponse);
 		// 查询类目链
 		uiModel.addAttribute("catLinkList", prodCatService.queryLink(normProdInfoResponse.getProductCatId()));
 		uiModel.addAttribute("productCatId", normProdInfoResponse.getProductCatId());
@@ -211,23 +209,6 @@ public class CostPriceController {
 		return "costprice/editinfo";
 	}
 
-	// private String getOperName(Long operId) {
-	// String name = null;
-	// // 设置操作者名称
-	// if (operId != null) {
-	// SysUserQueryRequest userQuery = new SysUserQueryRequest();
-	// userQuery.setTenantId(AdminUtil.getTenantId());
-	// userQuery.setId(Long.toString(operId));
-	// ISysUserQuerySV sysUserQuerySV =
-	// DubboConsumerFactory.getService(ISysUserQuerySV.class);
-	// SysUserQueryResponse serInfo = sysUserQuerySV.queryUserInfo(userQuery);
-	// if (serInfo != null) {
-	// name = serInfo.getName();
-	// }
-	// }
-	// return name;
-	// }
-	
 	/**
 	 * 查询仓库列
 	 * 
@@ -236,21 +217,59 @@ public class CostPriceController {
 	 */
 	@RequestMapping("/prodRouteList")
 	@ResponseBody
-	public ResponseData<StandedProdRoutePageSearchResponse> queryStandedProdRouteList(StandedProdIdPageSearchRequest queryRequest) {
-		ResponseData<StandedProdRoutePageSearchResponse> responseData = null;
+	public ResponseData<PageInfo<StandedProdRouteVo>> queryStandedProdRouteList(StandedProdIdPageSearchRequest queryRequest) {
+		ResponseData<PageInfo<StandedProdRouteVo>> responseData = null;
 		try {
 			IRouteProdSupplyManageSV  routeProdSupplyManageSV = DubboConsumerFactory.getService(IRouteProdSupplyManageSV .class);
+			//StandedProdRoutePageSearchResponse prodRoutePageResponse = getProdRoutePageResponse();
 			StandedProdRoutePageSearchResponse prodRoutePageResponse = routeProdSupplyManageSV.queryStandedProdRoutePageSearch (queryRequest);
-			responseData = new ResponseData<StandedProdRoutePageSearchResponse>(ResponseData.AJAX_STATUS_SUCCESS,
-					"查询成功", prodRoutePageResponse);
+			PageInfo<StandedProdRouteVo> pageInfo = prodRoutePageResponse.getPageInfo();
+			if(prodRoutePageResponse.getResponseHeader().isSuccess()){
+				responseData = new ResponseData<PageInfo<StandedProdRouteVo>>(ResponseData.AJAX_STATUS_SUCCESS,
+						"查询成功", pageInfo);
+			}else{
+				responseData = new ResponseData<PageInfo<StandedProdRouteVo>>(ResponseData.AJAX_STATUS_FAILURE,
+						"查询失败");
+			}
 		} catch (Exception e) {
-			responseData = new ResponseData<StandedProdRoutePageSearchResponse>(ResponseData.AJAX_STATUS_FAILURE,
+			responseData = new ResponseData<PageInfo<StandedProdRouteVo>>(ResponseData.AJAX_STATUS_FAILURE,
 					"获取信息异常");
 			LOG.error("获取信息出错：", e);
 		}
 		return responseData;
 	}
 	
+	/**
+	 * 测试数据
+	 * @return
+	 */
+	private StandedProdRoutePageSearchResponse getProdRoutePageResponse() {
+		StandedProdRoutePageSearchResponse prodRoutePageResponse = new StandedProdRoutePageSearchResponse();
+		ResponseHeader responseHeader = new ResponseHeader();
+		responseHeader.setIsSuccess(true);
+		responseHeader.setResultCode("000000");
+		prodRoutePageResponse.setResponseHeader(responseHeader);
+		PageInfo<StandedProdRouteVo> pageInfo=new PageInfo<StandedProdRouteVo>();
+		pageInfo.setCount(5);
+		pageInfo.setPageNo(1);
+		pageInfo.setPageSize(5);
+		List<StandedProdRouteVo> result=new LinkedList<StandedProdRouteVo>();
+		for(int i=1;i<=5;i++){
+			StandedProdRouteVo standedProdRouteVo = new StandedProdRouteVo();
+			standedProdRouteVo.setStandedProdId("1");
+			standedProdRouteVo.setRouteId("00"+i);
+			standedProdRouteVo.setRouteName("仓库"+i);
+			standedProdRouteVo.setSupplyId("10"+i);
+			standedProdRouteVo.setSupplyName("供应品"+i);
+			standedProdRouteVo.setTotalNum(100L);
+			standedProdRouteVo.setUsableNum(80L);
+			result.add(standedProdRouteVo);
+		}
+		pageInfo.setResult(result);
+		prodRoutePageResponse.setPageInfo(pageInfo);
+		return prodRoutePageResponse;
+	}
+
 	/**
 	 * 保存成本价
 	 * 
@@ -265,13 +284,15 @@ public class CostPriceController {
 		Gson gson = new Gson();
 		List<CostPriceUpdateVo> costPriceUpdateVoList = gson.fromJson(costPriceList, new TypeToken<List<CostPriceUpdateVo>>(){}.getType());
 		if(costPriceUpdateVoList != null && costPriceUpdateVoList.size()>0){
-//			for(CostPriceUpdateVo costPriceUpdateVo:costPriceUpdateVoList){
-//				costPriceUpdateVo.setTenantId(AdminUtil.getTenantId());
-//			}
+			//设置租户
+			for(CostPriceUpdateVo costPriceUpdateVo:costPriceUpdateVoList){
+				costPriceUpdateVo.setTenantId(AdminUtil.getTenantId());
+			}
 			paramCostPriceUpdateListRequest.setVoList(costPriceUpdateVoList);
 			try {
 				IRouteProdSupplyManageSV routeProdSupplyManageSV = DubboConsumerFactory.getService(IRouteProdSupplyManageSV .class);
 				CostPriceUpdateResponse updateCostPrice = routeProdSupplyManageSV.updateCostPrice(paramCostPriceUpdateListRequest);
+				//CostPriceUpdateResponse updateCostPrice = new CostPriceUpdateResponse();
 				ResponseHeader responseHeader = updateCostPrice.getResponseHeader();
 				if(responseHeader.isSuccess()){
 					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"保存成功");

@@ -98,7 +98,7 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    		var productType = $("#productType").val().trim();
 	    		var standedProdId = $("#standedProdId").val().trim();
 	    		var productName = $("#productName").val().trim();
-	    		
+	    		var state = $("#state").val().trim();
 	    		
 	    		$("#pagination-ul").runnerPagination({
 		 			url: _base+"/prodquery/getStayUpList",
@@ -106,8 +106,8 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 		 			dataType: "json",
 		 			renderId:"searchNormProductData",
 		 			messageId:"showMessageDiv",
-		 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName
-			 			},
+		 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName,
+			 			"state":state},
 		 			
 		           	pageSize: stayuplistPager.DEFAULT_PAGE_SIZE,
 		           	visiblePages:5,
@@ -123,9 +123,10 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    	},
 	    	
 	    	//确认上架弹框
-	    	_showAddAttr:function(){
+	    	_showAddAttr:function(productId){
 				$('#eject-mask').fadeIn(100);
 				$('#addAttrValue-samll').slideDown(200);
+				clickId = productId;
 			},
 	    	
 			//关闭弹框
@@ -137,13 +138,13 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 			//上架销售
 	    	_prodToInSale: function(){
 	    		var _this = this;
-	    		var standedProdId = clickId;
+	    		var productId = clickId;
 	    		ajaxController.ajax({
 					type: "post",
 					processing: false,
 					message: "上架中，请等待...",
 					url: _base+"/prodOperate/prodToSale",
-					data:{"standedProdId":standedProdId},
+					data:{"productId":productId},
 					success: function(data){
 						if("1"===data.statusCode){
 							_this._selectStayUpProd();

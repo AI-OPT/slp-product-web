@@ -88,6 +88,7 @@
 	                        </header> 
 	                        <div class="main-box-body clearfix">
 							<!--table表格-->
+							<form id="costpriceForm" action="${_base}/costprice/save" method="post">
 							<div class="table-responsive clearfix">
 								<table class="table table-hover table-border table-bordered">
 									<thead>
@@ -108,15 +109,19 @@
 								<script id="searchProdRouteTemple" type="text/template">
 									<tr>
 										<td>{{:#index+1}}</td>
-										<td>{{:productId}}</td>
+										<td>{{:supplyId}}</td>
 										<td>{{:supplyName}}</td>
 										<td>{{:routeId}}</td>
 										<td>{{:routeName}}</td>
 										<td>{{:usableNum}}</td>
-                                        <td></td>
+                                        <td>
+											<input for="costPrice" name="costPrice{{:#index}}" standedProdId="{{:standedProdId}}" supplyId="{{:supplyId}}" routeId="{{:routeId}}" value="{{:~liToYuan2(costPrice)}}" tenantId="{{:tenantId}}" type="text"  class="int-text int-mini" moneyNumber="true" data-msg-moneyNumber="请输入正确格式">
+											<div id="costPrice{{:#index}}"></div>
+										</td>
 									</tr>
 								</script>
 							</div>
+							</form>
 							<!--分页-->
 							<div class="paging">
 								<ul id="pagination-ul">
