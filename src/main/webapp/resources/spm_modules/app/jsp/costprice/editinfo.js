@@ -10,6 +10,9 @@ define('app/jsp/costprice/editinfo', function (require, exports, module) {
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
     
+    require("opt-paging/aiopt.pagination");
+    require("twbs-pagination/jquery.twbsPagination.min");
+    
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
     
@@ -59,29 +62,31 @@ define('app/jsp/costprice/editinfo', function (require, exports, module) {
     	//保存成本信息
     	_saveCostPrice:function(){
 			var _this = this;
-			var formValidator=$("#nromProdForm").validate({
+			var formValidator=$("#costpriceForm").validate({
 				errorPlacement: function(error, element) {
-					if (element.is(":checkbox")){
-						$("#error_" + element.attr( "name" )+"_title").append( error );
-					}
-				    else{
-				    	$("#error_" + element.attr( "name" )).append( error );
-				    } 
+					$("#" + element.attr( "name" )).append( error );
 				}
 			});
-			$.extend($.validator.messages, {  
-			    required: '该项为必填项'
-			});  
 			if(!formValidator.form()){
 				return;
 			}
+			var updateData = [];
+			$("#searchProdRouteData input[for='costPrice']").each(function(i){
+				var costPrice = $(this).val()?parseInt($(this).val())*1000:null;
+				var tenantId = $(this).attr('tenantId');
+				var standedProdId = $(this).attr('standedProdId');
+				var supplyId = $(this).attr('supplyId');
+				var routeId = $(this).attr('routeId');
+				var data = {"tenantId":tenantId,"costPrice":costPrice,"standedProdId":standedProdId,"supplyId":supplyId,"routeId":routeId};
+				updateData.push(data);
+			});
 			//验证通过,则进行保存操作.this._checkInput() &&
 				ajaxController.ajax({
 					type: "post",
 					processing: true,
 					message: "保存中，请等待...",
 					url: _base+"/costprice/save",
-					data:$('#nromProdForm').serializeArray(),
+					data:{"costPriceList":JSON.stringify(updateData)},
 					success: function(data){
 						if("1"===data.statusCode){
 							var d = Dialog({

@@ -52,7 +52,7 @@
                         <!--二级菜单-->
                         <ul class="submenu">
                             <li><a href="${_base}/marketpricequery/list" target="mainFrame">市场价管理</a></li>
-                            <li><a href="#" target="mainFrame">成本价管理</a></li>
+                            <li><a href="${_base}/costprice/list" target="mainFrame">成本价管理</a></li>
                             <li><a href="${_base}/saleprice/query/" target="mainFrame">销售价管理</a></li>
                         </ul>
                         <!--二级菜单结束-->
