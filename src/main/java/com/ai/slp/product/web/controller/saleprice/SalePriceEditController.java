@@ -58,7 +58,7 @@ public class SalePriceEditController {
     @RequestMapping("/sku/{id}")
     @ResponseBody
     public ResponseData<String> updateSalePrice(
-            @PathVariable("id")String groupId,Short pn,String skuPriceStr){
+            @PathVariable("id")String groupId,Short groupPn,String skuPriceStr){
         ResponseData<String> responseData =
                 new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"更新成功");
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
@@ -67,7 +67,7 @@ public class SalePriceEditController {
         skuSalePrice.setSupplierId(AdminUtil.getSupplierId());
         skuSalePrice.setOperId(AdminUtil.getAdminId());
         skuSalePrice.setGroupId(groupId);
-        skuSalePrice.setPriorityNum(pn);
+        skuSalePrice.setPriorityNum(groupPn);
         Map<String,Long> priceMap = JSON.parseObject(skuPriceStr,new TypeReference<Map<String,Long>>(){});
         skuSalePrice.setStorageSalePrice(priceMap);
         BaseResponse baseResponse = storageSV.updateSkuStorageSalePrice(skuSalePrice);

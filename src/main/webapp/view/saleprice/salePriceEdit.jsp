@@ -18,7 +18,7 @@
     <div class="eject-medium" id="edit-medium">
         <div class="eject-medium-title">
             <p>商品销售价</p>
-            <p class="img" onclick="pager._closeAddStoView();"><i class="fa fa-times"></i></p>
+            <p class="img" onclick="pager._closeSkuPriceView();"><i class="fa fa-times"></i></p>
         </div>
         <div class="form-label">
         </div>
@@ -43,8 +43,8 @@
         <div class="row mt-15"><!--删格化-->
             <p class="center pr-30 mt-30">
                 <input type="button" id="saveInfo" class="biu-btn  btn-primary  btn-auto  ml-5"
-                       onclick="pager._addStorage();" value="确  认">
-                <input id="edit-close" type="button" onclick="pager._closeAddStoView();"
+                       value="确  认">
+                <input id="edit-close" type="button" onclick="pager._closeSkuPriceView();"
                        class="biu-btn  btn-primary  btn-auto  ml-5" value="取  消">
             </p>
         </div>
@@ -172,7 +172,7 @@
                                                 <c:choose>
                                                     <c:when test="${isSale==true}">
                                                         <a href="javaScript:void(0);" class="blue-border"
-                                                           onclick="pager._showAddStoView('${groupInfo.storageGroupId}',${storageSn.key})">设置</a>
+                                                           onclick="pager._showSkuPriceView('${groupInfo.storageGroupId}',${storageSn.key})">设置</a>
                                                     </c:when>
                                                     <%-- 无销售属性 --%>
                                                     <c:when test="${storage.salePrice!=null}">
