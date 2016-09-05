@@ -34,9 +34,9 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    	events: {
 	    		//查询
 	            "click #selectProductList":"_selectProductList",
-	            "click #addBtn-close":"_closeDiv",
-	            "click #createCloseImg":"_closeDiv",
-	            "click #submitAddBtn":"_prodToInSale",//上架操作
+	            "click #addBtn-close":"_closeConf",
+	            "click #createCloseImg":"_closeConf",
+	            "click #submitBtn":"_prodToInSale",//上架操作
 	            },
 	    	//重写父类
 	    	setup: function () {
@@ -123,22 +123,23 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    	},
 	    	
 	    	//确认上架弹框
-	    	_showAddAttr:function(productId){
+	    	_showInSale:function(productId){
 				$('#eject-mask').fadeIn(100);
-				$('#addAttrValue-samll').slideDown(200);
-				clickId = productId;
+				$('#aband-small').slideDown(200);
+				console.log("insale id is "+ productId);
+				$("#insaleId").val(productId);
 			},
 	    	
-			//关闭弹框
-			_closeDiv:function(){
+			//关闭确认提示框
+			_closeConf:function(){
 				$('#eject-mask').fadeOut(100);
-				$('#addAttrValue-samll').slideUp(150);
-				
+				$('#aband-small').slideUp(150);
 			},
 			//上架销售
 	    	_prodToInSale: function(){
 	    		var _this = this;
-	    		var productId = clickId;
+	    		var productId = $("#insaleId").val();
+	    		_this._closeConf();
 	    		ajaxController.ajax({
 					type: "post",
 					processing: false,
@@ -147,13 +148,13 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 					data:{"productId":productId},
 					success: function(data){
 						if("1"===data.statusCode){
-							_this._selectStayUpProd();
 							var d = Dialog({
 								content:"上架成功.",
 								icon:'success',
 								okValue: '确 定',
 								ok:function(){
 									this.close();
+									_this._selectProductList();
 								}
 							});
 							d.show();
