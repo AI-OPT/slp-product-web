@@ -145,7 +145,7 @@
 									<tr>
 										<th>序号</th>
 										<th>商品ID</th>
-										<th width="30%">商品名称</th>
+										<th>商品名称</th>
 										<th>所属类目</th>
 										<th>类型</th>
 										<th>市场价</th>
@@ -164,8 +164,16 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td>{{:productName}}</td>
-										<td>{{:catName}}</td>
+										<!-- <td>{{:productName}}</td>
+										<td>{{:catName}}</td> -->
+										<td class="hind1">
+											<div class="center-hind" >{{:catName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+										</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:productName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
+										</td>
 										<td>{{:productType}}</td>
 										<td>{{:~liToYuan(marketPrice)}}</td>
 										<!-- <td>{{:state}}</td>
