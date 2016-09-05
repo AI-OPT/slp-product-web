@@ -55,49 +55,13 @@ button{outline:none}
 .dialog-icon-prompt{ width:100%;height:75px;float:left; margin-bottom:20px; background: url(../images/eject-icon-prompt.png) no-repeat center top;}
 .dialog-icon-success{ width:100%;height:75px;float:left; margin-bottom:20px; background: url(../images/eject-icon-success.png) no-repeat center top;}
 .dialog-icon-warning{ width:100%;height:75px;float:left; margin-bottom:20px; background: url(../images/eject-icon-Warning.png) no-repeat center top;}
-.dialog-icon-loading{ width:100%;height:120px;float:left; margin-bottom:20px; background: url(../images/loading_1.gif) no-repeat center top;}
-.dialog-icon-notquery{ width:100%;height:230px;float:left; margin-bottom:20px; background: url(../images/not-query.png) no-repeat center;}
-.dialog-icon-notquery-1{ width:100%;height:320px;float:left; margin-bottom:20px; background: url(../images/not-query_1.png) no-repeat center;}
-/**未查询到**/
-.not-query{text-align:center;}
-/**商城首页提示图片**/
-.query-product-msgimage{width: 98%;float: left;background: #fff;padding: 20px 24px 50px 24px;margin-bottom: 20px;margin-left: 20px;}
-/*************************内填充*************************/
-.pt-5{padding-top:5px}/**上填充5像素**/
-.pt-10{padding-top:10px}/**上填充10像素**/
-.pt-15{padding-top:15px}/**上填充15像素**/
-.pt-20{padding-top:20px}/**上填充20像素**/
- 
-.pb-5{padding-bottom:5px}/**下填充5像素**/
-.pb-10{padding-bottom:10px}/**下填充10像素**/
-.pb-15{padding-bottom:15px}/**下填充15像素**/
-.pb-20{padding-bottom:20px}/**下填充20像素**/
- 
-.pl-5{padding-left:5px}/**左填充5像素**/
-.pl-10{padding-left:10px}/**左填充10像素**/
-.pl-15{padding-left:15px}/**左填充15像素**/
-.pl-20{padding-left:20px}/**左填充20像素**/
-.pl-40{padding-left:40px}/**左填充20像素**/
-
-.pr-5{padding-right:5px}/**右填充5像素**/
-.pr-10{padding-right:10px}/**右填充10像素**/
-.pr-15{padding-right:15px}/**右填充15像素**/
-.pr-20{padding-right:20px}/**右填充20像素**/
- 
-.pd-5{padding:5px}/**填充5像素**/
-.pd-10{padding:10px}/**填充10像素**/
-.pd-15{padding:15px}/**填充15像素**/
-.pd-20{padding:20px}/**填充20像素**/
-
-.mr-0{margin-right:0px;}
-
 
 .loading{  
     top:50%;  
     left:50%;  
     padding-left:60px;  
     font-size:15px;  
-    background: url(../images/loading_1.gif) no-repeat 10px 50%;  
+    background: url(../images/loading.gif) no-repeat 10px 50%;  
     -moz-border-radius:20px;  
     -webkit-border-radius:20px;  
     border-radius:20px;  

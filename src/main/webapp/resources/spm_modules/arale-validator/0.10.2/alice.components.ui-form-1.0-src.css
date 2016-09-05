@@ -62,7 +62,7 @@
 .ui-form-item-error .ui-input, .ui-form-item-error .ui-textarea{border:1px #F00 solid; color:#FF5243}
 .ui-form-item-error .ui-input-reset{border:1px #9C9C9C solid; color:#000}
 .ui-form-item-error .ui-form-explain, .ui-form-item-warn .ui-form-explain, 
-.ui-form-item-success .ui-form-explain{ background-repeat:no-repeat; padding-left:20px; *zoom:1}
+.ui-form-item-success .ui-form-explain{background-image:url(https://img.alipay.com/alice/ui-fm.png); background-repeat:no-repeat; padding-left:20px; *zoom:1}
 .ui-form-item-error .ui-form-explain{color:#FF5243; background-position:-186px 16px}
 .ui-form-item-warn .ui-form-explain{background-position:-138px -80px}
 .ui-form-item-error .ui-input:hover, 

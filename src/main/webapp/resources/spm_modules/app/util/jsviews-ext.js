@@ -380,5 +380,22 @@ function subStrLessThan30(str){
 	}
 	return str;
 }
+$.views.helpers({
+	"subStr": function(strlength,str){
+		return subStr(strlength,str);
+	}
+});
 
+function subStr(strlength,str){
+	if(str!=null){
+		var strLength = str.length;
+		if(strLength > strlength){
+			var beginIndex = strlength;
+			str = str.substr(0, strlength) + '...';
+		}else{
+			str = str;
+		}
+	}
+	return str;
+}
 });

@@ -339,8 +339,6 @@ $.extend(prototype, {
 			$icon.attr("class","dialog-icon-success");	
 		}else if(value == "warning"){
 			$icon.attr("class","dialog-icon-warning");		
-		}else if(value == "loading"){
-			$icon.attr("class","dialog-icon-loading");		
 		}
 	},
 
