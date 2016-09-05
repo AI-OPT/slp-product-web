@@ -135,15 +135,15 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th width="10%">序号</th>
-										<th width="15%">商品ID</th>
-										<th width="25%">商品名称</th>
-										<th width="15%">所属类目</th>
-										<th width="10%">类型</th>
-										<th width="10%">商品状态</th>
+										<th>序号</th>
+										<th>商品ID</th>
+										<th>商品名称</th>
+										<th>所属类目</th>
+										<th>类型</th>
+										<th>商品状态</th>
 										<!-- <th>操作时间</th>
 										<th>操作人</th> -->
-										<th width="15%">操作</th>
+										<th>操作</th>
 									</tr>
 									</thead>
 									<tbody id="searchNormProductData">
@@ -153,15 +153,21 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
 									<tr>
-										<td width="10%">{{:#index+1}}</td>
-										<td width="15%">{{:productId}}</td>
-										<td width="25%">{{:productName}}</td>
-										<td width="15%">{{:catName}}</td>
-										<td width="10%">{{:productType}}</td>
-										<td width="10%">{{:state}}</td>
+										<td>{{:#index+1}}</td>
+										<td>{{:productId}}</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:productName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
+										</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:catName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+										</td>
+										<td>{{:productType}}</td>
+										<td>{{:state}}</td>
 										<!-- <td>{{:~timesToFmatter(operTime)}}</td>
-										<td width="10%">{{:operName}}</td> -->
-                                        <td width="15%">
+										<td>{{:operName}}</td> -->
+                                        <td>
 											<a href="${_base}/normprodquery/{{:productId}}" class="blue-border">查看详情</a>
 											<a href="${_base}/normprodedit/{{:productId}}" class="blue-border">编辑</a>
                                             <a href="javaScript:void(0)" onclick="pager._isDiscardDialog('{{:productId}}')" class="blue-border">废弃</a>

@@ -116,8 +116,14 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td>{{:productName}}</td>
-										<td>{{:catName}}</td>
+										<td>
+											<div class="center-hind" >{{:productName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
+										</td>
+										<td>
+											<div class="center-hind" >{{:catName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+										</td>
 										<td>{{:productType}}</td>
                                         <td>
 											<a href="${_base}/costprice/{{:productId}}" class="blue-border">编辑</a>
