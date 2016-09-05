@@ -192,7 +192,10 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:attrvalueDefId}}</td>
-										<td>{{:attrValueName}}</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:attrValueName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:attrValueName}}</div>
+										</td>
 										<td>{{:firstLetter}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
 										<td>{{:operName}}</td>
