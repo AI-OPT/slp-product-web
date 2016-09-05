@@ -19,7 +19,7 @@
 						<!-- 查询条件 -->
 						<div class="form-label">
 							<%-- 类目 --%>
-							<ul id="data1ProdCat">
+						<%-- 	<ul id="data1ProdCat">
 								<li class="col-md-12">
 									<p class="word">商品类目</p>
 										<p id="productCat0">
@@ -30,7 +30,7 @@
 												</c:forEach>
 											</select>
 										</p>
-								<%-- 	<c:forEach var="map" items="${catInfoMap}" varStatus="status">
+									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
 										<p id="productCat${status.index}">
 											<select class="select select-small" onChange="pager._selectChange(this);">
 												<c:forEach var="info" items="${map.value}">
@@ -38,7 +38,7 @@
 												</c:forEach>
 											</select>
 										</p>
-									</c:forEach> --%>
+									</c:forEach>
 									
 									
 									<script id="prodCatTemple" type="text/template">
@@ -51,7 +51,7 @@
 										</p>
 									</script>
 								</li>
-							</ul>
+							</ul> --%>
 							<ul>
 								<li class="col-md-12">
 									<p class="word">商品名称</p>
@@ -79,6 +79,40 @@
 									</li>
 								</ul>
 								<input type="hidden" id="state" value="1"/>
+								<%-- 类目 --%>
+								<ul id="data1ProdCat">
+									<li class="col-md-12">
+										<p class="word">商品类目</p>
+											<p id="productCat0">
+												<select class="select select-small" onChange="pager._selectChange(this);">
+														<option value="">全部</option>
+													<c:forEach var="info" items="${catInfoList}">
+														<option value="${info.productCatId}">${info.productCatName}</option>
+													</c:forEach>
+												</select>
+											</p>
+									<%-- 	<c:forEach var="map" items="${catInfoMap}" varStatus="status">
+											<p id="productCat${status.index}">
+												<select class="select select-small" onChange="pager._selectChange(this);">
+													<c:forEach var="info" items="${map.value}">
+														<option value="${info.productCatId}">${info.productCatName}</option>
+													</c:forEach>
+												</select>
+											</p>
+										</c:forEach> --%>
+										
+										
+										<script id="prodCatTemple" type="text/template">
+										<p id="productCat{{:level}}">
+											<select class="select select-small" onChange="pager._selectChange(this);">
+												{{for prodCatList}}
+												<option value="{{:productCatId}}">{{:productCatName}}</option>
+												{{/for}}
+											</select>
+										</p>
+									</script>
+									</li>
+								</ul>
 							</div>
 								<ul>
 									<li class="width-xlag">
