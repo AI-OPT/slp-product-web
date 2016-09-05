@@ -61,8 +61,6 @@
                             	<p class="center pr-30 mt-30">
                             		<input id="next" type="button" class="biu-btn  btn-primary  btn-xxlarge  ml-5"
                                            value="下一步，填写详细信息">
-                                    <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-mini  ml-5"
-                                           value="返  回" onclick="javaScript:window.history.go(-1);">
                             	</p>
                             </div>
 						</div>
