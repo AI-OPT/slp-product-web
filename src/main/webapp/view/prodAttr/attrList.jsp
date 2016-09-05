@@ -170,7 +170,7 @@
 									<tr>
 										<th width="5%">序号</th>
 										<th>属性ID</th>
-										<th width="20%">属性名称</th>
+										<th>属性名称</th>
 										<th>输入值方式</th>
 										<th>属性值数量</th>
 										<th>操作时间</th>
@@ -185,7 +185,10 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:attrId}}</td>
-										<td>{{:attrName}}</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:attrName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:attrName}}</div>
+										</td>
 										<td>{{:valueWay}}</td>
 										<td>{{:attrValNum}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
