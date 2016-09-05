@@ -116,11 +116,11 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td>
+										<td class="hind1">
 											<div class="center-hind" >{{:productName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
 										</td>
-										<td>
+										<td class="hind1">
 											<div class="center-hind" >{{:catName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
 										</td>
