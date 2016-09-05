@@ -155,13 +155,19 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td>{{:productName}}</td>
-										<td>{{:catName}}</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:productName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
+										</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:catName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+										</td>
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
 										<!-- <td>{{:~timesToFmatter(operTime)}}</td>
 										<td>{{:operName}}</td> -->
-                                         <td>
+                                        <td>
 											<a href="${_base}/normprodquery/{{:productId}}" class="blue-border">查看详情</a>
 											<a href="${_base}/normprodedit/{{:productId}}" class="blue-border">编辑</a>
                                             <a href="javaScript:void(0)" onclick="pager._isDiscardDialog('{{:productId}}')" class="blue-border">废弃</a>

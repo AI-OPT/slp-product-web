@@ -298,7 +298,7 @@
                                                         <p>库存组</p>
                                                         <p>总库存量:${stoGroup.storageTotal}</p>
                                                         <c:if test="${noDicard}">
-                                                        <p><input type="button" onclick="pager._addPriorityNumber(${stoGroup.storageGroupId})"
+                                                        <p><input type="button" onclick="pager._addPriorityNumber('${stoGroup.storageGroupId}')"
                                                                   class="biu-btn  btn-primary  btn-auto" value="增加优先级 ">
                                                         </p>
                                                         <p>

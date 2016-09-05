@@ -1,6 +1,7 @@
 package com.ai.slp.product.web.controller.saleprice;
 
 import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
@@ -42,14 +43,22 @@ public class SalePriceEditController {
         salePriceReq.setOperId(AdminUtil.getAdminId());
         List<StoNoSkuSalePrice> salePriceList = JSON.parseArray(salePriceStr,StoNoSkuSalePrice.class);
         salePriceReq.setStorageSalePrice(salePriceList);
-//        BaseResponse baseResponse = storageSV.updateMultiStorageSalePrice(salePriceReq);
+        BaseResponse baseResponse = storageSV.updateMultiStorageSalePrice(salePriceReq);
+        //保存错误
+        ResponseHeader header = baseResponse.getResponseHeader();
+        if (header!=null && !header.isSuccess()){
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_FAILURE, "更新销售价失败:"+header.getResultMessage());
+        }else
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_SUCCESS, "OK","");
         return responseData;
     }
 
     @RequestMapping("/sku/{id}")
     @ResponseBody
     public ResponseData<String> updateSalePrice(
-            @PathVariable("id")String groupId,Short pn,String skuPriceStr){
+            @PathVariable("id")String groupId,Short groupPn,String skuPriceStr){
         ResponseData<String> responseData =
                 new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"更新成功");
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
@@ -58,10 +67,18 @@ public class SalePriceEditController {
         skuSalePrice.setSupplierId(AdminUtil.getSupplierId());
         skuSalePrice.setOperId(AdminUtil.getAdminId());
         skuSalePrice.setGroupId(groupId);
-        skuSalePrice.setPriorityNum(pn);
+        skuSalePrice.setPriorityNum(groupPn);
         Map<String,Long> priceMap = JSON.parseObject(skuPriceStr,new TypeReference<Map<String,Long>>(){});
         skuSalePrice.setStorageSalePrice(priceMap);
         BaseResponse baseResponse = storageSV.updateSkuStorageSalePrice(skuSalePrice);
+        //保存错误
+        ResponseHeader header = baseResponse.getResponseHeader();
+        if (header!=null && !header.isSuccess()){
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_FAILURE, "更新销售价失败:"+header.getResultMessage());
+        }else
+            responseData = new ResponseData<String>(
+                    ResponseData.AJAX_STATUS_SUCCESS, "OK","");
         return responseData;
     }
 }

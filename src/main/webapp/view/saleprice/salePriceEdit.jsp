@@ -17,27 +17,13 @@
 <div class="eject-big">
     <div class="eject-medium" id="edit-medium">
         <div class="eject-medium-title">
-            <p>编辑库存</p>
-            <p class="img" onclick="pager._closeAddStoView();"><i class="fa fa-times"></i></p>
+            <p>商品销售价</p>
+            <p class="img" onclick="pager._closeSkuPriceView();"><i class="fa fa-times"></i></p>
         </div>
         <div class="form-label">
-            <input type="hidden" id="storageId">
-            <input type="hidden" id="stoAddGroupId">
-            <input type="hidden" id="stoAddGroupPn">
-            <ul>
-                <li>
-                    <p class="word"><span>*</span>库存名称:</p>
-                    <p><input type="text" id="newStorageName" class="int-text int-small" maxlength="60"></p>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <p class="word">库存量:</p>
-                    <p><input type="text" id="newTotalNum" class="int-text int-small" value="0"
-                              <c:if test="${!saleAttr.isEmpty()}">readonly</c:if> maxlength="10"></p>
-                </li>
-            </ul>
         </div>
+        <input type="hidden" id="upGroupId">
+        <input type="hidden" id="upGroupPn">
     <c:if test="${!saleAttr.isEmpty()}">
         <c:set var="isSale" value="true"/>
         <!--table表格-->
@@ -56,102 +42,30 @@
         <!--按钮-->
         <div class="row mt-15"><!--删格化-->
             <p class="center pr-30 mt-30">
-                <input type="button" id="addStorage" class="biu-btn  btn-primary  btn-auto  ml-5"
-                       onclick="pager._addStorage();" value="确  认">
-                <input id="edit-close" type="button" onclick="pager._closeAddStoView();"
+                <input type="button" id="saveInfo" class="biu-btn  btn-primary  btn-auto  ml-5"
+                       value="确  认">
+                <input id="edit-close" type="button" onclick="pager._closeSkuPriceView();"
                        class="biu-btn  btn-primary  btn-auto  ml-5" value="取  消">
             </p>
         </div>
     </div>
     <div class="mask" id="eject-mask"></div>
 </div>
-<script id="skuStoTemp" type="text/template">
-    <tr>
-        {{for valForSkuList}}
-        <td>{{:valName}}</td>
-        {{/for}}
-        <td >{{:totalNum}}</td>
-    </tr>
-</script>
 <script id="skuInfoTemp" type="text/template">
     <tr>
         {{for valForSkuList}}
         <td>{{:valName}}</td>
         {{/for}}
-        <td ><input type="text" name="skuNum" skuId="{{:skuId}}" onchange="pager._changeStorageNum(this)"
-                    class="int-text int-mini"  value="0" maxlength="10"/></td>
+        <td >
+            {{if salePrice}}
+                {{:~liToYuan(salePrice)}}
+            {{else}}
+            <input type="text" name="skuNum" skuId="{{:skuId}}"
+                   class="int-text int-mini" maxlength="10"/>
+            {{/if}}
+        </td>
     </tr>
 </script>
-<div class="eject-big">
-    <div class="eject-medium" id="info-medium">
-        <div class="eject-medium-title">
-            <p>库存信息</p>
-            <p class="img" onclick="pager._closeStorageInfo();"><i class="fa fa-times"></i></p>
-        </div>
-        <div class="form-label center">
-            <ul>
-                <li>
-                    <p class="word">库存名称:</p>
-                    <p id="stoInfoName"></p>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <p class="word">库存量:</p>
-                    <p id="stoInfoNum"></p>
-                </li>
-            </ul>
-        </div>
-
-        <c:if test="${!saleAttr.isEmpty()}">
-            <c:set var="isSale" value="true"/>
-            <!--table表格-->
-            <div class="table-responsive clearfix">
-                <table class="table table-hover table-border table-bordered">
-                    <thead>
-                    <tr id="attrValTr4Sto">
-                    </tr>
-                    </thead>
-                    <tbody id="skuStoInfo">
-                    </tbody>
-                </table>
-            </div>
-        </c:if>
-        <!--/table表格结束-->
-        <!--按钮-->
-        <div class="row mt-15"><!--删格化-->
-            <p class="center pr-30 mt-30">
-                <input type="button" onclick="pager._closeStorageInfo();"
-                       class="biu-btn  btn-primary  btn-auto  ml-5" value="关  闭">
-            </p>
-        </div>
-    </div>
-    <div class="mask" id="eject-mask"></div>
-</div>
-<!--编辑名称弹出框  中结束-->
-<!--废弃 弹出框  小-->
-<div class="eject-big">
-    <div class="eject-samll" id="eject-samll-3">
-        <div class="eject-samll-title">
-            <p>废弃组</p>
-            <p class="img"><A href="javascript:void(0);"></A></p>
-        </div>
-        <div class="eject-medium-complete">
-            <p><img src="${_slpres }/images/eject-icon-prompt.png"></p>
-            <p class="word">库存组废弃后不可再启用，确定废弃该库存组吗？</p>
-        </div>
-        <div class="eject-samll-confirm mt-0">
-            <ul>
-                <li><input type="button" class="slp-btn eject-small-btn mt-10" value="确认">
-                    <input type="button" class="slp-btn eject-small-btn close-btn mt-10" value="取消">
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="eject-mask"></div>
-</div>
-<!--/结束-->
-
 
 <div class="content-wrapper-iframe"><!--外围框架-->
     <div class="row"><!--外围框架-->
@@ -257,8 +171,8 @@
                                             <td rowspan="${snNum}">
                                                 <c:choose>
                                                     <c:when test="${isSale==true}">
-                                                        <a href="javaScritp:void(0);" class="blue-border"
-                                                           groupId="${groupInfo.storageGroupId}" stoSn="${storageSn.key}">设置</a>
+                                                        <a href="javaScript:void(0);" class="blue-border"
+                                                           onclick="pager._showSkuPriceView('${groupInfo.storageGroupId}',${storageSn.key})">设置</a>
                                                     </c:when>
                                                     <%-- 无销售属性 --%>
                                                     <c:when test="${storage.salePrice!=null}">

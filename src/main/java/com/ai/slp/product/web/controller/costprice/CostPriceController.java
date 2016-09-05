@@ -222,7 +222,7 @@ public class CostPriceController {
 		try {
 			IRouteProdSupplyManageSV  routeProdSupplyManageSV = DubboConsumerFactory.getService(IRouteProdSupplyManageSV .class);
 			//StandedProdRoutePageSearchResponse prodRoutePageResponse = getProdRoutePageResponse();
-			StandedProdRoutePageSearchResponse prodRoutePageResponse = routeProdSupplyManageSV.queryStandedProdRoutePageSearch (queryRequest);
+			StandedProdRoutePageSearchResponse prodRoutePageResponse = routeProdSupplyManageSV.queryStandedProdRoutePageSearch(queryRequest);
 			PageInfo<StandedProdRouteVo> pageInfo = prodRoutePageResponse.getPageInfo();
 			if(prodRoutePageResponse.getResponseHeader().isSuccess()){
 				responseData = new ResponseData<PageInfo<StandedProdRouteVo>>(ResponseData.AJAX_STATUS_SUCCESS,

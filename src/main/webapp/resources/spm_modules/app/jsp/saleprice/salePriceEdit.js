@@ -27,11 +27,13 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
     	attrs: {
     	},
     	Statics: {
+			PRICE_REGEX:/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/
     	},
     	//事件代理
     	events: {
             "click #goBack":"_goBack",
-			"click #submitAddBtn":"_upNoSkuPrice"
+			"click #submitAddBtn":"_upNoSkuPrice",
+			"click #saveInfo":"_saveSkuPrice"
         },
     	//重写父类
     	setup: function () {
@@ -44,18 +46,22 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 			var hasError = false;
 			//查询所有的价格信息
 			$("input:text[name='salePrice']").each(function(index,item){
-				var priceVal = $(item).val();
-				if (priceVal == null || priceVal.trim().length === 0)
-					return true;
-				if (priceVal!=null && isNaN(priceVal)){
-					_this._showMsg("价格必须为数字,如:123,12.45");
+				var price = $(item).val();
+				console.log("skuId:"+skuId+",price="+price);
+				if (price == null || typeof (price) == undefined || price.trim() == "" ){
 					hasError = true;
+					_this._showMsg("有部分价格为填写,无法提交");
+					return false;
+				}
+				if (!salePriceEditPage.PRICE_REGEX.test(price)){
+					hasError = true;
+					_this._showMsg("请输入正确格式的价格,\n 如:123,12.3,1.23");
 					return false;
 				}
 				var salePrice = {};
 				salePrice['groupId']=$(item).attr('groupId');
 				salePrice['PriorityNumber']=$(item).attr('stoSn');
-				salePrice['salePrice']=priceVal;
+				salePrice['salePrice']=Number(price)*1000;
 				priceArry.push(salePrice);
 			});
 			if (hasError==true){
@@ -84,27 +90,16 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 				}
 			});
 		},
-		//显示添加库存
-		_showAddStoView:function(groupId,pNum){
-			$("#addStorage").attr("onclick","pager._addStorage();");
-			$("#stoAddGroupId").val(groupId);
-			$("#stoAddGroupPn").val(pNum);
-			//若不包含销售属性,则直接返回
-			if (!hasSale){
-				//取消只读
-				$('#newTotalNum').removeAttr("readonly");
-				$('#eject-mask').fadeIn(100);
-				$('#edit-medium').slideDown(200);
-				console.log("The hasSale is "+hasSale);
-				return;
-			}
-
+		//显示设置价格
+		_showSkuPriceView:function(groupId,pNum){
+			$("#upGroupId").val(groupId);
+			$("#upGroupPn").val(pNum);
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
 				message: "获取数据中，请等待...",
-				url: _base+"/storage/sku/"+groupId,
-				data:{"status":status},
+				url: _base+"/saleprice/query/sku/"+groupId,
+				data:{"groupPn":pNum},
 				success: function(data){
 					//变更成功
 					if("1"=== data.statusCode){
@@ -114,7 +109,7 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 						$.each( attrVal, function(index,item){
 							attrValTr = attrValTr+"<th>"+item.attrName+"</th>";
 						});
-						attrValTr = attrValTr+"<th>sku库存量</th>";
+						attrValTr = attrValTr+"<th>销售价(元)</th>";
 						$("#attrValTr").html(attrValTr);
 						//SKU信息
 						var template = $.templates("#skuInfoTemp");
@@ -127,147 +122,49 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 			});
 		},
 		//关闭添加库存弹出框
-		_closeAddStoView:function(){
-			$("#newTotalNum").val("");
-			$("#stoAddGroupId").val("");
-			$("#stoAddGroupPn").val("");
-			$("#newStorageName").val("");
+		_closeSkuPriceView:function(){
+			$("#upGroupId").val("");
+			$("#upGroupPn").val("");
 			$('#eject-mask').fadeOut(100);
 			$('#edit-medium').slideUp(150);
 		},
-
-    	//sku数量变更,相应变化库存总数量
-		_changeStorageNum:function(obj){
-			var skuNum = $(obj).val();
-			if(!this._isNum(skuNum)){
-				this._showMsg("SKU库存数量不能小于0");
-				return;
-			}
-			var stoNum = 0;
-			$("#skuInfo input[name='skuNum']").each(function(index,item){
-				stoNum = stoNum+parseInt($(item).val());
-			});
-			$("#newTotalNum").val(stoNum);
-		},
-
-		//显示详情页面
-		_showStorageInfo:function(obj){
-			var storageId = $(obj).attr("storageId");
-			var groupId = $(obj).attr("groupId");
-			//数量
-			var nameTd = $(obj).parent().prev().prev();
-			$("#stoInfoNum").text(nameTd.html());
-			//名称
-			$("#stoInfoName").text(nameTd.prev().html());
-			//若不包含销售属性,则直接返回
-			if (!hasSale){
-				$('#eject-mask').fadeIn(100);
-				$('#info-medium').slideDown(200);
-				console.log("The hasSale is "+hasSale);
-				return;
-			}
-
-			ajaxController.ajax({
-				type: "post",
-				processing: true,
-				message: "获取数据中，请等待...",
-				url: _base+"/storage/skuSto/"+storageId,
-				data:{"groupId":groupId},
-				success: function(data){
-					//变更成功
-					if("1"=== data.statusCode){
-						//属性标题信息
-						var attrValTr = "";
-						var attrVal = data.data.attrInfoList;
-						$.each( attrVal, function(index,item){
-							attrValTr = attrValTr+"<th>"+item.attrName+"</th>";
-						});
-						attrValTr = attrValTr+"<th>sku库存量</th>";
-						$("#attrValTr4Sto").html(attrValTr);
-						//SKU信息
-						var template = $.templates("#skuStoTemp");
-						var htmlOutput = template.render(data.data.skuInfoList);
-						$("#skuStoInfo").html(htmlOutput);
-						$('#eject-mask').fadeIn(100);
-						$('#info-medium').slideDown(200);
-					}
-				}
-			});
-		},
-		//关闭详情页
-		_closeStorageInfo:function(){
-			$('#eject-mask').fadeOut(100);
-			$('#info-medium').slideUp(150);
-		},
-		//显示编辑页面
-		_showStorageEdit:function(obj){
-			$("#addStorage").attr("onclick","pager._saveStoName();");
-			var storageId = $(obj).attr("storageId");
-			var groupId = $(obj).attr("groupId");
-			//库存组
-			$("#stoAddGroupId").val(groupId);
-			//数量
-			var nameTd = $(obj).parent().prev().prev();
-			$("#newTotalNum").val(nameTd.html());
-			$('#newTotalNum').attr("readonly","readonly");
-			//名称
-			$("#newStorageName").val(nameTd.prev().html());
-			$("#storageId").val(storageId);
-
-			//若不包含销售属性,则直接返回
-			if (!hasSale){
-				$('#eject-mask').fadeIn(100);
-				$('#edit-medium').slideDown(200);
-				console.log("The hasSale is "+hasSale);
-				return;
-			}
-
-			ajaxController.ajax({
-				type: "post",
-				processing: true,
-				message: "获取数据中，请等待...",
-				url: _base+"/storage/skuSto/"+storageId,
-				data:{"groupId":groupId},
-				success: function(data){
-					//变更成功
-					if("1"=== data.statusCode){
-						//属性标题信息
-						var attrValTr = "";
-						var attrVal = data.data.attrInfoList;
-						$.each( attrVal, function(index,item){
-							attrValTr = attrValTr+"<th>"+item.attrName+"</th>";
-						});
-						attrValTr = attrValTr+"<th>sku库存量</th>";
-						$("#attrValTr").html(attrValTr);
-						//SKU信息
-						var template = $.templates("#skuStoTemp");
-						var htmlOutput = template.render(data.data.skuInfoList);
-						$("#skuInfo").html(htmlOutput);
-						$('#eject-mask').fadeIn(100);
-						$('#edit-medium').slideDown(200);
-					}
-				}
-			});
-		},
-		//变更库存名称
-		_saveStoName:function(){
+		//保存SKU的销售价信息
+		_saveSkuPrice:function(){
 			var _this = this;
-			var stoName = $("#newStorageName").val();
-			var storageId = $("#storageId").val();
+			var groupId = $("#upGroupId").val();
+			var pNum = $("#upGroupPn").val();
+			var skuPriceMap = {};
+			var hasError = false;
+			$("input:text[name='skuNum']").each(function(index,item){
+				var skuId = $(item).attr("skuId");
+				var price = $(item).val();
+				console.log("skuId:"+skuId+",price="+price);
+				if (price == null || typeof (price) == undefined || price.trim() == ""){
+					hasError = true;
+					_this._showMsg("有部分价格为填写,无法提交");
+					return false;
+				}
+				if (!salePriceEditPage.PRICE_REGEX.test(price)){
+					hasError = true;
+					_this._showMsg("请输入正确格式的价格,\n 如:123,12.3,1.23");
+					return false;
+				}
+				//只在有输入值时才进行赋值
+				skuPriceMap[skuId] = Number(price)*1000;
+			});
+			if(hasError)
+				return;
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
-				message: "更新中，请等待...",
-				url: _base+"/storage/edit/stoName/"+storageId,
-				data:{"stoName":stoName},
+				message: "更新数据中，请等待...",
+				url: _base+"/saleprice/edit/sku/"+groupId,
+				data:{"groupPn":pNum,"skuPriceStr":JSON.stringify(skuPriceMap)},
 				success: function(data){
 					//变更成功
 					if("1"=== data.statusCode){
-						_this._closeAddStoView();
-						//属性标题信息
-						_this._showSuccessMsg("库存更新成功");
-						//变更名称
-						$("#stoName"+storageId).text(stoName);
+						_this._closeSkuPriceView();
+						_this._showSuccessMsg("更新成功");
 					}
 				}
 			});

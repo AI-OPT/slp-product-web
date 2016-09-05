@@ -1,6 +1,5 @@
 package com.ai.slp.product.web.controller.product;
 
-import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -19,7 +18,6 @@ import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.ai.slp.product.web.util.DateUtil;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,7 +101,7 @@ public class ProdQueryController {
 		
 	}
 	/**
-	 * 进入查询商品审核的页面 
+	 * 进入查询商品审核的页面
 	 * 加载类目
 	 */
 	@RequestMapping("/audit")
@@ -112,9 +110,9 @@ public class ProdQueryController {
 		uiModel.addAttribute("count", productCatMap.size() - 1);
 		uiModel.addAttribute("catInfoList", productCatMap);
 		return "product/auditlist";
-		
+
 	}
-	
+
 	/**
 	 * 查询条件检查设置
 	 * @param request
@@ -132,7 +130,7 @@ public class ProdQueryController {
 			productEditQueryReq.setStandedProdId(request.getParameter("standedProdId"));
 		if(!request.getParameter("productName").isEmpty())
 			productEditQueryReq.setProdName(request.getParameter("productName"));
-		
+
 	}
 	
 	/**
@@ -305,7 +303,7 @@ public class ProdQueryController {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 点击查询按钮调用方法-获取待上架商品
 	 * @return
@@ -374,9 +372,9 @@ public class ProdQueryController {
 			LOG.error("获取信息出错：", e);
 		}
 		return responseData;
-		
+
 	}
-	
+
 	private PageInfoResponse<ProductEditUp> queryProductAudit(ProductQueryInfo queryInfo) {
 		queryInfo.setSupplierId(AdminUtil.getSupplierId());
 		IProductManagerSV productManagerSV = DubboConsumerFactory.getService("iProductManagerSV");
@@ -402,7 +400,7 @@ public class ProdQueryController {
 				String stateName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
 				productEditUp.setStateName(stateName);
 			}
-			
+
 			// 产生图片地址
 			if (StringUtils.isNotBlank(productEditUp.getVfsId())) {
 				String attrImageSize = "80x80";
@@ -414,10 +412,10 @@ public class ProdQueryController {
 		}
 		return result;
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * 点击查询按钮调用方法-获取售罄下架商品
 	 * @return
@@ -494,5 +492,5 @@ public class ProdQueryController {
 		}
 		return responseData;
 	}
-	
+
 }
