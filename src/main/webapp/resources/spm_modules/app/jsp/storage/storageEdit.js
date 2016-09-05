@@ -163,7 +163,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     		var totalNum = $("#newTotalNum").val();
     		var length = _this._getLen(storageName);
     		//判断库存名称
-    		if(storageName==null || storageName=='undefined' || length==0){
+    		if(storageName==null || typeof(storageName)=="undefined" || length==0){
     			_this._showMsg("库存名称不能为空");
     			return;
     		}
@@ -209,7 +209,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 				message: "添加中，请等待...",
 				url: _base+"/storage/edit/addStorage",
 				data:{"storageGroupId":storGroupId,"priorityNumber":priorityNumber,"storageName":storageName,
-					"totalNum":stoNum,"skuNumMap":skuMapStr},
+					"totalNum":totalNum,"skuNumMap":skuMapStr},
 				success: function(data){
 					if("1"===data.statusCode){
 						window.location.reload();
