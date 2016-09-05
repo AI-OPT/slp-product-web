@@ -68,16 +68,15 @@
 											<p class="word" attrId="${keyAttr.attrId}" valueType="${keyAttr.valueWay}"><b class="red">*</b>${keyAttr.attrName}</p>
 											<p id="error_keyAttr${keyAttr.attrId}_title"></p>
 											<c:set var="keyAttrSet" value="${productInfo.attrAndValueIds.get(keyAttr.attrId)}"/>
+											<c:set var="keyAttrValue" value="${productInfo.attrAndValueMap.get(keyAttr.attrId)}"/>
 											<p><c:choose>
 												<%-- 下拉选择 --%>
 												<c:when test="${keyAttr.valueWay == '1'}">
 													<select required class="select select-medium" attrId="keyAttr${keyAttr.attrId}" name="keyAttr${keyAttr.attrId}">
 														<option value="">--请选择--</option>
 														<c:forEach var="valInfo" items="${keyAttr.attrValList}">
-														<!-- <script>alert("attrvalueDefId=${valInfo.attrvalueDefId}");</script>
-														<script>alert("isOk=${fn:contains(attrValueSet,valInfo.attrvalueDefId)}");</script> -->
 															<option value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(keyAttrSet,valInfo.attrvalueDefId)}">selected ="selected"</c:if>>
-															${valInfo.attrValueName}
+																${valInfo.attrValueName}
 															</option>
 														</c:forEach>
 													</select>
@@ -94,12 +93,12 @@
 												
 												<%--单行输入--%>
 												<c:when test="${keyAttr.valueWay  == '3'}">
-													<p><input required type="text" class="int-text int-xlarge" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" maxlength="200" value="${keyAttrSet[0]}"></p>
+													<p><input required type="text" class="int-text int-xlarge" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" maxlength="200" value="${keyAttrValue}"></p>
 												</c:when>
 												
 												<%--多行输入--%>
 												<c:when test="${attr.valueWay == '4'}">
-													<p><textarea required class="textarea-xlarge"  maxlength="200" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" value="${keyAttrSet[0]}"></textarea></p>
+													<p><textarea required class="textarea-xlarge"  maxlength="200" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" value="${keyAttrValue}"</textarea></p>
 												</c:when>
 												
 											</c:choose></p>
@@ -124,6 +123,7 @@
 												<p class="word" attrId="${saleAttr.attrId}" valueType="${saleAttr.valueWay}"><b class="red">*</b>${saleAttr.attrName}</p>
 												<p id="error_saleAttr${saleAttr.attrId}_title"></p>
 												<c:set var="saleAttrSet" value="${productInfo.attrAndValueIds.get(saleAttr.attrId)}"/>
+												<c:set var="saleAttrValue" value="${productInfo.attrAndValueMap.get(saleAttr.attrId)}"/>
 												<p><c:choose>
 													<%-- 下拉选择 --%>
 													<c:when test="${saleAttr.valueWay == '1'}">
@@ -148,12 +148,12 @@
 													
 													<%--单行输入--%>
 													<c:when test="${saleAttr.valueWay  == '3'}">
-														<p><input required type="text" class="int-text int-xlarge" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" maxlength="200" value="${saleAttrSet[0]}"></p>
+														<p><input required type="text" class="int-text int-xlarge" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" maxlength="200" value="${saleAttrValue}"></p>
 													</c:when>
 													
 													<%--多行输入--%>
 													<c:when test="${saleAttr.valueWay == '4'}">
-														<p><textarea required class="int-text textarea-xlarge" maxlength="200" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" value="${saleAttrSet[0]}"></textarea></p>
+														<p><textarea required class="int-text textarea-xlarge" maxlength="200" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" value="${saleAttrValue}"></textarea></p>
 													</c:when>
 													
 												</c:choose></p>
