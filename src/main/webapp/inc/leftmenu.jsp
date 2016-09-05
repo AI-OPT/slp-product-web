@@ -23,12 +23,13 @@
                     <li>
                         <a href="#" class="dropdown-toggle">
                             <i class="fa fa-inbox"></i>
-                            <span>标准品管理</span>
+                            <span>商品管理</span>
                             <i class="fa fa-chevron-circle-right drop-icon"></i>
                         </a>
                         <!--二级菜单-->
                         <ul class="submenu">
-                            <li><a href="${_base}/normprodquery/list" target="mainFrame">标准品列表</a></li>
+                            <li><a href="${_base}/normprodedit/add" target="mainFrame">新增商品</a></li>
+                            <li><a href="${_base}/normprodquery/list" target="mainFrame">商品列表</a></li>
                         </ul>
                         <!--二级菜单结束-->
                     </li>
@@ -47,7 +48,7 @@
                     <li>
                         <a href="#" class="dropdown-toggle">
                             <i class="fa fa-usd"></i>
-                            <span>结算管理</span><i class="fa fa-chevron-circle-right drop-icon"></i>
+                            <span>定价管理</span><i class="fa fa-chevron-circle-right drop-icon"></i>
                         </a>
                         <!--二级菜单-->
                         <ul class="submenu">
