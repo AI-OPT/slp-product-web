@@ -46,6 +46,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            <c:if test="${!keyAttr.isEmpty()}">
                             <!-- 关键属性 -->
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品关键属性</h5>
@@ -63,6 +64,7 @@
                                     </ul>
                                 </c:forEach>
                             </div>
+                            </c:if>
                             <c:if test="${!saleAttr.isEmpty()}">
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品销售属性</h5>

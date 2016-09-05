@@ -10,8 +10,8 @@ sourceSets.main.java.srcDir 'src'   // 设置 Java 源码所在目录
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-    resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+    resolutionStrategy.cacheChangingModulesFor 10, 'seconds'
+    resolutionStrategy.cacheDynamicVersionsFor 10, 'seconds'
 }
 
 configurations {

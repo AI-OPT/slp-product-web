@@ -67,6 +67,9 @@ define('app/jsp/costprice/editinfo', function (require, exports, module) {
 					$("#" + element.attr( "name" )).append( error );
 				}
 			});
+			$.extend($.validator.messages, {  
+			    required: '该项为必填项'
+			});
 			if(!formValidator.form()){
 				return;
 			}
@@ -96,7 +99,7 @@ define('app/jsp/costprice/editinfo', function (require, exports, module) {
 								ok:function(){
 									this.close();
 									//保存成功,回退到进入的列表页
-									window.history.go(-2);
+									window.location.href=_base+"/costprice/"+standedProdId;
 								}
 							});
 							d.show();
