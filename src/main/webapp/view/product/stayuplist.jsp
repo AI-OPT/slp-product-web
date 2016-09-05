@@ -140,7 +140,7 @@
 										<th>所属类目</th>
 										<th>类型</th>
 										<th>预览图</th>
-										<th width="30%">商品名称</th>
+										<th>商品名称</th>
 										<th>状态</th>
 										<!-- <th>生成时间</th> -->
 										<th>操作</th>
@@ -155,14 +155,20 @@
 									<tr>
 											<!-- <td>{{:prodId}}</td> -->
 											<td>{{:standedProdId}}</td>
-											<td>{{:productCatName}}</td>
+											<td class="hind1">
+											<div class="center-hind" >{{:productCatName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
+											</td>
 											<td>{{:productTypeName}}</td>
 											{{if picUrl==null || picUrl==""}}
 											<td><img src="${_slpres}/images/sp-03-a.png"></td>
 											{{else}}
 											<td><img src="{{:picUrl}}"></td>
 											{{/if}}
-											<td>{{:prodName}}</td>
+											<td class="hind1">
+											<div class="center-hind" >{{:prodName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
+											</td>
 											<td>{{:stateName}}</td>
 											<!-- <td>{{:~timesToFmatter(createTime)}}</td> -->
 
