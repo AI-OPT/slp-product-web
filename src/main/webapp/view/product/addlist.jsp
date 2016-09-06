@@ -177,7 +177,7 @@
 													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
 													{{/if}}
 													
-													{{if state=="3"}}
+													{{if state=="4"}}
 													<p><a href="#" class="blue">查看原因</a></p>
 													{{/if}}
 													<p><a href="${_base}/prodquery/{{:prodId}}" class="blue-border">查看商品</a></p>
