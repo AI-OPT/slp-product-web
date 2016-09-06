@@ -124,7 +124,7 @@
 										<td>{{:usableNum}}</td>
                                         <td>
 											<input for="costPrice" name="costPrice{{:#index}}" standedProdId="{{:standedProdId}}" supplyId="{{:supplyId}}" routeId="{{:routeId}}" value="{{:~liToYuan2(costPrice)}}" tenantId="{{:tenantId}}" type="text"  class="int-text int-mini" required moneyNumber="true" data-msg-moneyNumber="请输入正确格式">
-											<div id="costPrice{{:#index}}"></div>
+											<div id="costPrice{{:#index}}" style="float:left;text-align:left;"></div>
 										</td>
 									</tr>
 								</script>
