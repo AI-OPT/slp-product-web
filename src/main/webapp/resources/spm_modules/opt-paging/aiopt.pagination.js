@@ -110,7 +110,7 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         /**
          * 显示加载信息
          */
-        showLoadingMessage(){
+        showLoadingMessage:function(){
         	var messageId = this.options.messageId;
         	if(messageId){
         		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-loading'></li>";
@@ -124,7 +124,7 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         /**
          * 隐藏加载信息
          */
-        hiddenLoadingMessage(){
+        hiddenLoadingMessage:function(){
         	var messageId = this.options.messageId;
         	if(messageId){
         		document.getElementById(messageId).innerHTML = "";
@@ -138,7 +138,7 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         /**
          * 显示无返回信息
          */
-        showNotResultMessage(){
+        showNotResultMessage:function(){
         	this.$element.removeClass("pagination");
         	var imageType = this.options.resultImageType;
         	var messageId = this.options.messageId;
@@ -162,7 +162,7 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         /**
          * 隐藏无返回信息
          */
-        hiddenNotResultMessage(){
+        hiddenNotResultMessage: function(){
         	this.$element.addClass("pagination");
         	var imageType = this.options.resultImageType;
         	var messageId = this.options.messageId;
