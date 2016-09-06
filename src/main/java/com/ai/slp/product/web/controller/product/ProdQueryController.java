@@ -1,35 +1,60 @@
 package com.ai.slp.product.web.controller.product;
 
 import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.paas.ipaas.image.IImageClient;
 import com.ai.platform.common.api.cache.interfaces.ICacheSV;
+import com.ai.platform.common.api.cache.param.SysParam;
+import com.ai.platform.common.api.cache.param.SysParamMultiCond;
 import com.ai.platform.common.api.cache.param.SysParamSingleCond;
+import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
+import com.ai.slp.product.api.normproduct.param.AttrMap;
+import com.ai.slp.product.api.normproduct.param.AttrQuery;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
+import com.ai.slp.product.api.product.interfaces.IProductSV;
+import com.ai.slp.product.api.product.param.OtherSetOfProduct;
+import com.ai.slp.product.api.product.param.ProdAttrMap;
+import com.ai.slp.product.api.product.param.ProdAudiencesInfo;
+import com.ai.slp.product.api.product.param.ProdNoKeyAttr;
 import com.ai.slp.product.api.product.param.ProductEditQueryReq;
 import com.ai.slp.product.api.product.param.ProductEditUp;
+import com.ai.slp.product.api.product.param.ProductInfo;
+import com.ai.slp.product.api.product.param.ProductInfoQuery;
 import com.ai.slp.product.api.product.param.ProductQueryInfo;
+import com.ai.slp.product.api.product.param.TargetAreaForProd;
+import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
+import com.ai.slp.product.api.productcat.param.ProductCatInfo;
+import com.ai.slp.product.api.productcat.param.ProductCatUniqueReq;
 import com.ai.slp.product.web.constants.ComCacheConstants;
+import com.ai.slp.product.web.constants.ProductCatConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
+import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.ai.slp.product.web.util.DateUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商城商品管理查询 Created by jackieliu on 16/6/16.
@@ -40,6 +65,8 @@ public class ProdQueryController {
 	private static final Logger LOG = LoggerFactory.getLogger(ProdQueryController.class);
 	@Autowired
 	private ProdCatService prodCatService;
+	@Autowired
+    private AttrAndValService attrAndValService;
 	/**
 	 * 进入页面调用-加载类目
 	 */
@@ -492,5 +519,91 @@ public class ProdQueryController {
 		}
 		return responseData;
 	}
+	
+	/**
+	 * 根据ID查询单个商品的详细信息
+	 */
+	@RequestMapping("/{id}")
+	public String toViewProduct(@PathVariable("id") String prodId, Model uiModel){
+		//查询商品的基础信息--类目信息,商品类型,商品名称,商品买点
+		ProductInfoQuery productInfoQuery = new ProductInfoQuery();
+		productInfoQuery.setProductId(prodId);
+		productInfoQuery.setTenantId(AdminUtil.getTenantId());
+		productInfoQuery.setSupplierId(AdminUtil.getSupplierId());
+		IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
+		ProductInfo productInfo = productSV.queryProductById(productInfoQuery);
+		uiModel.addAttribute("productInfo", productInfo);
+		
+        //查询类目链
+        ProductCatUniqueReq catUniqueReq = new ProductCatUniqueReq();
+        catUniqueReq.setTenantId(AdminUtil.getTenantId());
+        catUniqueReq.setProductCatId(productInfo.getProductCatId());
+        IProductCatSV productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
+        List<ProductCatInfo> catLinkList =productCatSV.queryLinkOfCatById(catUniqueReq);
+        uiModel.addAttribute("catLinkList",catLinkList);
+        SysParamSingleCond paramSingleCond = new SysParamSingleCond();
+        paramSingleCond.setTenantId(AdminUtil.getTenantId());
+        paramSingleCond.setTypeCode(ComCacheConstants.TypeProduct.CODE);
+        paramSingleCond.setParamCode(ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE);
+        paramSingleCond.setColumnValue(productInfo.getProductType());
+        //商品类型
+        ICacheSV cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
+        SysParam sysParam = cacheSV.getSysParamSingle(paramSingleCond);
+        uiModel.addAttribute("prodType",sysParam.getColumnDesc());
+        //标准品关键属性
+        AttrQuery attrQuery = new AttrQuery();
+        attrQuery.setTenantId(AdminUtil.getTenantId());
+        attrQuery.setProductId(productInfo.getStandedProdId());
+        attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
+        INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
+        AttrMap attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
+        uiModel.addAttribute("keyAttr",attrAndValService.getAttrAndVals(attrMap));
+        //商品非关键属性
+        IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+        ProdNoKeyAttr noKeyAttr = productManagerSV.queryNoKeyAttrOfProd(productInfoQuery);
+        uiModel.addAttribute("noKeyAttr",noKeyAttr.getAttrInfoForProdList());
+        uiModel.addAttribute("noKeyAttrValMap",noKeyAttr.getAttrValMap());
+        //选择商品的目标地域
+        ProductEditQueryReq queryReq = new ProductEditQueryReq();
+        queryReq.setProdId(prodId);
+        queryReq.setTenantId(AdminUtil.getTenantId());
+        queryReq.setSupplierId(AdminUtil.getSupplierId());
+        PageInfoResponse<TargetAreaForProd> prodTargetArea = productSV.searchProdTargetArea(queryReq);
+        uiModel.addAttribute("prodTargetArea", prodTargetArea.getResult());
+        //预售设置
+
+        
+        
+        //查询商品其他设置
+        OtherSetOfProduct otherSet = productManagerSV.queryOtherSetOfProduct(productInfoQuery);
+        uiModel.addAttribute("otherSet",otherSet);
+
+        //商品主图
+        uiModel.addAttribute("prodPic",otherSet.getProductPics());
+        //属性值图
+        uiModel.addAttribute("attrValList",otherSet.getAttrValInfoList());
+        uiModel.addAttribute("valPicMap",otherSet.getAttrValPics());
+
+        SysParamMultiCond paramMultiCond = new SysParamMultiCond();
+        paramMultiCond.setTenantId(AdminUtil.getTenantId());
+        paramMultiCond.setTypeCode(ComCacheConstants.TypeProduct.CODE);
+        paramMultiCond.setParamCode(ComCacheConstants.TypeProduct.PROD_UNIT);
+
+        //设置商品详情
+        setProdDetail(productInfo.getProDetailContent(),uiModel);
+		
+		return "product/viewproduct";
+	}
+	 public void setProdDetail(String fileId,Model uiModel){
+	        if (StringUtils.isBlank(fileId)){
+	            return;
+	        }
+	        IDSSClient client= DSSClientFactory.getDSSClient(SysCommonConstants.ProductDetail.DSSNS);
+	        String context = client.findById(fileId);
+	        if (StringUtils.isNotBlank(context)){
+	            JSONObject object = JSON.parseObject(context);
+	            uiModel.addAttribute("prodDetail",object.getString("content"));
+	        }
+	    }
 
 }
