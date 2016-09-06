@@ -84,7 +84,7 @@
         <td>{{:valName}}</td>
         {{/for}}
         <td ><input type="text" name="skuNum" skuId="{{:skuId}}" onchange="pager._changeStorageNum(this)"
-                    class="int-text int-mini"  value="0" maxlength="10"/></td>
+                    class="int-text int-mini"  value="0" maxlength="8"/></td>
     </tr>
 </script>
 <div class="eject-big">

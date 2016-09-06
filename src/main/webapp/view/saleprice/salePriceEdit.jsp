@@ -180,7 +180,7 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <c:set var="setPrice" value="true"/>
-                                                        <input name="salePrice" type="text"  class="int-text int-mini"
+                                                        <input name="salePrice" type="text"  class="int-text int-mini" maxlength="10"
                                                                groupId="${groupInfo.storageGroupId}" stoSn="${storageSn.key}">
                                                     </c:otherwise>
                                                 </c:choose>
