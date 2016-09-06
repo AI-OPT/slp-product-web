@@ -159,12 +159,22 @@
 											</td>
 											<td>{{:stateName}}</td>
 											<td>{{:~timesToFmatter(operTime)}}</td>
+
+											{{if state=="3"}}
 											<td>
 												<div>
 													<p><a href="#" class="blue-border">审核商品</a></p>
 													<p><a href="#" class="blue-border">查看商品</a></p>
 												</div>
 											</td>
+											{{else}}
+											<td>
+												<div>
+													<p><a href="#" class="blue-border">查看原因</a></p>
+													<p><a href="#" class="blue-border">查看商品</a></p>
+												</div>
+											</td>
+											{{/if}}
 									</tr>
 								</script>
 							</div>
