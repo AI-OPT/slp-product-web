@@ -124,107 +124,41 @@
                             		</c:forEach>
                             	</c:forEach>
                             </div>
+                            <!-- 预售设置 -->
+                            <header class="main-box-header clearfix">
+                                <h5 class="pull-left">预售设置</h5>
+                            </header>
+                            <div class="form-label  bd-bottom">
+                            	
+                            </div>
                             <!-- 发票信息 -->
-                            <c:if test="${productInfo.is == '2'}"></c:if>
+                            <header class="main-box-header clearfix">
+                                <h5 class="pull-left">发票信息</h5>
+                            </header>
+                            <div class="form-label  bd-bottom">
+	                            <c:if test="${productInfo.getIsInvoice == 'Y'}">提供发票</c:if>
+	                            <c:if test="${productInfo.getIsInvoice == 'N'}">不提供发票</c:if>
+                            </div>
+                            <!-- 商品上架时间 -->
+                            <header class="main-box-header clearfix">
+                                <h5 class="pull-left">商品上架时间</h5>
+                            </header>
+                            <div class="form-label  bd-bottom">
+                            	${productInfo.getUpTime}
+                            </div>
                             
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            <div class="nav-tplist-wrapper"><!--白底内侧-->
-								<div class="nav-form-title">商品非关键属性</div> <!--标题-->
-								<div class="nav-form nav-form-border" id="noKeyAttrDiv"><!--非关键属性条件-->
-									<input type="hidden" id="noKeyAttrStr" name="noKeyAttrStr">
-									<c:forEach var="attr" items="${noKeyAttr}">
-										<ul>
-											<li class="width-xlag">
-										<p class="word" attrId="${attr.attrId}" valueType="${attr.valueWay}">${attr.attrName}</p>
-										<c:choose>
-											<%-- 下拉选择 --%>
-											<c:when test="${attr.valueWay == '1'}">
-												<select class="select select-medium" attrId="noKeyAttr${attr.attrId}">
-													<c:forEach var="valInfo" items="${noKeyAttrValMap.get(attr.attrId)}">
-														<option value="${valInfo.attrValId}" id="${valInfo.productAttrValId}"
-																<c:if test="${valInfo.productAttrValId != null}">selected</c:if>>${valInfo.attrVal}</option>
-													</c:forEach>
-												</select>
-											</c:when>
-											<%--多选--%>
-											<c:when test="${attr.valueWay == '2'}">
-												<div class="width-xlag">
-													<c:forEach var="valInfo" items="${noKeyAttrValMap.get(attr.attrId)}">
-														<p><input type="checkbox" class="checkbox-small" attrId="noKeyAttr${attr.attrId}" value="${valInfo.attrValId}"
-																  <c:if test="${valInfo.productAttrValId != null}">checked</c:if> >${valInfo.attrVal}</p>
-													</c:forEach>
-												</div>
-											</c:when>
-											<%--单行输入--%>
-											<c:when test="${attr.valueWay == '3'}">
-												<c:set var="valInfo" value="${noKeyAttrValMap.get(attr.attrId).get(0)}"></c:set>
-												<p><input type="text" class="int-text int-xlarge" attrId="noKeyAttr${attr.attrId}" maxlength="100"
-														  <c:if test="${valInfo!=null}">value="${valInfo.attrVal}"</c:if> ></p>
-											</c:when>
-											<%--多行输入--%>
-											<c:when test="${attr.valueWay == '4'}">
-												<c:set var="valInfo" value="${noKeyAttrValMap.get(attr.attrId).get(0)}"></c:set>
-												<p><textarea class="textarea-xlarge" maxlength="100"
-															 attrId="noKeyAttr${attr.attrId}"><c:if test="${valInfo!=null}">${valInfo.attrVal}</c:if></textarea></p>
-											</c:when>
-										</c:choose>
-											</li>
-										</ul>
-									</c:forEach>
-								</div>
-								<div class="nav-form-title">其他设置</div> <!--标题-->
-								<div class="nav-form nav-form-border"><!--查询条件-->
-									<%-- 目标地域 --%>
-									<ul>
-										<li class="width-xlag">
-											<p class="word">商品目标地域</p>
-										</li>
-									</ul>
-									<input type="hidden" id="targetProd" name="targetProd">
-									<ul>
-										<li class="width-xlag">
-											<p class="word"><b class="red">*</b>选择商品目标地域</p>
-											<p><input type="radio" name="isSaleNationwide" class="checkbox-small radioc " value="Y"
-													  <c:if test="${productInfo.isSaleNationwide == 'Y'}">checked</c:if> >全国</p>
-											<p><input type="radio" name="isSaleNationwide"class="checkbox-small radiod city" value="N"
-													  <c:if test="${productInfo.isSaleNationwide == 'N'}">checked</c:if> >部分</p>
-											<div id="check3"></div>
-											<div id="check4" style="display:none;">
-												<div class="cit-width cit-width-list2">
-													<p class="width-xlag"><span id="areaNum">已选中省份${areaNum}个</span><a href="javascript:void(0);" class="city">修改</a></p>
-													<span id="areaName"></span>
-												</div>
-											</div>
-										</li>
-									</ul>
-								</div>
-								
-								
-							</div>
-                        </div>
+                       	</div>
                         <div id="subDiv" class="row pt-30">
-	                            	<p class="center pr-30 mt-30">
+	                         <p class="center pr-30 mt-30">
                                 <input type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="返  回"
                                        onclick="javaScript:window.history.go(-1);">
                             </p>
                         </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- footer -->
 </body>
