@@ -57,12 +57,12 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 				rules:{
 					productCatName:{
 						required: true,
-						maxlength: 20
+						maxlength: 10
 					},
 					firstLetter:{
 						required: true,
 						maxlength:1,
-						regexp:/^[A-Z]+$/
+						regexp:/^[A-Z]{1}$/
 					},
 					upSerialNum:{
 						required:true,
@@ -74,7 +74,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 				messages:{
 					productCatName:{
 						required:"类目名称不能为空",
-						maxlength:"类目名称不能超过20位(一个汉字占2位)"
+						maxlength:"类目名称不能超过10位"
 					},
 					firstLetter:{
 						required:"名称首字母不能为空",
