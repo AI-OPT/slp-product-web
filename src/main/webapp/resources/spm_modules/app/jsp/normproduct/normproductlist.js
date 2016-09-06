@@ -110,8 +110,6 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
     		var productId = $("#standedProdId").val()?$("#standedProdId").val().trim():"";
     		var productName = $("#standedProductName").val()?$("#standedProductName").val().trim():"";
     		var state = $("#state").val()?$("#state").val().trim():"";
-//    		var operStartTime = $("#operStartTime").val()?$("#operStartTime").val().trim():"";
-//    		var operEndTime = $("#operEndTime").val()?$("#operEndTime").val().trim():"";
     		
     		$("#pagination-ul").runnerPagination({
     			

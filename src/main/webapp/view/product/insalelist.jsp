@@ -126,7 +126,7 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!--标题-->
 						<header class="main-box-header clearfix">
-							<h2 class="pull-left">查询结果</h2>
+							<h2 class="pull-left">在售商品列表</h2>
 						</header>
 						<!--标题结束-->
 						<div class="main-box-body clearfix">
@@ -168,7 +168,7 @@
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
 											</td>
 											<td>{{:stateName}}</td>
-											<td>{{:~timesToFmatter(createTime)}}</td>
+											<td>{{:~timesToFmatter(upTime)}}</td>
 											<td>
 												<div>
 													<!-- <p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p> -->

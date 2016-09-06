@@ -45,22 +45,19 @@
 						
 						<div class="form-label">
 
-							<ul>
-								<li class="col-md-12">
-									<p class="word">商品名称</p>
-									<p><input id="productName" type="text" class="int-text int-medium"></p>
-									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
-									</p>
-								</li>
-							</ul>
-							<!--点击展开-->
-							<div id="selectDiv" class="open" style="display:none;">
 								<ul>
-									<li class="col-md-4">
+									<li class="col-md-6">
+										<p class="word">商品名称</p>
+										<p><input id="productName" type="text" class="int-text int-medium"></p>
+									</li>
+									<li class="col-md-6">
 										<p class="word">商品ID</p>
 										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
 									</li>
-									<li class="col-md-4">
+								</ul>
+								<ul>
+									
+									<li class="col-md-6">
 										<p class="word">商品类型</p>
 										<p>
 											<select id="productType" class="select select-medium">
@@ -70,7 +67,7 @@
 											</select>
 										</p>
 									</li>
-									<li class="col-md-4">
+									<li class="col-md-6">
 										<p class="word">商品状态</p>
 										<p>
 											<select id="state" class="select select-medium">
@@ -105,7 +102,6 @@
 										</script>
 									</li>
 								</ul>
-							</div>
 								<ul>
 									<li class="width-xlag">
 										<p class="word">&nbsp;</p>
@@ -127,7 +123,7 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!--标题-->
 						<header class="main-box-header clearfix">
-							<h2 class="pull-left">查询结果</h2>
+							<h2 class="pull-left">待上架商品列表</h2>
 						</header>
 						<!--标题结束-->
 						<div class="main-box-body clearfix">
@@ -184,7 +180,6 @@
 											<td>
 												<div>
 													<p><a name="#" id="#" href="#" class="blue-border">查看商品</a></p> 
-													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
 												</div>
 											</td>
 											{{/if}}

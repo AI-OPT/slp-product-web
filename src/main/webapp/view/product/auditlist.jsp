@@ -31,11 +31,11 @@
 							<!--点击展开-->
 							<div id="selectDiv" class="open" style="display:none;">
 								<ul>
-									<li class="col-md-4">
+									<li class="col-md-6">
 										<p class="word">商品ID</p>
 										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
 									</li>
-									<li class="col-md-4">
+									<li class="col-md-6">
 										<p class="word">商品类型</p>
 										<p>
 											<select id="productType" class="select select-medium">
@@ -45,7 +45,22 @@
 											</select>
 										</p>
 									</li>
-									<li class="col-md-4">
+								</ul>
+								<ul>
+									<li class="col-md-6">
+										<p class="word">操作开始时间</p>
+										<p><input type="text" class="int-text int-medium" id="operStartTime">
+											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
+									</li>
+									<li class="col-md-6">
+										<p class="word">操作结束时间</p>
+										<p><input type="text" class="int-text int-medium" id="operEndTime">
+											<span class="time"> <i class="fa  fa-calendar" ></i></span>
+										</p>
+									</li>
+								</ul>
+								<ul>
+									<li class="col-md-6">
 										<p class="word">商品状态</p>
 										<p>
 											<select id="state" class="select select-medium">
@@ -53,19 +68,6 @@
 												<option value="3">审核中</option>
 												<option value="4">被拒绝</option>
 											</select>
-										</p>
-									</li>
-								</ul>
-								<ul>
-									<li class="col-md-4">
-										<p class="word">操作开始时间</p>
-										<p><input type="text" class="int-text int-medium" id="operStartTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
-									</li>
-									<li class="col-md-4">
-										<p class="word">操作结束时间</p>
-										<p><input type="text" class="int-text int-medium" id="operEndTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span>
 										</p>
 									</li>
 								</ul>
@@ -114,7 +116,7 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!--标题-->
 						<header class="main-box-header clearfix">
-							<h2 class="pull-left">查询结果</h2>
+							<h2 class="pull-left">商品审核列表</h2>
 						</header>
 						<!--标题结束-->
 						<div class="main-box-body clearfix">
@@ -157,12 +159,22 @@
 											</td>
 											<td>{{:stateName}}</td>
 											<td>{{:~timesToFmatter(operTime)}}</td>
+
+											{{if state=="3"}}
 											<td>
 												<div>
 													<p><a href="#" class="blue-border">审核商品</a></p>
 													<p><a href="#" class="blue-border">查看商品</a></p>
 												</div>
 											</td>
+											{{else}}
+											<td>
+												<div>
+													<p><a href="#" class="blue-border">查看原因</a></p>
+													<p><a href="#" class="blue-border">查看商品</a></p>
+												</div>
+											</td>
+											{{/if}}
 									</tr>
 								</script>
 							</div>
