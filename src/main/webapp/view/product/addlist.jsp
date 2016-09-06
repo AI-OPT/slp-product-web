@@ -21,31 +21,32 @@
 						<div class="form-label">
 
 							<ul>
-								<li class="col-md-12">
+								<li class="col-md-6">
 									<p class="word">商品名称</p>
 									<p><input id="productName" type="text" class="int-text int-medium"></p>
-									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
-									</p>
+									<!-- <p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
+									</p> -->
 								</li>
+								<li class="col-md-6">
+									<p class="word">商品ID</p>
+									<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
+								</li>
+								
 							</ul>
 							<!--点击展开-->
-							<div id="selectDiv" class="open" style="display:none;">
+							<!-- <div id="selectDiv" class="open" style="display:none;"> -->
 								<ul>
-									<li class="col-md-4">
-										<p class="word">商品ID</p>
-										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
-									</li>
-									<li class="col-md-4">
-										<p class="word">商品类型</p>
-										<p>
-											<select id="productType" class="select select-medium">
-												<option value="">全部</option>
-												<option value="1">实物</option>
-												<option value="2">虚拟</option>
-											</select>
-										</p>
-									</li>
-									<li class="col-md-4">
+									<li class="col-md-6">
+									<p class="word">商品类型</p>
+									<p>
+										<select id="productType" class="select select-medium">
+											<option value="">全部</option>
+											<option value="1">实物</option>
+											<option value="2">虚拟</option>
+										</select>
+									</p>
+								</li>
+									<li class="col-md-6">
 										<p class="word">商品状态</p>
 										<p>
 											<select id="state" class="select select-medium">
@@ -57,7 +58,6 @@
 										</p>
 									</li>
 								</ul>
-								<input type="hidden" id="state" value="1"/>
 								<!-- <ul>
 									<li class="col-md-6">
 										<p class="word">操作开始时间</p>
@@ -94,7 +94,7 @@
 										</script>
 									</li>
 								</ul>
-							</div>
+							<!-- </div> -->
 								<ul>
 									<li class="width-xlag">
 										<p class="word">&nbsp;</p>
