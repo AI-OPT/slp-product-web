@@ -9,11 +9,12 @@ var,em {font-style:normal;}
 table{border-collapse:collapse;}
 .left{ float:left}
 .right{ float:right;}
+.center{text-align: center;}
 input{outline:none;}
 button{outline:none; cursor:pointer;}
 html,body {height:100%; }
 
-h1,h2,h3,h4,h5,h6{font-weight:200;line-height:1.1;color:inherit}
+h1,h2,h3,h4,h5,h6{font-weight:200;line-height:1.1;color:inherit;font-family: "微软雅黑";}
 h1 small,h2 small,h3 small,h4 small,h5 small,h6 small,h1 .small,h2 .small,h3 .small,h4 .small,h5 .small,h6 .small{font-weight:normal;line-height:1;color:#999}
 h1,h2,h3{margin-top:10px;margin-bottom:10px}
 h1 small,h2 small,h3 small,h1 .small,h2 .small,h3 .small{font-size:65%}
@@ -56,7 +57,7 @@ pre{white-space: pre-wrap}	/**预格式化的文本**/
 .f-30{font-size:30px}
 
 h3{margin:20px 0;}
-p{margin-bottom:10px;}
+
 
 
 /*************************边距*************************/
@@ -85,15 +86,15 @@ p{margin-bottom:10px;}
 .ml-15{margin-left:15px}/**距左15像素**/
 .ml-20{margin-left:20px}/**距左20像素**/
 .ml-30{margin-left:30px}/**距左30像素**/
-.ml-40{margin-left:40px}/**距左40像素**/
 .ml-50{margin-left:50px}/**距左50像素**/
- 
+.ml-45{margin-left:45px}/**距右45像素**/
 .mr-5{margin-right:5px}/**距右5像素**/
 .mr-10{margin-right:10px}/**距右10像素**/
 .mr-15{margin-right:15px}/**距右15像素**/
 .mr-20{margin-right:20px}/**距右20像素**/
 .mr-30{margin-right:30px}/**距右30像素**/
 .mr-40{margin-right:40px}/**距右40像素**/
+
 .mr-50{margin-right:50px}/**距右50像素**/
 
 .mc-5{margin-right:5px}/**距离5像素**/
@@ -125,6 +126,8 @@ p{margin-bottom:10px;}
 .pr-10{padding-right:10px}/**右填充10像素**/
 .pr-15{padding-right:15px}/**右填充15像素**/
 .pr-20{padding-right:20px}/**右填充20像素**/
+.pr-25{padding-right:25px}/**右填充20像素**/
+.pr-30{padding-right:30px}/**右填充20像素**/
  
 .pd-5{padding:5px}/**填充5像素**/
 .pd-10{padding:10px}/**填充10像素**/
@@ -254,28 +257,31 @@ pre ol.linenums li {
 .top-list .date {color: #999;font-size: 12px;position: absolute;right: 0;top: 0;}
 
 /************************表格************************/
-.table{width:100%;empty-cells:show;background-color:transparent;border-collapse:collapse;border-spacing:0}
+.table{width:100%;float:left;empty-cells:show;background-color:transparent;border-collapse:collapse;border-spacing:0}
 .table tr td{text-align:center;font-weight:400}
 .table tr th{text-align:center;}
 /**带水平线**/
 .table th{font-weight:bold}
-.table th,.table td{padding:8px;line-height:20px}
+.table th,.table td{height:35px;line-height:20px;font-size:12px}
 .table td{text-align:left}
 .table tbody tr.success > td{background-color:#dff0d8}
 .table tbody tr.error > td{background-color:#f2dede}
 .table tbody tr.warning > td{background-color:#fcf8e3}
 .table tbody tr.info > td{background-color:#d9edf7}
-.table tbody + tbody{border-top:2px solid #ddd}
+.table tbody + tbody{border-top:1px solid #ddd}
 .table .table{background-color:#fff}
- 
+.table a{color:#333;margin-right:6px;}
+.table a:hover{color:#1295f2;}
 /**带横向分割线**/
 .table-border{border-top:1px solid #ddd}
 .table-border th,.table-border td{border-bottom:1px solid #ddd}
  
 /**th带背景**/
+.table-bg .bj{background-color:#eee;height:40px;}
+.table-bg .bj:hover{background-color:#eee}
 .table-bg thead th{background-color:#F5FAFE}
 /**带外边框**/
-.table-bordered{border:1px solid #ddd;border-collapse:separate;*border-collapse:collapse;border-left:0}
+.table-bordered{border:1px solid #ddd;border-left:0}
 .table-bordered th,.table-bordered td{border-left:1px solid #ddd}
 .table-border.table-bordered{border-bottom:0}
  
@@ -295,19 +301,15 @@ pre ol.linenums li {
 .table th.text-r,.table td.text-r{text-align:right!important}/**单独列居右**/
 
 /************************按钮************************/
-.biu-btn{display:inline-block;cursor:pointer;text-align:center; font-weight:400;white-space:nowrap;vertical-align: middle; outline:none;}
+.btn{cursor:pointer;text-align:center;outline:none;}
 /*默认——灰色 通常用于取消*/
-.btn-default{background-color:#eee;}
-.btn-default:hover,
-.btn-default:focus,
-.btn-default:active,
-.btn-default.active{color:#333;background-color:#c7c7c7;}
+.biu-btn{display:inline-block;cursor:pointer;text-align:center; font-weight:400;white-space:nowrap; outline:none;}
 /*颜色 蓝色*/
-.btn-blue{color:#fff;background-color:#28a3ef;}
+.btn-blue{color:#fff;background-color:#1c9aec;}
 .btn-blue:hover,
 .btn-blue:focus,
 .btn-blue:active,
-.btn-blue.active{color:#fff;background-color:#4cb9fc;}
+.btn-blue.active{color:#fff;background-color:#10a2fb;}
 /*颜色 绿色*/
 .btn-green{color:#fff;background-color:#43cd6e;}
 .btn-green:hover,
@@ -349,44 +351,48 @@ pre ol.linenums li {
 /**边框按钮红色**/
 .border-red{border:1px solid #ed6a5a;background:#fff;}
 .border-red:hover{background:#ed6a5a;color:#fff;}
-
+/**库存按钮**/
+.stock-btn{padding:0 10px;min-width:100px;height:30px; border:1px solid #10a2fb; color:#fff; line-height:30px;outline:none;font-size:14px;}
 /**按钮尺寸大小**/
 .btn-mini{width:60px;height:30px;}
-.btn-small{width:80px;height:24px;}
-.btn-medium{width:100px;height:26px;}
-.btn-large{width:120px;height:28px;}
+.btn-small{width:80px;height:34px;}
+.btn-medium{width:100px;height:35px;}
+.btn-large{width:120px;height:40px;}
 .btn-xlarge{width:140px;height:30px;}
 .btn-xxlarge{width:160px;height:30px;}
 /**按钮自适应大小**/
-.btn-auto{padding:0 14px;height:30px;line-height: 30px;}
+.btn-auto{padding:0 14px;height:30px;}
+
 
 /************************表单************************/
-.int-text{border:1px solid #c7c7c7;background:#fff; outline:none;}
-.int-text:hover{border:1px solid #000;}
-.int-mini{width:100px;height:30px;padding-left:4px;}
+.int-text{border:1px solid #e4e4e4;background:#fff; outline:none;}
+.int-text:hover{border:1px solid #ccc;}
+.int-mini{width:102px;height:30px;padding-left:4px;}
 .int-small{width:140px;height:30px;padding-left:4px;}
-.int-medium{width:180px;height:30px;padding-left:4px;}
-.int-large{width:220px;height:30px;padding-left:4px;}
-.int-xlarge{width:260px;height:30px;padding-left:4px;}
-.int-xxlarge{width:300px;height:30px;padding-left:4px;}
-.int-xxxlarge{width:340px;height:30px;padding-left:4px;}
-.textarea-large{width:440px;height:80px;padding-left:4px;}
+.int-medium{width:190px;height:30px;padding-left:4px;}
+.int-large{width:260px;height:30px;padding-left:4px;}
+.int-xlarge{width:350px;height:30px;padding-left:4px;}
+.int-xxlarge{width:500px;height:30px;padding-left:4px;}
+.int-xxxlarge{width:700px;height:30px;padding-left:4px;}
+.textarea-xlarge{width:350px;height:80px;padding-left:4px;}
+
 /**禁用**/
 .input-disabled{cursor:not-allowed;background:#eee;}
 .input-disabled:hover{border:1px solid #c7c7c7;}
+
 /************************checkbox************************/
 .skin-minimal .checkbox-1,.checkbox-2,.checkbox-disabled,.checkbox-disabled-checked{width:14px;height:14px;}
 .checkbox-disabled,.checkbox-disabled-checked{cursor:not-allowed;}
 /************************select************************/
-.select{border:1px solid #c7c7c7;background:#fff; outline:none;}
-.select:hover{border:1px solid #000;}
-.select-mini{width:100px;height:30px;padding-left:4px;}
+.select{border:1px solid #e4e4e4;background:#fff; outline:none;}
+.select:hover{border:1px solid #0697ef;}
+.select-mini{width:102px;height:30px;padding-left:4px;}
 .select-small{width:140px;height:30px;padding-left:4px;}
-.select-medium{width:180px;height:30px;padding-left:4px;}
-.select-large{width:220px;height:30px;padding-left:4px;}
+.select-medium{width:190px;height:30px;padding-left:4px;}
+.select-large{width:260px;height:30px;padding-left:4px;}
 .select-xlarge{width:260px;height:30px;padding-left:4px;}
-.select-xxlarge{width:300px;height:30px;padding-left:4px;}
-.select-xxxlarge{width:340px;height:30px;padding-left:4px;}
+.select-xxlarge{width:350px;height:30px;padding-left:4px;}
+.select-xxxlarge{width:500px;height:30px;padding-left:4px;}
 
 /**上传按钮**/
 .btn-upload{width:auto;position: relative; display:inline-block;height:36px; *display:inline;overflow:hidden;vertical-align:middle;cursor:pointer}
@@ -433,3 +439,8 @@ pre ol.linenums li {
 .paging-noneborder ul li a{border:none;}
 .paging-noneborder ul li a:hover{border:none;background:none;color:#06a7e1;}
 .paging-noneborder ul .active a{border:none;background:none;color:#06a7e1;}
+
+
+
+
+
