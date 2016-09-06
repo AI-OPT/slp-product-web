@@ -168,7 +168,7 @@
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
 											</td>
 											<td>{{:stateName}}</td>
-											<td>{{:~timesToFmatter(createTime)}}</td>
+											<td>{{:~timesToFmatter(upTime)}}</td>
 											<td>
 												<div>
 													<!-- <p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p> -->
