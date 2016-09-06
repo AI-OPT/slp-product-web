@@ -231,12 +231,10 @@ public class ProdQueryController {
 		try {
 			//查询条件
 			queryBuilder(request, productEditQueryReq);
-			// 设置状态，新增：0；未编辑1.
+			// 设置状态
 			List<String> stateList = new ArrayList<>();
 			if (StringUtil.isBlank(request.getParameter("state"))) {
-				stateList.add("0");
 				stateList.add("1");
-				stateList.add("2");
 				stateList.add("3");
 				stateList.add("4");
 			}else {
