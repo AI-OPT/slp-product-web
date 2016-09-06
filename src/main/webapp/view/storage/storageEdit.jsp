@@ -16,57 +16,6 @@
 </head>
 
 <body>
-<!--添加库存分组 弹出框  小-->
-<div class="eject-big">
-    <div class="eject-samll" id="eject-samll">
-        <div class="eject-samll-title">
-            <p>添加库存分组</p>
-            <p class="img"><A href="javascript:void(0);"></A></p>
-        </div>
-        <div class="medium-list-form">
-            <ul>
-                <li>
-                    <p>库存组名称</p>
-                    <p><input id="storageGroupName" type="text" class="int-text int-medium"></p>
-                </li>
-            </ul>
-        </div>
-        <div class="eject-samll-confirm mt-0">
-            <ul>
-                <li><input id="addStorGroup" type="button" class="slp-btn eject-small-btn" value="确认">
-                    <input type="button" class="slp-btn eject-small-btn close-btn" value="取消">
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="mask" id="eject-mask"></div>
-</div>
-<!--/结束-->
-<!--编辑库存分组 弹出框  小-->
-<div class="eject-big">
-    <div class="eject-samll" id="up-group-name">
-        <div class="eject-medium-title">
-            <p>编辑名称</p>
-            <p class="img"><i class="fa fa-times" onclick="pager._closeUpGroupView();"></i></p>
-        </div>
-        <input type="hidden" id="upGroupId">
-        <div class="form-label mt-10">
-            <ul>
-                <li>
-                    <p class="word"><span>*</span>库存组名称:</p>
-                    <p><input id="upGroupName" type="text" class="int-text int-small"></p>
-                </li>
-            </ul>
-        </div>
-        <div class="row mt-15">
-            <p class="center pr-30 mt-30">
-                <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
-                <input id="add-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 edit-close" value="取  消">
-            </p>
-        </div>
-    </div>
-    <div class="mask" id="eject-mask"></div>
-</div>
 <!--增加库存 弹出框  小-->
 <!--编辑名称弹出框-->
 <div class="eject-big">
@@ -82,7 +31,7 @@
             <ul>
                 <li>
                     <p class="word"><span>*</span>库存名称:</p>
-                    <p><input type="text" id="newStorageName" class="int-text int-small" maxlength="60"></p>
+                    <p><input type="text" id="newStorageName" class="int-text int-small" maxlength="15"></p>
                 </li>
             </ul>
             <ul>
