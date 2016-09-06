@@ -46,6 +46,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            <c:if test="${!keyAttr.isEmpty()}">
                             <!-- 关键属性 -->
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品关键属性</h5>
@@ -63,6 +64,7 @@
                                     </ul>
                                 </c:forEach>
                             </div>
+                            </c:if>
                             <c:if test="${!saleAttr.isEmpty()}">
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品销售属性</h5>
@@ -110,13 +112,19 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:supplyId}}</td>
-										<td>{{:supplyName}}</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:supplyName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:supplyName}}</div>
+										</td>
 										<td>{{:routeId}}</td>
-										<td>{{:routeName}}</td>
+										<td>
+											<div class="center-hind" >{{:routeName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:routeName}}</div>
+										</td>
 										<td>{{:usableNum}}</td>
                                         <td>
-											<input for="costPrice" name="costPrice{{:#index}}" standedProdId="{{:standedProdId}}" supplyId="{{:supplyId}}" routeId="{{:routeId}}" value="{{:~liToYuan2(costPrice)}}" tenantId="{{:tenantId}}" type="text"  class="int-text int-mini" moneyNumber="true" data-msg-moneyNumber="请输入正确格式">
-											<div id="costPrice{{:#index}}"></div>
+											<input for="costPrice" name="costPrice{{:#index}}" standedProdId="{{:standedProdId}}" supplyId="{{:supplyId}}" routeId="{{:routeId}}" value="{{:~liToYuan2(costPrice)}}" tenantId="{{:tenantId}}" type="text"  class="int-text int-mini" required moneyNumber="true" data-msg-moneyNumber="请输入正确格式">
+											<div id="costPrice{{:#index}}" style="float:left;text-align:left;"></div>
 										</td>
 									</tr>
 								</script>
