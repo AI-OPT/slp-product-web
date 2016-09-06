@@ -48,6 +48,12 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
         loadData: function(currentPage) {
         	var _this = this;
         	var opt = _this.options;
+        	this.showLoadingMessage();
+        	var renderId = opt.renderId;
+        	if(renderId){
+        		var showDoc = document.getElementById(renderId);
+            	showDoc.innerHTML="";
+        	}
         	var data = opt.data?opt.data:{};
         	var currentPageSize = opt.pageSize?opt.pageSize:10;
         	var _pagesize={name:"pageSize",value: currentPageSize};
@@ -68,16 +74,29 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
  	 			dataType: opt.dataType,
  	            showWait: opt.showWait,
  	            data: data,
- 	            message: opt.message,
+ 	            //message: opt.message,
+ 	            processing: false,
  	            success: function (resp) {
+ 	            	_this.hiddenLoadingMessage();
  	            	var d = (resp && resp.data)?resp.data:{};
- 	                opt.render && opt.render.call(_this,d.result);
+ 	            	if(d && d.result && d.result.length>0){
+ 	            		_this.hiddenNotResultMessage();
+ 	            		opt.render && opt.render.call(_this,d.result);
+ 	            	}else{
+ 	            		_this.showNotResultMessage();
+ 	            	}
  	                opt.callback && opt.callback.call(_this,d);
  	                //var pager = d.pager?d.pager:{};
  	                //var totalPages=d.pageCount?d.pageCount:1;
  	                if(d.pageCount>0){
  	                	_this.setupTwbsPagination(d.pageCount);
  	                }
+ 	            },
+ 	            failure:function(){
+ 	            	_this.hiddenLoadingMessage();
+ 	            },
+ 	            error:function(){
+ 	        	   _this.hiddenLoadingMessage();
  	            }
         	});
         	
@@ -86,6 +105,79 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
 	           		data.pop();//移除pageSize
 	           		data.pop();//移除pageNo
 	        }
+        },
+        
+        /**
+         * 显示加载信息
+         */
+        showLoadingMessage:function(){
+        	var messageId = this.options.messageId;
+        	if(messageId){
+        		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-loading'></li>";
+        		document.getElementById(messageId).className = "not-query pt-20 pb-20";
+        	}
+//        	this.$element.addClass("not-query pt-20 pb-20");
+//        	this.$element.removeClass("pagination");
+//        	this.$element.get(0).innerHTML = "<li class='dialog-icon-loading'></li>";
+        },
+        
+        /**
+         * 隐藏加载信息
+         */
+        hiddenLoadingMessage:function(){
+        	var messageId = this.options.messageId;
+        	if(messageId){
+        		document.getElementById(messageId).innerHTML = "";
+        		document.getElementById(messageId).className = "";
+        	}
+        	
+//        	this.$element.addClass("pagination");
+//        	this.$element.removeClass("not-query pt-20 pb-20");
+//        	this.$element.get(0).innerHTML = "";
+        },
+        /**
+         * 显示无返回信息
+         */
+        showNotResultMessage:function(){
+        	this.$element.removeClass("pagination");
+        	var imageType = this.options.resultImageType;
+        	var messageId = this.options.messageId;
+        	if(messageId){
+	        	if(imageType == "1"){
+	        		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-notquery-1'></li><li>抱歉没有找到相关商品，更换搜索词试一试吧！</li>";
+	            	document.getElementById(messageId).className = "query-product-msgimage not-query";
+	
+	//        		this.$element.addClass("query-product-msgimage not-query");
+	//            	this.$element.get(0).innerHTML = "<li class='dialog-icon-notquery-1'></li><li>抱歉没有找到相关商品，更换搜索词试一试吧！</li>";
+	        	}else{
+	        		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-notquery'></li><li>抱歉没有查询到相关数据</li>";
+	            	document.getElementById(messageId).className = "not-query pt-20 pb-20";
+	        		
+	//        		this.$element.addClass("not-query pt-20 pb-20");
+	//            	this.$element.get(0).innerHTML = "<li class='dialog-icon-notquery'></li><li>抱歉没有查询到相关数据</li>";
+	        	}
+        	}
+        },
+        
+        /**
+         * 隐藏无返回信息
+         */
+        hiddenNotResultMessage: function(){
+        	this.$element.addClass("pagination");
+        	var imageType = this.options.resultImageType;
+        	var messageId = this.options.messageId;
+        	if(messageId){
+	        	document.getElementById(this.options.messageId).innerHTML = "";
+	        	document.getElementById(this.options.messageId).className = "";
+        	}
+        	
+//        	if(imageType == "1"){
+//        		this.$element.reremoveClass("query-product-msgimage not-query");
+//            	this.$element.get(0).innerHTML = "";
+//        	}else{
+//        		this.$element.removeClass("not-query pt-20 pb-20");
+//            	this.$element.get(0).innerHTML = "";
+//        	}
         },
         
         setupTwbsPagination: function(totalPages){

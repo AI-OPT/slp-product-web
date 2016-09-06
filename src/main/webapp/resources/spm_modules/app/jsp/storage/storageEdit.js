@@ -167,8 +167,8 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     			_this._showMsg("库存名称不能为空");
     			return;
     		}
-    		if(length>30){
-    			_this._showMsg("库存名称最大长度为15个字（30个字符）");
+    		if(storageName.length>15){
+    			_this._showMsg("库存名称最大长度为15");
     			return;
     		}
 

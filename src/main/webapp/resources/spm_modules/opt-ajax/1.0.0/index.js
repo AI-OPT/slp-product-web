@@ -7,7 +7,8 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
     require('jquery-form/3.51.0/jquery.form');
     
     var processingDialog = Dialog({
-        content: "<div class='loading'>正在处理中，请稍候..</div>"
+    	icon:"loading",
+        content: "<div class='word'>正在处理中，请稍候..</div>"
     });
     
     
@@ -97,7 +98,7 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
 			settings.type=options.type?options.type:"post";
 			var q="ajax_req_random="+new Date().getTime();
 			settings.url += (settings.url.indexOf('?') >= 0 ? '&' : '?') + q;  
-			if(processing)processingDialog.content("<div class='loading'>"+message+"</div>").showModal();
+			if(processing)processingDialog.content("<div class='word'>"+message+"</div>").showModal();
 			if(options.postselectors && options.postselectors.length==1){ 
 				settings.semantic=true; 
 				var postContainerSelector=options.postselectors[0]; 
