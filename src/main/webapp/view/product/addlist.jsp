@@ -181,7 +181,7 @@
 													{{if state=="3"}}
 													<p><a href="#" class="blue">查看原因</a></p>
 													{{/if}}
-													<p><a href="#" class="blue">查看商品</a></p>
+													<p><a href="${_base}/prodquery/{{:prodId}}" class="blue-border">查看商品</a></p>
 												</div>
 											</td>
 									</tr>
