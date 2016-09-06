@@ -87,6 +87,7 @@
                     class="int-text int-mini"  value="0" maxlength="8"/></td>
     </tr>
 </script>
+<!-- 查看库存信息 -->
 <div class="eject-big">
     <div class="eject-medium" id="info-medium">
         <div class="eject-medium-title">
