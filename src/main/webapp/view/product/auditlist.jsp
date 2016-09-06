@@ -31,11 +31,11 @@
 							<!--点击展开-->
 							<div id="selectDiv" class="open" style="display:none;">
 								<ul>
-									<li class="col-md-4">
+									<li class="col-md-6">
 										<p class="word">商品ID</p>
 										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
 									</li>
-									<li class="col-md-4">
+									<li class="col-md-6">
 										<p class="word">商品类型</p>
 										<p>
 											<select id="productType" class="select select-medium">
@@ -45,7 +45,22 @@
 											</select>
 										</p>
 									</li>
-									<li class="col-md-4">
+								</ul>
+								<ul>
+									<li class="col-md-6">
+										<p class="word">操作开始时间</p>
+										<p><input type="text" class="int-text int-medium" id="operStartTime">
+											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
+									</li>
+									<li class="col-md-6">
+										<p class="word">操作结束时间</p>
+										<p><input type="text" class="int-text int-medium" id="operEndTime">
+											<span class="time"> <i class="fa  fa-calendar" ></i></span>
+										</p>
+									</li>
+								</ul>
+								<ul>
+									<li class="col-md-6">
 										<p class="word">商品状态</p>
 										<p>
 											<select id="state" class="select select-medium">
@@ -53,19 +68,6 @@
 												<option value="3">审核中</option>
 												<option value="4">被拒绝</option>
 											</select>
-										</p>
-									</li>
-								</ul>
-								<ul>
-									<li class="col-md-4">
-										<p class="word">操作开始时间</p>
-										<p><input type="text" class="int-text int-medium" id="operStartTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
-									</li>
-									<li class="col-md-4">
-										<p class="word">操作结束时间</p>
-										<p><input type="text" class="int-text int-medium" id="operEndTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span>
 										</p>
 									</li>
 								</ul>
