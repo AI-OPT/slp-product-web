@@ -129,22 +129,84 @@
                                 <h5 class="pull-left">预售设置</h5>
                             </header>
                             <div class="form-label  bd-bottom">
-                            	
+                                <ul>
+                           		   <li class="col-md-6">
+		                            	<p class="word">
+			                            <c:if test="${upType == '4'}">预售</c:if>
+			                            <c:if test="${upType != '4'}">非预售商品</c:if>
+		                            	</p>
+                                    </li>
+                            	</ul>
                             </div>
                             <!-- 发票信息 -->
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">发票信息</h5>
                             </header>
                             <div class="form-label  bd-bottom">
-	                            <c:if test="${productInfo.getIsInvoice == 'Y'}">提供发票</c:if>
-	                            <c:if test="${productInfo.getIsInvoice == 'N'}">不提供发票</c:if>
+                            	<ul>
+                           		   <li class="col-md-6">
+		                            	<p class="word">是否提供发票:</P>
+		                            	<p>
+		                            	<c:if test="${invoice == 'Y'}">提供发票</c:if>
+			                            <c:if test="${invoice == 'N'}">不提供发票</c:if>
+		                            	</p>
+                                    </li>
+                            	</ul>
                             </div>
                             <!-- 商品上架时间 -->
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品上架时间</h5>
                             </header>
                             <div class="form-label  bd-bottom">
-                            	${productInfo.getUpTime}
+                            	<ul>
+                           		   <li class="col-md-6">
+		                            	<p class="word">
+		                            	<c:if test="${upType == '1'}">立即上架</c:if>
+			                            <c:if test="${upType == '2'}">放入仓库</c:if>
+		                            	</p>
+                                    </li>
+                            	</ul>
+                            </div>
+                            <!-- 商品预览图 -->
+                            <header class="main-box-header clearfix">
+                                <h5 class="pull-left">商品预览图</h5>
+                            </header>
+                            <div class="form-label  bd-bottom">
+                            		<div class="width-img" id="prod_pic_0">
+								<c:set var="prodPicNum" value="${prodPic.size()}"></c:set>
+								<c:forEach var="valInd" begin="0" end="5">
+									<p class="img">
+										<c:choose>
+											<c:when test="${valInd<prodPicNum && prodPic.get(valInd)!=null}">
+												<c:set var="valInfo" value="${prodPic.get(valInd)}"/>
+												<img src="<c:out value="${imgClient.getImageUrl(valInfo.vfsId,valInfo.picType,picSize)}"/>"
+													 imgId="${valInfo.vfsId}" imgType="${valInfo.picType}"
+													 attrVal="0" picInd="${valInd}" id="prodPicId0ind${valInd}"/>
+												<i class="icon-remove-sign"></i>
+											</c:when>
+											<c:otherwise>
+												<img src="${_slpres}/images/sp-03-a.png" imgId="" imgType=""
+													 attrVal="0" picInd="${valInd}" id="prodPicId0ind${valInd}"/>
+												<i></i>
+											</c:otherwise>
+										</c:choose>
+
+									</p>
+								</c:forEach>
+							</div>
+                            </div>
+                            <!-- 商品预览图 -->
+                            <header class="main-box-header clearfix">
+                                <h5 class="pull-left">商品图文描述</h5>
+                            </header>
+                            <div class="form-label  bd-bottom">
+                            	<ul>
+                           		   <li class="col-md-6">
+		                            	<p class="word">
+		                            		${prodDetail}
+		                            	</p>
+                                    </li>
+                            	</ul>
                             </div>
                             
                        	</div>
