@@ -50,11 +50,11 @@ button{outline:none}
 .ui-eject-mask1{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;opacity:0.4;filter:alpha(opacity=40);z-index:18; }
 
 /**图标样式**/
-.dialog-icon-fail{ width:100%;height:75px;float:left; margin-bottom:20px; background: url(../images/eject-icon-fail.png) no-repeat center top;}
-.dialog-icon-help{ width:100%;height:75px;float:left; margin-bottom:20px; background: url(../images/eject-icon-help.png) no-repeat center top;}
-.dialog-icon-prompt{ width:100%;height:75px;float:left; margin-bottom:20px; background: url(../images/eject-icon-prompt.png) no-repeat center top;}
-.dialog-icon-success{ width:100%;height:75px;float:left; margin-bottom:20px; background: url(../images/eject-icon-success.png) no-repeat center top;}
-.dialog-icon-warning{ width:100%;height:75px;float:left; margin-bottom:20px; background: url(../images/eject-icon-Warning.png) no-repeat center top;}
+.dialog-icon-fail{ width:100%;height:45px;float:left; margin-bottom:20px; background: url(../images/eject-icon-fail.png) no-repeat center top;}
+.dialog-icon-help{ width:100%;height:45px;float:left; margin-bottom:20px; background: url(../images/eject-icon-help.png) no-repeat center top;}
+.dialog-icon-prompt{ width:100%;height:45px;float:left; margin-bottom:20px; background: url(../images/eject-icon-prompt.png) no-repeat center top;}
+.dialog-icon-success{ width:100%;height:45px;float:left; margin-bottom:20px; background: url(../images/eject-icon-success.png) no-repeat center top;}
+.dialog-icon-warning{ width:100%;height:45px;float:left; margin-bottom:20px; background: url(../images/eject-icon-Warning.png) no-repeat center top;}
 .dialog-icon-loading{ width:100%;height:120px;float:left; margin-bottom:20px; background: url(../images/loading_1.gif) no-repeat center top;}
 .dialog-icon-notquery{ width:100%;height:230px;float:left; margin-bottom:20px; background: url(../images/not-query.png) no-repeat center;}
 .dialog-icon-notquery-1{ width:100%;height:320px;float:left; margin-bottom:20px; background: url(../images/not-query_1.png) no-repeat center;}

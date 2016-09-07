@@ -62,6 +62,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 					success: function(data){
 						if("1"===data.statusCode){
 							var d = Dialog({
+								title:"提示",
 								content:data.statusInfo,
 								icon:'success',
 								okValue: '确 定',
@@ -74,6 +75,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 							d.show();
 						}else{
 							var d = Dialog({
+								title:"错误",
 								content:data.statusInfo,
 								icon:'fail',
 								okValue: '确 定',

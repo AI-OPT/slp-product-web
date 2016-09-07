@@ -147,6 +147,7 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
     	_isDiscardDialog:function(productId){
     		var _this = this;
     		var d = Dialog({
+    			title:"提示",
 				content:"确定废弃该标准品吗？废弃后不可再使用",
 				icon:'help',
 				okValue: '确 定',

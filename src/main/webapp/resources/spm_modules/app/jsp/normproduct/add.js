@@ -113,6 +113,7 @@ define('app/jsp/normproduct/add', function (require, exports, module) {
     		var productCatId = $("#selectCat"+length+" option:selected").val();
     		if(productCatId=="" || productCatId==null || productCatId == undefined){
     			var d = Dialog({
+    				title:"提示",
 					content:"请先关联类目属性",
 					icon:'warning',
 					okValue: '确 定',
