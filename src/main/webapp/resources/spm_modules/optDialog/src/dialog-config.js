@@ -93,7 +93,7 @@ define({
         +	'<div class="ui-prompt-samll">'
         +		'<div i="header" class="eject-samll-title">'
 		+			'<p i="title"></p>'
-		+			'<p i="close" class="img"><A href="#"></A></p>'
+		+			'<p i="close" class="img"><i class="fa fa-times"></p>'
 		+		'</div>'
 		+		'<div class="prompt-samll-confirm">'
 		+			'<ul i="body">'
