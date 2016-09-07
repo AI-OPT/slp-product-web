@@ -64,12 +64,14 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			if (!hasSale){
 				//取消只读
 				$('#newTotalNum').removeAttr("readonly");
+				if ($("#newTotalNum").hasClass("input-disabled"))
+					$("#newTotalNum").removeClass("input-disabled");
 				$('#eject-mask').fadeIn(100);
 				$('#edit-medium').slideDown(200);
 				console.log("The hasSale is "+hasSale);
 				return;
 			}
-
+			$("#newTotalNum").addClass("input-disabled");
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
@@ -362,7 +364,10 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			//数量
 			var nameTd = $(obj).parent().prev().prev();
 			$("#newTotalNum").val(nameTd.html());
+			//添加只读
 			$('#newTotalNum').attr("readonly","readonly");
+			if (!$("#newTotalNum").hasClass("input-disabled"))
+				$("#newTotalNum").addClass("input-disabled");
 			//名称
 			$("#newStorageName").val(nameTd.prev().html());
 			$("#storageId").val(storageId);

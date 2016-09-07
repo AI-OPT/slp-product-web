@@ -135,7 +135,7 @@
                             </c:if>
                             <%-- 遍历库存组 --%>
                             <div class="form-label table-responsive clearfix">
-                                <table class="table table-hover table-border table-bordered">
+                                <table class="table table-border table-bordered">
                                     <thead>
                                     <tr>
                                         <th>序号</th>
