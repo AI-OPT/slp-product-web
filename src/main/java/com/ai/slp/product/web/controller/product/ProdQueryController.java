@@ -52,6 +52,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -568,9 +570,14 @@ public class ProdQueryController {
         queryReq.setSupplierId(AdminUtil.getSupplierId());
         PageInfoResponse<TargetAreaForProd> prodTargetArea = productSV.searchProdTargetArea(queryReq);
         uiModel.addAttribute("prodTargetArea", prodTargetArea.getResult());
-        //预售设置
 
+        //发票信息
+        String invoice = productInfo.getIsInvoice();
+        uiModel.addAttribute("invoice", invoice);
         
+        //商品上架时间
+        String upshelfType = productInfo.getUpshelfType();
+        uiModel.addAttribute("upType", upshelfType);
         
         //查询商品其他设置
         OtherSetOfProduct otherSet = productManagerSV.queryOtherSetOfProduct(productInfoQuery);
