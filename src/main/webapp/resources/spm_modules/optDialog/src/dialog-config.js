@@ -91,7 +91,7 @@ define({
 //		+'</div>'
         '<div i="dialog" class="eject-big">'
         +	'<div i="showView" class="prompt-samll">'
-        +		'<div i="header" class="eject-samll-title">'
+        +		'<div i="header" class="eject-medium-title">'
 		+			'<p i="title"></p>'
 		+			'<p i="close" class="img"><i class="fa fa-times"></p>'
 		+		'</div>'
