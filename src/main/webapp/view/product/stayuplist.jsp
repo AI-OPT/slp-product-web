@@ -134,10 +134,10 @@
 									<tr>
 										<th>商品ID</th>
 										<th>所属类目</th>
-										<th>类型</th>
+										<th>商品类型</th>
 										<th>预览图</th>
 										<th>商品名称</th>
-										<th>状态</th>
+										<th>商品状态</th>
 										<!-- <th>生成时间</th> -->
 										<th>操作</th>
 									</tr>
@@ -179,6 +179,7 @@
 											{{else}}
 											<td>
 												<div>
+													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
 													<p><a name="#" id="#" href="#" class="blue-border">查看商品</a></p> 
 												</div>
 											</td>
