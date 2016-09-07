@@ -286,7 +286,9 @@ $.extend(prototype, {
      * @name artDialog.prototype.onshow
      * @event
      */
-	
+	onshow:function(){
+		this._$("showView").css("display","block");
+	},
     /**
      * 关闭事件，在 close() 执行
      * @name artDialog.prototype.onclose
@@ -375,7 +377,7 @@ $.extend(prototype, {
      */
     title: function (text) {
         this._$('title').text(text);
-        this._$('header')[text ? 'show' : 'hide']();
+        this._$('title')[text ? 'show' : 'hide']();
         return this;
     },
 

@@ -90,7 +90,7 @@ define({
 //		+	'<div class="ui-eject-mask"></div>'	
 //		+'</div>'
         '<div i="dialog" class="eject-big">'
-        +	'<div class="ui-prompt-samll">'
+        +	'<div i="showView" class="prompt-samll">'
         +		'<div i="header" class="eject-samll-title">'
 		+			'<p i="title"></p>'
 		+			'<p i="close" class="img"><i class="fa fa-times"></p>'
