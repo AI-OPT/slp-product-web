@@ -2,7 +2,7 @@
 *{font-family:"Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing:grayscale; box-sizing: border-box; border:0; padding:0; margin:0;}
 body{font-size:14px; color:#333;}
 ul{ list-style:none;}
-a{text-decoration:none;}
+a{text-decoration:none;font-size:12px;}
 a:link{ text-decoration:none;}
 a:active{ text-decoration:none;}
 var,em {font-style:normal;}
@@ -262,7 +262,7 @@ pre ol.linenums li {
 .table tr th{text-align:center;}
 /**带水平线**/
 .table th{font-weight:bold}
-.table th,.table td{height:35px;line-height:20px;font-size:12px}
+.table th,.table td{height:35px;line-height:20px;font-size:12px;}
 .table td{text-align:left}
 .table tbody tr.success > td{background-color:#dff0d8}
 .table tbody tr.error > td{background-color:#f2dede}
