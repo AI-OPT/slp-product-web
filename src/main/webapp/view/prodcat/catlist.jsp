@@ -182,7 +182,10 @@
                                         <tr>
                                             <td>{{:#index+1}}</td>
                                             <td>{{:productCatId}}</td>
-                                            <td>{{:productCatName}}</td>
+                                            <td class="hind1">
+                                                <div class="center-hind" >{{:productCatName}}</div>
+                                                <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
+                                            </td>
                                             <td>{{if isChild=='Y'}}是{{else}}否{{/if}}</td>
                                             <td>{{:serialNumber}}</td>
                                             <td>
@@ -242,9 +245,10 @@
             $(".open ").slideToggle(100);
             $(".nav-form ").toggleClass("reorder remove");
         });
-        seajs.use('app/jsp/prodcat/catlist', function (catListPager) {
+        seajs.use(['app/jsp/prodcat/catlist','app/util/center-hind'], function (catListPager,centerHind) {
             pager = new catListPager({element: document.body});
             pager.render();
+            new centerHind({element : document.body}).render();
         });
     })();
     function goSecondParent(){

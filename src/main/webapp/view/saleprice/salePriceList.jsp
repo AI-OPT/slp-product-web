@@ -117,8 +117,14 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td>{{:productName}}</td>
-										<td>{{:catName}}</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:productName}}</div>
+											<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
+										</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:catName}}</div>
+											<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+										</td>
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
 										<td><a href="${_base}/saleprice/query/{{:productId}}" class="blue-border">编辑销售价</a></td>
@@ -158,9 +164,10 @@
 			$(".nav-form ").toggleClass("reorder remove");
 		});
 		$("#catFirst").val("");//设置类目为全部.
-		seajs.use('app/jsp/saleprice/salePriceList', function(salePriceList) {
+		seajs.use(['app/jsp/saleprice/salePriceList','app/util/center-hind'], function(salePriceList,centerHind) {
 			pager = new salePriceList({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>
