@@ -12,7 +12,6 @@ define('app/jsp/storage/storageList', function (require, exports, module) {
     require("app/util/jsviews-ext");
     require("opt-paging/aiopt.pagination");
     require("twbs-pagination/jquery.twbsPagination.min");
-   
     
     var SendMessageUtil = require("app/util/sendMessage");
     

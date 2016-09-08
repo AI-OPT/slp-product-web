@@ -96,7 +96,8 @@
 						<div class="main-box-body clearfix">
 							<!--table表格-->
 							<div class="table-responsive clearfix">
-								<table class="table table-hover table-border table-bordered">
+								<table class="table table-hover table-border table-bordered"
+									   style="table-layout:fixed;">
 									<thead>
 									<tr>
 										<th>序号</th>
@@ -117,11 +118,17 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td>{{:productName}}</td>
-										<td>{{:catName}}</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:productName}}</div>
+											<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
+										</td>
+										<td class="hind1">
+											<div class="center-hind" >{{:catName}}</div>
+											<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+										</td>
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
-										<td><a href="${_base}/storage/{{:productId}}" class="blue-border">编辑</a></td>
+										<td ><a href="${_base}/storage/{{:productId}}" class="blue-border">编辑</a></td>
 									</tr>
 								</script>
 							</div>
@@ -157,10 +164,12 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
+
 		$("#catFirst").val("");//设置类目为全部.
-		seajs.use('app/jsp/storage/storageList', function(storageList) {
+		seajs.use(['app/jsp/storage/storageList','app/util/center-hind'], function(storageList,centerHind) {
 			pager = new storageList({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>
