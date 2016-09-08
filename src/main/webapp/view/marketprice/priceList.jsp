@@ -143,16 +143,13 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th>序号</th>
-										<th>商品ID</th>
-										<th>商品名称</th>
-										<th>所属类目</th>
-										<th>类型</th>
-										<th>市场价</th>
-										<!-- <th>商品状态</th>
-										<th>操作时间</th>
-										<th>操作人</th> -->
-										<th>操作</th>
+										<th width="5%">序号</th>
+										<th width="17%">商品ID</th>
+										<th width="28%">商品名称</th>
+										<th width="17%">所属类目</th>
+										<th width="10%">类型</th>
+										<th width="12%">市场价</th>
+										<th width="10%">操作</th>
 									</tr>
 									</thead>
 									<tbody id="searchNormProductData">
@@ -166,20 +163,20 @@
 										<td>{{:productId}}</td>
 										<!-- <td>{{:productName}}</td>
 										<td>{{:catName}}</td> -->
-										<td class="hind1">
-											<div class="center-hind" >{{:catName}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
-										</td>
-										<td class="hind1">
+										<td class="hind1-medium text-l pl-15">
 											<div class="center-hind" >{{:productName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
 										</td>
+										<td class="hind1-medium text-l pl-15">
+											<div class="center-hind" >{{:catName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+										</td>
 										<td>{{:productType}}</td>
-										<td>{{:~liToYuan(marketPrice)}}</td>
+										<td class="text-r pr-15">{{:~liToYuan(marketPrice)}}</td>
 										<!-- <td>{{:state}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
 										<td>{{:operName}}</td> -->
-										<td><a href="${_base}/marketpricequery/{{:productId}}" class="blue-border">添加市场价</a></td>
+										<td><a href="${_base}/marketpricequery/{{:productId}}" class="blue-border">修改市场价</a></td>
 									</tr>
 								</script>
 							</div>
@@ -215,9 +212,10 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		seajs.use('app/jsp/marketprice/priceList', function(priceListPager) {
+		seajs.use(['app/jsp/marketprice/priceList','app/util/center-hind'], function(priceListPager,centerHind) {
 			pager = new priceListPager({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>
