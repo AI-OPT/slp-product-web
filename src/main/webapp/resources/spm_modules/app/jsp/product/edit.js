@@ -8,6 +8,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 	require("ckeditor/ckeditor.js")
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
+	require("my97DatePicker/WdatePicker");
     require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
     
@@ -59,90 +60,6 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			this._changeAudiEnt();
 			this._changeAudiAgent();
 		},
-		//刷新受众信息
-		_flushAudiInfo:function(){
-			//企业
-			if (ProdEditPager.AUDI_ENT_TYPE==nowAudiType){
-				this._changeAudiEnt();
-			}//代理商
-			else if(ProdEditPager.AUDI_AGENT_TYPE==nowAudiType){
-				this._changeAudiAgent();
-			}
-			//清除已有搜索
-			$('#userList').text("请输入公司名称进行搜索");
-			$('#selectName').val('');
-			$('#pagination-ul').empty();
-			$('.eject-mask').fadeOut(100);
-			$('.eject-large').slideUp(150);
-		},
-		//显示受众用户选择窗口
-		_showAudiSelect:function(audiType){
-			nowAudiType = audiType;
-			console.log("show audi type:"+nowAudiType);
-			var audiMap;
-			var typeName;
-			//企业
-			if (ProdEditPager.AUDI_ENT_TYPE==nowAudiType){
-				audiMap = audiEntObjs;
-				typeName = "企业";
-				selectUserType = ProdEditPager.USER_ENT_TYPE;
-			}//代理商
-			else if(ProdEditPager.AUDI_AGENT_TYPE==nowAudiType){
-				audiMap = audiAgentObjs;
-				typeName = "代理商";
-				selectUserType = ProdEditPager.USER_AGENT_TYPE;
-			}else
-				return;
-			this._showCheckAudi(audiMap);
-			$("#audiType").text(typeName);
-			$("#selectType").text(typeName);
-			$('.eject-mask').fadeIn(100);
-			$('.eject-large').slideDown(200);
-		},
-		//删除受众用户
-		_delAudi:function (userId){
-			console.log("del audi userId:"+userId);
-			var audiMap;
-			//企业
-			if (ProdEditPager.AUDI_ENT_TYPE==nowAudiType){
-				delete(audiEntObjs[userId]);
-				audiMap = audiEntObjs;
-			}//代理商
-			else if(ProdEditPager.AUDI_AGENT_TYPE==nowAudiType){
-				delete(audiAgentObjs[userId]);
-				audiMap = audiAgentObjs;
-			}else {
-				return;
-			}
-			this._showCheckAudi(audiMap);
-		},
-		//添加受众用户
-		_addAudi:function(userId,userName){
-			console.log("add user audi,id:"+userId+",userName:"+userName);
-			var audiMap;
-			//企业
-			if (ProdEditPager.AUDI_ENT_TYPE==nowAudiType){
-				audiEntObjs[userId] = userName;
-				audiMap = audiEntObjs;
-			}//代理商
-			else if(ProdEditPager.AUDI_AGENT_TYPE==nowAudiType){
-				audiAgentObjs[userId]=userName;
-				audiMap = audiAgentObjs;
-			}else{
-				return;
-			}
-			this._showCheckAudi(audiMap);
-		},
-		//显示选中受众
-		_showCheckAudi:function(audiMap){
-			var audNum = Object.keys(audiMap).length;
-			$('#audiNum').text(audNum);
-			//删除原来受众信息
-			$('#audiSelectedDiv').html("");
-			for (var key in audiMap) {
-				$('#audiSelectedDiv').append("<p>"+audiMap[key]+"<a href=\"javascript:void(0);\"><i class=\"icon-remove-sign\" userId='"+key+"'></i></a></p>");
-			}
-		},
 		_showAudi:function(){
 			var partTarget = $("input:radio[name='audiencesEnterprise']:checked").val();
 			if ('1' == partTarget){
@@ -157,48 +74,6 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			}else {
 				$('#agentAudiDiv').hide();
 				$('#agentAudiDivMore').hide();
-			}
-		},
-		//对企业受众进行处理
-		_changeAudiEnt:function(){
-			//获取audiEntObjs
-			var ind = 0;
-			var audiId = [];
-			$('#entAudiDiv').empty();
-			$('#entAudiDivMore').empty();
-			for (var key in audiEntObjs) {
-				audiId.push(key);
-				if (ind < 20)
-					$('#entAudiDiv').append("<p>"+audiEntObjs[key]+"、</p>");
-				else
-					$('#entAudiDivMore').append("<p>"+audiEntObjs[key]+"、</p>");
-				ind ++;
-			}
-			$('#entAudiDiv').prepend("<p class=\"width-xlag\">已选中"+audiId.length+"个<a href=\"javascript:void(0);\" class=\"modify\" audi=\""+ProdEditPager.AUDI_ENT_TYPE+"\" >修改</a></p>");
-			$('#audiEntIds').val(JSON.stringify(audiId));
-			if(audiId.length>20){
-				$('#entAudiDiv').append("<p><a href=\"javascript:void(0);\" class=\"zk\">显示更多<i class=\"icon-angle-down\"></i></a></p>");
-			}
-		},
-		//对代理商受众进行处理
-		_changeAudiAgent:function(){
-			//获取audiEntObjs
-			var ind = 0;
-			var audiId = [];
-			$('#agentAudiDiv').empty();
-			$('#agentAudiDivMore').empty();
-			for (var key in audiAgentObjs) {
-				audiId.push(key);
-				if (ind < 20)
-					$('#agentAudiDiv').append("<p>"+audiAgentObjs[key]+"、</p>");
-				else
-					$('#agentAudiDivMore').append("<p>"+audiAgentObjs[key]+"、</p>");
-				ind ++;
-			}
-			$('#agentAudiDiv').prepend("<p class=\"width-xlag\">已选中"+audiId.length+"个<a href=\"javascript:void(0);\" class=\"modify\" audi=\""+ProdEditPager.AUDI_AGENT_TYPE+"\">修改</a></p>");
-			$('#audiAgentIds').val(JSON.stringify(audiId));
-			if(audiId.length>20){
-				$('#agentAudiDiv').append("<p><a href=\"javascript:void(0);\" class=\"zk\">显示更多<i class=\"icon-angle-down\"></i></a></p>");
 			}
 		},
 		//完成目标地域选择
@@ -322,36 +197,6 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			console.log($('#noKeyAttrStr').val());
 			$('#noKeyAttrStr').val(noKeyJsonStr);
 			return true;
-		},
-		//查询用户
-		_searchBtnClick: function() {
-			var _this = this;
-			var selectName = $("#selectName").val();
-			if (selectName == null || '' == selectName) {
-				this._showMsg("请输入要查询公司名称");
-				return;
-			}
-			$("#pagination-ul").runnerPagination({
-				url: _base + "/home/queryuser",
-				method: "POST",
-				dataType: "json",
-				renderId:"userList",
-				messageId:"showMessageDiv",
-				processing: true,
-				data: {"userName":selectName,"userType":selectUserType},
-				pageSize: ProdEditPager.DEFAULT_PAGE_SIZE,
-				visiblePages: 5,
-				message: "正在为您查询数据..",
-				render: function (data) {
-					if (data != null && data != 'undefined' && data.length > 0) {
-						var template = $.templates("#userListTemple");
-						var htmlOutput = template.render(data);
-						$("#userList").html(htmlOutput);
-					} else {
-						$("#userList").html("没有搜索到相关信息");
-					}
-				}
-			});
 		},
 		//上传文件
 		_uploadFile:function(){
@@ -587,13 +432,6 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				return false;
 			}
 			return true;
-		},
-		//检查受众为部分时,是否选择用户,若选择用户为false,否则为true
-		_noHasAudi:function(audiId){
-			//获取受众信息
-			var audiJson = $('#'+audiId).val();
-			var audiArry = eval(audiJson);
-			return audiArry.length > 0?false:true;
 		},
 		_showMsg:function(msg){
 			var msg = Dialog({

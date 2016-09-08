@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html style="overflow-x:auto;overflow-y:auto;">
 <head>
-	<title>运营管理平台<sitemesh:title/></title>
+	<title>运营管理平台</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<%@include file="/inc/inc.jsp" %>
