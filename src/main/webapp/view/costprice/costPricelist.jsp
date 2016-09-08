@@ -49,7 +49,7 @@
 								<li class="col-md-12">
 									<p class="word">商品类目</p>
 									<p id="productCat0">
-										<select class="select select-small" onChange="pager._selectChange(this);">
+										<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
 											<option value="">全部</option>
 											<c:forEach var="info" items="${catInfoList}">
 												<option value="${info.productCatId}">${info.productCatName}</option>

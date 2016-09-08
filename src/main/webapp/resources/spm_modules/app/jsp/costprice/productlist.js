@@ -20,7 +20,7 @@ define('app/jsp/costprice/productlist', function (require, exports, module) {
     var ajaxController = new AjaxController();
     var clickId = "";
     //定义页面组件类
-    var normproductlistPager = Widget.extend({
+    var productListPage = Widget.extend({
     	
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -37,7 +37,7 @@ define('app/jsp/costprice/productlist', function (require, exports, module) {
             },
     	//重写父类
     	setup: function () {
-    		normproductlistPager.superclass.setup.call(this);
+			productListPage.superclass.setup.call(this);
     		this._clearQueryParams();
     		this._selectNormProductList();
     	},
@@ -68,6 +68,9 @@ define('app/jsp/costprice/productlist', function (require, exports, module) {
 			for(var i=index;i<length;i++){
 				$("#productCat"+i).remove();
 			}
+			//若为全部,则不查询.
+			if (prodCatId === '')
+				return;
 			ajaxController.ajax({
 				type: "post",
 				processing: false,
@@ -115,7 +118,7 @@ define('app/jsp/costprice/productlist', function (require, exports, module) {
 	 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName
 		 		},
 	 			
-	           	pageSize: normproductlistPager.DEFAULT_PAGE_SIZE,
+	           	pageSize: productListPage.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
@@ -135,6 +138,6 @@ define('app/jsp/costprice/productlist', function (require, exports, module) {
     	
     });
     
-    module.exports = normproductlistPager
+    module.exports = productListPage;
 });
 
