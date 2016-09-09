@@ -43,8 +43,8 @@ define('app/jsp/product/edit', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click input:checkbox[name='targetProv']":"_showTarget",
-			"click input:radio[name='audiencesEnterprise']":"_showAudi",
-			"click input:radio[name='audiencesAgents']":"_showAudi",
+			"click input:radio[name='isSaleNationwide']":"_showPartTarget",
+			"click #changeArea":"_showTargetWindow",
 			"click #finishTarget":"_finishTarget",
 			"click #searchBut":"_searchBtnClick",
 			"change #uploadFile":"_uploadFile",
@@ -57,38 +57,27 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			editDom = CKEDITOR.replace(prodDetail);
 			this._showPartTarget();
 			this._showTarget();
-			this._changeAudiEnt();
-			this._changeAudiAgent();
-		},
-		_showAudi:function(){
-			var partTarget = $("input:radio[name='audiencesEnterprise']:checked").val();
-			if ('1' == partTarget){
-				$('#entAudiDiv').show();
-			}else {
-				$('#entAudiDiv').hide();
-				$('#entAudiDivMore').hide();
-			}
-			var audiAgent = $("input:radio[name='audiencesAgents']:checked").val();
-			if ('1' == audiAgent){
-				$('#agentAudiDiv').show();
-			}else {
-				$('#agentAudiDiv').hide();
-				$('#agentAudiDivMore').hide();
-			}
 		},
 		//完成目标地域选择
 		_finishTarget:function(){
-			$('.eject-mask').fadeOut(100);
-			$('.eject-large2').slideUp(150);
+			$('#eject-mask').fadeOut(100);
+			$('#eject-city').slideUp(150);
 		},
 		//显示目标地域的信息
 		_showPartTarget:function(){
 			var partTarget = $("input[name='isSaleNationwide']:checked").val();
 			if ('N' == partTarget){
 				$('#check4').show();
+			} else{
+				$('#check4').hide();
 			}
 		},
-		//改变目标地域
+		//显示目标地域变更窗口
+		_showTargetWindow:function(){
+			$('#eject-mask').fadeIn(100);
+			$('#eject-city').slideDown(200);
+		},
+		//更改地域
 		_showTarget:function(){
 			//选中省份的名称字符串
 			var checkProvStr = new Array();

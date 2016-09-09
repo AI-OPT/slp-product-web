@@ -53,35 +53,35 @@
 </div>
 <!--弹出上传图片  中结束-->
 
-<!--弹出选择目标省份弹出框 大-->
-<div class="eject-big">
-		<div class="eject-large eject-large2">		
-			<div class="eject-large-title">
-				<p>选择省市</p>
-				<p class="img"><A href="#"></A></p>
+<!--选择省份弹出框 大-->
+<div class="eject-big" >
+	<div class="eject-large" id="eject-city">
+		<div class="eject-medium-title">
+			<p>选择省市</p>
+			<%--<p class="img"><i class="fa fa-times"></i></p>--%>
+		</div>
+		<div class="eject-large-list">
+			<div class="account-title eject-martop"><p>已选中<b><span id="dialogAreaNum">10</span>个</b>
+				<input type="button" class="biu-btn  btn-primary btn-small right" id="finishTarget" value="确认"></p>
 			</div>
-			<div class="eject-large-list">
-			<div class="account-title eject-martop"><p>已选中<b><span id="dialogAreaNum">10</span></b>个<a id="finishTarget" href="javascript:void(0);" class="wnc">完成选择</a></p></div>
-		    <div id="provAreaDiv" class="user-list-title-list">
+			<div id="provAreaDiv" class="user-list-title-list">
 				<c:set value="0" var="areaNum"></c:set>
-		     	<ul>
+				<ul>
 					<c:forEach var="areaInfo" items="${otherSet.areaInfos}">
 						<li>
-						<p><input type="checkbox" name="targetProv" class="checkbox-medium" value="${areaInfo.areaCode}"
-								   title="${areaInfo.areaName}" <c:if test="${areaInfo.own}">checked</c:if>></p>
-						<p>${areaInfo.areaName}</p>
-						<c:if test="${areaInfo.own}"><c:set var="areaNum" value="${areaNum+1}"></c:set></c:if>
+							<p><input type="checkbox" name="targetProv" class="checkbox-medium" value="${areaInfo.areaCode}"
+									  title="${areaInfo.areaName}" <c:if test="${areaInfo.own}">checked</c:if>></p>
+							<p>${areaInfo.areaName}</p>
+							<c:if test="${areaInfo.own}"><c:set var="areaNum" value="${areaNum+1}"></c:set></c:if>
 						</li>
 					</c:forEach>
-		     	</ul>	
-		    </div> 	
-		     
-			</div>	
-		
-		</div>	
-		<div class="eject-mask"></div>	
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="mask" id="eject-mask"></div>
 </div>
-<!--弹出选择目标省份弹出框 大结束-->
+<!--选择省份 大结束-->
 
 <div class="content-wrapper-iframe"><!--外围框架-->
 	<div class="row"><!--外围框架-->
@@ -115,7 +115,7 @@
 							<ul>
 								<li class="width-xlag">
 									<p class="word3"><b class="red">*</b>商品名称</p>
-									<p>${productInfo.prodName}</p>
+									<p class="wide-field">${productInfo.prodName}</p>
 								</li>
 							</ul>
 							<ul>
@@ -219,13 +219,15 @@
 									<p class="word3"><b class="red">*</b>选择商品目标地域</p>
 									<p><input type="radio" name="isSaleNationwide" class="checkbox-small radioc " value="Y"
 											  <c:if test="${productInfo.isSaleNationwide == 'Y'}">checked</c:if> >全部地域</p>
-									<p><input type="radio" name="isSaleNationwide"class="checkbox-small radiod city" value="N"
+									<p><input type="radio" name="isSaleNationwide" class="checkbox-small radiod" value="N"
 											  <c:if test="${productInfo.isSaleNationwide == 'N'}">checked</c:if> >部分地域</p>
 									<div id="check3"></div>
 									<div id="check4" style="display:none;">
 										<div class="cit-width cit-width-list2">
-											<p class="width-xlag"><span id="areaNum">已选中省份${areaNum}个</span><a href="javascript:void(0);" class="city">修改</a></p>
-											<span id="areaName"></span>
+											<p class="width-xlag">
+												<span id="areaNum" style="color:black;">已选中省份${areaNum}个</span>
+												<a href="javascript:void(0);" class="city" id="changeArea">修改</a></p>
+											<span id="areaName" style="color:black;"></span>
 										</div>
 									</div>
 								</li>
@@ -240,7 +242,7 @@
 									<p class="word3"><b class="red">*</b>是否提供发票</p>
 									<p><input type="radio" name="isInvoice" class="checkbox-small radioc " value="Y"
 											  <c:if test="${productInfo.isInvoice == 'Y'}">checked</c:if> >提供</p>
-									<p><input type="radio" name="isInvoice"class="checkbox-small radiod city" value="N"
+									<p><input type="radio" name="isInvoice"class="checkbox-small radiod" value="N"
 											  <c:if test="${productInfo.isInvoice == 'N'}">checked</c:if> >不提供</p>
 								</li>
 							</ul>
@@ -262,13 +264,13 @@
 							<ul id="presaleTimeUl">
 								<li id="choseDate" class="width-xlag">
 									<p class="word3"><b class="red">*</b>预售时间</p>
-									<p><input name="presaleBeginTimeStr" class="int-text int-medium "
-											  type="text"  onClick="WdatePicker()" readonly/>
+									<p><input id="presaleBegin" name="presaleBeginTimeStr" class="int-text int-medium "
+											  type="text" readonly/>
 										<span class="time"> <i class="fa  fa-calendar" ></i></span>
 									</p>
 									<p>至</p>
-									<p><input name="presaleEndTimeStr" class="int-text int-medium "
-											  type="text"  onClick="WdatePicker()" readonly/>
+									<p><input id="presaleEnd" name="presaleEndTimeStr" class="int-text int-medium "
+											  type="text" readonly/>
 										<span class="time"> <i class="fa  fa-calendar" ></i></span>
 									</p>
 								</li>
@@ -404,11 +406,11 @@
 			timer = setInterval(Scroll,40);
 		};
 		<%-- 展示日历 --%>
-		$('#choseDate').delegate('.fa-calendar','click',function(){
+		$('#choseDate').delegate('.fa.fa-calendar','click',function(){
 			var calInput = $(this).parent().prev();
-			var timeId = calInput.attr('id');
-			console.log("click calendar "+timeId);
-			WdatePicker({el:timeId,readOnly:true});
+			var id = calInput.attr('id');
+			console.log("click calendar "+id);
+			WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'});
 		});
 		<%-- 上传图片 --%>
 		$('.nav-form-border').delegate('.file-btn','click',function(){
