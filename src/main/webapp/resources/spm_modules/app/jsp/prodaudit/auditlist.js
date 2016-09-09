@@ -236,6 +236,8 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 		_closeRefuse:function(){
 			$('#eject-mask').fadeOut(100);
 			$('#refuse-small').slideUp(150);
+			$("#refuseReason").val("");
+			$("#refuseDes").val("");
 		}
     });
     
