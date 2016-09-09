@@ -97,7 +97,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     		var productCatId = $("#productCat"+length+" option:selected").val();
     		var productType = $("#productType").val().trim();
     		var standedProdId = $("#standedProdId").val().trim();
-    		var productName = $("#productName").val().trim();
+    		var prodName = $("#productName").val().trim();
     		var upStartTime = $("#upStartTime").val().trim();
     		var upEndTime = $("#upEndTime").val().trim();
     		
@@ -110,7 +110,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
 	 			messageId:"showMessageDiv",
 //	 			data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName,
 //		 			"upStartTime":upStartTime,"upEndTime":upEndTime},
-		 		data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"productName":productName,
+		 		data: {"productCatId":productCatId,"productType":productType,"standedProdId":standedProdId,"prodName":prodName,
 		 			"upStartTimeStr":upStartTime,"upEndTimeStr":upEndTime},
 	 			
 	           	pageSize: insalelist.DEFAULT_PAGE_SIZE,

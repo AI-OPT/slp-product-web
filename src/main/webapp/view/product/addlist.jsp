@@ -218,9 +218,10 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		seajs.use('app/jsp/product/addlist', function(addlistPager) {
+		seajs.use(['app/jsp/product/addlist','app/util/center-hind'], function(addlistPager,centerHind) {
 			pager = new addlistPager({element : document.body});
 			pager.render();
+			 new centerHind({element : document.body}).render();
 		});
 	})();
 </script>

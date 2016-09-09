@@ -193,11 +193,23 @@
 										<td>{{:attrValNum}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
 										<td>{{:operName}}</td>
-										<td>
-											<a attrId="{{:attrId}}" name="editView" href="#" class="blue-border">编辑</a>
-											<a attrId="{{:attrId}}" name="manageView" href="${_base}/attrManage/getAttrValue/{{:attrId}}" class="blue-border">管理属性值</a>
-											<a attrId="{{:attrId}}" name="delView" href="#" class="blue-border">删除</a>
-										</td>
+
+										{{if valueWay == "可输入文本框（单行）" || valueWay == "可输入文本框（多行）"}}
+											<td>
+												<div>
+													<a attrId="{{:attrId}}" name="editView" href="#" class="blue-border">编辑</a>
+													<a attrId="{{:attrId}}" name="delView" href="#" class="blue-border">删除</a>
+												</div>
+											</td>
+											{{else}}
+											<td>
+												<div>
+													<a attrId="{{:attrId}}" name="editView" href="#" class="blue-border">编辑</a>
+													<a attrId="{{:attrId}}" name="manageView" href="${_base}/attrManage/getAttrValue/{{:attrId}}" class="blue-border">管理属性值</a>
+													<a attrId="{{:attrId}}" name="delView" href="#" class="blue-border">删除</a>
+												</div>
+											</td>
+											{{/if}}
 									</tr>
 								</script>
 							</div>

@@ -219,9 +219,10 @@
             pager._showInSale(productId);
         });
 		
-		seajs.use('app/jsp/product/stayuplist', function(stayuplistPager) {
+		seajs.use(['app/jsp/product/stayuplist','app/util/center-hind'], function(stayuplistPager,centerHind) {
 			pager = new stayuplistPager({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>

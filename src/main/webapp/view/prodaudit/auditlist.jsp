@@ -10,6 +10,76 @@
 </head>
 
 <body>
+<!-- 确认提示框 -->
+<div class="eject-big">
+    <div class="eject-samll" id="audit-small">
+        <div class="eject-medium-title">
+            <p>审核通过操作确认！</p>
+            <p id="auditCloseImg" class="img"><i class="fa fa-times"></i></p>
+        </div>
+
+        <div class="eject-medium-complete">
+            <p><img src="${uedroot}/images/eject-icon-prompt.png"></p>
+            <p class="word">确定全部通过审核吗？</p>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="submitBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+                <input id="auditBtn-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
+            </p>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
+<!-- 确认提示框结束 -->
+
+<!-- 拒绝提示框 -->
+<div class="eject-big">
+    <div class="eject-samll" id="refuse-small">
+        <div class="eject-medium-title">
+            <p>审核拒接操作！</p>
+            <p id="refuseCloseImg" class="img"><i class="fa fa-times"></i></p>
+        </div>
+
+        <div class="eject-medium-complete">
+            <div class="form-label">
+			<form id="prodAttrForm">
+				<p><input type="hidden" id="upAttrId"  class="int-text int-medium"></p>
+              <ul> 
+                <li>
+                   <p class="word"><span>*</span>拒绝上架原因</p>
+                   <p>
+                   	<select id="upValueWay" class="select select-medium">
+	                   	<option value="1">信息有误</option>
+	                   	<option value="2">信息为完善</option>
+	                   	<option value="3">其他</option>
+                   	</select>
+                   </p>
+              	 </li>
+          	 </ul>
+	           <ul>	
+	               <li>
+	                   <p class="word"><span>*</span>问题描述</p>
+	                   <p><textarea id="upAttrName" type="text" class="int-text int-medium"  style="width:190px;height:80px;"></textarea></p>
+	               </li>
+	           </ul>
+         </form> 	 
+		</div>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="refuseBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确定拒绝">
+                <input id="refuseBtn-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
+            </p>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
+<!-- 拒绝提示框结束 -->
+
+
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
 	<div class="row"><!--外围框架-->
 		<div class="col-lg-12"><!--删格化-->
@@ -49,12 +119,12 @@
 								<ul>
 									<li class="col-md-6">
 										<p class="word">操作开始时间</p>
-										<p><input type="text" class="int-text int-medium" id="operStartTime">
+										<p><input type="text" class="int-text int-medium" id="operStartTime" readonly="true">
 											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
 									</li>
 									<li class="col-md-6">
 										<p class="word">操作结束时间</p>
-										<p><input type="text" class="int-text int-medium" id="operEndTime">
+										<p><input type="text" class="int-text int-medium" id="operEndTime" readonly="true">
 											<span class="time"> <i class="fa  fa-calendar" ></i></span>
 										</p>
 									</li>
@@ -113,11 +183,21 @@
 		<div class="col-lg-12"><!--删格化-->
 			<div class="row"><!--内侧框架-->
 				<div class="col-lg-12"><!--删格化-->
-					<div class="main-box clearfix"><!--白色背景-->
+					<div class="main-box clearfix"  id="TableView"><!--白色背景-->
 						<!--标题-->
 						<header class="main-box-header clearfix">
 							<h2 class="pull-left">商品审核列表</h2>
 						</header>
+						<div class="row"><!--删格化-->
+                                <p class="right pr-30">
+                                    <input name="refuseMoreBtn" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
+                                           value="批量审核拒绝" onclick="#">
+                                </p>
+                                <p class="right pr-30">
+                                    <input name="auditMoreBtn" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
+                                           value="批量审核通过" onclick="#">
+                                </p>
+                            </div>
 						<!--标题结束-->
 						<div class="main-box-body clearfix">
 							<!--table表格-->
@@ -125,6 +205,7 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
+										<th><input id="checkall" name="checkall" type="checkbox" value="" /></th>
 										<th>商品ID</th>
 										<th>所属类目</th>
 										<th>商品类型</th>
@@ -142,29 +223,41 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
 									<tr>
+											{{if state=="3"}}
+											<td><input id="box" name="box" type="checkbox" value="{{:prodId}}" /></td>
+											{{else}}
+											<td>
+											</td>
+											{{/if}}
+
 											<td>{{:standedProdId}}</td>
+
 											<td class="hind1">
 											<div class="center-hind" >{{:productCatName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
 											</td>
+
 											<td>{{:productTypeName}}</td>
+
 											{{if picUrl==null || picUrl==""}}
 											<td><img src="${_slpres}/images/sp-03-a.png"></td>
 											{{else}}
 											<td><img src="{{:picUrl}}"></td>
 											{{/if}}
+
 											<td class="hind1">
 											<div class="center-hind" >{{:prodName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
 											</td>
+
 											<td>{{:stateName}}</td>
 											<td>{{:~timesToFmatter(operTime)}}</td>
 
 											{{if state=="3"}}
 											<td>
 												<div>
-													<p><a href="#" class="blue-border">审核商品</a></p>
-													<p><a href="#" class="blue-border">查看商品</a></p>
+													<p><a href="${_base}/prodquery/audit/{{:prodId}}" class="blue-border">审核商品</a></p>
+													<p><a href="${_base}/prodquery/{{:prodId}}" class="blue-border">查看商品</a></p>
 												</div>
 											</td>
 											{{else}}
@@ -210,9 +303,31 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		seajs.use('app/jsp/product/auditlist', function(auditlistPager) {
+		<%-- 全选 --%>
+		$('#TableView').delegate("input[name='checkall']",'click',function(){
+			pager._clickAll($(this));
+		});		
+		
+		<%-- 单选 --%>
+		$('#TableView').delegate("input[name='box']",'click',function(){
+			pager._clicksingle($(this));
+		});		
+		
+		<%-- 批量审核通过 --%>
+		$('#TableView').delegate("input[name='auditMoreBtn']",'click',function(){
+			pager._showAuditMore();
+		});		
+		
+		<%-- 批量审核拒绝 --%>
+		$('#TableView').delegate("input[name='refuseMoreBtn']",'click',function(){
+			pager._showRefuseMore();
+		});		
+
+		
+		seajs.use(['app/jsp/prodaudit/auditlist','app/util/center-hind'], function(auditlistPager,centerHind) {
 			pager = new auditlistPager({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>

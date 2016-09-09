@@ -71,12 +71,12 @@
 								<ul>
 									<li class="col-md-6">
 										<p class="word">上架开始时间</p>
-										<p><input type="text" class="int-text int-medium" id="upStartTime">
+										<p><input type="text" class="int-text int-medium" id="upStartTime" readonly="true">
 											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
 									</li>
 									<li class="col-md-6">
 										<p class="word">上架结束时间</p>
-										<p><input type="text" class="int-text int-medium" id="upEndTime">
+										<p><input type="text" class="int-text int-medium" id="upEndTime" readonly="true">
 											<span class="time"> <i class="fa  fa-calendar" ></i></span>
 										</p>
 									</li>
@@ -218,9 +218,10 @@
             pager._showDownSale(productId);
         });
 		
-		seajs.use('app/jsp/product/insalelist', function(insalelist) {
+		seajs.use(['app/jsp/product/insalelist','app/util/center-hind'], function(insalelist,centerHind) {
 			pager = new insalelist({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>

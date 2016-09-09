@@ -18,8 +18,6 @@ import com.ai.slp.product.api.normproduct.param.AttrQuery;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
 import com.ai.slp.product.api.product.interfaces.IProductSV;
 import com.ai.slp.product.api.product.param.OtherSetOfProduct;
-import com.ai.slp.product.api.product.param.ProdAttrMap;
-import com.ai.slp.product.api.product.param.ProdAudiencesInfo;
 import com.ai.slp.product.api.product.param.ProdNoKeyAttr;
 import com.ai.slp.product.api.product.param.ProductEditQueryReq;
 import com.ai.slp.product.api.product.param.ProductEditUp;
@@ -53,10 +51,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 商城商品管理查询 Created by jackieliu on 16/6/16.
@@ -138,7 +134,7 @@ public class ProdQueryController {
 		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
 		uiModel.addAttribute("catInfoList", productCatMap);
-		return "product/auditlist";
+		return "prodaudit/auditlist";
 
 	}
 
@@ -599,8 +595,9 @@ public class ProdQueryController {
 		
 		return "product/viewproduct";
 	}
-	 public void setProdDetail(String fileId,Model uiModel){
-	        if (StringUtils.isBlank(fileId)){
+	
+	public void setProdDetail(String fileId,Model uiModel){
+        if (StringUtils.isBlank(fileId)){
 	            return;
 	        }
 	        IDSSClient client= DSSClientFactory.getDSSClient(SysCommonConstants.ProductDetail.DSSNS);
@@ -608,7 +605,15 @@ public class ProdQueryController {
 	        if (StringUtils.isNotBlank(context)){
 	            JSONObject object = JSON.parseObject(context);
 	            uiModel.addAttribute("prodDetail",object.getString("content"));
-	        }
 	    }
-
+	}
+	
+	/**
+	 * 根据ID查询单个商品的详细信息
+	 */
+	@RequestMapping("/audit/{id}")
+	public String auditProduct(@PathVariable("id") String prodId, Model uiModel){
+		toViewProduct(prodId, uiModel);
+		return "prodaudit/auditproduct";
+	}
 }
