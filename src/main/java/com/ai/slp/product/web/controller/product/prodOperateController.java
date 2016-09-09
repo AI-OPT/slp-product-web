@@ -10,7 +10,6 @@ import com.ai.slp.product.api.product.param.ProductCheckParam;
 import com.ai.slp.product.api.product.param.ProductInfoQuery;
 import com.ai.slp.product.web.constants.AuditStatus;
 import com.ai.slp.product.web.util.AdminUtil;
-import com.sun.xml.internal.ws.wsdl.writer.document.Port;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
