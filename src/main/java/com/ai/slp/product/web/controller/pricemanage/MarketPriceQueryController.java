@@ -185,6 +185,7 @@ public class MarketPriceQueryController {
 	@RequestMapping("/{id}")
     public String storageEdit(@PathVariable("id") String standedProdId, Model uiModel) {
 		NormProdInfoResponse normProdResponse = standedProdService.getInfo(standedProdId,uiModel);
+		
 		//查询出市场价进行转换
         String price;
         if (normProdResponse.getMarketPrice() != null) {
@@ -203,7 +204,7 @@ public class MarketPriceQueryController {
         	price = "0.00";
         	uiModel.addAttribute("price", price);
 		}
-        
+        uiModel.addAttribute("normProdResponse", normProdResponse);
 		return "marketprice/addMarketPrice";
 		
 	}
