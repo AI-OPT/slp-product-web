@@ -116,10 +116,12 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 				$('#refuse-small').slideDown(200);
 			},
 				
-			//确认提示框
+			//关闭审核拒绝提示框
 			_closeRefuse:function(){
 				$('#eject-mask').fadeOut(100);
 				$('#refuse-small').slideUp(150);
+				$("#refuseReason").val("");
+				$("#refuseDes").val("");
 			}
 	    	
 	    });
