@@ -201,7 +201,7 @@
                             </header>
                             <div class="form-label  bd-bottom">
                             	<ul>
-                           		   <li class="col-md-6">
+                           		   <li class="col-md-12">
 		                            	<p class="word">
 		                            		${prodDetail}
 		                            	</p>
@@ -223,5 +223,6 @@
 	</div>
 </div>
 <!-- footer -->
+
 </body>
 </html>
