@@ -1,10 +1,26 @@
 package com.ai.slp.product.web.controller.costprice;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.ai.opt.base.vo.PageInfo;
+import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.platform.common.api.cache.interfaces.ICacheSV;
+import com.ai.platform.common.api.cache.param.SysParam;
+import com.ai.platform.common.api.cache.param.SysParamSingleCond;
+import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
+import com.ai.slp.product.api.normproduct.param.*;
+import com.ai.slp.product.api.productcat.param.ProdCatInfo;
+import com.ai.slp.product.web.constants.ComCacheConstants;
+import com.ai.slp.product.web.constants.ProductCatConstants;
+import com.ai.slp.product.web.constants.ProductConstants;
+import com.ai.slp.product.web.service.AttrAndValService;
+import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
+import com.ai.slp.route.api.routeprodsupplymanage.interfaces.IRouteProdSupplyManageSV;
+import com.ai.slp.route.api.routeprodsupplymanage.param.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,37 +31,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ai.opt.base.vo.PageInfo;
-import com.ai.opt.base.vo.PageInfoResponse;
-import com.ai.opt.base.vo.ResponseHeader;
-import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.platform.common.api.cache.interfaces.ICacheSV;
-import com.ai.platform.common.api.cache.param.SysParam;
-import com.ai.platform.common.api.cache.param.SysParamSingleCond;
-import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
-import com.ai.slp.product.api.normproduct.param.AttrMap;
-import com.ai.slp.product.api.normproduct.param.AttrQuery;
-import com.ai.slp.product.api.normproduct.param.NormProdInfoResponse;
-import com.ai.slp.product.api.normproduct.param.NormProdRequest;
-import com.ai.slp.product.api.normproduct.param.NormProdResponse;
-import com.ai.slp.product.api.normproduct.param.NormProdUniqueReq;
-import com.ai.slp.product.api.productcat.param.ProdCatInfo;
-import com.ai.slp.product.web.constants.ComCacheConstants;
-import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.constants.ProductConstants;
-import com.ai.slp.product.web.service.AttrAndValService;
-import com.ai.slp.product.web.service.ProdCatService;
-import com.ai.slp.product.web.util.AdminUtil;
-import com.ai.slp.route.api.routeprodsupplymanage.interfaces.IRouteProdSupplyManageSV;
-import com.ai.slp.route.api.routeprodsupplymanage.param.CostPriceUpdateListRequest;
-import com.ai.slp.route.api.routeprodsupplymanage.param.CostPriceUpdateResponse;
-import com.ai.slp.route.api.routeprodsupplymanage.param.CostPriceUpdateVo;
-import com.ai.slp.route.api.routeprodsupplymanage.param.StandedProdIdPageSearchRequest;
-import com.ai.slp.route.api.routeprodsupplymanage.param.StandedProdRoutePageSearchResponse;
-import com.ai.slp.route.api.routeprodsupplymanage.param.StandedProdRouteVo;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 标准品查询
@@ -67,10 +54,10 @@ public class CostPriceController {
 	 */
 	@RequestMapping("/list")
 	public String editQuery(Model uiModel) {
-		Map<Short, List<ProdCatInfo>> productCatMap = prodCatService.loadCat();
+		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
-		uiModel.addAttribute("catInfoMap", productCatMap);
-		return "costprice/productlist";
+		uiModel.addAttribute("catInfoList", productCatMap);
+		return "costprice/costPricelist";
 	}
 
 	/**
@@ -181,7 +168,7 @@ public class CostPriceController {
 		attrMap = normProductSV.queryAttrByNormProduct(attrQuery);
 		uiModel.addAttribute("saleAttr", attrAndValService.getAttrAndVals(attrMap));
 		// 查询成本价列表
-		return "costprice/editinfo";
+		return "costprice/costPriceEdit";
 	}
 
 	/**

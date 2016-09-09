@@ -99,13 +99,13 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th>序号</th>
-										<th>商品ID</th>
-										<th>商品名称</th>
-										<th>所属类目</th>
-										<th>类型</th>
-										<th>商品状态</th>
-										<th>操作</th>
+										<th width="5%">序号</th>
+										<th width="17%">商品ID</th>
+										<th width="28%">商品名称</th>
+										<th width="20%">所属类目</th>
+										<th width="10%">类型</th>
+										<th width="10%">商品状态</th>
+										<th width="10%">操作</th>
 									</tr>
 									</thead>
 									<tbody id="searchNormProductData">
@@ -117,11 +117,17 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td>{{:productName}}</td>
-										<td>{{:catName}}</td>
+										<td class="hind1-medium text-l pl-15">
+											<div class="center-hind" >{{:productName}}</div>
+											<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
+										</td>
+										<td class="hind1-medium text-l pl-15">
+											<div class="center-hind" >{{:catName}}</div>
+											<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+										</td>
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
-										<td><a href="${_base}/saleprice/query/{{:productId}}" class="blue-border">编辑销售价</a></td>
+										<td><a href="${_base}/saleprice/query/{{:productId}}" class="blue-border">修改销售价</a></td>
 									</tr>
 								</script>
 							</div>
@@ -158,9 +164,10 @@
 			$(".nav-form ").toggleClass("reorder remove");
 		});
 		$("#catFirst").val("");//设置类目为全部.
-		seajs.use('app/jsp/saleprice/salePriceList', function(salePriceList) {
+		seajs.use(['app/jsp/saleprice/salePriceList','app/util/center-hind'], function(salePriceList,centerHind) {
 			pager = new salePriceList({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>

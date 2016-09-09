@@ -48,16 +48,14 @@
 							<ul id="data1ProdCat">
 								<li class="col-md-12">
 									<p class="word">商品类目</p>
-									<c:forEach var="map" items="${catInfoMap}" varStatus="status">
-										<p id="productCat${status.index}">
-											<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
-												<c:if test="${status.index==0}"><option value="">全部</option></c:if>
-												<c:forEach var="info" items="${map.value}">
-													<option value="${info.productCatId}">${info.productCatName}</option>
-												</c:forEach>
-											</select>
-										</p>
-									</c:forEach>
+									<p id="productCat0">
+										<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
+											<option value="">全部</option>
+											<c:forEach var="info" items="${catInfoList}">
+												<option value="${info.productCatId}">${info.productCatName}</option>
+											</c:forEach>
+										</select>
+									</p>
 									<script id="prodCatTemple" type="text/template">
 										<p id="productCat{{:level}}">
 											<select name="selectProductCat" class="select select-small" onChange="pager._selectChange(this);">
@@ -99,12 +97,12 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th>序号</th>
-										<th>商品ID</th>
-										<th>商品名称</th>
-										<th>所属类目</th>
-										<th>类型</th>
-										<th>操作</th>
+										<th width="5%">序号</th>
+										<th width="17%">商品ID</th>
+										<th width="35%">商品名称</th>
+										<th width="23%">所属类目</th>
+										<th width="10%">类型</th>
+										<th width="10%">操作</th>
 									</tr>
 									</thead>
 									<tbody id="searchNormProductData">
@@ -116,17 +114,17 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td class="hind1">
+										<td class="hind1-medium text-l pl-15">
 											<div class="center-hind" >{{:productName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
 										</td>
-										<td class="hind1">
+										<td class="hind1-medium text-l pl-15">
 											<div class="center-hind" >{{:catName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
 										</td>
 										<td>{{:productType}}</td>
                                         <td>
-											<a href="${_base}/costprice/{{:productId}}" class="blue-border">编辑</a>
+											<a href="${_base}/costprice/{{:productId}}" class="blue-border">修改成本价</a>
 										</td>
 									</tr>
 								</script>
@@ -156,9 +154,10 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		seajs.use('app/jsp/costprice/productlist', function(productListPage) {
+		seajs.use(['app/jsp/costprice/productlist','app/util/center-hind'], function(productListPage,centerHind) {
 			pager = new productListPage({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>
