@@ -50,9 +50,9 @@
                    <p class="word"><span>*</span>拒绝上架原因</p>
                    <p>
                    	<select id="refuseReason" class="select select-medium">
-	                   	<option value="1">信息有误</option>
-	                   	<option value="2">信息为完善</option>
-	                   	<option value="3">其他</option>
+	                   	<option value="10">信息有误</option>
+	                   	<option value="11">信息为完善</option>
+	                   	<option value="99">其他</option>
                    	</select>
                    </p>
               	 </li>
@@ -61,6 +61,10 @@
 	               <li>
 	                   <p class="word"><span>*</span>问题描述</p>
 	                   <p><textarea id="refuseDes" type="text" class="int-text int-medium"  style="width:190px;height:80px;"></textarea></p>
+	                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(100字符以内)</p>
 	               </li>
 	           </ul>
          </form> 	 
