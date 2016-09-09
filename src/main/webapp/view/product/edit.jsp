@@ -1,3 +1,6 @@
+<%@ page import="com.ai.opt.sdk.components.idps.IDPSClientFactory" %>
+<%@ page import="com.ai.paas.ipaas.image.IImageClient" %>
+<%@ page import="com.ai.slp.product.web.constants.SysCommonConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html>
@@ -82,7 +85,7 @@
 	<div class="mask" id="eject-mask"></div>
 </div>
 <!--选择省份 大结束-->
-
+<input type="file" id="uploadFile" style="display: none;">
 <div class="content-wrapper-iframe"><!--外围框架-->
 	<div class="row"><!--外围框架-->
 		<div class="col-lg-12"><!--删格化-->
@@ -287,10 +290,16 @@
 									提示：请上传商品主体正面照片jpg/png格式，不小于700x700px的方形图片，单张不能超过3M，最多6张。
 								</li>
 							</ul>
+							<%
+								String picSize = "78x78";
+								IImageClient imageClient = IDPSClientFactory.getImageClient(SysCommonConstants.ProductImage.IDPSNS);
+								request.setAttribute("imgClient",imageClient);
+								request.setAttribute("picSize",picSize);
+							%>
 							<input id="prodPicStr" name="prodPicStr" type="hidden">
 							<ul>
 								<li class="width-xlag">
-									<p class="word3"><b class="red">*</b>商品主图</p>
+									<p class="word"><b class="red">*</b>商品主图</p>
 									<div class="width-img" id="prod_pic_0">
 										<c:set var="prodPicNum" value="${prodPic.size()}"></c:set>
 										<c:forEach var="valInd" begin="0" end="5">
@@ -322,7 +331,7 @@
 							<c:forEach var="attrValInfo" items="${attrValList}">
 								<ul>
 									<li class="width-xlag">
-										<p class="word3"><b class="red">*</b>${attrValInfo.attrVal}</p>
+										<p class="word"><b class="red">*</b>${attrValInfo.attrVal}</p>
 										<div class="width-img" id="prod_pic_${attrValInfo.attrValId}">
 											<c:set var="attrValPic" value="${valPicMap.get(attrValInfo.attrValId)}"></c:set>
 											<c:set var="attrValSize" value="${attrValPic.size()}"></c:set>
@@ -340,7 +349,6 @@
 																 attrVal="${attrValPicEnt.key.attrValId}" picInd="${valInd}"/><i></i>
 														</c:otherwise>
 													</c:choose>
-
 												</p>
 											</c:forEach>
 										</div>
@@ -413,13 +421,13 @@
 			WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'});
 		});
 		<%-- 上传图片 --%>
-		$('.nav-form-border').delegate('.file-btn','click',function(){
+		$('.width-xlag').delegate('input','click',function(){
 			picAttrVal = $(this).attr('attrVal');
-			console.log("图片上传属性值:"+picAttrVal);
+			console.log("img up attrValId:"+picAttrVal);
 			return $("#uploadFile").click();
 		});
 		<%-- 图片删除 --%>
-		$(".img").delegate("i[class='icon-remove-sign']","click",function(){
+		$(".img").delegate(".fa.fa-times","click",function(){
 			//获得当前删除图标的上一个图片对象
 			var imgObj = $(this).prev();
 			var imgP = $(this).parent();

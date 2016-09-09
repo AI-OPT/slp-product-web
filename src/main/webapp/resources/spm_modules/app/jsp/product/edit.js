@@ -349,7 +349,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			imgObj.attr('imgType',fileType);
 			imgObj.attr('src',imgUrl);
 			//添加删除按钮
-			imgObj.next().attr('class','icon-remove-sign');
+			imgObj.next().addClass('fa fa-times');
 		},
 		//删除图片
 		_delProdPic:function(attrValId,picInd){
@@ -371,7 +371,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				}
 			}
 			//若都不符合则设置当前为删除
-			imgObj.attr('src',_base+'/resources/slpoperate/images/sp-03-a.png');
+			imgObj.attr('src',_base+'/resources/local/images/sp-03-a.png');
 			imgObj.attr('imgId','');
 			imgObj.attr('imgType','');
 			imgObj.next().removeClass();//移除删除按钮
