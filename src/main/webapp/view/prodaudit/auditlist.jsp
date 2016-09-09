@@ -119,12 +119,12 @@
 								<ul>
 									<li class="col-md-6">
 										<p class="word">操作开始时间</p>
-										<p><input type="text" class="int-text int-medium" id="operStartTime">
+										<p><input type="text" class="int-text int-medium" id="operStartTime" readonly="true">
 											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
 									</li>
 									<li class="col-md-6">
 										<p class="word">操作结束时间</p>
-										<p><input type="text" class="int-text int-medium" id="operEndTime">
+										<p><input type="text" class="int-text int-medium" id="operEndTime" readonly="true">
 											<span class="time"> <i class="fa  fa-calendar" ></i></span>
 										</p>
 									</li>
