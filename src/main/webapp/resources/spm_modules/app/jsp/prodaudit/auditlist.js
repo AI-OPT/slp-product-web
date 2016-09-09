@@ -163,10 +163,24 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 			}
          },
          
-         //批量审核通过
+         //批量审核通过弹框
          _showAuditMore:function(){
+        	 var checkNum = $("input:checkbox:checked[name='box']").size();
+        	 if (checkNum == 0) {
+        		 var d = Dialog({
+						content:"请选择商品进行处理!",
+						icon:'fail',
+						okValue: '确 定',
+						ok:function(){
+							this.close();
+							_this._selectProductList();
+						}
+					});
+        		 d.show();
+			}else{
 			$('#eject-mask').fadeIn(100);
 			$('#audit-small').slideDown(200);
+			}
 		},
 		//关闭确认提示框
 		_closeAudit:function(){
@@ -228,8 +242,22 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 		
 		//批量审核拒绝
 		_showRefuseMore:function(){
+			 var checkNum = $("input:checkbox:checked[name='box']").size();
+        	 if (checkNum == 0) {
+        		 var d = Dialog({
+						content:"请选择商品进行处理!",
+						icon:'fail',
+						okValue: '确 定',
+						ok:function(){
+							this.close();
+							_this._selectProductList();
+						}
+					});
+        		 d.show();
+			}else{
 			$('#eject-mask').fadeIn(100);
 			$('#refuse-small').slideDown(200);
+			}
 		},
 			
 		//关闭确认提示框
