@@ -53,7 +53,7 @@
                                 <ul class="big-word">
                                     <li class="col-md-6">
                                         <p class="word">商品名称：</p>
-                                        <p>${normProd.productName}</p>
+                                        <p>${normProdResponse.productName}</p>
                                     </li>
                                 </ul>
                                 <ul>
