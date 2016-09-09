@@ -6,14 +6,22 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.util.JSonUtil;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
+import com.ai.slp.product.api.product.param.ProductCheckParam;
 import com.ai.slp.product.api.product.param.ProductInfoQuery;
+import com.ai.slp.product.web.constants.AuditStatus;
 import com.ai.slp.product.web.util.AdminUtil;
+import com.sun.xml.internal.ws.wsdl.writer.document.Port;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -72,4 +80,82 @@ public class prodOperateController {
 		
     	return responseData;
     }
+    
+    /**
+     * 单个商品审核通过
+     */
+   @RequestMapping("/auditPass")
+   @ResponseBody
+   public ResponseData<String> passProduct(String id){
+	   ProductCheckParam productCheckParam = new ProductCheckParam();
+	   ArrayList<String> idList = new ArrayList<>();
+	   idList.add(id);
+	   productCheckParam.setProdIdList(idList);
+   	return auditProduct(productCheckParam,AuditStatus.PASS);
+   }
+   /**
+    * 批量审核通过
+    * @param ids
+    * @return
+    */
+   @RequestMapping("/auditPassMore")
+   @ResponseBody
+   public ResponseData<String> passProducts(String ids){
+	   ProductCheckParam productCheckParam = new ProductCheckParam();
+	   String id [] = ids.split(",");
+	   ArrayList<String> idList = new ArrayList<>();
+	   for(int i=0;i<id.length;i++){
+		   idList.add(id[i]);
+	   }
+	   productCheckParam.setProdIdList(idList);
+   	return auditProduct(productCheckParam,AuditStatus.PASS);
+   }
+   /**
+    * 单个商品审核拒绝
+    */
+  @RequestMapping("/auditReject")
+  @ResponseBody
+  public ResponseData<String> rejectProduct(ProductCheckParam productCheckParam){
+	  
+  	return auditProduct(productCheckParam,AuditStatus.REJECT);
+  }
+  
+  
+  /**
+   * 批量商品审核拒绝
+   * @param ids
+   * @return
+   */
+  @RequestMapping("/auditRejectMore")
+  @ResponseBody
+  public ResponseData<String> rejectProducts(String ids,ProductCheckParam productCheckParam){
+	   String id [] = ids.split(",");
+	   ArrayList<String> idList = new ArrayList<>();
+	   for(int i=0;i<id.length;i++){
+		   idList.add(id[i]);
+	   }
+	   productCheckParam.setProdIdList(idList);
+  	return auditProduct(productCheckParam,AuditStatus.REJECT);
+  }
+  
+   private ResponseData<String> auditProduct(ProductCheckParam productCheckParam,AuditStatus status){
+	   ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "审核成功");
+	   IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+	   //设置租户ID
+	   productCheckParam.setTenantId(AdminUtil.getTenantId());
+	   //设置操作人
+	   productCheckParam.setOperId(AdminUtil.getAdminId());
+	   //设置点击按钮  0:通过按钮  1:拒绝按钮
+	   productCheckParam.setState(status.getStatus());
+	   
+	   BaseResponse baseResponse = productManagerSV.productCheck(productCheckParam);
+	   LOG.debug("审核返回信息:"+JSonUtil.toJSon(baseResponse));
+	   ResponseHeader header = baseResponse.getResponseHeader();
+		//审核通过出错
+       if (header!=null && !header.isSuccess()){
+           responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "审核失败:"+header.getResultMessage());
+       }
+       return responseData;
+   }
+   
 }
