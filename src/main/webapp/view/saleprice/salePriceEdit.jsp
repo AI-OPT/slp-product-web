@@ -87,7 +87,7 @@
                                 <ul class="big-word">
                                     <li class="col-md-6">
                                         <p class="word">商品名称：</p>
-                                        <p>${normProdInfo.productName}</p>
+                                        <p class="wide-field">${normProdInfo.productName}</p>
                                     </li>
                                 </ul>
                                 <ul>

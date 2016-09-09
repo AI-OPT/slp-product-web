@@ -146,7 +146,7 @@
 											<!-- <td>{{:productCatName}}</td> -->
 											<td class="hind1">
 											<div class="center-hind" >{{:productCatName}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
+                                          	<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
 											</td>
 											<td>{{:productTypeName}}</td>
 											{{if picUrl==null || picUrl==""}}
@@ -157,7 +157,7 @@
 											<!--	<td>{{:prodName}}</td>-->
 											<td class="hind1">
 											<div class="center-hind" >{{:prodName}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
+                                          	<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
 											</td>
 											<td>{{:stateName}}</td>
 
