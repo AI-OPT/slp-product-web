@@ -110,8 +110,7 @@ require("app/util/aiopt-validate-ext");
     	_goBack:function(){
     		window.history.go(-1);
     	},
-    	
-    	//滚动到顶部
+		//滚动到顶部
     	_returnTop:function(){
     		var container = $('.wrapper-right');
     		container.scrollTop(0);//滚动到div 顶部

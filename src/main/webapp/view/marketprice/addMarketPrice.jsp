@@ -51,13 +51,13 @@
                             <!--标题结束-->
                             <div class="form-label  bd-bottom">
                                 <ul class="big-word">
-                                    <li class="col-md-6">
+                                    <li class="col-md-12">
                                         <p class="word">商品名称：</p>
-                                        <p>${normProdResponse.productName}</p>
+                                        <p class="wide-field">${normProdResponse.productName}</p>
                                     </li>
                                 </ul>
                                 <ul>
-                                    <li class="col-md-6">
+                                    <li class="col-md-12">
                                         <p class="word">商品类型：</p>
                                         <p>${prodType}</p>
                                     </li>
@@ -71,7 +71,7 @@
                             <div class="form-label  bd-bottom">
                                 <c:forEach var="aav" items="${keyAttr}">
                                     <ul>
-                                        <li class="col-md-6">
+                                        <li class="col-md-12">
                                             <p class="word">${aav.key.attrName}:</p>
                                             <c:forEach var="attrVal" items="${aav.value}">
                                                 <p>${attrVal.attrVal}</p>
@@ -88,7 +88,7 @@
                             <div class="form-label  bd-bottom">
                                 <c:forEach var="aav" items="${saleAttr}">
                                     <ul>
-                                        <li class="col-md-6">
+                                        <li class="col-md-12">
                                             <p class="word">${aav.key.attrName}:</p>
                                             <c:forEach var="attrVal" items="${aav.value}">
                                                 <p>${attrVal.attrVal}</p>
@@ -103,9 +103,10 @@
                             	<form id="prodForm" action="${_base}/marketpricequery/updateMarketPrice" method="post">
 	                            	<input type="hidden" name="productId" id="productId" value="${standedProdId}">
 	                            	<ul class="big-word">
-	                                    <li class="col-md-6">
+	                                    <li class="col-md-12">
 	                                        <p class="word">市场价：</p>
-	                                        <p><input name="marketPrice" id="marketPrice" type="text" value="${price}" class="int-text int-medium" regexp="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$" data-msg-regexp="请输入正确市场价"> (元)</p>
+	                                        <p><input name="marketPrice" id="marketPrice"  type="text" value="${price}" class="int-text int-medium" onkeyup="marketPriceCopy.value=this.value"> (元)</p>
+	                                        <p><input name="marketPriceCopy" type="text" style="width:0px; height:20px;" regexp="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$" data-msg-regexp="请输入正确市场价"></p>
 	                                    </li>
 	                                </ul>
                                 </form>
