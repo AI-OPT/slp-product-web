@@ -184,10 +184,9 @@ public final class DateUtil {
     public static Date str2Timestamp(String str) throws SystemException {
         Date date = null;
         if (!StringUtils.isBlank(str)) {
-            date = DateUtil.to_date(str, DATETIME_FORMAT);
+            date = to_date(str, DATETIME_FORMAT);
         }
         return date;
-
     }
 
     /**

@@ -92,6 +92,17 @@
 			<div class="row"><!--内侧框架-->
 				<div class="col-lg-12"><!--删格化-->
 					<div class="main-box clearfix"><!--白色背景-->
+						<form id="prodForm" method="post">
+							<input type="hidden" name="prodId" value="${productInfo.prodId}">
+							<input type="hidden" name="activeType" value="2">
+							<input type="hidden" name="activeCycle" value="1">
+							<input type="hidden" name="unit" value="M">
+							<input type="hidden" name="basicOrgId" value="10">
+							<input type="hidden" name="rechargeType" value="C">
+							<input type="hidden" name="audiencesPerson" value="-1">
+							<input type="hidden" name="audiencesEnterprise" value="-1">
+							<input type="hidden" name="audiencesAgents" value="-1">
+							<input type="hidden" name="isReplaceSell" value="Y">
 						<header class="main-box-header clearfix ">
 							<h5 class="pull-left">*标注为必填项</h5>
 						</header>
@@ -119,6 +130,7 @@
 								<li class="width-xlag">
 									<p class="word3"><b class="red">*</b>商品名称</p>
 									<p class="wide-field">${productInfo.prodName}</p>
+									<input type="hidden" name="prodName" value="${productInfo.prodName}">
 								</li>
 							</ul>
 							<ul>
@@ -221,7 +233,7 @@
 								<li class="width-xlag">
 									<p class="word3"><b class="red">*</b>选择商品目标地域</p>
 									<p><input type="radio" name="isSaleNationwide" class="checkbox-small radioc " value="Y"
-											  <c:if test="${productInfo.isSaleNationwide == 'Y'}">checked</c:if> >全部地域</p>
+											  <c:if test="${productInfo.isSaleNationwide == 'Y'}">checked</c:if> required>全部地域</p>
 									<p><input type="radio" name="isSaleNationwide" class="checkbox-small radiod" value="N"
 											  <c:if test="${productInfo.isSaleNationwide == 'N'}">checked</c:if> >部分地域</p>
 									<div id="check3"></div>
@@ -244,7 +256,7 @@
 								<li class="width-xlag">
 									<p class="word3"><b class="red">*</b>是否提供发票</p>
 									<p><input type="radio" name="isInvoice" class="checkbox-small radioc " value="Y"
-											  <c:if test="${productInfo.isInvoice == 'Y'}">checked</c:if> >提供</p>
+											  <c:if test="${productInfo.isInvoice == 'Y'}">checked</c:if> required>提供</p>
 									<p><input type="radio" name="isInvoice"class="checkbox-small radiod" value="N"
 											  <c:if test="${productInfo.isInvoice == 'N'}">checked</c:if> >不提供</p>
 								</li>
@@ -257,7 +269,7 @@
 							<ul>
 								<li class="width-xlag">
 									<p class="word3"><b class="red">*</b>选择上架类型</p>
-									<p><input type="radio" name="upshelfType" value="1"
+									<p><input type="radio" name="upshelfType" value="1" required
 											  class="checkbox-small" <c:if test="${productInfo.upshelfType == '1'}">checked</c:if>>立即上架</p>
 									<p><input type="radio" name="upshelfType" value="2"
 											  class="checkbox-small" <c:if test="${productInfo.upshelfType == '2'}">checked</c:if>>放入仓库</p>
@@ -381,6 +393,7 @@
 							</ul>
 						</div>
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -421,7 +434,7 @@
 			WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'});
 		});
 		<%-- 上传图片 --%>
-		$('.width-xlag').delegate('input','click',function(){
+		$('.width-xlag').delegate('input[attrVal]','click',function(){
 			picAttrVal = $(this).attr('attrVal');
 			console.log("img up attrValId:"+picAttrVal);
 			return $("#uploadFile").click();

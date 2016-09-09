@@ -85,6 +85,14 @@ public class ProductEditInfo {
      * 非关键属性
      */
     private String noKeyAttrStr;
+    /**
+     * 预售开始时间
+     */
+    private String presaleBeginTimeStr;
+    /**
+     * 预售结束时间
+     */
+    private String presaleEndTimeStr;
 
     public String getProdId() {
         return prodId;
@@ -260,5 +268,21 @@ public class ProductEditInfo {
 
     public void setNoKeyAttrStr(String noKeyAttrStr) {
         this.noKeyAttrStr = noKeyAttrStr;
+    }
+
+    public String getPresaleBeginTimeStr() {
+        return presaleBeginTimeStr;
+    }
+
+    public void setPresaleBeginTimeStr(String presaleBeginTimeStr) {
+        this.presaleBeginTimeStr = presaleBeginTimeStr;
+    }
+
+    public String getPresaleEndTimeStr() {
+        return presaleEndTimeStr;
+    }
+
+    public void setPresaleEndTimeStr(String presaleEndTimeStr) {
+        this.presaleEndTimeStr = presaleEndTimeStr;
     }
 }

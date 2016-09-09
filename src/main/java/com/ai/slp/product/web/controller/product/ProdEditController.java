@@ -5,6 +5,7 @@ import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.BeanUtils;
+import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.platform.common.api.cache.interfaces.ICacheSV;
@@ -167,7 +168,6 @@ public class ProdEditController {
             fileId = "";
         }
 
-
         if (StringUtils.isNotBlank(detailConVal))
             fileId = client.insert(detailConVal);
         logger.info("fileId="+fileId);
@@ -178,6 +178,7 @@ public class ProdEditController {
         ProductInfoForUpdate prodInfo = new ProductInfoForUpdate();
         BeanUtils.copyProperties(prodInfo,editInfo);
         prodInfo.setTenantId(AdminUtil.getTenantId());
+        prodInfo.setSupplierId(AdminUtil.getSupplierId());
         prodInfo.setOperId(AdminUtil.getAdminId(session));
         prodInfo.setNoKeyAttrValMap(attrValMap);
         //添加省份编码
@@ -196,6 +197,12 @@ public class ProdEditController {
         //属性值图片
         picInfoMap = genProdAttrPic(editInfo.getProdId(),editInfo.getProdAttrValPicStr());
         prodInfo.setAttrValPics(picInfoMap);
+        if (StringUtils.isNotBlank(editInfo.getPresaleBeginTimeStr()))
+            prodInfo.setPresaleBeginTime(
+                    DateUtil.getTimestamp(editInfo.getPresaleBeginTimeStr(),DateUtil.DATETIME_FORMAT));
+        if (StringUtils.isNotBlank(editInfo.getPresaleEndTimeStr()))
+            prodInfo.setPresaleEndTime(
+                    DateUtil.getTimestamp(editInfo.getPresaleEndTimeStr(),DateUtil.DATETIME_FORMAT));
         //保存商品详情信息
         BaseResponse response = productManagerSV.updateProduct(prodInfo);
         ResponseHeader header = response.getResponseHeader();

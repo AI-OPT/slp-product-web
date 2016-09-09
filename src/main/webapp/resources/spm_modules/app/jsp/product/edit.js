@@ -3,17 +3,14 @@ define('app/jsp/product/edit', function (require, exports, module) {
     var $=require('jquery'),
 		Events = require('arale-events/1.2.0/events'),
     Widget = require('arale-widget/1.2.0/widget'),
-    Dialog = require("artDialog/src/dialog"),
+    Dialog = require("optDialog/src/dialog"),
     AjaxController = require('opt-ajax/1.0.0/index');
 	require("ckeditor/ckeditor.js")
-    require("jsviews/jsrender.min");
-    require("jsviews/jsviews.min");
 	require("my97DatePicker/WdatePicker");
     require("bootstrap-paginator/bootstrap-paginator.min");
-    require("app/util/jsviews-ext");
-    
-    require("opt-paging/aiopt.pagination");
-    require("twbs-pagination/jquery.twbsPagination.min");
+
+	require("jquery-validation/1.15.1/jquery.validate");
+	require("app/util/aiopt-validate-ext");
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
@@ -38,7 +35,8 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			USER_ENT_TYPE: "11",
 			USER_AGENT_TYPE: "12",
 			FILE_MAX_SIZE:3145728,//大小为3*1024*1024的值
-			FILE_TYPES:['.jpg','.png']
+			FILE_TYPES:['.jpg','.png'],
+			UPSHEL_PRESALE:"4"
     	},
     	//事件代理
     	events: {
@@ -50,7 +48,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			"change #uploadFile":"_uploadFile",
 			//保存数据
 			"click #save":"_saveProd",
-			//保存数据
+			//变更上架类型
 			"click input:radio[name='upshelfType']":"_changeUpShel"
         },
     	//重写父类
@@ -60,12 +58,25 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			this._showPartTarget();
 			this._showTarget();
 			this._changeUpShel();
+			$("#prodForm").validate({
+				errorPlacement: function(error, element) {
+					if (element.is(":radio"))
+						error.appendTo(element.parent().parent());
+					else
+						error.insertAfter(element);
+				},
+				messages:{
+					isSaleNationwide:"请选择目标地域",
+					isInvoice:"请选择是否提供发票",
+					upshelfType:"请选择上架类型"
+				}
+			});
 		},
 		//上架类型变更
 		_changeUpShel:function(){
 			var shelType = $("input[name='upshelfType']:checked").val();
 			console.log("the upshel type is "+shelType);
-			if ('4' == shelType){
+			if (ProdEditPager.UPSHEL_PRESALE == shelType){
 				$('#presaleTimeUl').show();
 			} else{
 				$('#presaleTimeUl').hide();
@@ -115,7 +126,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
       	_saveProd:function() {
 			var _this = this;
 			//验证通过,则进行保存操作.
-			if(this._checkInput() && this._convertProdPic() && this._convertNoKeyAttr()){
+			if($("#prodForm").valid() && this._checkInput() && this._convertProdPic() && this._convertNoKeyAttr()){
 				//获取editor中内容
 				$("#detailConVal").val(editDom.getData());
 				console.log($('#detailConVal').val());
@@ -127,10 +138,14 @@ define('app/jsp/product/edit', function (require, exports, module) {
 					data:$('#prodForm').serializeArray(),
 					success: function(data){
 						if("1"===data.statusCode){
-							//_this._showMsg("保存成功");
-							//保存成功,回退到进入的列表页
-							window.history.go(-1);
-							//window.location.href = _base+"/prodquery/add";
+							new Dialog({
+								content:"提交成功",
+								icon:'success',
+								okValue: '确 定',
+								ok:function(){
+									window.history.go(-1);
+								}
+							}).show();
 						}
 					}
 				});
@@ -157,7 +172,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				}
 			});
 			if (prodPic.length <1){
-				this._showMsg("商品主图不能为空,至少有一张图片.");
+				this._showWarn("商品主图不能为空,至少有一张图片.");
 				return false;
 			}
 			$('#prodPicStr').val(JSON.stringify(prodPic));
@@ -312,10 +327,10 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			//文件类型
 			var checkType = true;
 			if(fileSize > ProdEditPager.FILE_MAX_SIZE){
-				this._showMsg('图片不能超过3M');
+				this._showWarn('图片不能超过3M');
 				checkSize = false;
 			}else if($.inArray(fileType, ProdEditPager.FILE_TYPES)<0){
-				this._showMsg('请上传jpg/png格式图片');
+				this._showWarn('请上传jpg/png格式图片');
 				checkType = false;
 			}else {
 				img.src = "file:///"+fileLocation;
@@ -378,72 +393,43 @@ define('app/jsp/product/edit', function (require, exports, module) {
 		},
 		//商品信息保存检查
 		_checkInput:function(){
-			//商品名称不能为空
-			var prodName = $('#prodName').val();
-			if (prodName==null || prodName==''){
-				this._showMsg("商品名称不能为空");
-				return false;
-			}
-			//有效期不能为空
-			var activeCycle = $('#activeCycle').val();
-			if (activeCycle==null || activeCycle==''||isNaN(activeCycle)){
-				this._showMsg("商品有效期不能为空,且必须是数字");
-				return false;
-			}
-			//是否快充不能为空
-			var partTarget = $("input:radio[name='rechargeType']:checked").val();
-			if (partTarget==null || partTarget == ''){
-				this._showMsg("请选择是否为快充商品");
-				return false;
-			}
-			//运营商不能为空
-			var basicOrgId = $("input:radio[name='basicOrgId']:checked").val();
-			if (basicOrgId==null || basicOrgId == ''){
-				this._showMsg("请选择运营商");
-				return false;
-			}
-			//检查企业受众类型
-			var entAudi = $("input:radio[name='audiencesEnterprise']:checked").val();
-			if (entAudi == "1" && this._noHasAudi("audiEntIds")){
-				this._showMsg("请选择受众的企业用户");
-				return false;
-			}
-			//检查代理商受众类型
-			var agentAudi = $("input:radio[name='audiencesAgents']:checked").val();
-			if (agentAudi == "1" && this._noHasAudi("audiAgentIds")){
-				this._showMsg("请选择受众的代理商用户");
-				return false;
-			}
-
-			//是否允许平台代销不能为空
-			var isReplaceSell = $("input:radio[name='isReplaceSell']:checked").val();
-			if (isReplaceSell==null || isReplaceSell == ''){
-				this._showMsg("请选择是否允许平台代销");
-				return false;
-			}
-			//目标地域不能为空
-			var isSaleNationwide = $("input:radio[name='isSaleNationwide']:checked").val();
-			if (isSaleNationwide==null || isSaleNationwide == ''){
-				this._showMsg("请选择商品目标地域");
+			//商品预售
+			var upType = $("input[name='upshelfType']:checked").val();
+			var beginTime = $("#presaleBegin").val();
+			var endTime = $("#presaleEnd").val();
+			if (ProdEditPager.UPSHEL_PRESALE == upType
+				&& (beginTime=="" || typeof beginTime == 'undefined'
+				|| endTime == "" || typeof endTime == 'undefined')){
+				this._showWarn("预售时间不能为空");
 				return false;
 			}
 			//图文详情不能为空
 			var editVal = editDom.getData();
 			if (editVal==null || editVal == ''){
-				this._showMsg("商品详情图文描述不能为空");
+				this._showWarn("商品详情图文描述不能为空");
 				return false;
 			}
 			return true;
 		},
 		_showMsg:function(msg){
-			var msg = Dialog({
-				title: '提示',
+			new Dialog({
 				content:msg,
+				icon:'success',
+				okValue: '确 定',
 				ok:function(){
 					this.close();
 				}
-			});
-			msg.showModal();
+			}).show();
+		},
+		_showWarn:function(msg){
+			new Dialog({
+				content:msg,
+				icon:'warning',
+				okValue: '确 定',
+				ok:function(){
+					this.close();
+				}
+			}).show();
 		}
     });
     
