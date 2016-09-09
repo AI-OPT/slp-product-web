@@ -49,7 +49,9 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			"click #searchBut":"_searchBtnClick",
 			"change #uploadFile":"_uploadFile",
 			//保存数据
-			"click #save":"_saveProd"
+			"click #save":"_saveProd",
+			//保存数据
+			"click input:radio[name='upshelfType']":"_changeUpShel"
         },
     	//重写父类
     	setup: function () {
@@ -57,6 +59,17 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			editDom = CKEDITOR.replace(prodDetail);
 			this._showPartTarget();
 			this._showTarget();
+			this._changeUpShel();
+		},
+		//上架类型变更
+		_changeUpShel:function(){
+			var shelType = $("input[name='upshelfType']:checked").val();
+			console.log("the upshel type is "+shelType);
+			if ('4' == shelType){
+				$('#presaleTimeUl').show();
+			} else{
+				$('#presaleTimeUl').hide();
+			}
 		},
 		//完成目标地域选择
 		_finishTarget:function(){

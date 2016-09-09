@@ -192,7 +192,7 @@
 												<c:if test="${!noKeyAttrValMap.get(attr.attrId).isEmpty()}">
 													<c:set var="valInfo" value="${noKeyAttrValMap.get(attr.attrId).get(0)}"></c:set>
 												</c:if>
-												<p><input type="text" class="int-text int-xlarge" attrId="noKeyAttr${attr.attrId}" maxlength="100"
+												<p><input type="text" class="int-text int-xlarge" attrId="noKeyAttr${attr.attrId}" maxlength="20"
 														  <c:if test="${valInfo!=''}">value="${valInfo.attrVal}"</c:if> ></p>
 											</c:when>
 											<%--多行输入--%>
@@ -258,7 +258,7 @@
 											  class="checkbox-small" <c:if test="${productInfo.upshelfType == '1'}">checked</c:if>>立即上架</p>
 									<p><input type="radio" name="upshelfType" value="2"
 											  class="checkbox-small" <c:if test="${productInfo.upshelfType == '2'}">checked</c:if>>放入仓库</p>
-									<p><input type="radio" name="upshelfType" value="2"
+									<p><input type="radio" name="upshelfType" value="4"
 											  class="checkbox-small" <c:if test="${productInfo.upshelfType == '4'}">checked</c:if>>预售上架</p>
 							</ul>
 							<ul id="presaleTimeUl">
@@ -429,6 +429,7 @@
 			console.log("attrValDefId:"+imgObj.attr('attrVal')+"index:"+attrInd);
 			pager._delProdPic(valDefId,attrInd);
 		});
+
 		seajs.use('app/jsp/product/edit', function (ProdEditPager) {
 			pager = new ProdEditPager({element: document.body});
 			pager.render();
