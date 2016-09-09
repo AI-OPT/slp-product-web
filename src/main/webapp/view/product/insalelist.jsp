@@ -218,9 +218,10 @@
             pager._showDownSale(productId);
         });
 		
-		seajs.use('app/jsp/product/insalelist', function(insalelist) {
+		seajs.use(['app/jsp/product/insalelist','app/util/center-hind'], function(insalelist,centerHind) {
 			pager = new insalelist({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>
