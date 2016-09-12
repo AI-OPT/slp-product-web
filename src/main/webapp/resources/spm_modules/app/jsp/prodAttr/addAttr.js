@@ -102,9 +102,10 @@ require("app/util/aiopt-validate-ext");
 				attrArr.push(attrObj);
 			});
 		
-			console.log("No error");
+			/*console.log("No error");
 			if (hasError)
-				return;
+				return;*/
+			console.log("No error");
 			
 		console.log("attr arr lengeth "+attrArr.length);
 		ajaxController.ajax({

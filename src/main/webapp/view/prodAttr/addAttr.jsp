@@ -29,8 +29,8 @@
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>名称首字母(大写)</p>
-										<p><input  name="firstLetter0" type="text" class="int-text int-medium"  maxlength="1" required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
-                                                  data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter"></p>
+										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1" required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
+                                                  data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter0"></p>
 									</li>
 					             </ul>
 					             <ul>
