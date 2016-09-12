@@ -24,6 +24,12 @@
     var slp_uac_host="${slp_uac_host}";
     var ssoLoginUrl="${ssoLoginUrl}";
     var uedroot="${uedroot}";
+    if(!window.console){
+        window.console = {};
+    }
+    if(!window.console.log){
+        window.console.log = function(msg){};
+    }
 </script>
 
 <!-- <link rel="stylesheet" type="text/css" href="${_base}/resources/slpmall/styles/bootstrap.css"> -->

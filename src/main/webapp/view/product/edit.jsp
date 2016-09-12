@@ -12,6 +12,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<title>运营管理</title>
 	<%@ include file="/inc/inc.jsp" %>
+	<style type="text/css">
+		.form-label span {
+			color: rgb(0, 0, 0);
+		}
+	</style>
 </head>
 <body>
 <!--弹出上传图片  中-->
@@ -240,9 +245,9 @@
 									<div id="check4" style="display:none;">
 										<div class="cit-width cit-width-list2">
 											<p class="width-xlag">
-												<span id="areaNum" style="color:black;">已选中省份${areaNum}个</span>
+												<span id="areaNum">已选中省份${areaNum}个</span>
 												<a href="javascript:void(0);" class="city" id="changeArea">修改</a></p>
-											<span id="areaName" style="color:black;"></span>
+											<span id="areaName"></span>
 										</div>
 									</div>
 								</li>
@@ -280,12 +285,14 @@
 								<li id="choseDate" class="width-xlag">
 									<p class="word3"><b class="red">*</b>预售时间</p>
 									<p><input id="presaleBegin" name="presaleBeginTimeStr" class="int-text int-medium "
-											  type="text" readonly/>
+											  type="text" readonly
+											  onfocus="WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'presaleEnd\');}'})"/>
 										<span class="time"> <i class="fa  fa-calendar" ></i></span>
 									</p>
 									<p>至</p>
 									<p><input id="presaleEnd" name="presaleEndTimeStr" class="int-text int-medium "
-											  type="text" readonly/>
+											  type="text" readonly
+											  onfocus="WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'presaleBegin\');}'})"/>
 										<span class="time"> <i class="fa  fa-calendar" ></i></span>
 									</p>
 								</li>
@@ -426,13 +433,7 @@
 		elem.onmouseout = function(){
 			timer = setInterval(Scroll,40);
 		};
-		<%-- 展示日历 --%>
-		$('#choseDate').delegate('.fa.fa-calendar','click',function(){
-			var calInput = $(this).parent().prev();
-			var id = calInput.attr('id');
-			console.log("click calendar "+id);
-			WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'});
-		});
+
 		<%-- 上传图片 --%>
 		$('.width-xlag').delegate('input[attrVal]','click',function(){
 			picAttrVal = $(this).attr('attrVal');

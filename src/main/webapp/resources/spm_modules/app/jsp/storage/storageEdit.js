@@ -259,18 +259,14 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 				data:{"standedProdId":standedProdId,"storageGroupName":storageGroupName},
 				success: function(data){
 					if("1"===data.statusCode){
-//	            		var template = $.templates("#storGroupTemple");
-//	            	    var htmlOutput = template.render(data.data);
-//	            	    $("#storGroupMarked").before(htmlOutput);
 						window.location.reload();
-//						window.history.go(0);
 					}else{
 						_this._showMsg("添加库存组失败:"+data.statusInfo);
 	            	}
 				}
 			});
     	},
-		//库存废弃
+		//库存状态变更
 		_changeStoStatus:function(obj){
 			var _this =this;
 			var status = $(obj).attr('statue');
@@ -283,24 +279,9 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 				url: _base+"/storage/edit/status/"+stoId,
 				data:{"status":status},
 				success: function(data) {
-					//若不成功,直接返回
-					if ("1" != data.statusCode) {
-						return;
-					}//废弃
-					else if (status === stoDiscard) {
+					//状态变更成功,直接刷新页面
+					if ("1" == data.statusCode) {
 						window.location.reload();
-					}//启用
-					else if (status === stoActive) {
-						$(obj).html("停用");
-						$(obj).attr("statue", stoStop);
-						$(obj).parent().prev().html("启用");
-						_this._showSuccessMsg("库存启用成功");
-					}//停用
-					else if (status === stoStop) {
-						$(obj).text("启用");
-						$(obj).attr("statue", stoActive);
-						$(obj).parent().prev().text("停用");
-						_this._showSuccessMsg("库存停用成功");
 					}
 				}
 			});

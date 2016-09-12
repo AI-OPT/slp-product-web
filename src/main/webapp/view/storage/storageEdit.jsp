@@ -177,14 +177,14 @@
                             <!--标题结束-->
                             <div class="form-label  bd-bottom">
                                 <ul class="big-word">
-                                    <li class="col-md-6">
-                                        <p class="word">商品名称：</p>
+                                    <li class="col-md-12">
+                                        <p class="word3">商品名称：</p>
                                         <p class="wide-field">${normProdInfo.productName}</p>
                                     </li>
                                 </ul>
                                 <ul>
-                                    <li class="col-md-6">
-                                        <p class="word">商品类型：</p>
+                                    <li class="col-md-12">
+                                        <p class="word3">商品类型：</p>
                                         <p>${prodType}</p>
                                     </li>
                                 </ul>
@@ -197,8 +197,8 @@
                             <div class="form-label  bd-bottom">
                                 <c:forEach var="aav" items="${keyAttr}">
                                     <ul>
-                                        <li class="col-md-6">
-                                            <p class="word">${aav.key.attrName}:</p>
+                                        <li class="col-md-12">
+                                            <p class="word3">${aav.key.attrName}：</p>
                                             <c:forEach var="attrVal" items="${aav.value}">
                                                 <p>${attrVal.attrVal}</p>
                                             </c:forEach>
@@ -214,8 +214,8 @@
                             <div class="form-label  bd-bottom">
                                 <c:forEach var="aav" items="${saleAttr}">
                                     <ul>
-                                        <li class="col-md-6">
-                                            <p class="word">${aav.key.attrName}:</p>
+                                        <li class="col-md-12">
+                                            <p class="word3">${aav.key.attrName}：</p>
                                             <c:forEach var="attrVal" items="${aav.value}">
                                                 <p>${attrVal.attrVal}</p>
                                             </c:forEach>
