@@ -1,10 +1,4 @@
-<%@ page import="com.ai.slp.product.web.constants.StorageConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    request.setAttribute("stoActive",StorageConstants.STATUS_ACTIVE);
-    request.setAttribute("stoStop",StorageConstants.STATUS_STOP);
-    request.setAttribute("stoDiscard",StorageConstants.STATUS_DISCARD);
-%>
 <!doctype html>
 <html>
 <head>
@@ -16,6 +10,29 @@
 </head>
 
 <body>
+<!-- 确认保存提示框 -->
+<div class="eject-big">
+    <div class="eject-samll" id="aband-small">
+        <input type="hidden" id="delAttrId">
+        <div class="eject-medium-title">
+            <p>成功提示</p>
+        </div>
+
+        <div class="eject-medium-complete">
+            <p class="word">市场价更改成功</p>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="successBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+            </p>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
+
+<!-- 确认保存提示框 -->
+
 <div class="content-wrapper-iframe"><!--外围框架-->
     <div class="row"><!--外围框架-->
         <div class="col-lg-12"><!--删格化-->
@@ -42,7 +59,7 @@
                                 <ul class="big-word">
                                     <li class="col-md-12">
                                         <p class="word3">商品名称：</p>
-                                        <p class="wide-field">${normProdInfo.productName}</p>
+                                        <p class="wide-field">${normProdResponse.productName}</p>
                                     </li>
                                 </ul>
                                 <ul>
@@ -52,7 +69,6 @@
                                     </li>
                                 </ul>
                             </div>
-                            <c:if test="${!keyAttr.isEmpty()}">
                             <!-- 关键属性 -->
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品关键属性</h5>
@@ -70,7 +86,6 @@
                                     </ul>
                                 </c:forEach>
                             </div>
-                            </c:if>
                             <c:if test="${!saleAttr.isEmpty()}">
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品销售属性</h5>
@@ -89,87 +104,49 @@
                                 </c:forEach>
                             </div>
                             </c:if>
-                            
-                            <!--标题开始--> 
-						    <header class="main-box-header clearfix ">
-	                           <h5 class="pull-left">成本价</h5>
-	                        </header> 
-	                        <div class="main-box-body clearfix">
-							<!--table表格-->
-							<form id="costpriceForm" action="${_base}/costprice/save" method="post">
-							<div class="table-responsive clearfix">
-								<table class="table table-hover table-border table-bordered">
-									<thead>
-									<tr>
-										<th>序号</th>
-										<th>商品ID</th>
-										<th>商品名称</th>
-										<th>仓库ID</th>
-										<th>仓库名称</th>
-										<th>供货量</th>
-										<th>成本价(元)</th>
-									</tr>
-									</thead>
-									<tbody id="searchProdRouteData">
-									</tbody>
-								</table>
-								<div id="showMessageDiv"></div>
-								<script id="searchProdRouteTemple" type="text/template">
-									<tr>
-										<td>{{:#index+1}}</td>
-										<td>{{:supplyId}}</td>
-										<td class="hind1">
-											<div class="center-hind" >{{:supplyName}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:supplyName}}</div>
-										</td>
-										<td>{{:routeId}}</td>
-										<td>
-											<div class="center-hind" >{{:routeName}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:routeName}}</div>
-										</td>
-										<td>{{:usableNum}}</td>
-                                        <td class="text-l">
-											<input for="costPrice" name="costPrice{{:#index}}" standedProdId="{{:standedProdId}}" supplyId="{{:supplyId}}" routeId="{{:routeId}}" value="{{:~liToYuan2(costPrice)}}" tenantId="{{:tenantId}}" type="text"  class="int-text int-mini ml-30" required moneyNumber="true" data-msg-moneyNumber="请输入正确格式">
-											<div id="costPrice{{:#index}}" style="float:left;text-align:left;"></div>
-										</td>
-									</tr>
-								</script>
-							</div>
-							</form>
-							<!--分页-->
-							<div class="paging">
-								<ul id="pagination-ul">
-								</ul>
-							</div>
-							<!--分页结束-->
-						 </div>
+                            <!-- 市场价 -->
+                            <div class="form-label bd-bottom ui-form" data-widget="validator">
+                            	<form id="prodForm" action="${_base}/marketpricequery/updateMarketPrice" method="post">
+	                            	<input type="hidden" name="productId" id="productId" value="${standedProdId}">
+	                            	<ul class="big-word">
+	                                    <li class="col-md-12">
+	                                        <p class="word3">市场价：</p>
+	                                        <p><input name="marketPrice" id="marketPrice"  type="text" value="${price}" class="int-text int-medium" onkeyup="marketPriceCopy.value=this.value"> (元)</p>
+	                                        <p><input name="marketPriceCopy" type="text" style="width:0px; height:20px;" regexp="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$" data-msg-regexp="请输入正确市场价"></p>
+	                                    </li>
+	                                </ul>
+                                </form>
+                            </div>
                         </div>
                         <div id="subDiv" class="row pt-30">
-	                            	<p class="center pr-30 mt-30">
-	                            <input id="saveBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="保  存">
-                                <input type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="返  回"
-                                       onclick="javaScript:window.history.go(-1);">
-                            </p>
-                        </div>
+                        	<p class="center pr-30 mt-30">
+                        		<input id="submitSaveBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                       value="保  存">
+                                <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                       value="返  回" onclick="javaScript:window.history.go(-1);">
+                        	</p>
                         </div>
                         
                     </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 <!-- footer -->
 </body>
-<script type="text/javascript">
-	var pager;
-	var standedProdId = '${standedProdId}';
-	(function () {
-		seajs.use('app/jsp/costprice/editinfo', function(costpricePage) {
-			pager = new costpricePage({element : document.body});
-			pager.render();
-		});
-	})();
-</script>
 </html>
+<script type="text/javascript">
+    //是否有销售属性
+    var pager;
+    var count = '${count}';
+    var standedProdId = "${standedProdId}";
+    var productCatId = "${productCatId}";
+    (function () {
+        seajs.use('app/jsp/marketprice/addMarketPrice', function (addMarketPricePager) {
+            pager = new addMarketPricePager({element: document.body});
+            pager.render();
+        });
+    })();
+</script>
