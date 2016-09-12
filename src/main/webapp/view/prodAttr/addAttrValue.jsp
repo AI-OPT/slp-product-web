@@ -17,6 +17,7 @@
 			<div class="row"><!--内侧框架-->
 				<div class="col-lg-12"><!--删格化-->
 					<div class="main-box clearfix"><!--白色背景-->
+					<form id="prodAttrValueForm" action="${_base}/attrManage/saveAttrValue" method="post">
 						<div id="addViewDiv" class="main-box-body clearfix">
                             <!-- 查询条件 -->
                             <div class="form-label bd-bottom ui-form" data-widget="validator">
@@ -24,11 +25,13 @@
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性值名称</p>
-					                    <p><input name="attrValueName" type="text" class="int-text int-medium" maxlength="20"></p>
+					                    <p><input name="attrValueName0" type="text" class="int-text int-medium" maxlength="20" required data-msg-required="类目名称不能为空"
+                                                  val-tag="attrValueName"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>名称首字母(大写)</p>
-										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1"></p>
+										<p><input  name="firstLetter0" type="text" class="int-text int-medium"  maxlength="1" required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
+                                                  data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter"></p>
 									</li>
 					             </ul>
 					             
@@ -54,6 +57,7 @@
                             </div>
                             
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>

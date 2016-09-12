@@ -11,15 +11,17 @@ require("jsviews/jsviews.min");
 require("bootstrap-paginator/bootstrap-paginator.min");
 require("app/util/jsviews-ext");
 
-require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
-require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
+/*require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
+require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");*/
+require("jquery-validation/1.15.1/jquery.validate");
+require("app/util/aiopt-validate-ext");
 
 
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-    Validator.addRule('upperCaseRule', /^[A-Z]{1}$/, '请输入大写字母');
+  /*  Validator.addRule('upperCaseRule', /^[A-Z]{1}$/, '请输入大写字母');*/
     
     //定义页面组件类
     var attrValueAddPager = Widget.extend({
@@ -43,7 +45,7 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
     	},
     	
     	//添加输入验证
-    	_addValidator:function(validator){
+    /*	_addValidator:function(validator){
     		validator.addItem({
     			element: "input[name=attrValueName]",
     			required: true,
@@ -54,7 +56,7 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
     			rule:'upperCaseRule',
     			errormessage:'请输入名称首字母(大写)',
     		});
-    	},
+    	},*/
     	
     	//增加
     	_addAttrBtn:function(){
@@ -70,9 +72,15 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 			//获取from-label下的数据
 			var attrArrValue = [];
 			var hasError = false;
+			
+			var validateForm = $("#prodAttrValueForm").validate();
+			if(!validateForm.form()){
+				return;
+			}
+			
 			$("#addViewDiv > .form-label.bd-bottom ").each(function(index,form){
 				
-				var validator = new Validator({
+				/*var validator = new Validator({
 					element: $(this)
 				});
 				_this._addValidator(validator);
@@ -80,7 +88,7 @@ require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");
 					if (error){
 						hasError = true;
 					}
-				});
+				});*/
 				
 				var attrObj = {};
 				console.log(index+" form-label");
