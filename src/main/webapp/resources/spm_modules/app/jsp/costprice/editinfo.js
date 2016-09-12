@@ -75,7 +75,7 @@ define('app/jsp/costprice/editinfo', function (require, exports, module) {
 			}
 			var updateData = [];
 			$("#searchProdRouteData input[for='costPrice']").each(function(i){
-				var costPrice = $(this).val()?parseInt($(this).val())*1000:null;
+				var costPrice = $(this).val()?parseFloat($(this).val())*1000:null;
 				var tenantId = $(this).attr('tenantId');
 				var standedProdId = $(this).attr('standedProdId');
 				var supplyId = $(this).attr('supplyId');
