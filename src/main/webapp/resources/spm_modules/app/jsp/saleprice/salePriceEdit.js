@@ -79,7 +79,7 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 						Dialog({
 							title: '提示',
 							icon:'success',
-							content:data.statusInfo,
+							content:"更新完成",
 							okValue: '确 定',
 							ok:function(){
 								this.close();
