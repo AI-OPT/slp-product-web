@@ -24,7 +24,7 @@
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性名称</p>
-					                    <p><input name="attrName0" type="text" class="int-text int-medium" maxlength="20" required data-msg-required="类目名称不能为空"
+					                    <p><input name="attrName0" type="text" class="int-text int-medium" maxlength="20" required data-msg-required="属性名称不能为空"
                                                   val-tag="attrName"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
