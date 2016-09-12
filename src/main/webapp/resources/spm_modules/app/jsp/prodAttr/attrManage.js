@@ -79,7 +79,7 @@ require("app/util/aiopt-validate-ext");
     	_initValidator:function(){
 			return $("#prodAttrValueForm").validate({
 				rules:{
-					productCatName:{
+					productAttrValueName:{
 						required: true,
 						maxlength: 20
 					},
@@ -87,16 +87,10 @@ require("app/util/aiopt-validate-ext");
 						required: true,
 						maxlength:1,
 						regexp:/^[A-Z]+$/
-					},
-					upSerialNum:{
-						required:true,
-						digits:true,
-						min:1,
-						max:999
 					}
 				},
 				messages:{
-					productCatName:{
+					productAttrValueName:{
 						required:"名称不能为空",
 						maxlength:"名称不能超过20位(一个汉字占2位)"
 					},
