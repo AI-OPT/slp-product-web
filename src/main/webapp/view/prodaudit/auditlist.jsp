@@ -37,10 +37,10 @@
 <!-- 拒绝提示框 -->
 <div class="eject-big">
     <div class="eject-samll" id="refuse-small">
-        <div class="eject-medium-title">
+        <!-- <div class="eject-medium-title">
             <p>审核拒接操作！</p>
             <p id="refuseCloseImg" class="img"><i class="fa fa-times"></i></p>
-        </div>
+        </div> -->
 
         <div class="eject-medium-complete">
             <div class="form-label">
@@ -48,7 +48,7 @@
 				<p><input type="hidden" id="upAttrId"  class="int-text int-medium"></p>
               <ul> 
                 <li>
-                   <p class="word"><span>*</span>拒绝上架原因</p>
+                   <p class="word"><span>*</span>拒绝原因</p>
                    <p>
                    	<select id="refuseReason" class="select select-medium">
 	                   	<option value="10">信息有误</option>
@@ -61,11 +61,12 @@
 	           <ul>	
 	               <li>
 	                   <p class="word"><span>*</span>问题描述</p>
-	                   <p><textarea id="refuseDes" type="text" class="int-text int-medium"  style="width:190px;height:80px;" maxlength="100" ></textarea></p>
-	                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                   <p><textarea id="refuseDes" name="refuseDes" class="int-text textarea-xlarge"
+												  maxlength="100" style="width:190px;height:80px;"></textarea></p>
+	                 <!--   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(100字符以内)</p>
+	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(100字符以内)</p> -->
 	               </li>
 	           </ul>
          </form> 	 
