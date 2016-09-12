@@ -24,12 +24,14 @@
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性名称</p>
-					                    <p><input name="attrName" type="text" class="int-text int-medium" maxlength="20" required data-msg-required="属性名称不能为空"
+					                    <p><input name="attrName" type="text" class="int-text int-medium" maxlength="15"
+					                              required data-msg-required="属性名称不能为空"
                                                   val-tag="attrName0"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>名称首字母(大写)</p>
-										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1" required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
+										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1"
+												  required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
                                                   data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter0"></p>
 									</li>
 					             </ul>
@@ -90,11 +92,13 @@
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性名称</p>
-					                    <p><input name="attrName" type="text" class="int-text int-medium" maxlength="20"></p>
+					                    <p><input name="attrName" type="text" class="int-text int-medium" 
+											maxlength="20"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>属性名称首字母</p>
-										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1"></p>
+										<p><input  name="firstLetter" type="text" class="int-text int-medium" 
+										   maxlength="1"></p>
 									</li>
 					             </ul>
 					             <ul>

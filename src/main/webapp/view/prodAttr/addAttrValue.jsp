@@ -32,7 +32,8 @@
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>名称首字母(大写)</p>
-										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1" 
+										<p><input  name="firstLetter" type="text" class="int-text int-medium" 
+										 maxlength="1" 
 										required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
                                            data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter0"></p>
 									</li>
@@ -52,7 +53,8 @@
                             </div>
                             <div  class="row pt-30">
                             	<p class="center pr-30 mt-30">
-                            		<input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                            		<input id="submitAddBtn" type="button" 
+                            		class="biu-btn  btn-primary  btn-small  ml-5"
                                            value="提  交">
                                     <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
                                            value="返  回" onclick="javaScript:window.history.go(-1);">
@@ -81,11 +83,13 @@
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性值名称</p>
-					                    <p><input name="attrValueName" type="text" class="int-text int-medium" maxlength="20"></p>
+					                    <p><input name="attrValueName" type="text" class="int-text int-medium" 
+											maxlength="20"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>名称首字母(大写)</p>
-										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1"></p>
+										<p><input  name="firstLetter" type="text" class="int-text int-medium" 
+											 maxlength="1"></p>
 									</li>
 					             </ul>
 							</div>
