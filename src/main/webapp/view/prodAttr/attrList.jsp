@@ -24,14 +24,13 @@
 	           <ul>	
 	               <li>
 	                   <p class="word"><span>*</span>属性名称</p>
-	                   <p><input id="upAttrName" type="text" class="int-text int-medium" maxlength="20"></p>
+	                   <p><input id="upAttrName" type="text" name="productAttrName" class="int-text int-medium" maxlength="15" ></p>
 	               </li>
 	           </ul>
 	           <ul>	
 	               <li>
 	                   <p class="word"><span>*</span>属性名称首字母(大写)</p>
-	                   <p><input id="upFirstLetter" type="text" class="int-text int-medium" maxlength="1" required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
-                                                  data-msg-regexp="请输入大写字母" val-tag="firstLetter"></p>
+	                   <p><input id="upFirstLetter" type="text" class="int-text int-medium" name="firstLetter" maxlength="1"></p>
 	               </li>
 	           </ul>
               <ul> 
