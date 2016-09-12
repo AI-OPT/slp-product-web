@@ -37,17 +37,16 @@
 <!-- 拒绝提示框 -->
 <div class="eject-big">
     <div class="eject-samll" id="refuse-small">
-        <div class="eject-medium-title">
-            <p>审核拒接操作确认！</p>
+       <!--  <div class="eject-medium-title">
             <p id="refuseCloseImg" class="img"><i class="fa fa-times"></i></p>
-        </div>
+        </div> -->
 
         <div class="eject-medium-complete">
              <div class="form-label">
 			<form id="prodAttrForm">
               <ul> 
                 <li>
-                   <p class="word"><span>*</span>拒绝上架原因</p>
+                   <p class="word"><span>*</span>拒绝原因</p>
                    <p>
                    	<select id="refuseReason" class="select select-medium">
 	                   	<option value="10">信息有误</option>
@@ -60,11 +59,11 @@
 	           <ul>	
 	               <li>
 	                   <p class="word"><span>*</span>问题描述</p>
-	                   <p><textarea id="refuseDes" type="text" class="int-text int-medium"  style="width:190px;height:80px;"></textarea></p>
-	                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(100字符以内)</p>
+	                   <p><textarea id="refuseDes" name="refuseDes" class="int-text textarea-xlarge"
+												  maxlength="100" style="width:190px;height:80px;"></textarea>
+	                   <!-- <textarea id="refuseDes" type="text" class="int-text int-medium"  style="width:190px;height:80px;"></textarea> -->
+	                   </p>
+	                   
 	               </li>
 	           </ul>
          </form> 	 
@@ -81,6 +80,28 @@
     <div class="mask" id="eject-mask"></div>
 </div>
 <!-- 拒绝提示框结束 -->
+
+<!-- 拒绝确认提示框 -->
+<div class="eject-big">
+    <div class="eject-samll" id="successRefuse-small">
+        <div class="eject-medium-title">
+            <p id="successCloseImg" class="img"><i class="fa fa-times"></i></p>
+        </div>
+
+        <div class="eject-medium-complete">
+            <p><img src="${uedroot}/images/eject-icon-success.png"></p>
+            <p class="word">成功</p>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="successsubmitBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+            </p>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
+<!-- 拒绝确认提示框结束 -->
 
 
 <div class="content-wrapper-iframe"><!--外围框架-->
@@ -99,7 +120,7 @@
                                 	<input type="hidden" id="prodId" value="${productInfo.prodId}">
                                 	<input type="hidden" id="state" value="${productInfo.state}">
                                     <li class="col-md-12">
-                                        <p class="word">类目信息：</p>
+                                        <p class="word3">类目信息：</p>
                                         <p>
                                         <c:forEach var="catInfo" items="${catLinkList}"
                                                varStatus="stat">${catInfo.productCatName}<c:if test="${!stat.last}">&gt;</c:if>
@@ -109,19 +130,19 @@
                                 </ul>
                                 <ul>
                                     <li class="col-md-12">
-                                        <p class="word">商品类型：</p>
+                                        <p class="word3">商品类型：</p>
                                         <p>${prodType}</p>
                                     </li>
                                 </ul>
                                 <ul class="big-word">
                                     <li class="col-md-12">
-                                        <p class="word">商品名称：</p>
+                                        <p class="word3">商品名称：</p>
                                         <p class="wide-field">${productInfo.prodName}</p>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="col-md-12">
-                                        <p class="word">商品卖点：</p>
+                                        <p class="word3">商品卖点：</p>
                                         <p>${productInfo.productSellPoint}</p>
                                     </li>
                                 </ul>
@@ -135,7 +156,7 @@
                                 <c:forEach var="aav" items="${keyAttr}">
                                     <ul>
                                         <li class="col-md-12">
-                                            <p class="word">${aav.key.attrName}：</p>
+                                            <p class="word3">${aav.key.attrName}：</p>
                                             <c:forEach var="attrVal" items="${aav.value}">
                                                 <p>${attrVal.attrVal}</p>
                                             </c:forEach>
@@ -162,7 +183,7 @@
                             	<c:forEach var="attr" items="${noKeyAttr}">
 									<ul>
 										<li class="width-xlag">
-										<p class="word" attrId="${attr.attrId}" valueType="${attr.valueWay}">${attr.attrName}:</p>
+										<p class="word3" attrId="${attr.attrId}" valueType="${attr.valueWay}">${attr.attrName}:</p>
 										<c:choose>
 											<%-- 下拉选择 --%>
 											<c:when test="${attr.valueWay == '1'}">
@@ -218,7 +239,7 @@
                             <div class="form-label  bd-bottom">
                                 <ul>
                            		   <li class="col-md-12">
-		                            	<p class="word">
+		                            	<p class="word3">
 			                            <c:if test="${upType == '4'}">预售</c:if>
 			                            <c:if test="${upType != '4'}">非预售商品</c:if>
 		                            	</p>
@@ -232,7 +253,7 @@
                             <div class="form-label  bd-bottom">
                             	<ul>
                            		   <li class="col-md-12">
-		                            	<p class="word">是否提供发票:</P>
+		                            	<p class="word3">是否提供发票:</P>
 		                            	<p>
 		                            	<c:if test="${invoice == 'Y'}">提供发票</c:if>
 			                            <c:if test="${invoice == 'N'}">不提供发票</c:if>
@@ -247,7 +268,7 @@
                             <div class="form-label  bd-bottom">
                             	<ul>
                            		   <li class="col-md-12">
-		                            	<p class="word">
+		                            	<p class="word3">
 		                            	<c:if test="${upType == '1'}">立即上架</c:if>
 			                            <c:if test="${upType == '2'}">放入仓库</c:if>
 		                            	</p>
@@ -258,12 +279,79 @@
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品预览图</h5>
                             </header>
-                            <div class="form-label  bd-bottom">
+                            <div class="form-label bd-bottom"><!--查询条件-->
+							<input id="prodPicStr" name="prodPicStr" type="hidden">
+							<ul>
+								<li class="width-xlag">
+									<p class="word"><b class="red">*</b>商品主图</p>
+									<div class="width-img" id="prod_pic_0">
+										<c:set var="prodPicNum" value="${prodPic.size()}"></c:set>
+										<c:forEach var="valInd" begin="0" end="5">
+											<p class="img">
+												<c:choose>
+													<c:when test="${valInd<prodPicNum && prodPic.get(valInd)!=null}">
+														<c:set var="valInfo" value="${prodPic.get(valInd)}"/>
+														<img src="<c:out value="${imgClient.getImageUrl(valInfo.vfsId,valInfo.picType,picSize)}"/>"
+															 imgId="${valInfo.vfsId}" imgType="${valInfo.picType}"
+															 attrVal="0" picInd="${valInd}" id="prodPicId0ind${valInd}"/>
+														<i class="fa fa-times"></i>
+													</c:when>
+													<c:otherwise>
+														<img src="${_slpres}/images/sp-03-a.png" imgId="" imgType=""
+															 attrVal="0" picInd="${valInd}" id="prodPicId0ind${valInd}"/>
+														<i></i>
+													</c:otherwise>
+												</c:choose>
+
+											</p>
+										</c:forEach>
+									</div>
+								</li>
+							</ul>
+							<%-- 属性值图片 --%>
+							<input id="prodAttrValPicStr" name="prodAttrValPicStr" type="hidden">
+							<c:forEach var="attrValInfo" items="${attrValList}">
+								<ul>
+									<li class="width-xlag">
+										<p class="word"><b class="red">*</b>${attrValInfo.attrVal}</p>
+										<div class="width-img" id="prod_pic_${attrValInfo.attrValId}">
+											<c:set var="attrValPic" value="${valPicMap.get(attrValInfo.attrValId)}"></c:set>
+											<c:set var="attrValSize" value="${attrValPic.size()}"></c:set>
+											<c:forEach var="valInd" begin="0" end="5">
+												<p class="img">
+													<c:choose>
+														<c:when test="${valInd<attrValSize && attrValPic.get(valInd)!=null}">
+															<c:set var="valInfo" value="${attrValPic.get(valInd)}"></c:set>
+															<img src="<c:out value='${imgClient.getImageUrl(valInfo.vfsId,valInfo.picType,picSize)}'/>" imgId="${valInfo.vfsId}"
+																 imgType="${valInfo.picType}" attrVal="${attrValPicEnt.key.attrValId}" picInd="${valInd}"
+																 id="prodPicId${attrValPicEnt.key.attrValId}ind${valInd}" /><i class="fa fa-times"></i>
+														</c:when>
+														<c:otherwise>
+															<img src="${_slpres}/images/sp-03-a.png" id="prodPicId${attrValPicEnt.key.attrValId}ind${valInd}" imgId="" imgType=""
+																 attrVal="${attrValPicEnt.key.attrValId}" picInd="${valInd}"/><i></i>
+														</c:otherwise>
+													</c:choose>
+												</p>
+											</c:forEach>
+										</div>
+										<p>
+											<input type="button" class="biu-btn btn-primary btn-large mt-25" value="上传图片" attrVal = "${attrValPicEnt.key.attrValId}"/>
+										</p>
+									</li>
+								</ul>
+							</c:forEach>
+						</div>
+                            
+                            
+                            
+                            
+                            
+                            
+                          <%--   <div class="form-label  bd-bottom">
                             	<div class="width-img" id="prod_pic_0">
 									<c:set var="prodPicNum" value="${prodPic.size()}"></c:set>
 									<c:forEach var="valInd" begin="0" end="5">
 										<p class="col-md-2">
-										<p class="img">
 											<c:choose>
 												<c:when test="${valInd<prodPicNum && prodPic.get(valInd)!=null}">
 													<c:set var="valInfo" value="${prodPic.get(valInd)}"/>
@@ -279,10 +367,9 @@
 												</c:otherwise>
 											</c:choose>
 										</p>
-										</p>
 									</c:forEach>
 								</div>
-                            </div>
+                            </div> --%>
                             <!-- 商品预览图 -->
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品图文描述</h5>
@@ -290,7 +377,7 @@
                             <div class="form-label  bd-bottom">
                             	<ul>
                            		   <li class="col-md-12">
-		                            	<p class="word">
+		                            	<p class="word3">
 		                            		${prodDetail}
 		                            	</p>
                                     </li>
