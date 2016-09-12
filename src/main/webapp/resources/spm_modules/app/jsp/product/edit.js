@@ -54,7 +54,16 @@ define('app/jsp/product/edit', function (require, exports, module) {
     	//重写父类
     	setup: function () {
 			ProdEditPager.superclass.setup.call(this);
-			editDom = CKEDITOR.replace(prodDetail);
+			//自定义toolbar
+			//http://www.cnblogs.com/answercard/p/3709463.html
+			editDom = CKEDITOR.replace(prodDetail,{
+				toolbar: [
+					[ 'Cut', 'Copy', 'Paste', 'PasteText','PasteFromWord','-','Image', '-', 'Undo', 'Redo' ],
+					['Link','Unlink','Anchor'],
+					{ name: 'basicstyles', items: [ 'Bold', 'Italic' ] },
+					['Source']
+				]
+			});
 			this._showPartTarget();
 			this._showTarget();
 			this._changeUpShel();
