@@ -98,7 +98,7 @@
                                 <ul>
                                 	<input type="hidden" id="prodId" value="${productInfo.prodId}">
                                 	<input type="hidden" id="state" value="${productInfo.state}">
-                                    <li class="col-md-6">
+                                    <li class="col-md-12">
                                         <p class="word">类目信息：</p>
                                         <p>
                                         <c:forEach var="catInfo" items="${catLinkList}"
@@ -108,19 +108,19 @@
                                     </li>
                                 </ul>
                                 <ul>
-                                    <li class="col-md-6">
+                                    <li class="col-md-12">
                                         <p class="word">商品类型：</p>
                                         <p>${prodType}</p>
                                     </li>
                                 </ul>
                                 <ul class="big-word">
-                                    <li class="col-md-6">
+                                    <li class="col-md-12">
                                         <p class="word">商品名称：</p>
-                                        <p>${productInfo.prodName}</p>
+                                        <p class="wide-field">${productInfo.prodName}</p>
                                     </li>
                                 </ul>
                                 <ul>
-                                    <li class="col-md-6">
+                                    <li class="col-md-12">
                                         <p class="word">商品卖点：</p>
                                         <p>${productInfo.productSellPoint}</p>
                                     </li>
@@ -134,7 +134,7 @@
                             <div class="form-label  bd-bottom">
                                 <c:forEach var="aav" items="${keyAttr}">
                                     <ul>
-                                        <li class="col-md-6">
+                                        <li class="col-md-12">
                                             <p class="word">${aav.key.attrName}：</p>
                                             <c:forEach var="attrVal" items="${aav.value}">
                                                 <p>${attrVal.attrVal}</p>
@@ -217,7 +217,7 @@
                             </header>
                             <div class="form-label  bd-bottom">
                                 <ul>
-                           		   <li class="col-md-6">
+                           		   <li class="col-md-12">
 		                            	<p class="word">
 			                            <c:if test="${upType == '4'}">预售</c:if>
 			                            <c:if test="${upType != '4'}">非预售商品</c:if>
@@ -231,7 +231,7 @@
                             </header>
                             <div class="form-label  bd-bottom">
                             	<ul>
-                           		   <li class="col-md-6">
+                           		   <li class="col-md-12">
 		                            	<p class="word">是否提供发票:</P>
 		                            	<p>
 		                            	<c:if test="${invoice == 'Y'}">提供发票</c:if>
@@ -246,7 +246,7 @@
                             </header>
                             <div class="form-label  bd-bottom">
                             	<ul>
-                           		   <li class="col-md-6">
+                           		   <li class="col-md-12">
 		                            	<p class="word">
 		                            	<c:if test="${upType == '1'}">立即上架</c:if>
 			                            <c:if test="${upType == '2'}">放入仓库</c:if>
@@ -263,6 +263,7 @@
 									<c:set var="prodPicNum" value="${prodPic.size()}"></c:set>
 									<c:forEach var="valInd" begin="0" end="5">
 										<p class="col-md-2">
+										<p class="img">
 											<c:choose>
 												<c:when test="${valInd<prodPicNum && prodPic.get(valInd)!=null}">
 													<c:set var="valInfo" value="${prodPic.get(valInd)}"/>
@@ -277,6 +278,7 @@
 													<i></i>
 												</c:otherwise>
 											</c:choose>
+										</p>
 										</p>
 									</c:forEach>
 								</div>
