@@ -235,14 +235,18 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			var form = new FormData();
 			form.append("uploadFile", document.getElementById("uploadFile").files[0]);
 			form.append("imgSize","78x78");
-
+			var processingDialog = Dialog({
+				icon:"loading",
+				content: "<div class='word'>图片上传中，请稍候..</div>"
+			});
 			// XMLHttpRequest 对象
 			var xhr = new XMLHttpRequest();
 			var uploadURL = _base+"/home/upImg";
 			xhr.open("post", uploadURL, true);
-
+			processingDialog.showModal();
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4) {// 4 = "loaded"
+					processingDialog.close();
 					if (xhr.status == 200) {
 						var responseData = $.parseJSON(xhr.response);
 						if(responseData.statusCode=="1"){
@@ -255,34 +259,20 @@ define('app/jsp/product/edit', function (require, exports, module) {
 								var fileName = fileData.fileType;
 								//文件地址
 								var fileUrl = fileData.imgUrl;
-								_this._showMsg("上传成功:"+filePosition+","+fileName);
+								//_this._showMsg("上传成功:"+filePosition+","+fileName);
 								_this._closeDialog();
 								_this._showProdPicPreview(filePosition,fileName,fileUrl);
 								return;
 							}
 						}//上传失败
 						else if(responseData.statusCode=="0"){
-							var msgDialog = Dialog({
-								title: '提示',
-								content: responseData.statusInfo,
-								ok: function () {
-									this.close();
-								}
-							});
+							_this._showFail(responseData.statusInfo);
 							_this._closeDialog();
-							msgDialog.showModal();
 							return;
 						}
 					}
-					var msgDialog = Dialog({
-						title: '提示',
-						content: "文件上失败,状态:"+xhr.status,
-						ok: function () {
-							this.close();
-						}
-					});
+					_this._showFail("文件上失败,状态:"+xhr.status);
 					_this._closeDialog();
-					msgDialog.showModal();
 				}
 			};
 			xhr.send(form);
@@ -434,6 +424,17 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			new Dialog({
 				content:msg,
 				icon:'warning',
+				okValue: '确 定',
+				ok:function(){
+					this.close();
+				}
+			}).show();
+		},
+		_showFail:function(msg){
+			new Dialog({
+				title: '提示',
+				content:msg,
+				icon:'fail',
 				okValue: '确 定',
 				ok:function(){
 					this.close();
