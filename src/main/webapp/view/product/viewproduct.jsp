@@ -1,3 +1,6 @@
+<%@ page import="com.ai.opt.sdk.components.idps.IDPSClientFactory" %>
+<%@ page import="com.ai.paas.ipaas.image.IImageClient" %>
+<%@ page import="com.ai.slp.product.web.constants.SysCommonConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html>
@@ -159,20 +162,6 @@
                             		</c:forEach>
                             	</c:forEach>
                             </div>
-                            <!-- 预售设置 -->
-                            <header class="main-box-header clearfix">
-                                <h5 class="pull-left">预售设置</h5>
-                            </header>
-                            <div class="form-label  bd-bottom">
-                                <ul>
-                           		   <li class="col-md-12">
-		                            	<p class="word3">
-			                            <c:if test="${upType == '4'}">预售</c:if>
-			                            <c:if test="${upType != '4'}">非预售商品</c:if>
-		                            	</p>
-                                    </li>
-                            	</ul>
-                            </div>
                             <!-- 发票信息 -->
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">发票信息</h5>
@@ -190,15 +179,21 @@
                             </div>
                             <!-- 商品上架时间 -->
                             <header class="main-box-header clearfix">
-                                <h5 class="pull-left">商品上架时间</h5>
+                                <h5 class="pull-left">商品上架类型</h5>
                             </header>
                             <div class="form-label  bd-bottom">
                             	<ul>
                            		   <li class="col-md-12">
 		                            	<p class="word3">
-		                            	<c:if test="${upType == '1'}">立即上架</c:if>
-			                            <c:if test="${upType == '2'}">放入仓库</c:if>
 		                            	</p>
+									   <p class="wide-field">
+										   <c:if test="${upType == '1'}">立即上架</c:if>
+										   <c:if test="${upType == '2'}">放入仓库</c:if>
+										   <c:if test="${upType == '4'}">预售商品
+											   预售时间:<fmt:formatDate value="${productInfo.presaleBeginTime}" type="both"></fmt:formatDate>
+											   至
+											   <fmt:formatDate value="${productInfo.presaleEndTime}" type="both"></fmt:formatDate></c:if>
+									   </p>
                                     </li>
                             	</ul>
                             </div>
@@ -206,70 +201,66 @@
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品预览图</h5>
                             </header>
-                            <div class="form-label bd-bottom"><!--查询条件-->
-							<input id="prodPicStr" name="prodPicStr" type="hidden">
-							<ul>
-								<li class="width-xlag">
-									<div class="width-img" id="prod_pic_0">
-										<c:set var="prodPicNum" value="${prodPic.size()}"></c:set>
-										<c:forEach var="valInd" begin="0" end="5">
-											<p class="img">
-												<c:choose>
-													<c:when test="${valInd<prodPicNum && prodPic.get(valInd)!=null}">
-														<c:set var="valInfo" value="${prodPic.get(valInd)}"/>
-														<img src="<c:out value="${imgClient.getImageUrl(valInfo.vfsId,valInfo.picType,picSize)}"/>"
-															 imgId="${valInfo.vfsId}" imgType="${valInfo.picType}"
-															 attrVal="0" picInd="${valInd}" id="prodPicId0ind${valInd}"/>
-														<i class="fa fa-times"></i>
-													</c:when>
-													<c:otherwise>
-														<img src="${_slpres}/images/sp-03-a.png" imgId="" imgType=""
-															 attrVal="0" picInd="${valInd}" id="prodPicId0ind${valInd}"/>
-														<i></i>
-													</c:otherwise>
-												</c:choose>
-
-											</p>
-										</c:forEach>
-									</div>
-								</li>
-							</ul>
-							<%-- 属性值图片 --%>
-							<input id="prodAttrValPicStr" name="prodAttrValPicStr" type="hidden">
-							<c:forEach var="attrValInfo" items="${attrValList}">
+							<div class="form-label bd-bottom"><!--查询条件-->
+								<ul>
+									<li class="width-xlag pl-40">
+										提示：请上传商品主体正面照片jpg/png格式，不小于700x700px的方形图片，单张不能超过3M，最多6张。
+									</li>
+								</ul>
+								<%
+									String picSize = "78x78";
+									IImageClient imageClient = IDPSClientFactory.getImageClient(SysCommonConstants.ProductImage.IDPSNS);
+									request.setAttribute("imgClient",imageClient);
+									request.setAttribute("picSize",picSize);
+								%>
+								<input id="prodPicStr" name="prodPicStr" type="hidden">
 								<ul>
 									<li class="width-xlag">
-										<p class="word"><b class="red">*</b>${attrValInfo.attrVal}</p>
-										<div class="width-img" id="prod_pic_${attrValInfo.attrValId}">
-											<c:set var="attrValPic" value="${valPicMap.get(attrValInfo.attrValId)}"></c:set>
-											<c:set var="attrValSize" value="${attrValPic.size()}"></c:set>
+										<p class="word"><b class="red">*</b>商品主图</p>
+										<div class="width-img" id="prod_pic_0">
+											<c:set var="prodPicNum" value="${prodPic.size()}"></c:set>
 											<c:forEach var="valInd" begin="0" end="5">
 												<p class="img">
 													<c:choose>
-														<c:when test="${valInd<attrValSize && attrValPic.get(valInd)!=null}">
-															<c:set var="valInfo" value="${attrValPic.get(valInd)}"></c:set>
-															<img src="<c:out value='${imgClient.getImageUrl(valInfo.vfsId,valInfo.picType,picSize)}'/>" imgId="${valInfo.vfsId}"
-																 imgType="${valInfo.picType}" attrVal="${attrValPicEnt.key.attrValId}" picInd="${valInd}"
-																 id="prodPicId${attrValPicEnt.key.attrValId}ind${valInd}" /><i class="fa fa-times"></i>
+														<c:when test="${valInd<prodPicNum && prodPic.get(valInd)!=null}">
+															<c:set var="valInfo" value="${prodPic.get(valInd)}"/>
+															<img src="<c:out value="${imgClient.getImageUrl(valInfo.vfsId,valInfo.picType,picSize)}"/>"/>
 														</c:when>
 														<c:otherwise>
-															<img src="${_slpres}/images/sp-03-a.png" id="prodPicId${attrValPicEnt.key.attrValId}ind${valInd}" imgId="" imgType=""
-																 attrVal="${attrValPicEnt.key.attrValId}" picInd="${valInd}"/><i></i>
+															<img src="${_slpres}/images/sp-03-a.png"/>
 														</c:otherwise>
 													</c:choose>
 												</p>
 											</c:forEach>
 										</div>
-										<p>
-											<input type="button" class="biu-btn btn-primary btn-large mt-25" value="上传图片" attrVal = "${attrValPicEnt.key.attrValId}"/>
-										</p>
 									</li>
 								</ul>
-							</c:forEach>
-						</div>
-                            
-                            
-                            
+								<%-- 属性值图片 --%>
+								<c:forEach var="attrValInfo" items="${attrValList}">
+									<ul>
+										<li class="width-xlag">
+											<p class="word"><b class="red">*</b>${attrValInfo.attrVal}</p>
+											<div class="width-img" id="prod_pic_${attrValInfo.attrValId}">
+												<c:set var="attrValPic" value="${valPicMap.get(attrValInfo.attrValId)}"></c:set>
+												<c:set var="attrValSize" value="${attrValPic.size()}"></c:set>
+												<c:forEach var="valInd" begin="0" end="5">
+													<p class="img">
+														<c:choose>
+															<c:when test="${valInd<attrValSize && attrValPic.get(valInd)!=null}">
+																<c:set var="valInfo" value="${attrValPic.get(valInd)}"></c:set>
+																<img src="<c:out value='${imgClient.getImageUrl(valInfo.vfsId,valInfo.picType,picSize)}'/>"/>
+															</c:when>
+															<c:otherwise>
+																<img src="${_slpres}/images/sp-03-a.png"/>
+															</c:otherwise>
+														</c:choose>
+													</p>
+												</c:forEach>
+											</div>
+										</li>
+									</ul>
+								</c:forEach>
+							</div>
                             <!-- 商品预览图 -->
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品图文描述</h5>
@@ -280,8 +271,6 @@
 										<p><div id="prodDetail">${prodDetail}</div></p>
 									</li>
 								</ul>
-								<input type="hidden" name="proDetailContent" value="${productInfo.proDetailContent}">
-								<textarea style="display: none;" name="detailConVal" id="detailConVal"></textarea>
 							</div>
                             
 	                        <div id="subDiv" class="row pt-30">

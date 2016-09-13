@@ -1,5 +1,20 @@
 package com.ai.slp.product.web.controller.product;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
@@ -17,14 +32,7 @@ import com.ai.slp.product.api.normproduct.param.AttrMap;
 import com.ai.slp.product.api.normproduct.param.AttrQuery;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
 import com.ai.slp.product.api.product.interfaces.IProductSV;
-import com.ai.slp.product.api.product.param.OtherSetOfProduct;
-import com.ai.slp.product.api.product.param.ProdNoKeyAttr;
-import com.ai.slp.product.api.product.param.ProductEditQueryReq;
-import com.ai.slp.product.api.product.param.ProductEditUp;
-import com.ai.slp.product.api.product.param.ProductInfo;
-import com.ai.slp.product.api.product.param.ProductInfoQuery;
-import com.ai.slp.product.api.product.param.ProductQueryInfo;
-import com.ai.slp.product.api.product.param.TargetAreaForProd;
+import com.ai.slp.product.api.product.param.*;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.api.productcat.param.ProductCatInfo;
@@ -38,21 +46,6 @@ import com.ai.slp.product.web.util.AdminUtil;
 import com.ai.slp.product.web.util.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 商城商品管理查询 Created by jackieliu on 16/6/16.
@@ -596,17 +589,17 @@ public class ProdQueryController {
 		return "product/viewproduct";
 	}
 	
-	public void setProdDetail(String fileId,Model uiModel){
-        if (StringUtils.isBlank(fileId)){
-	            return;
-	        }
-	        IDSSClient client= DSSClientFactory.getDSSClient(SysCommonConstants.ProductDetail.DSSNS);
-	        String context = client.findById(fileId);
-	        if (StringUtils.isNotBlank(context)){
-	            JSONObject object = JSON.parseObject(context);
-	            uiModel.addAttribute("prodDetail",object.getString("content"));
-	    }
-	}
+    public void setProdDetail(String fileId, Model uiModel) {
+        if (StringUtils.isBlank(fileId)) {
+            return;
+        }
+        IDSSClient client = DSSClientFactory.getDSSClient(SysCommonConstants.ProductDetail.DSSNS);
+        String context = client.findById(fileId);
+        if (StringUtils.isNotBlank(context)) {
+            JSONObject object = JSON.parseObject(context);
+            uiModel.addAttribute("prodDetail", object.getString("content"));
+        }
+    }
 	
 	/**
 	 * 根据ID查询单个商品的详细信息
