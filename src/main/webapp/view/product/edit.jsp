@@ -99,15 +99,9 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<form id="prodForm" method="post">
 							<input type="hidden" name="prodId" value="${productInfo.prodId}">
-							<input type="hidden" name="activeType" value="2">
-							<input type="hidden" name="activeCycle" value="1">
-							<input type="hidden" name="unit" value="M">
-							<input type="hidden" name="basicOrgId" value="10">
-							<input type="hidden" name="rechargeType" value="C">
 							<input type="hidden" name="audiencesPerson" value="-1">
 							<input type="hidden" name="audiencesEnterprise" value="-1">
 							<input type="hidden" name="audiencesAgents" value="-1">
-							<input type="hidden" name="isReplaceSell" value="Y">
 						<header class="main-box-header clearfix ">
 							<h5 class="pull-left">*标注为必填项</h5>
 						</header>
@@ -433,7 +427,10 @@
 		elem.onmouseout = function(){
 			timer = setInterval(Scroll,40);
 		};
-
+		<%-- 展示日历 --%>
+		$('#choseDate').delegate('.fa.fa-calendar','click',function(){
+			$(this).parent().prev().click();
+		});
 		<%-- 上传图片 --%>
 		$('.width-xlag').delegate('input[attrVal]','click',function(){
 			picAttrVal = $(this).attr('attrVal');

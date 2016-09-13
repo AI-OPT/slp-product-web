@@ -44,6 +44,10 @@ public class ProductEditInfo {
      */
     private String isReplaceSell;
     /**
+     * 是否开发票
+     */
+    private String isInvoice;
+    /**
      * 上架类型
      */
     private String upshelfType;
@@ -284,5 +288,13 @@ public class ProductEditInfo {
 
     public void setPresaleEndTimeStr(String presaleEndTimeStr) {
         this.presaleEndTimeStr = presaleEndTimeStr;
+    }
+
+    public String getIsInvoice() {
+        return isInvoice;
+    }
+
+    public void setIsInvoice(String isInvoice) {
+        this.isInvoice = isInvoice;
     }
 }
