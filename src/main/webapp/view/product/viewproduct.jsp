@@ -199,7 +199,7 @@
 									   </p>
 									   <p class="wide-field">
 										   <c:if test="${productInfo.upshelfType == '4'}">
-											   预售时间:<fmt:formatDate value="${productInfo.presaleBeginTime}" type="both"></fmt:formatDate>
+											   预售时间&emsp;<fmt:formatDate value="${productInfo.presaleBeginTime}" type="both"></fmt:formatDate>
 											   至
 											   <fmt:formatDate value="${productInfo.presaleEndTime}" type="both"></fmt:formatDate></c:if>
 									   </p>
