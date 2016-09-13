@@ -429,7 +429,7 @@
 		};
 		<%-- 展示日历 --%>
 		$('#choseDate').delegate('.fa.fa-calendar','click',function(){
-			$(this).parent().prev().click();
+			$(this).parent().prev().focus();
 		});
 		<%-- 上传图片 --%>
 		$('.width-xlag').delegate('input[attrVal]','click',function(){
