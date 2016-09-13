@@ -118,12 +118,12 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:supplyId}}</td>
-										<td class="hind1">
+										<td class="hind1 text-l pl-15">
 											<div class="center-hind" >{{:supplyName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:supplyName}}</div>
 										</td>
 										<td>{{:routeId}}</td>
-										<td>
+										<td class="hind1 text-l pl-15">
 											<div class="center-hind" >{{:routeName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:routeName}}</div>
 										</td>
@@ -166,9 +166,10 @@
 	var pager;
 	var standedProdId = '${standedProdId}';
 	(function () {
-		seajs.use('app/jsp/costprice/editinfo', function(costpricePage) {
+		seajs.use(['app/jsp/costprice/editinfo','app/util/center-hind'], function(costpricePage,centerHind) {
 			pager = new costpricePage({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>
