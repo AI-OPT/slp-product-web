@@ -10,30 +10,6 @@
 </head>
 
 <body>
-<!-- 确认提示框 -->
-<div class="eject-big">
-    <div class="eject-samll" id="audit-small">
-        <div class="eject-medium-title">
-            <p>审核通过操作确认！</p>
-            <p id="auditCloseImg" class="img"><i class="fa fa-times"></i></p>
-        </div>
-
-        <div class="eject-medium-complete">
-            <p><img src="${uedroot}/images/eject-icon-prompt.png"></p>
-            <p class="word">确定全部通过审核吗？</p>
-        </div>
-        <!--按钮-->
-        <div class="row mt-15"><!--删格化-->
-            <p class="center pr-30 mt-30">
-                <input id="submitBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
-                <input id="auditBtn-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
-            </p>
-        </div>
-    </div>
-    <div class="mask" id="eject-mask"></div>
-</div>
-<!-- 确认提示框结束 -->
-
 <!-- 拒绝提示框 -->
 <div class="eject-big">
     <div class="eject-samll" id="refuse-small">
@@ -62,7 +38,7 @@
 	               <li>
 	                   <p class="word"><span>*</span>问题描述</p>
 	                   <p><textarea id="refuseDes" name="refuseDes" class="int-text textarea-xlarge"
-												  maxlength="100" style="width:190px;height:80px;"></textarea></p>
+									maxlength="100" style="width:190px;height:80px;"></textarea></p>
 	                 <!--   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

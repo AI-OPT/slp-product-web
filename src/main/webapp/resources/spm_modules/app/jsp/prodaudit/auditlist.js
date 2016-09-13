@@ -133,53 +133,65 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
     	},
     	
     	//全选
-    	_clickAll:function(obj){
-             var check = true;
-             if(!obj.is(':checked')){
-                 check = false;
-             }
-             $("input:checkbox[name='box']").prop("checked",check);
-         },
-         
-         //如果列表子项都选中  全选按钮则选中
-         _clicksingle:function(obj){
-             var prodId= obj.attr("prodId");
-             var attrVal = obj.val();
-             console.log("prodId:"+prodId+",click");
-             // 若子项没有都选中,则全选也取消 --%>
-             if(!obj.is(':checked')){
-                 $("input:checkbox[name='checkall']").prop("checked",false);
-                 return;
-             }
-
-             //获取列表中数据数量
-             var valNum = $("input:checkbox[name='box']").size();
-             //获取选中的数据数量
-             var checkNum = $("input:checkbox:checked[name='box']").size();
-             if (valNum == checkNum) {
-                 $("input:checkbox[name='checkall']").prop("checked", true);
-             }else {
-            	 $("input:checkbox[name='checkall']").prop("checked", false);
+		_clickAll: function (obj) {
+			var check = true;
+			if (!obj.is(':checked')) {
+				check = false;
 			}
-         },
-         
-         //批量审核通过弹框
-         _showAuditMore:function(){
-        	 var checkNum = $("input:checkbox:checked[name='box']").size();
-        	 if (checkNum == 0) {
-        		 var d = Dialog({
-						content:"请选择商品进行处理!",
-						icon:'fail',
-						okValue: '确 定',
-						ok:function(){
-							this.close();
-							_this._selectProductList();
-						}
-					});
-        		 d.show();
-			}else{
-			$('#eject-mask').fadeIn(100);
-			$('#audit-small').slideDown(200);
+			$("input:checkbox[name='box']").prop("checked", check);
+		},
+
+		//如果列表子项都选中  全选按钮则选中
+		_clicksingle: function (obj) {
+			var prodId = obj.attr("prodId");
+			var attrVal = obj.val();
+			console.log("prodId:" + prodId + ",click");
+			// 若子项没有都选中,则全选也取消 --%>
+			if (!obj.is(':checked')) {
+				$("input:checkbox[name='checkall']").prop("checked", false);
+				return;
+			}
+
+			//获取列表中数据数量
+			var valNum = $("input:checkbox[name='box']").size();
+			//获取选中的数据数量
+			var checkNum = $("input:checkbox:checked[name='box']").size();
+			if (valNum == checkNum) {
+				$("input:checkbox[name='checkall']").prop("checked", true);
+			} else {
+				$("input:checkbox[name='checkall']").prop("checked", false);
+			}
+		},
+
+		//批量审核通过弹框
+		_showAuditMore: function () {
+			var _this = this;
+			var checkNum = $("input:checkbox:checked[name='box']").size();
+			if (checkNum == 0) {
+				var d = Dialog({
+					content: "请选择商品进行处理!",
+					icon: 'warning',
+					okValue: '确 定',
+					ok: function () {
+						this.close();
+					}
+				});
+				d.show();
+			} else {
+				Dialog({
+					title:"审核通过操作确认!",
+					content: "确定全部通过审核吗!",
+					icon: 'prompt',
+					cancelValue:'取 消',
+					okValue: '确 定',
+					ok: function () {
+						_this._auditProduct();
+						this.close();
+					},
+					cancel:function(){
+						this.close();
+					}
+				}).show();
 			}
 		},
 		//关闭确认提示框
@@ -189,55 +201,55 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 		},
 		
 		//点击确认批量审核通过
-		_auditProduct:function(){
-		var _this = this;
-		 var prodId = '';
-		//获取列表中的选中项
-        $("[name='box']:checked").each(function(index, element) {
-        	prodId += $(this).val() + ",";
-         });
-		this._closeAudit();
-		ajaxController.ajax({
-			type: "post",
-			processing: true,
-			message: "数据更新中,请等待...",
-			url: _base+"/prodOperate/auditPassMore",
-			data:{"ids":prodId},
-			success: function(data){
-				//获取数据成功
-				if("1"===data.statusCode){
-					//返回列表
-					window.location.reload();
+		_auditProduct: function () {
+			var _this = this;
+			var prodId = '';
+			//获取列表中的选中项
+			$("[name='box']:checked").each(function (index, element) {
+				prodId += $(this).val() + ",";
+			});
+			this._closeAudit();
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "数据更新中,请等待...",
+				url: _base + "/prodOperate/auditPassMore",
+				data: {"ids": prodId},
+				success: function (data) {
+					//获取数据成功
+					if ("1" === data.statusCode) {
+						//返回列表
+						window.location.reload();
+					}
 				}
-			}
-		});
+			});
 		},
 		
 		//点击确认批量审核拒绝
-		_refuseProduct:function(){
-		var _this = this;
-		var prodId = '';
-		var refuseReason = $("#refuseReason").val();
-		var refuseDes = $("#refuseDes").val();
-		//获取列表中的选中项
-        $("[name='box']:checked").each(function(index, element) {
-        	prodId += $(this).val() + ",";
-         });
-		this._closeAudit();
-		ajaxController.ajax({
-			type: "post",
-			processing: true,
-			message: "数据更新中,请等待...",
-			url: _base+"/prodOperate/auditRejectMore",
-			data:{"ids":prodId,"refuseReason":refuseReason,"refuseDes":refuseDes},
-			success: function(data){
-				//获取数据成功
-				if("1"===data.statusCode){
-					//返回列表
-					window.location.reload();
+		_refuseProduct: function () {
+			var _this = this;
+			var prodId = '';
+			var refuseReason = $("#refuseReason").val();
+			var refuseDes = $("#refuseDes").val();
+			//获取列表中的选中项
+			$("[name='box']:checked").each(function (index, element) {
+				prodId += $(this).val() + ",";
+			});
+			this._closeAudit();
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "数据更新中,请等待...",
+				url: _base + "/prodOperate/auditRejectMore",
+				data: {"ids": prodId, "refuseReason": refuseReason, "refuseDes": refuseDes},
+				success: function (data) {
+					//获取数据成功
+					if ("1" === data.statusCode) {
+						//返回列表
+						window.location.reload();
+					}
 				}
-			}
-		});
+			});
 		},
 		
 		//批量审核拒绝
@@ -246,17 +258,16 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
         	 if (checkNum == 0) {
         		 var d = Dialog({
 						content:"请选择商品进行处理!",
-						icon:'fail',
+						icon:'warning',
 						okValue: '确 定',
 						ok:function(){
 							this.close();
-							_this._selectProductList();
 						}
 					});
         		 d.show();
 			}else{
-			$('#eject-mask').fadeIn(100);
-			$('#refuse-small').slideDown(200);
+				$('#eject-mask').fadeIn(100);
+				$('#refuse-small').slideDown(200);
 			}
 		},
 			
