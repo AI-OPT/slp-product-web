@@ -27,8 +27,8 @@ import com.ai.slp.product.web.util.AdminUtil;
  */
 @Controller
 @RequestMapping("/prodOperate")
-public class ProdOperateController1 {
-    private static final Logger LOG = LoggerFactory.getLogger(ProdOperateController1.class);
+public class ProdOperateController {
+    private static final Logger LOG = LoggerFactory.getLogger(ProdOperateController.class);
 
     /**
      * 待上架商品上架
