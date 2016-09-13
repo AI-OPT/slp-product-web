@@ -25,4 +25,15 @@ public final class ProductConstants {
             public static final String DISABLE = "2";
         }
     }
+
+    public final class IsSaleNationwide{
+        /**
+         * 为全国
+         */
+        public static final String YES = "Y";
+        /**
+         * 非全国
+         */
+        public static final String NO = "N";
+    }
 }

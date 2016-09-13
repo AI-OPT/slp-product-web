@@ -30,7 +30,7 @@
                                 	<input type="hidden" id="prodId" value="${productInfo.prodId}">
                                 	<input type="hidden" id="state" value="${productInfo.state}">
                                     <li class="col-md-12">
-                                        <p class="word">类目信息：</p>
+                                        <p class="word3">类目信息：</p>
                                         <p>
                                         <c:forEach var="catInfo" items="${catLinkList}"
                                                varStatus="stat">${catInfo.productCatName}<c:if test="${!stat.last}">&gt;</c:if>
@@ -40,19 +40,19 @@
                                 </ul>
                                 <ul>
                                     <li class="col-md-12">
-                                        <p class="word">商品类型：</p>
+                                        <p class="word3">商品类型：</p>
                                         <p>${prodType}</p>
                                     </li>
                                 </ul>
                                 <ul class="big-word">
                                     <li class="col-md-12">
-                                        <p class="word">商品名称：</p>
+                                        <p class="word3">商品名称：</p>
                                         <p class="wide-field">${productInfo.prodName}</p>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="col-md-12">
-                                        <p class="word">商品卖点：</p>
+                                        <p class="word3">商品卖点：</p>
                                         <p>${productInfo.productSellPoint}</p>
                                     </li>
                                 </ul>
@@ -156,32 +156,15 @@
                                 <h5 class="pull-left">商品目标地域</h5>
                             </header>
                             <div class="form-label  bd-bottom">
-                            	<c:forEach var="targetArea" items="${prodTargetArea}">
-                            		<c:forEach var="targetAreaValue" items="${targetArea.targetArea}">
-                            			<p>${targetAreaValue}</p>
-                            		</c:forEach>
-                            	</c:forEach>
 								<ul>
 									<li class="width-xlag">
-										<p class="word3"></p>
+										<p class="word3">目标地域：</p>
 										<c:choose>
 											<c:when test="${productInfo.isSaleNationwide == 'Y'}">
 												<p>全部地域</p>
 											</c:when>
 											<c:when test="${productInfo.isSaleNationwide == 'N'}">
-												<div id="check3"></div>
-												<div id="check4" >
-													<div class="cit-width cit-width-list2">
-														<p class="width-xlag">
-															<span id="areaName">
-															<c:forEach var="areaInfo" varStatus="start"
-																	   items="${otherSet.areaInfos}">
-																${areaInfo.areaName}<c:if test="${!stat.last}">、</c:if>
-															</c:forEach>
-														</span>
-														</p>
-													</div>
-												</div>
+												<p class="wide-field">${areaInfoStr}</p>
 											</c:when>
 										</c:choose>
 									</li>
@@ -194,10 +177,10 @@
                             <div class="form-label  bd-bottom">
                             	<ul>
                            		   <li class="col-md-12">
-		                            	<p class="word3">是否提供发票:</P>
+		                            	<p class="word3">是否提供发票：</P>
 		                            	<p>
-		                            	<c:if test="${invoice == 'Y'}">提供发票</c:if>
-			                            <c:if test="${invoice == 'N'}">不提供发票</c:if>
+		                            	<c:if test="${productInfo.isInvoice == 'Y'}">提供发票</c:if>
+			                            <c:if test="${productInfo.isInvoice == 'N'}">不提供发票</c:if>
 		                            	</p>
                                     </li>
                             	</ul>
@@ -209,12 +192,13 @@
                             <div class="form-label  bd-bottom">
                             	<ul>
                            		   <li class="col-md-12">
-		                            	<p class="word3">
-		                            	</p>
+									   <p class="word3">
+										   <c:if test="${productInfo.upshelfType == '1'}">立即上架</c:if>
+										   <c:if test="${productInfo.upshelfType == '2'}">放入仓库</c:if>
+										   <c:if test="${productInfo.upshelfType == '4'}">预售上架：</c:if>
+									   </p>
 									   <p class="wide-field">
-										   <c:if test="${upType == '1'}">立即上架</c:if>
-										   <c:if test="${upType == '2'}">放入仓库</c:if>
-										   <c:if test="${upType == '4'}">预售商品
+										   <c:if test="${productInfo.upshelfType == '4'}">
 											   预售时间:<fmt:formatDate value="${productInfo.presaleBeginTime}" type="both"></fmt:formatDate>
 											   至
 											   <fmt:formatDate value="${productInfo.presaleEndTime}" type="both"></fmt:formatDate></c:if>
@@ -236,7 +220,7 @@
 								<ul>
 									<li class="width-xlag">
 										<p class="word"><b class="red">*</b>商品主图</p>
-										<div class="width-img" id="prod_pic_0">
+										<div>
 											<c:set var="prodPicNum" value="${prodPic.size()}"></c:set>
 											<c:forEach var="valInd" begin="0" end="5">
 												<p class="img">

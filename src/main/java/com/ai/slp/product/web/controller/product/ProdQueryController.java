@@ -19,13 +19,13 @@ import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.paas.ipaas.image.IImageClient;
 import com.ai.platform.common.api.cache.interfaces.ICacheSV;
 import com.ai.platform.common.api.cache.param.SysParam;
-import com.ai.platform.common.api.cache.param.SysParamMultiCond;
 import com.ai.platform.common.api.cache.param.SysParamSingleCond;
 import com.ai.slp.product.api.normproduct.interfaces.INormProductSV;
 import com.ai.slp.product.api.normproduct.param.AttrMap;
@@ -39,6 +39,7 @@ import com.ai.slp.product.api.productcat.param.ProductCatInfo;
 import com.ai.slp.product.api.productcat.param.ProductCatUniqueReq;
 import com.ai.slp.product.web.constants.ComCacheConstants;
 import com.ai.slp.product.web.constants.ProductCatConstants;
+import com.ai.slp.product.web.constants.ProductConstants;
 import com.ai.slp.product.web.constants.SysCommonConstants;
 import com.ai.slp.product.web.service.AttrAndValService;
 import com.ai.slp.product.web.service.ProdCatService;
@@ -552,37 +553,19 @@ public class ProdQueryController {
         ProdNoKeyAttr noKeyAttr = productManagerSV.queryNoKeyAttrOfProd(productInfoQuery);
         uiModel.addAttribute("noKeyAttr",noKeyAttr.getAttrInfoForProdList());
         uiModel.addAttribute("noKeyAttrValMap",noKeyAttr.getAttrValMap());
-        //选择商品的目标地域
-        ProductEditQueryReq queryReq = new ProductEditQueryReq();
-        queryReq.setProdId(prodId);
-        queryReq.setTenantId(AdminUtil.getTenantId());
-        queryReq.setSupplierId(AdminUtil.getSupplierId());
-        PageInfoResponse<TargetAreaForProd> prodTargetArea = productSV.searchProdTargetArea(queryReq);
-        uiModel.addAttribute("prodTargetArea", prodTargetArea.getResult());
-
-        //发票信息
-        String invoice = productInfo.getIsInvoice();
-        uiModel.addAttribute("invoice", invoice);
-        
-        //商品上架时间
-        String upshelfType = productInfo.getUpshelfType();
-        uiModel.addAttribute("upType", upshelfType);
         
         //查询商品其他设置
         OtherSetOfProduct otherSet = productManagerSV.queryOtherSetOfProduct(productInfoQuery);
         uiModel.addAttribute("otherSet",otherSet);
+		if (ProductConstants.IsSaleNationwide.NO.equals(productInfo.getIsSaleNationwide()))
+			//目标地域
+			uiModel.addAttribute("areaInfoStr",getTargetOfProduct(otherSet.getAreaInfos()));
 
         //商品主图
         uiModel.addAttribute("prodPic",otherSet.getProductPics());
         //属性值图
         uiModel.addAttribute("attrValList",otherSet.getAttrValInfoList());
         uiModel.addAttribute("valPicMap",otherSet.getAttrValPics());
-
-        SysParamMultiCond paramMultiCond = new SysParamMultiCond();
-        paramMultiCond.setTenantId(AdminUtil.getTenantId());
-        paramMultiCond.setTypeCode(ComCacheConstants.TypeProduct.CODE);
-        paramMultiCond.setParamCode(ComCacheConstants.TypeProduct.PROD_UNIT);
-
         //设置商品详情
         setProdDetail(productInfo.getProDetailContent(),uiModel);
 		
@@ -608,5 +591,19 @@ public class ProdQueryController {
 	public String auditProduct(@PathVariable("id") String prodId, Model uiModel){
 		toViewProduct(prodId, uiModel);
 		return "prodaudit/auditproduct";
+	}
+
+	private String getTargetOfProduct(List<ProdTargetAreaInfo> areaInfoList){
+		if (CollectionUtil.isEmpty(areaInfoList)) return "";
+		StringBuffer sb = new StringBuffer();
+		for (ProdTargetAreaInfo areaInfo:areaInfoList){
+			if (areaInfo.isOwn())
+				sb.append(areaInfo.getAreaName()+"、");
+		}
+		//删除最后一个分隔号
+		int last = sb.lastIndexOf("、");
+		if (last==(sb.length()-1))
+			sb.deleteCharAt(last);
+		return sb.toString();
 	}
 }
