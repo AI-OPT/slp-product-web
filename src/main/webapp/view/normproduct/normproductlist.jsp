@@ -135,15 +135,15 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th>序号</th>
-										<th>商品ID</th>
-										<th>商品名称</th>
-										<th>所属类目</th>
-										<th>类型</th>
-										<th>商品状态</th>
+										<th width="5%">序号</th>
+										<th width="20%">商品ID</th>
+										<th width="20%">商品名称</th>
+										<th width="20%">所属类目</th>
+										<th width="10%">类型</th>
+										<th width="10%">商品状态</th>
 										<!-- <th>操作时间</th>
 										<th>操作人</th> -->
-										<th>操作</th>
+										<th width="15%">操作</th>
 									</tr>
 									</thead>
 									<tbody id="searchNormProductData">
@@ -155,11 +155,11 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td class="hind1">
+										<td class="hind1 text-l pl-15">
 											<div class="center-hind" >{{:productName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
 										</td>
-										<td class="hind1">
+										<td class="hind1 text-l pl-15">
 											<div class="center-hind" >{{:catName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
 										</td>
@@ -207,9 +207,10 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		seajs.use('app/jsp/normproduct/normproductlist', function(storageList) {
+		seajs.use(['app/jsp/normproduct/normproductlist','app/util/center-hind'], function(storageList,centerHind) {
 			pager = new storageList({element : document.body});
 			pager.render();
+			new centerHind({element : document.body}).render(); 
 		});
 	})();
 </script>
