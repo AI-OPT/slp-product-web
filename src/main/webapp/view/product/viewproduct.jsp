@@ -153,7 +153,7 @@
                             </div>
                             <!-- 选择商品目标地域 -->
                             <header class="main-box-header clearfix">
-                                <h5 class="pull-left">选择商品目标地域</h5>
+                                <h5 class="pull-left">商品目标地域</h5>
                             </header>
                             <div class="form-label  bd-bottom">
                             	<c:forEach var="targetArea" items="${prodTargetArea}">
@@ -161,6 +161,31 @@
                             			<p>${targetAreaValue}</p>
                             		</c:forEach>
                             	</c:forEach>
+								<ul>
+									<li class="width-xlag">
+										<p class="word3"></p>
+										<c:choose>
+											<c:when test="${productInfo.isSaleNationwide == 'Y'}">
+												<p>全部地域</p>
+											</c:when>
+											<c:when test="${productInfo.isSaleNationwide == 'N'}">
+												<div id="check3"></div>
+												<div id="check4" >
+													<div class="cit-width cit-width-list2">
+														<p class="width-xlag">
+															<span id="areaName">
+															<c:forEach var="areaInfo" varStatus="start"
+																	   items="${otherSet.areaInfos}">
+																${areaInfo.areaName}<c:if test="${!stat.last}">、</c:if>
+															</c:forEach>
+														</span>
+														</p>
+													</div>
+												</div>
+											</c:when>
+										</c:choose>
+									</li>
+								</ul>
                             </div>
                             <!-- 发票信息 -->
                             <header class="main-box-header clearfix">
@@ -202,18 +227,12 @@
                                 <h5 class="pull-left">商品预览图</h5>
                             </header>
 							<div class="form-label bd-bottom"><!--查询条件-->
-								<ul>
-									<li class="width-xlag pl-40">
-										提示：请上传商品主体正面照片jpg/png格式，不小于700x700px的方形图片，单张不能超过3M，最多6张。
-									</li>
-								</ul>
 								<%
 									String picSize = "78x78";
 									IImageClient imageClient = IDPSClientFactory.getImageClient(SysCommonConstants.ProductImage.IDPSNS);
 									request.setAttribute("imgClient",imageClient);
 									request.setAttribute("picSize",picSize);
 								%>
-								<input id="prodPicStr" name="prodPicStr" type="hidden">
 								<ul>
 									<li class="width-xlag">
 										<p class="word"><b class="red">*</b>商品主图</p>
