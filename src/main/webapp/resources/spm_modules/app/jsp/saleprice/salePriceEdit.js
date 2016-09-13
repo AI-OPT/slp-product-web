@@ -135,6 +135,7 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 			var pNum = $("#upGroupPn").val();
 			var skuPriceMap = {};
 			var hasError = false;
+			var priceNum = 0;
 			$("input:text[name='skuNum']").each(function(index,item){
 				var skuId = $(item).attr("skuId");
 				var price = $(item).val();
@@ -151,9 +152,16 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 				}
 				//只在有输入值时才进行赋值
 				skuPriceMap[skuId] = Number(price)*1000;
+				priceNum++;
 			});
+
 			if(hasError)
 				return;
+			//没有需要保存的价格,则直接
+			if(priceNum < 1){
+				_this._closeSkuPriceView();
+				return;
+			}
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
