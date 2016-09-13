@@ -154,8 +154,6 @@ artDialog.create = function (options) {
 
     // 关闭按钮
     this._$('close')
-    .css('display', this.cancel === false ? 'none' : '')
-    .attr('title', this.cancelValue)
     .on('click', function (event) {
         that._trigger('cancel');
         event.preventDefault();
