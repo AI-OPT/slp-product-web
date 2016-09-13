@@ -1,20 +1,7 @@
 package com.ai.slp.product.web.controller.prodCat;
 
-import com.ai.opt.base.vo.*;
-import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.util.BeanUtils;
-import com.ai.opt.sdk.util.CollectionUtil;
-import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.paas.ipaas.util.JSonUtil;
-import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
-import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
-import com.ai.slp.product.api.productcat.param.*;
-import com.ai.slp.product.web.constants.ProductCatConstants;
-import com.ai.slp.product.web.model.prodCat.ProdCatQuery;
-import com.ai.slp.product.web.service.ProdCatService;
-import com.ai.slp.product.web.util.AdminUtil;
-import com.ai.slp.product.web.vo.ProdQueryCatVo;
-import com.alibaba.fastjson.JSON;
+import java.util.*;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +12,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import com.ai.opt.base.vo.*;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.BeanUtils;
+import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.util.JSonUtil;
+import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
+import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
+import com.ai.slp.product.api.productcat.param.*;
+import com.ai.slp.product.web.constants.ProdAttrDefConstants;
+import com.ai.slp.product.web.constants.ProductCatConstants;
+import com.ai.slp.product.web.model.prodCat.ProdCatQuery;
+import com.ai.slp.product.web.service.ProdCatService;
+import com.ai.slp.product.web.util.AdminUtil;
+import com.ai.slp.product.web.vo.ProdQueryCatVo;
+import com.alibaba.fastjson.JSON;
 
 /**
  * 类目查询
@@ -208,7 +210,11 @@ public class CatQueryController {
         BaseInfo baseInfo = new BaseInfo();
         baseInfo.setTenantId(AdminUtil.getTenantId());
         BaseListResponse<AttrDef> response = attrAndValDefSV.queryAllAttrAndVal(baseInfo);
-        uiModel.addAttribute("attrList",response.getResult());
+        List<AttrDef> attrDefList = response.getResult();
+        if (ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE.equals(attrType)) {
+            attrDefList = delNoSaleAttr(attrDefList);
+        }
+        uiModel.addAttribute("attrList",attrDefList);
         uiModel.addAttribute("nowMap",nowMap);
         uiModel.addAttribute("otherSet",otherAttr);
         return "prodcat/catattrall";
@@ -251,5 +257,19 @@ public class CatQueryController {
         attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_NONKEY);
         BaseListResponse<ProdCatAttrDef> noKeyAttrMap = catSV.queryAttrByCatAndType(attrQuery);
         uiModel.addAttribute("noKeyAttr",noKeyAttrMap.getResult());
+    }
+
+    //删除不适用于销售属性的属性
+    private List<AttrDef> delNoSaleAttr(List<AttrDef> attrDefList){
+        if (CollectionUtil.isEmpty(attrDefList)) return attrDefList;
+        List<AttrDef> newAttrDefList = new ArrayList<>();
+        for (AttrDef attrDef:attrDefList){
+            //若是复选框,则选中.
+            if (ProdAttrDefConstants.ValueWay.CHECKBOX.equals(attrDef.getValueWay())
+                    ||ProdAttrDefConstants.ValueWay.RADIO.equals(attrDef.getValueWay())){
+                newAttrDefList.add(attrDef);
+            }
+        }
+        return newAttrDefList;
     }
 }
