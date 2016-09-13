@@ -93,7 +93,7 @@ define({
         +	'<div i="showView" class="prompt-samll">'
         +		'<div i="header" class="eject-medium-title">'
 		+			'<p i="title"></p>'
-		+			'<p i="close" class="img"><i class="fa fa-times"></p>'
+		+			'<p i="close" class="img"><i class="fa fa-times"></i></p>'
 		+		'</div>'
 		+		'<div class="prompt-samll-confirm">'
 		+			'<ul i="body">'
