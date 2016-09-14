@@ -67,9 +67,22 @@
                                     <ul>
                                         <li class="col-md-12">
                                             <p class="word3">${aav.key.attrName}：</p>
-                                            <c:forEach var="attrVal" items="${aav.value}">
-                                                <p>${attrVal.attrVal}</p>
-                                            </c:forEach>
+											<c:choose>
+												<%--多选--%>
+												<c:when test="${aav.key.attrType == '2'}">
+													<div class="cit-width">
+														<c:forEach var="attrVal" items="${aav.value}">
+															<p>${attrVal.attrVal}</p>
+														</c:forEach>
+													</div>
+												</c:when>
+												<c:when test="${!aav.value.isEmpty()}">
+													<p>${aav.value.get(0).attrVal}</p>
+												</c:when>
+												<c:otherwise>
+													<p></p>
+												</c:otherwise>
+											</c:choose>
                                         </li>
                                     </ul>
                                 </c:forEach>
@@ -79,77 +92,30 @@
                                 <h5 class="pull-left">商品非关键属性</h5>
                             </header>
                              <div class="form-label  bd-bottom">
-                           		<%-- <c:forEach var="attr" items="${noKeyAttr}">
+                           		 <c:forEach var="attr" items="${noKeyAttr}">
                                     <ul>
-                                        <li class="col-md-6">
-                                            <p class="word">${attr.attrName}：</p>
-                                            <c:forEach var="attrVal" items="${noKeyAttrValMap.get(attr.attrId)}">
-                                                <p>${attrVal.attrVal}</p>
-                                            </c:forEach>
+                                        <li class="col-md-12">
+                                            <p class="word3">${attr.attrName}：</p>
+											<c:set var="noKeyAttrVals" value="${noKeyAttrValMap.get(attr.attrId)}"/>
+											<c:choose>
+												<%--多选--%>
+												<c:when test="${attr.valueWay == '2'}">
+													<div class="cit-width">
+														<c:forEach var="attrVal" items="${noKeyAttrVals}">
+															<p>${attrVal.attrVal}</p>
+														</c:forEach>
+													</div>
+												</c:when>
+												<c:when test="${!noKeyAttrVals.isEmpty()}">
+													<p>${noKeyAttrVals.get(0).attrVal}</p>
+												</c:when>
+												<c:otherwise>
+													<p></p>
+												</c:otherwise>
+											</c:choose>
                                         </li>
                                     </ul>
-                                </c:forEach> --%>
-                            
-                            	<c:forEach var="attr" items="${noKeyAttr}">
-									<ul>
-										<li class="width-xlag">
-										<p class="word3" attrId="${attr.attrId}" valueType="${attr.valueWay}">${attr.attrName}:</p>
-										<c:choose>
-											<%-- 下拉选择 --%>
-											<c:when test="${attr.valueWay == '1'}">
-												
-												<select class="select select-medium" disabled="disabled" attrId="noKeyAttr${attr.attrId}">
-													<c:forEach var="valInfo" items="${noKeyAttrValMap.get(attr.attrId)}">
-														<option value="${valInfo.attrValId}" id="${valInfo.productAttrValId}"
-																<c:if test="${valInfo.productAttrValId != null}">selected</c:if>>${valInfo.attrVal}</option>
-													</c:forEach>
-												</select>
-											</c:when>
-											<%--多选--%>
-											<c:when test="${attr.valueWay == '2'}">
-												<div class="width-xlag">
-													<c:forEach var="valInfo" items="${noKeyAttrValMap.get(attr.attrId)}">
-														<p><input type="checkbox" disabled=“disabled” class="checkbox-small" attrId="noKeyAttr${attr.attrId}" value="${valInfo.attrValId}"
-																  <c:if test="${valInfo.productAttrValId != null}">checked</c:if> >${valInfo.attrVal}</p>
-													</c:forEach>
-												</div>
-											</c:when>
-											
-											
-											<%--单行输入--%>
-											<c:when test="${attr.valueWay == '3'}">
-												<c:set var="valInfo" value=""></c:set>
-												<c:if test="${!noKeyAttrValMap.get(attr.attrId).isEmpty()}">
-													<c:set var="valInfo" value="${noKeyAttrValMap.get(attr.attrId).get(0)}"></c:set>
-												</c:if>
-												<p><input type="text" readOnly="true" attrId="noKeyAttr${attr.attrId}" maxlength="20"
-														  <c:if test="${valInfo!=''}">value="${valInfo.attrVal}"</c:if> ></p>
-											</c:when>
-											
-											<%-- <c:when test="${attr.valueWay == '3'}">
-												<c:set var="valInfo" value="${noKeyAttrValMap.get(attr.attrId).get(0)}"></c:set>
-												<p><input type="text" readOnly="true"  class="int-text int-xlarge" attrId="noKeyAttr${attr.attrId}" maxlength="100"
-														  <c:if test="${valInfo!=null}">value="${valInfo.attrVal}"</c:if> ></p>
-											</c:when> --%>
-											<%--多行输入--%>
-											<c:when test="${attr.valueWay == '4'}">
-												<c:set var="valInfo" value=""></c:set>
-												<c:if test="${!noKeyAttrValMap.get(attr.attrId).isEmpty()}">
-													<c:set var="valInfo" value="${noKeyAttrValMap.get(attr.attrId).get(0)}"></c:set>
-												</c:if>
-												<p><textarea class="textarea-xlarge" readOnly="true" maxlength="100"
-															 attrId="noKeyAttr${attr.attrId}"><c:if test="${valInfo!=''}">${valInfo.attrVal}</c:if></textarea></p>
-											</c:when>
-											
-											<%-- <c:when test="${attr.valueWay == '4'}">
-												<c:set var="valInfo" value="${noKeyAttrValMap.get(attr.attrId).get(0)}"></c:set>
-												<p><textarea class="textarea-xlarge" readOnly="true"  maxlength="100"
-															 attrId="noKeyAttr${attr.attrId}"><c:if test="${valInfo!=null}">${valInfo.attrVal}</c:if></textarea></p>
-											</c:when> --%>
-										</c:choose>
-										</li>
-									</ul>
-								</c:forEach>
+								 </c:forEach>
                             </div>
                             <!-- 选择商品目标地域 -->
                             <header class="main-box-header clearfix">
