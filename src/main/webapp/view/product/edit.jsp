@@ -175,7 +175,7 @@
 						<header class="main-box-header clearfix ">
 							<h5 class="pull-left">商品非关键属性</h5>
 						</header>
-						<div class="form-label bd-bottom"><!--查询条件-->
+						<div class="form-label bd-bottom" id="noKeyAttrDiv"><!--查询条件-->
 							<input type="hidden" id="noKeyAttrStr" name="noKeyAttrStr">
 							<c:forEach var="attr" items="${noKeyAttr}">
 								<ul>

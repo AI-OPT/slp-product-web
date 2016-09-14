@@ -199,7 +199,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 		_convertNoKeyAttr:function(){
 			var noKeyVal = {};
 			//获取所有
-			$("#noKeyAttrDiv .word").each(function(i){
+			$("#noKeyAttrDiv .word3").each(function(i){
 				var attrId = $(this).attr('attrId');
 				var valWay = $(this).attr('valueType');
 				var attrValArray = [];
@@ -226,9 +226,9 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				};
 				noKeyVal[attrId] = attrValArray;
 			});
-			var noKeyJsonStr = JSON.stringify(noKeyVal,null);
+			var noKeyJsonStr = JSON.stringify(noKeyVal);
 			if (window.console) {
-				console.log($('#noKeyAttrStr').val());
+				console.log(noKeyJsonStr);
 			}
 			$('#noKeyAttrStr').val(noKeyJsonStr);
 			return true;
