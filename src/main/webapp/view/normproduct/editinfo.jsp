@@ -22,26 +22,31 @@
                         	<input type="hidden" id="productId" name="productId" value="${productInfo.productId}"/>
                         	<div class="main-box-body clearfix">	<!--padding20-->
                         	<!--标题开始--> 
-					        <header class="main-box-header clearfix ">
-                            	<h5 class="pull-left">
-                            	类目信息：<c:forEach var="catInfo" items="${catLinkList}" varStatus="stat">
-					                    	${catInfo.productCatName}<c:if test="${!stat.last}">&gt;</c:if>
-                                    	</c:forEach>
-                            	</h5>
-                            </header> 
+                        	<!-- 类目链 -->
+                            <header class="main-box-header clearfix">
+                                <h5 class="pull-left">商品基础信息</h5>
+                            </header>
                             <!--标题结束-->
                         	<div class="form-label bd-bottom">
 					            <input type="hidden" id="productCatId" name="productCatId" value="${productCatId}"/>
 					            <ul>
 					                <li class="width-xlag">
-					                    <p class="word"><b class="red">*</b>商品名称</p>
+					                    <p class="word3">类目信息</p>
+					                    <p><c:forEach var="catInfo" items="${catLinkList}" varStatus="stat">
+					                    	${catInfo.productCatName}<c:if test="${!stat.last}">&gt;</c:if>
+                                    	</c:forEach></p> 
+					                </li> 
+					            </ul>
+					            <ul>
+					                <li class="width-xlag">
+					                    <p class="word3"><b class="red">*</b>商品名称</p>
 					                    <p><input required id="productName" name="productName" type="text" maxlength='100' class="int-text int-xlarge"  value="${productInfo.productName}"/></p>
 					               	 	<p id="error_productName"></p> 
 					                </li> 
 					            </ul>
 					            <ul>
 					                <li class="width-xlag">
-					                    <p class="word"><b class="red">*</b>商品类型</p>
+					                    <p class="word3"><b class="red">*</b>商品类型</p>
 					                    <p>
 					                    	<select required id="productType" name="productType" class="select select-medium >
 					                    		<option value="">--请选择--</option>
@@ -65,7 +70,7 @@
 								<c:forEach var="keyAttr" items="${keyAttrlist}">
 									<ul>
 										<li class="width-xlag">
-											<p class="word" attrId="${keyAttr.attrId}" valueType="${keyAttr.valueWay}"><b class="red">*</b>${keyAttr.attrName}</p>
+											<p class="word3" attrId="${keyAttr.attrId}" valueType="${keyAttr.valueWay}"><b class="red">*</b>${keyAttr.attrName}</p>
 											<p id="error_keyAttr${keyAttr.attrId}_title"></p>
 											<c:set var="keyAttrSet" value="${productInfo.attrAndValueIds.get(keyAttr.attrId)}"/>
 											<c:set var="keyAttrValue" value="${productInfo.attrAndValueMap.get(keyAttr.attrId)}"/>
@@ -120,7 +125,7 @@
 					        	<c:forEach var="saleAttr" items="${saleAttrlist}">
 										<ul>
 											<li class="width-xlag">
-												<p class="word" attrId="${saleAttr.attrId}" valueType="${saleAttr.valueWay}"><b class="red">*</b>${saleAttr.attrName}</p>
+												<p class="word3" attrId="${saleAttr.attrId}" valueType="${saleAttr.valueWay}"><b class="red">*</b>${saleAttr.attrName}</p>
 												<p id="error_saleAttr${saleAttr.attrId}_title"></p>
 												<c:set var="saleAttrSet" value="${productInfo.attrAndValueIds.get(saleAttr.attrId)}"/>
 												<c:set var="saleAttrValue" value="${productInfo.attrAndValueMap.get(saleAttr.attrId)}"/>
@@ -172,7 +177,7 @@
 	                            <div class="form-label  bd-bottom"> 
 		                            <ul>
 						                <li class="width-xlag">
-				                            <p class="word"><b class="red">*</b>状态：</p>
+				                            <p class="word3"><b class="red">*</b>状态：</p>
 				                            <p>
 				                            	<select required id="state" name="state" class="select select-medium">
 								                   	<option value="1"<c:if test="${productInfo.state == '1'}">selected="selected"</c:if>>可使用</option>

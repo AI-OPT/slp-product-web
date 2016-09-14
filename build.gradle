@@ -99,6 +99,9 @@ dependencies {
     
     //仓库管理
     compile 'com.ai.slp.route:routeprodsupplymanage:1.0-SNAPSHOT'
+    
+    //商品评价
+    compile 'com.ai.slp.product:productcomment:1.0-SNAPSHOT'
 
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",
