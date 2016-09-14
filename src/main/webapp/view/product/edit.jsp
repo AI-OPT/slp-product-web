@@ -374,7 +374,7 @@
 						</div>
 						<!--标题-->
 						<header class="main-box-header clearfix ">
-							<h5 class="pull-left">商品详情图文描述</h5>
+							<h5 class="pull-left"><b class="red">*</b>商品详情图文描述</h5>
 						</header>
 						<!--标题结束-->
 						<div class="form-label"><!--查询条件-->

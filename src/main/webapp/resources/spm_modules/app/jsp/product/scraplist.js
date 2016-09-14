@@ -103,7 +103,7 @@ define('app/jsp/product/scraplist', function (require, exports, module) {
 		 			dataType: "json",
 		 			renderId:"searchNormProductData",
 		 			messageId:"showMessageDiv",
-		 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"productName":productName
+		 			data: {"productCatId":productCatId,"productType":productType,"productId":productId,"prodName":productName
 			 			},
 		 			
 		           	pageSize: scraplistPager.DEFAULT_PAGE_SIZE,
