@@ -234,21 +234,16 @@
 											<td>{{:stateName}}</td>
 											<td>{{:~timesToFmatter(operTime)}}</td>
 
-											{{if state=="3"}}
 											<td>
 												<div>
+													{{if state=="3"}}
 													<p><a href="${_base}/prodquery/audit/{{:prodId}}" class="blue-border">审核商品</a></p>
+													{{else}}
+													<p><a href="#" class="blue-border">查看原因</a></p>
+													{{/if}}
 													<p><a href="${_base}/prodquery/{{:prodId}}" class="blue-border">查看商品</a></p>
 												</div>
 											</td>
-											{{else}}
-											<td>
-												<div>
-													<p><a href="#" class="blue-border">查看原因</a></p>
-													<p><a href="#" class="blue-border">查看商品</a></p>
-												</div>
-											</td>
-											{{/if}}
 									</tr>
 								</script>
 							</div>
