@@ -268,7 +268,7 @@
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品图文描述</h5>
                             </header>
-                            <div class="form-label"><!--查询条件-->
+                            <div class="form-label" style="width: 100%;word-wrap:break-word; "><!--查询条件-->
 								${prodDetail}
 							</div>
                             
