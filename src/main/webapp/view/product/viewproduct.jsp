@@ -269,11 +269,7 @@
                                 <h5 class="pull-left">商品图文描述</h5>
                             </header>
                             <div class="form-label"><!--查询条件-->
-								<ul>
-									<li class="width-xlag">
-										<p><div id="prodDetail">${prodDetail}</div></p>
-									</li>
-								</ul>
+								${prodDetail}
 							</div>
                             
 	                        <div id="subDiv" class="row pt-30">

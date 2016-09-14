@@ -186,7 +186,7 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th><input id="checkall" name="checkall" type="checkbox" value="" /></th>
+										<th><input id="checkall" name="checkall" type="checkbox" value="" />&nbsp;全选</th>
 										<th>商品ID</th>
 										<th>所属类目</th>
 										<th>商品类型</th>
