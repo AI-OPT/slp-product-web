@@ -71,12 +71,14 @@
 								<ul>
 									<li class="col-md-6">
 										<p class="word">上架开始时间</p>
-										<p><input type="text" class="int-text int-medium" id="upStartTime" readonly="true">
+										<p><input type="text" class="int-text int-medium" id="upStartTime"
+												  readonly="true" onfocus="WdatePicker({readOnly:true});">
 											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
 									</li>
 									<li class="col-md-6">
 										<p class="word">上架结束时间</p>
-										<p><input type="text" class="int-text int-medium" id="upEndTime" readonly="true">
+										<p><input type="text" class="int-text int-medium" id="upEndTime"
+												  readonly="true" onfocus="WdatePicker({readOnly:true})">
 											<span class="time"> <i class="fa  fa-calendar" ></i></span>
 										</p>
 									</li>
@@ -200,13 +202,8 @@
 	var productEditInfo = '${productEditInfo}';
 	(function () {
 		<%-- 展示日历 --%>
-		$('#selectDiv').delegate('.fa-calendar','click',function(){
-			var calInput = $(this).parent().prev();
-			var timeId = calInput.attr('id');
-			if (window.console) {
-				console.log("click calendar " + timeId);
-			}
-			WdatePicker({el:timeId,readOnly:true});
+		$('#selectDiv').delegate('.fa.fa-calendar','click',function(){
+			var calInput = $(this).parent().prev().focus();
 		});
 		<%-- 高级区域 --%>
 		$(".form-label ul li .sos a").click(function () {
