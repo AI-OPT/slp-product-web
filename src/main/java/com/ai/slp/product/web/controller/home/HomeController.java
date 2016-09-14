@@ -1,20 +1,11 @@
 package com.ai.slp.product.web.controller.home;
 
-import com.ai.opt.base.exception.BusinessException;
-import com.ai.opt.base.vo.PageInfoResponse;
-import com.ai.opt.base.vo.ResponseHeader;
-import com.ai.opt.sdk.components.idps.IDPSClientFactory;
-import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.paas.ipaas.PaasRuntimeException;
-import com.ai.paas.ipaas.image.IImageClient;
-import com.ai.paas.ipaas.image.ImageSizeIllegalException;
-import com.ai.slp.product.web.constants.SysCommonConstants;
-import com.ai.slp.product.web.util.AdminUtil;
-import com.ai.slp.product.web.vo.ImgFileInfoVo;
-import com.ai.slp.user.api.keyinfo.interfaces.IUcKeyInfoSV;
-import com.ai.slp.user.api.keyinfo.param.QueryGroupInfoRequest;
-import com.ai.slp.user.api.keyinfo.param.UcGroupKeyInfoVo;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +16,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.Map;
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.components.idps.IDPSClientFactory;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.PaasRuntimeException;
+import com.ai.paas.ipaas.image.IImageClient;
+import com.ai.paas.ipaas.image.exception.ImageSizeIllegalException;
+import com.ai.slp.product.web.constants.SysCommonConstants;
+import com.ai.slp.product.web.util.AdminUtil;
+import com.ai.slp.product.web.vo.ImgFileInfoVo;
+import com.ai.slp.user.api.keyinfo.interfaces.IUcKeyInfoSV;
+import com.ai.slp.user.api.keyinfo.param.QueryGroupInfoRequest;
+import com.ai.slp.user.api.keyinfo.param.UcGroupKeyInfoVo;
 
 
 @Controller
