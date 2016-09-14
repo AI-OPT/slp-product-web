@@ -25,14 +25,20 @@
                         <div class="main-box-body clearfix">
                             <!-- 类目链 -->
                             <header class="main-box-header clearfix">
-                                <h5 class="pull-left">所属类目：
-                                    <c:forEach var="catInfo" items="${catLinkList}"
-                                               varStatus="stat">${catInfo.productCatName}<c:if test="${!stat.last}">&gt;</c:if>
-                                    </c:forEach>
-                                </h5>
+                                <h5 class="pull-left">商品基础信息</h5>
                             </header>
                             <!--标题结束-->
                             <div class="form-label  bd-bottom">
+                            	<ul class="big-word">
+                                    <li class="col-md-6">
+                                        <p class="word">所属类目：</p>
+                                        <p> 
+                                        <c:forEach var="catInfo" items="${catLinkList}"
+                                               varStatus="stat">${catInfo.productCatName}<c:if test="${!stat.last}">&gt;</c:if>
+                                    	</c:forEach>
+                                    	</p>
+                                    </li>
+                                </ul>
                                 <ul class="big-word">
                                     <li class="col-md-6">
                                         <p class="word">商品名称：</p>
