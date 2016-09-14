@@ -53,5 +53,8 @@
 	<!-- 仓库管理服务 -->
 	<dubbo:reference id="iRouteProdSupplyManageSV" interface="com.ai.slp.route.api.routeprodsupplymanage.interfaces.IRouteProdSupplyManageSV"
 					 registry="slpRegistry"/>
+	<!-- 商品评价 -->
+	<dubbo:reference id="iProdCommentManagerSV" interface="com.ai.slp.product.api.productcomment.interfaces.IProdCommentManagerSV"
+					 registry="slpRegistry"/>
 
 </beans>
