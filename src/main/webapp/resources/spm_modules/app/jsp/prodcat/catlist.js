@@ -157,7 +157,9 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 		_showDelConf:function(catId){
 			$('#eject-mask').fadeIn(100);
 			$('#aband-small').slideDown(200);
-			console.log("del cat id is "+ catId);
+			if (window.console) {
+				console.log("del cat id is " + catId);
+			}
 			$("#delCatId").val(catId);
 		},
 		//关闭编辑页面弹出

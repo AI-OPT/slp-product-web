@@ -68,7 +68,9 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 					$("#newTotalNum").removeClass("input-disabled");
 				$('#eject-mask').fadeIn(100);
 				$('#edit-medium').slideDown(200);
-				console.log("The hasSale is "+hasSale);
+				if (window.console) {
+					console.log("The hasSale is " + hasSale);
+				}
 				return;
 			}
 			$("#newTotalNum").addClass("input-disabled");
@@ -192,7 +194,9 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 					stoNum = stoNum+parseInt($(item).val());
 				});
 				skuMapStr = JSON.stringify(skuMap);
-				console.log("SKU num string:"+skuMapStr);
+				if (window.console) {
+					console.log("SKU num string:" + skuMapStr);
+				}
 				totalNum = stoNum;
 			}
 
@@ -225,9 +229,13 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			if (number==null || typeof (number)==undefined)
 				number = 0;
 			var name = 'stopn_'+groupId+"_"+number;
-			console.log("Tr name:"+name);
+			if (window.console) {
+				console.log("Tr name:" + name);
+			}
 			var stoNum = $("tr[name="+name+"]").size();
-			console.log("GroupId:"+groupId+",Number:"+number+",stoNum:"+stoNum);
+			if (window.console) {
+				console.log("GroupId:" + groupId + ",Number:" + number + ",stoNum:" + stoNum);
+			}
     		if(number>0 && stoNum<1){
     			alert("最高优先级下没有库存,不允许添加新的优先级");
     			return;
@@ -271,7 +279,9 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			var _this =this;
 			var status = $(obj).attr('statue');
 			var stoId = $(obj).attr('storageId');
-			console.log("storageId:"+stoId+",status:"+status);
+			if (window.console) {
+				console.log("storageId:" + stoId + ",status:" + status);
+			}
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
@@ -299,7 +309,9 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			if (!hasSale){
 				$('#eject-mask').fadeIn(100);
 				$('#info-medium').slideDown(200);
-				console.log("The hasSale is "+hasSale);
+				if (window.console) {
+					console.log("The hasSale is " + hasSale);
+				}
 				return;
 			}
 
@@ -357,7 +369,9 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			if (!hasSale){
 				$('#eject-mask').fadeIn(100);
 				$('#edit-medium').slideDown(200);
-				console.log("The hasSale is "+hasSale);
+				if (window.console) {
+					console.log("The hasSale is " + hasSale);
+				}
 				return;
 			}
 

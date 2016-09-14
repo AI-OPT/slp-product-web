@@ -119,7 +119,9 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 				};
 			});
 			var keyJsonStr = JSON.stringify(attrValArray,null);
-			console.log($('#keyAttrStr').val());
+			if (window.console){
+				console.log($('#keyAttrStr').val());
+			}
 			$('#keyAttrStr').val(keyJsonStr);
 			return true;
 		},
@@ -153,7 +155,9 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 				};
 			});
 			var saleJsonStr = JSON.stringify(attrValArray,null);
-			console.log($('#saleAttrStr').val());
+			if (window.console) {
+				console.log($('#saleAttrStr').val());
+			}
 			$('#saleAttrStr').val(saleJsonStr);
 			return true;
 		},

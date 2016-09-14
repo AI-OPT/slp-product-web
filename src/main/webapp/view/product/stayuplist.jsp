@@ -215,7 +215,9 @@
 		<%-- 上架确认框 --%>
 		$('#searchNormProductData').delegate("a[name='insaleBtnView']", 'click', function () {
 			var productId = $(this).attr('prodId');
-            console.log("编辑链接:"+productId);
+			if (window.console) {
+				console.log("编辑链接:" + productId);
+			}
             pager._showInSale(productId);
         });
 		

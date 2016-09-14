@@ -33,7 +33,9 @@ define('app/jsp/prodcat/catattrall', function (require, exports, module) {
         //属性点击事件
         _clickAttr:function(obj){
             var attrId = obj.val();
-            console.log("attrId:"+attrId+",click");
+            if (window.console) {
+                console.log("attrId:" + attrId + ",click");
+            }
             // 若属性取消选择,则属性值也取消
             var check = true;
             if(!obj.is(':checked')){
@@ -45,7 +47,9 @@ define('app/jsp/prodcat/catattrall', function (require, exports, module) {
         _clickAttrVal:function(obj){
             var attrId= obj.attr("attrId");
             var attrVal = obj.val();
-            console.log("attrId:"+attrId+",attrVal:"+attrVal+",click");
+            if (window.console) {
+                console.log("attrId:" + attrId + ",attrVal:" + attrVal + ",click");
+            }
             // 若属性值取消,则属性也取消 --%>
             if(!obj.is(':checked')){
                 $("input:checkbox[name='attrCheck'][value='"+attrId+"']").prop("checked",false);
@@ -68,7 +72,9 @@ define('app/jsp/prodcat/catattrall', function (require, exports, module) {
             $("input:checkbox[name=attrCheck]:checked").each(function (index, form) {
                 var attrId = $(this).val();
                 var valArr = [];
-                console.log("attrId:"+attrId);
+                if (window.console) {
+                    console.log("attrId:" + attrId);
+                }
                 attrMap[attrId] = valArr;
             });
             //获取选中的属性值
@@ -79,7 +85,9 @@ define('app/jsp/prodcat/catattrall', function (require, exports, module) {
                     valArr = [];
                 valArr.push($(this).val());
                 attrMap[attrId] = valArr;
-                console.log("attrId:"+attrId+",attrVal:"+$(this).val());
+                if (window.console) {
+                    console.log("attrId:" + attrId + ",attrVal:" + $(this).val());
+                }
             });
             if (attrMap.length <1){
                 new Dialog({

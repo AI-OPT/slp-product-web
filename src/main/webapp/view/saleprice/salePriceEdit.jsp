@@ -236,7 +236,9 @@
             var storGroupId = $(this).attr('storGroupId');
             var priorityNum = $(this).attr('priorityNum');
             var storageNum = $(this).attr('storageNum');
-            console.log("storGroupId" + storGroupId + ",priorityNum" + priorityNum + ",storageNum:" + storageNum);
+            if (window.console) {
+                console.log("storGroupId" + storGroupId + ",priorityNum" + priorityNum + ",storageNum:" + storageNum);
+            }
             //把当前点击对象数据储存到隐藏域
             $('#saveCache').attr("storGroupId", storGroupId);
             $('#saveCache').attr("priorityNum", priorityNum);

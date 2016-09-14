@@ -59,7 +59,9 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
             //获取所有是否上传图片
             $("input:radio:checked").each(function (index, form) {
                 var attrId = $(this).attr('catAttrId');
-                console.log("attrId:"+attrId);
+                if (window.console) {
+                    console.log("attrId:" + attrId);
+                }
                 attrMap[attrId] = $(this).val();
             });
             //获取属性顺序

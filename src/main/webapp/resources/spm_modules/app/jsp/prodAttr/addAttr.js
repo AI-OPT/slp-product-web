@@ -89,7 +89,9 @@ require("app/util/aiopt-validate-ext");
 				});*/
 				
 				var attrObj = {};
-				console.log(index + " form-label");
+				if (window.console) {
+					console.log(index + " form-label");
+				}
 				//属性名称
 				var attrName = $(this).find("input[name='attrName']")[0];
 				attrObj['attrName'] = attrName.value;
@@ -105,10 +107,13 @@ require("app/util/aiopt-validate-ext");
 			/*console.log("No error");
 			if (hasError)
 				return;*/
-			console.log("No error");
-			
-		console.log("attr arr lengeth "+attrArr.length);
-		ajaxController.ajax({
+			if (window.console) {
+				console.log("No error");
+			}
+			if (window.console) {
+				console.log("attr arr lengeth " + attrArr.length);
+			}
+				ajaxController.ajax({
 			type: "post",
 			processing: true,
 			message: "保存中，请等待...",

@@ -91,7 +91,9 @@ require("app/util/aiopt-validate-ext");
 				});*/
 				
 				var attrObj = {};
-				console.log(index+" form-label");
+				if (window.console) {
+					console.log(index + " form-label");
+				}
 				//属性名称
 				var attrId = $(this).find("input[name='attrId']")[0];
 				attrObj['attrId'] = attrId.value;
@@ -103,12 +105,14 @@ require("app/util/aiopt-validate-ext");
 				attrObj['firstLetter'] = firstLetter.value;
 				attrArrValue.push(attrObj);
 			});
-		
-			console.log("No error");
+			if (window.console) {
+				console.log("No error");
+			}
 			if (hasError)
 				return;
-			
-		console.log("attr arr Value lengeth "+attrArrValue.length);
+			if (window.console) {
+				console.log("attr arr Value lengeth " + attrArrValue.length);
+			}
 		ajaxController.ajax({
 			type: "post",
 			processing: true,

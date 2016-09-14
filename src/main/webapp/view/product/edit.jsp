@@ -434,7 +434,9 @@
 		<%-- 上传图片 --%>
 		$('.width-xlag').delegate('input[attrVal]','click',function(){
 			picAttrVal = $(this).attr('attrVal');
-			console.log("img up attrValId:"+picAttrVal);
+			if (window.console) {
+				console.log("img up attrValId:" + picAttrVal);
+			}
 			return $("#uploadFile").click();
 		});
 		<%-- 图片删除 --%>
@@ -445,7 +447,9 @@
 			imgP.removeAttr("style");
 			var valDefId = imgObj.attr('attrVal');
 			var attrInd = Number(imgObj.attr('picInd'));
-			console.log("attrValDefId:"+imgObj.attr('attrVal')+"index:"+attrInd);
+			if (window.console) {
+				console.log("attrValDefId:" + imgObj.attr('attrVal') + "index:" + attrInd);
+			}
 			pager._delProdPic(valDefId,attrInd);
 		});
 

@@ -234,15 +234,19 @@
     	<%-- 编辑按钮 --%>
         $('#searchAttrData').delegate("a[name='editView']", 'click', function () {
             var attrId = $(this).attr('attrId');
-            console.log("编辑链接:"+attrId);
-            pager._showAttr(attrId);
+			if (window.console) {
+				console.log("编辑链接:" + attrId);
+			}
+			pager._showAttr(attrId);
         });
         
         <%-- 删除按钮 --%>
         $('#searchAttrData').delegate("a[name='delView']", 'click', function () {
             var attrId = $(this).attr('attrId');
-            console.log("编辑链接:"+attrId);
-            pager._showDelConf(attrId);
+			if (window.console) {
+				console.log("编辑链接:" + attrId);
+			}
+			pager._showDelConf(attrId);
         });
         seajs.use('app/jsp/prodAttr/attrList', function (attrlistPager) {
             pager = new attrlistPager({element: document.body});

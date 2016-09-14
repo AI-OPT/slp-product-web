@@ -47,7 +47,9 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 			//查询所有的价格信息
 			$("input:text[name='salePrice']").each(function(index,item){
 				var price = $(item).val();
-				console.log("price="+price);
+				if (window.console) {
+					console.log("price=" + price);
+				}
 				if (price == null || typeof (price) == undefined || price.trim() == "" ){
 					hasError = true;
 					_this._showMsg("有部分价格为填写,无法提交");
@@ -139,7 +141,9 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 			$("input:text[name='skuNum']").each(function(index,item){
 				var skuId = $(item).attr("skuId");
 				var price = $(item).val();
-				console.log("skuId:"+skuId+",price="+price);
+				if (window.console) {
+					console.log("skuId:" + skuId + ",price=" + price);
+				}
 				if (price == null || typeof (price) == undefined || price.trim() == ""){
 					hasError = true;
 					_this._showMsg("有部分价格为填写,无法提交");

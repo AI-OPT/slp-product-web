@@ -126,7 +126,9 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 	    	_showInSale:function(productId){
 				$('#eject-mask').fadeIn(100);
 				$('#aband-small').slideDown(200);
-				console.log("insale id is "+ productId);
+				if (window.console) {
+					console.log("insale id is " + productId);
+				}
 				$("#insaleId").val(productId);
 			},
 	    	

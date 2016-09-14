@@ -84,7 +84,9 @@ define('app/jsp/product/edit', function (require, exports, module) {
 		//上架类型变更
 		_changeUpShel:function(){
 			var shelType = $("input[name='upshelfType']:checked").val();
-			console.log("the upshel type is "+shelType);
+			if (window.console) {
+				console.log("the upshel type is " + shelType);
+			}
 			if (ProdEditPager.UPSHEL_PRESALE == shelType){
 				$('#presaleTimeUl').show();
 			} else{
@@ -126,7 +128,9 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			$('#areaNum').text('已选中省份'+checkNum+'个');
 			$('#areaName').text(checkProvStr.join("、"));
 			if (provArry.length>0){
-				console.log(JSON.stringify(provArry));
+				if (window.console) {
+					console.log(JSON.stringify(provArry));
+				}
 				$('#targetProd').val(JSON.stringify(provArry));
 			}else
 				$('#targetProd').val('');
@@ -138,7 +142,9 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			if($("#prodForm").valid() && this._checkInput() && this._convertProdPic() && this._convertNoKeyAttr()){
 				//获取editor中内容
 				$("#detailConVal").val(editDom.getData());
-				console.log($('#detailConVal').val());
+				if (window.console) {
+					console.log($('#detailConVal').val());
+				}
 				ajaxController.ajax({
 					type: "post",
 					processing: true,
@@ -169,8 +175,10 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			$(".width-img img[imgId!='']").each(function(i){
 				var attrVal = $(this).attr('attrVal');
 				//设置该图片的信息
-				console.log("已设置图片:"+$(this).attr('attrVal')+",序号:"+$(this).attr('picInd'));
-				console.log("====图片信息:"+$(this).attr('imgId')+",");
+				if (window.console) {
+					console.log("已设置图片:" + $(this).attr('attrVal') + ",序号:" + $(this).attr('picInd'));
+					console.log("====图片信息:" + $(this).attr('imgId') + ",");
+				}
 				//主图图片
 				if (attrVal=='0'){
 					var pic = {'attrvalueDefId':'0','vfsId':$(this).attr('imgId'),'picType':$(this).attr('imgType'),'serialNumber':$(this).attr('picInd')};
@@ -220,7 +228,9 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				noKeyVal[attrId] = attrValArray;
 			});
 			var noKeyJsonStr = JSON.stringify(noKeyVal,null);
-			console.log($('#noKeyAttrStr').val());
+			if (window.console) {
+				console.log($('#noKeyAttrStr').val());
+			}
 			$('#noKeyAttrStr').val(noKeyJsonStr);
 			return true;
 		},
@@ -320,7 +330,9 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				}
 			}
 			fileType = fileType.toLowerCase();
-			console.log("上传图片信息,图片名称:"+fileName+",图片大小:"+fileSize);
+			if (window.console) {
+				console.log("上传图片信息,图片名称:" + fileName + ",图片大小:" + fileSize);
+			}
 			//文件大小
 			var checkSize = true;
 			//文件类型
@@ -336,7 +348,9 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				img.onload=function() {
 					alert(img.width);
 					alert(img.height);
-					console.log("图片宽:" + img.width + ",高:" + img.height);
+					if (window.console) {
+						console.log("图片宽:" + img.width + ",高:" + img.height);
+					}
 				}
 			}
 			return checkSize&&checkType;
@@ -353,12 +367,16 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			//查询该商品下未有图片的位置
 			$("#"+divId+" img[imgId='']").each(function(i){
 				//设置该图片的信息
-				console.log("未设置图片:"+$(this).attr('attrVal')+",序号:"+$(this).attr('picInd'));
+				if (window.console) {
+					console.log("未设置图片:" + $(this).attr('attrVal') + ",序号:" + $(this).attr('picInd'));
+				}
 				if (imgObj ==null){
 					imgObj = $(this);
 				}
 			});
-			console.log("将要设置属性图片:"+imgObj.attr('attrVal')+",序号:"+imgObj.attr('picInd'));
+			if (window.console) {
+				console.log("将要设置属性图片:" + imgObj.attr('attrVal') + ",序号:" + imgObj.attr('picInd'));
+			}
 			imgObj.attr('imgId',filePosition);
 			imgObj.attr('imgType',fileType);
 			imgObj.attr('src',imgUrl);

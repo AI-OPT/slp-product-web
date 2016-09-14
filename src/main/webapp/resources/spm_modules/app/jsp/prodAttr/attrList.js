@@ -192,7 +192,9 @@ require("app/util/aiopt-validate-ext");
 		_showDelConf:function(attrId){
 			$('#eject-mask').fadeIn(100);
 			$('#aband-small').slideDown(200);
-			console.log("del attr id is "+ attrId);
+			if (window.console) {
+				console.log("del attr id is " + attrId);
+			}
 			$("#delAttrId").val(attrId);
 		},
 		//删除

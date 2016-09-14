@@ -156,7 +156,9 @@
 		$('#selectDiv').delegate('.fa-calendar','click',function(){
 			var calInput = $(this).parent().prev();
 			var timeId = calInput.attr('id');
-			console.log("click calendar "+timeId);
+			if (window.console) {
+				console.log("click calendar " + timeId);
+			}
 			WdatePicker({el:timeId,readOnly:true});
 		});
 		<%-- 高级区域 --%>

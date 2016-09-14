@@ -266,14 +266,18 @@
     	<%-- 编辑按钮 --%>
          $('#searchAttrData').delegate("a[name='editView']", 'click', function () {
             var attrvalueDefId = $(this).attr('attrvalueDefId');
-            console.log("编辑链接:"+attrvalueDefId);
+			 if (window.console) {
+				 console.log("编辑链接:" + attrvalueDefId);
+			 }
             pager._showAttr(attrvalueDefId);
         });
          
         <%-- 删除按钮 --%>
          $('#searchAttrData').delegate("a[name='delView']", 'click', function () {
             var attrvalueDefId = $(this).attr('attrvalueDefId');
-            console.log("编辑链接:"+attrvalueDefId);
+			 if (window.console) {
+				 console.log("编辑链接:" + attrvalueDefId);
+			 }
             pager._showDelConf(attrvalueDefId);
         });
         

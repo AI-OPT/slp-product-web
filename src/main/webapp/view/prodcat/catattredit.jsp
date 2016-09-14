@@ -269,14 +269,18 @@
         $('#mainBoxDiv').delegate(".i-close", 'click', function () {
             var id= $(this).attr('catAttrId');
             var objType = "1";
-            console.log("删除属性,id="+id);
+            if (window.console) {
+                console.log("删除属性,id=" + id);
+            }
             pager._delAttrOfVal(id,objType);
         });
 
         $('#mainBoxDiv').delegate(".i-close1", 'click', function () {
             var id=$(this).attr('catAttrValId');
             var objType = "2";
-            console.log("删除属性值,id="+id);
+            if (window.console) {
+                console.log("删除属性值,id=" + id);
+            }
             pager._delAttrOfVal(id,objType);
         });
         seajs.use('app/jsp/prodcat/catattredit', function (catattredit) {

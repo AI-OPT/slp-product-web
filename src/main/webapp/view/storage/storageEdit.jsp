@@ -466,7 +466,9 @@
             var storGroupId = $(this).attr('storGroupId');
             var priorityNum = $(this).attr('priorityNum');
             var storageNum = $(this).attr('storageNum');
-            console.log("storGroupId" + storGroupId + ",priorityNum" + priorityNum + ",storageNum:" + storageNum);
+            if (window.console) {
+                console.log("storGroupId" + storGroupId + ",priorityNum" + priorityNum + ",storageNum:" + storageNum);
+            }
             //把当前点击对象数据储存到隐藏域
             $('#saveCache').attr("storGroupId", storGroupId);
             $('#saveCache').attr("priorityNum", priorityNum);
@@ -491,7 +493,9 @@
         $('.setup-sku').delegate('input[name="addPriorityNumber"]', 'click', function () {
             var groupId = $(this).attr('storGroupId');
             var priorityNum = $(this).attr('priorityNum');
-            console.log("groupId: " + groupId + ",priorityNum:" + priorityNum);
+            if (window.console) {
+                console.log("groupId: " + groupId + ",priorityNum:" + priorityNum);
+            }
             pager._addPriorityNumber(groupId, priorityNum);
         });
 

@@ -131,7 +131,6 @@
     (function () {
         <%-- 删除按钮 --%>
         $('#addViewDiv').delegate("a[name='delBtn']", 'click', function () {
-            console.log("删除");
             <%--p  div(.title-right) div(.form-label) --%>
             $(this).parent().parent().parent().remove();
         });

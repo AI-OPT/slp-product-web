@@ -145,7 +145,9 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 		_clicksingle: function (obj) {
 			var prodId = obj.attr("prodId");
 			var attrVal = obj.val();
-			console.log("prodId:" + prodId + ",click");
+			if (window.console) {
+				console.log("prodId:" + prodId + ",click");
+			}
 			// 若子项没有都选中,则全选也取消 --%>
 			if (!obj.is(':checked')) {
 				$("input:checkbox[name='checkall']").prop("checked", false);

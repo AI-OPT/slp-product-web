@@ -130,13 +130,17 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     	_showDownSale:function(productId){
     		$('#eject-mask').fadeIn(100);
 			$('#aband-small').slideDown(200);
-			console.log("downsale id is "+ productId);
+			if (window.console) {
+				console.log("downsale id is " + productId);
+			}
 			$("#downsaleId").val(productId);
     	},
 
     	//关闭确认提示框
     	_closeConf:function(){
-    		console.log("close conf")
+			if (window.console) {
+				console.log("close conf");
+			}
     		$('#eject-mask').fadeOut(100);
 			$('#aband-small').slideUp(150);
     	},

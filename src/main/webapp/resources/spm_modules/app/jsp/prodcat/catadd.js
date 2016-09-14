@@ -58,7 +58,9 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 			//获取所有的form-label下的input
 			$("#addViewDiv > .form-label.bd-bottom ").each(function (index, form) {
 				var catObj = {};
-				console.log(index + " form-label");
+				if (window.console) {
+					console.log(index + " form-label");
+				}
 				if (parentCatId != null & parentCatId != '')
 					catObj['parentProductCatId'] = parentCatId;
 				//类目名
@@ -75,8 +77,10 @@ define('app/jsp/prodcat/catadd', function (require, exports, module) {
 				catObj['isChild'] = isChild.value;
 				catArr.push(catObj);
 			});
-			console.log("No error");
-			console.log("cat arr lengeth " + catArr.length);
+			if (window.console) {
+				console.log("No error");
+				console.log("cat arr lengeth " + catArr.length);
+			}
 			ajaxController.ajax({
 				type: "post",
 				processing: true,

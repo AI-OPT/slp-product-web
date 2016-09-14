@@ -203,7 +203,9 @@
 		$('#selectDiv').delegate('.fa-calendar','click',function(){
 			var calInput = $(this).parent().prev();
 			var timeId = calInput.attr('id');
-			console.log("click calendar "+timeId);
+			if (window.console) {
+				console.log("click calendar " + timeId);
+			}
 			WdatePicker({el:timeId,readOnly:true});
 		});
 		<%-- 高级区域 --%>
@@ -214,7 +216,9 @@
 		<%-- 商品下架弹框 --%>
 		$('#searchNormProductData').delegate("a[name='downsaleBtnView']", 'click', function () {
 			var productId = $(this).attr('prodId');
-            console.log("编辑链接:"+productId);
+			if (window.console) {
+				console.log("编辑链接:" + productId);
+			}
             pager._showDownSale(productId);
         });
 		

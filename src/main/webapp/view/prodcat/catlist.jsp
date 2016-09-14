@@ -231,13 +231,17 @@
         <%-- 编辑按钮 --%>
         $('#listData').delegate("a[name='editView']", 'click', function () {
             var catId = $(this).attr('catId');
-            console.log("编辑链接:"+catId);
+            if (window.console) {
+                console.log("编辑链接:" + catId);
+            }
             pager._showCat(catId);
         });
         <%-- 删除按钮 --%>
         $('#listData').delegate("a[name='delView']", 'click', function () {
             var catId = $(this).attr('catId');
-            console.log("删除链接:"+catId);
+            if (window.console) {
+                console.log("删除链接:" + catId);
+            }
             pager._showDelConf(catId);
         });
         <%-- 高级区域 --%>
