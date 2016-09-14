@@ -66,7 +66,6 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			});
 			this._showPartTarget();
 			this._showTarget();
-			this._changeUpShel();
 			$("#prodForm").validate({
 				errorPlacement: function(error, element) {
 					if (element.is(":radio"))

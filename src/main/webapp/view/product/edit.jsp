@@ -275,7 +275,7 @@
 									<p><input type="radio" name="upshelfType" value="4"
 											  class="checkbox-small" <c:if test="${productInfo.upshelfType == '4'}">checked</c:if>>预售上架</p>
 							</ul>
-							<ul id="presaleTimeUl" style="display: none;" >
+							<ul id="presaleTimeUl" <c:if test="${productInfo.upshelfType != '4'}">style="display: none;" </c:if>>
 								<li id="choseDate" class="width-xlag">
 									<p class="word3"><b class="red">*</b>预售时间</p>
 									<p><input id="presaleBegin" name="presaleBeginTimeStr" class="int-text int-medium "
