@@ -119,10 +119,7 @@
 						                   	<option value="">全部</option>
 						                   	<option value="1">下拉单选</option>
 						                   	<option value="2">多选</option>
-						                   	<option value="3">可输入文本框(单行)</option>
-						                   	<option value="4">可输入文本框(多行)</option>
-						                   	<option value="5">日期时间</option>
-						                   	<option value="6">日期时间段</option>
+						                   	<option value="3">可输入文本框</option>
 				                    	</select>
 				                    </p>
 				               	 </li>
