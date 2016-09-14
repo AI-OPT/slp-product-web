@@ -279,13 +279,13 @@
 								<li id="choseDate" class="width-xlag">
 									<p class="word3"><b class="red">*</b>预售时间</p>
 									<p><input id="presaleBegin" name="presaleBeginTimeStr" class="int-text int-medium "
-											  type="text" readonly
+											  type="text" readonly value="<fmt:formatDate value="${productInfo.presaleBeginTime}" type="both"/>"
 											  onfocus="WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'presaleEnd\');}'})"/>
 										<span class="time"> <i class="fa  fa-calendar" ></i></span>
 									</p>
 									<p>至</p>
 									<p><input id="presaleEnd" name="presaleEndTimeStr" class="int-text int-medium "
-											  type="text" readonly
+											  type="text" readonly value="<fmt:formatDate value="${productInfo.presaleEndTime}" type="both"/>"
 											  onfocus="WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'presaleBegin\');}'})"/>
 										<span class="time"> <i class="fa  fa-calendar" ></i></span>
 									</p>
