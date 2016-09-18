@@ -239,7 +239,7 @@
                                 </c:if>
                             <div class="table-responsive clearfix">
                                 <table width="100%" border="0" class="table table-hover table-border table-bordered">
-                                    <tbody>
+                                    <tbody id="tbGroupSn${stoGroup.storageGroupId}">
                                     <tr>
                                         <td colspan="9">
                                             <div class="setup-sku sku-bot-none">

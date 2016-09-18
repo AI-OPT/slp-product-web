@@ -245,7 +245,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
     		var data = {"groupId":groupId,"priNum":number};
     		var template = $.templates("#priorityNumTemple");
     	    var htmlOutput = template.render(data);
-    	    $("#groupSn"+groupId).before(htmlOutput);
+    	    $("#tbGroupSn"+groupId).append(htmlOutput).end();
     	},
     	//添加库存组
     	_addStorGroup:function(){
