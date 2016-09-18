@@ -103,10 +103,10 @@
 						<div class="main-box-body clearfix">
 							<!--table表格-->
 							<div class="table-responsive clearfix">
-								<table class="table table-hover table-border table-bordered">
+								<table id="TableView" class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th></th>
+										<th><input id="checkall" name="checkall" type="checkbox" value="" />&nbsp;全选</th>
 										<th>商品评价</th>
 										<th>评价时间</th>
 										<th>评价人</th>
@@ -127,21 +127,43 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchCommentTemple" type="text/template">
 									<tr>
-										<td></td>
-										<td>({{:shopScoreMs}}星)</td>
-										<td>{{:commentTime}}</td>
+										<td><input id="box" name="box" type="checkbox" value="{{:commentId}}" /></td>
+										<td>
+											{{if shopScoreMs != null}}
+											{{if shopScoreMs<3}}
+												差评({{:shopScoreMs}}星)
+											{{else shopScoreMs == 3}}
+												中评({{:shopScoreMs}}星)
+											{{else}}
+												好评({{:shopScoreMs}}星)
+											{{/if}}
+											{{/if}}
+										</td>
+										<td>{{:~timesToFmatter(commentTime)}}</td>
 										<td>{{:userName}}</td>
 										<td class="hind1-medium text-l pl-15">
 											<div class="center-hind" >{{:commentBody}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:commentBody}}</div>
 										</td>
-										<td>{{:shopScoreFw}}分</td>
-										<td>{{:shopScoreWl}}分</td>
+										<td></td>
+										<td>
+											{{if shopScoreFw != null}}
+												{{:shopScoreFw}}分
+											{{/if}}
+										</td>
+										<td>
+											{{if shopScoreWl != null}}
+												{{:shopScoreWl}}分
+											{{/if}}
+										</td>
 										<td>{{:standedProdId}}</td>
-										<td>{{:prodName}}</td>
+										<td class="hind1-medium text-l pl-15">
+											<div class="center-hind" >{{:prodName}}</div>
+                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
+										</td>
 										<td>{{:orderId}}</td>
                                         <td>
-											<a href="${_base}/productcomment/delete?commentId='{{:commentId}}'" class="blue-border">废弃</a>
+											<a href="javaScript:void(0)" onclick="pager._discardCommentById('{{:commentId}}')" class="blue-border">废弃</a>
 										</td>
 									</tr>
 								</script>
@@ -162,9 +184,15 @@
 </body>
 <script type="text/javascript">
 	var pager;
-	var count = '${count}';
-	var prodInfoList = '${prodInfoList}';
-	var productEditInfo = '${productEditInfo}';
+	<%-- 全选 --%>
+	$('#TableView').delegate("input[name='checkall']",'click',function(){
+		pager._clickAll($(this));
+	});		
+	
+	<%-- 单选 --%>
+	$('#TableView').delegate("input[name='box']",'click',function(){
+		pager._clicksingle($(this));
+	});	
 	(function () {
 		<%-- 高级区域 --%>
 		$(".form-label ul li .sos a").click(function () {

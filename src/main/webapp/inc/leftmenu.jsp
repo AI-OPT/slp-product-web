@@ -91,7 +91,7 @@
                         </a>
                         <!--二级菜单-->
                         <ul class="submenu">
-                            <li><a href="#">评价列表</a></li>
+                            <li><a href="${_base}/productcomment/list" target="mainFrame">评价列表</a></li>
                         </ul>
                         <!--二级菜单结束-->
                     </li>
