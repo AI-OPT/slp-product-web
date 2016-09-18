@@ -49,6 +49,34 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
     		$("#standedProdId").val("");
     		$("#orderId").val("");
     	},
+    	//全选
+		_clickAll: function (obj) {
+			var check = true;
+			if (!obj.is(':checked')) {
+				check = false;
+			}
+			$("input:checkbox[name='box']").prop("checked", check);
+		},
+		//如果列表子项都选中  全选按钮则选中
+		_clicksingle: function (obj) {
+			var commentId = obj.attr("commentId");
+			var attrVal = obj.val();
+			// 若子项没有都选中,则全选也取消 --%>
+			if (!obj.is(':checked')) {
+				$("input:checkbox[name='checkall']").prop("checked", false);
+				return;
+			}
+
+			//获取列表中数据数量
+			var valNum = $("input:checkbox[name='box']").size();
+			//获取选中的数据数量
+			var checkNum = $("input:checkbox:checked[name='box']").size();
+			if (valNum == checkNum) {
+				$("input:checkbox[name='checkall']").prop("checked", true);
+			} else {
+				$("input:checkbox[name='checkall']").prop("checked", false);
+			}
+		},
     	//查询评论列表
     	_selectCommentList:function(){
     		var _this = this;
@@ -93,6 +121,37 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
 	            	_this._returnTop();
 	            }
     		});
+    	},
+    	//废弃评论
+    	_discardComment:function(commentIds){
+    		var _this = this;
+    		ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "处理中，请等待...",
+				url: _base+"/productcomment/discardComment",
+				data:{"commentIds":commentIds},
+				success: function(data){
+					_this._selectCommentList();
+				}
+			});
+    	},
+    	_discardCommentById(commentId){
+    		var _this = this;
+    		Dialog({
+				title:"提示",
+				content: "确定废弃该评论吗？",
+				icon: 'help',
+				cancelValue:'取 消',
+				okValue: '确 定',
+				ok: function () {
+					_this._discardComment(commentId);
+					this.close();
+				},
+				cancel:function(){
+					this.close();
+				}
+			}).show();
     	},
     	//滚动到顶部
     	_returnTop:function(){
