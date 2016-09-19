@@ -25,7 +25,7 @@ require("app/util/aiopt-validate-ext");
     var upValidator;
     
   //表单校验对象
-	var validator = new Validator({
+	/*var validator = new Validator({
 		element: $(".form-label")
 	});
 	validator.addItem({
@@ -37,7 +37,7 @@ require("app/util/aiopt-validate-ext");
 		required: true,
 		pattern: "[A-Z]{1}",
 		errormessagePattern:'请输入大写字母'
-	});
+	});*/
     
 	
     //定义页面组件类
