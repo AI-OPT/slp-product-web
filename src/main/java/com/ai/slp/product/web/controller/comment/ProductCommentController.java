@@ -105,8 +105,10 @@ public class ProductCommentController {
 						header.put("appkey", userServerAppKey);
 						// 设置用户名
 						String userInfoStr = HttpClientUtil.sendPost(url, queryParam, header);
-						JSONObject json = JSON.parseObject(userInfoStr);
-						String userName = json.getString("userName");
+						JSONObject userjson = JSON.parseObject(userInfoStr);
+						String userDataStr = userjson.getString("data");
+						JSONObject userData = JSON.parseObject(userDataStr);
+						String userName = userData.getString("userName");
 						pageInfo.setUserName(userName);
 						pageInfoList.add(pageInfo);
 					}

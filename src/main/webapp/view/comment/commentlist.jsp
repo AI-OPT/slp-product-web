@@ -122,7 +122,7 @@
 								<table id="TableView" class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th><input id="checkall" name="checkall" type="checkbox" value="" />&nbsp;全选</th>
+										<th><input id="checkall" name="checkall" type="checkbox" value="" /></th>
 										<th>商品评价</th>
 										<th>评价时间</th>
 										<th>评价人</th>
@@ -163,7 +163,7 @@
 										</td>
 										<td>
 											{{if isPicture=="Y"}}
-												<a href="javaScript:void(0)" onclick="pager._showImages({{:commentId}})" class="blue-border">查看</a>
+												<a href="javaScript:void(0)" onclick="pager._showImages({{:commentId}})" class="blue-border">查看图片</a>
 											{{else}}
 												无
 											{{/if}}
@@ -196,6 +196,32 @@
 								</ul>
 							</div>
 							<!--分页结束-->
+							
+						<script id="commentImageTemple" type="text/x-jsrender">
+                         <div id="picarea">
+                           <div id="bigpicarea">
+							 {{for bigImagesUrl}}
+								<div id="image-{{: #getIndex()+1}}" class="image"><a href="javascript:void(0)"><img alt="" src="{{:#data}}" width="360" height="457"></a><div class="word"></div>
+                            	</div>
+							 {{/for}}
+						   </div>
+						 </div>
+                         <div id="smallpicarea">
+                            <div id="thumbs">
+                                <ul>
+                                    <li class="first btnPrev"><i id="play_prev" class="icon-angle-left"></i></li>
+                                	{{for smallImagesUrl}}
+										{{if #index<4}}
+										<li class="slideshowItem"><a id="thumb-{{: #getIndex()+1}}" href="javascript:"><img src="{{:#data}}"></a></li>
+                                		{{else}}
+										<li class="slideshowItem" style="display:none"><a id="thumb-{{: #getIndex()+1}}" href="javascript:"><img src="{{:#data}}"></a></li>
+										{{/if}}
+										{{/for}}
+                                    <li class="last btnNext"><i id="play_next" class="icon-angle-right"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                   		</script>
 						</div>
 					</div>
 				</div>

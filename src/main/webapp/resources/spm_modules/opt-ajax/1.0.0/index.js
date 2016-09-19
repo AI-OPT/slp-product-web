@@ -7,6 +7,7 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
     require('jquery-form/3.51.0/jquery.form');
     
     var processingDialog = Dialog({
+    	closeIconShow:false,
     	icon:"loading",
         content: "<div class='word'>正在处理中，请稍候..</div>"
     });
