@@ -60,6 +60,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			$("#addStorage").attr("onclick","pager._addStorage();");
 			$("#stoAddGroupId").val(groupId);
 			$("#stoAddGroupPn").val(pNum);
+			$("#editTitle").html("增加库存");
 			//若不包含销售属性,则直接返回
 			if (!hasSale){
 				//取消只读
@@ -364,7 +365,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			//名称
 			$("#newStorageName").val(nameTd.prev().html());
 			$("#storageId").val(storageId);
-
+			$("#editTitle").html("编辑库存");
 			//若不包含销售属性,则直接返回
 			if (!hasSale){
 				$('#eject-mask').fadeIn(100);

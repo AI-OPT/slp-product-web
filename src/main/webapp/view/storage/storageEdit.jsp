@@ -21,7 +21,7 @@
 <div class="eject-big">
     <div class="eject-medium" id="edit-medium">
         <div class="eject-medium-title">
-            <p>编辑库存</p>
+            <p id="editTitle">编辑库存</p>
             <p class="img" onclick="pager._closeAddStoView();"><i class="fa fa-times"></i></p>
         </div>
         <div class="form-label">
