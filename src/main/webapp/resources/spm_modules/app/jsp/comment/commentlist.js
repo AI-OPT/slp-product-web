@@ -32,6 +32,7 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
     	events: {
     		//查询在售商品
             "click #selectCommentList":"_selectCommentList",
+            "click #discardMoreBtn":"_discardMoreComment"
             },
     	//重写父类
     	setup: function () {
@@ -80,13 +81,13 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
     	//查询评论列表
     	_selectCommentList:function(){
     		var _this = this;
-    		var shopScoreMsStr = $("#shopScoreMs option:selected").val();
+    		var shopScoreMsStr = $("#shopScoreMs").val();
     		var shopScoreMs = shopScoreMsStr?parseInt(shopScoreMsStr):null;
     		var commentTimeBegin = $("#commentTimeBegin").val();
     		var commentTimeEnd = $("#commentTimeEnd").val();
-    		var shopScoreWlStr = $("#shopScoreWl option:selected").val();
+    		var shopScoreWlStr = $("#shopScoreWl").val();
     		var shopScoreWl = shopScoreWlStr?parseInt(shopScoreWlStr):null;
-    		var shopScoreFwStr = $("#shopScoreFw option:selected").val();
+    		var shopScoreFwStr = $("#shopScoreFw").val();
     		var shopScoreFw = shopScoreFwStr?parseInt(shopScoreFwStr):null;
     		var standedProdId = $("#standedProdId").val()?$("#standedProdId").val().trim():"";
     		var orderId = $("#orderId").val()?$("#orderId").val().trim():"";
@@ -122,6 +123,43 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
 	            }
     		});
     	},
+    	//批量审核通过弹框
+		_discardMoreComment: function () {
+			var _this = this;
+			var checkNum = $("input:checkbox:checked[name='box']").size();
+			if (checkNum == 0) {
+				var d = Dialog({
+					title:"提示",
+					content: "请选择要屏蔽的数据!",
+					icon: 'warning',
+					okValue: '确 定',
+					ok: function () {
+						this.close();
+					}
+				});
+				d.show();
+			} else {
+				Dialog({
+					title:"提示",
+					content: "确定屏蔽这些评论吗？",
+					icon: 'help',
+					cancelValue:'取 消',
+					okValue: '确 定',
+					ok: function () {
+						var commentIds = '';
+						//获取列表中的选中项
+						$("[name='box']:checked").each(function (index, element) {
+							commentIds += $(this).val() + ",";
+						});
+						_this._discardComment(commentIds);
+						this.close();
+					},
+					cancel:function(){
+						this.close();
+					}
+				}).show();
+			}
+		},
     	//废弃评论
     	_discardComment:function(commentIds){
     		var _this = this;
@@ -136,11 +174,27 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
 				}
 			});
     	},
-    	_discardCommentById(commentId){
+    	_showImages:function(commentId){
+    		ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "处理中，请等待...",
+				url: _base+"/productcomment/selectCommentImages",
+				data:{"commentId":commentId},
+				success: function(data){
+					if(data != null && data != 'undefined' && data.length>0){
+	            		var template = $.templates("#searchCommentTemple");
+	            	    var htmlOutput = template.render(data);
+	            	    $("#searchCommentData").html(htmlOutput);
+	            	}
+				}
+			});
+    	},
+    	_discardCommentById:function(commentId){
     		var _this = this;
     		Dialog({
 				title:"提示",
-				content: "确定废弃该评论吗？",
+				content: "确定屏蔽该评论吗？",
 				icon: 'help',
 				cancelValue:'取 消',
 				okValue: '确 定',
