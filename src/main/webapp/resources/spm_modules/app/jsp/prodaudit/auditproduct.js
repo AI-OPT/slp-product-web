@@ -12,7 +12,8 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 	    require("opt-paging/aiopt.pagination");
 	    require("twbs-pagination/jquery.twbsPagination.min");
 	   
-	    
+	    require("jquery-validation/1.15.1/jquery.validate");
+		require("app/util/aiopt-validate-ext");
 	    var SendMessageUtil = require("app/util/sendMessage");
 	    
 	    //实例化AJAX控制处理对象
@@ -70,8 +71,8 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 			var prodId = $("#prodId").val();
 			prodIdList.push(prodId);
 			//prodIdList[0]=prodId;
-			//this._closeAudit();
-			this._showRefuseSuccess();
+			this._closeAudit();
+			
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
@@ -82,21 +83,30 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 					//获取数据成功
 					if("1"===data.statusCode){
 						//返回列表
-						window.history.go(-1)
+						//window.history.go(-1)
+						_this._showPassSuccess();
 					}
 				}
 			});
 			},
+			
 			//点击确认审核拒绝
 			_auditRefuse:function(){
 				var _this = this;
-				var prodIdList = new Array();
 				var prodId = $("#prodId").val();
+				var validateForm = $("#prodAttrForm").validate();
+				if(!validateForm.form()){
+					return;
+				}
+				var prodIdList = new Array();
+				//问题描述
 				var refuseReason = $("#refuseReason").val();
 				var refuseDes = $("#refuseDes").val();
 				prodIdList.push(prodId);
+				
 				//prodIdList[0]=prodId;
-				this._showRefuseSuccess();
+				//this._showRefuseSuccess();
+				this._closeRefuse();
 				ajaxController.ajax({
 					type: "post",
 					processing: true,
@@ -108,16 +118,15 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 						if("1"===data.statusCode){
 							//返回列表
 							//window.history.go(-1)
-							//_showRefuseSuccess()
+							_this._showRefuseSuccess();
 						}
 					}
 				});
+				
 			},
 			
 			//审核拒绝成功后弹框
 			_showRefuseSuccess:function(){
-				$("#refuseReason").val("");
-				$("#refuseDes").val("");
 				$('#eject-mask').fadeIn(100);
 				$('#successRefuse-small').slideDown(200);
 			},
@@ -128,7 +137,7 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 			//审核通过成功弹框
 			_showPassSuccess:function(){
 				$('#eject-mask').fadeIn(100);
-				$('#_showRefuseSuccess').slideDown(200);
+				$('#successPass-small').slideDown(200);
 			},
 			_successPassBtn:function(){
 				window.history.go(-1);

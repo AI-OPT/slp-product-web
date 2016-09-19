@@ -39,7 +39,7 @@
 
 <!-- 拒绝提示框 -->
 <div class="eject-big">
-    <div class="eject-samll" id="refuse-small">
+    <div class="eject-medium" id="refuse-small">
        <!--  <div class="eject-medium-title">
             <p id="refuseCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div> -->
@@ -63,8 +63,8 @@
 	               <li>
 	                   <p class="word"><span>*</span>问题描述</p>
 	                   <p><textarea id="refuseDes" name="refuseDes" class="int-text textarea-xlarge"
-												  maxlength="100" style="width:190px;height:80px;"></textarea>
-	                   <!-- <textarea id="refuseDes" type="text" class="int-text int-medium"  style="width:190px;height:80px;"></textarea> -->
+												  maxlength="100" style="width:190px;height:80px;" 
+												  required data-msg-required="问题描述不能为空"></textarea>
 	                   </p>
 	                   
 	               </li>
@@ -286,12 +286,6 @@
 								<h5 class="pull-left">商品预览图</h5>
 							</header>
 							<div class="form-label bd-bottom"><!--查询条件-->
-								<%-- <%
-									String picSize = "78x78";
-									IImageClient imageClient = IDPSClientFactory.getImageClient(SysCommonConstants.ProductImage.IDPSNS);
-									request.setAttribute("imgClient",imageClient);
-									request.setAttribute("picSize",picSize);
-								%> --%>
 								<ul>
 									<li class="width-xlag">
 										<p class="word"><b class="red">*</b>商品主图</p>
@@ -349,9 +343,11 @@
                             
 	                        <div class="row pt-30">
 	                            <p class="center pr-30 mt-30">
-	                                <input id="auditMoreBtn" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
+	                                <input id="auditMoreBtn" type="button" 
+	                                class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
 	                                       value="审核通过">
-	                                <input id="refuseMoreBtn" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
+	                                <input id="refuseMoreBtn" type="button" 
+	                                class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
 	                                       value="审核拒绝">
 	                            </p>
 	                        </div>
