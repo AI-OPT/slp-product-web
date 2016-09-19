@@ -19,20 +19,17 @@
 						<!-- 查询条件 -->
 						<div class="form-label">
 							<ul>
-								<li class="col-md-12">
+								<li class="col-md-6">
 									<p class="word">商品名称</p>
 									<p><input id="standedProductName" type="text" class="int-text int-medium"></p>
-									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
-									</p>
+								</li>
+								<li class="col-md-6">
+									<p class="word">商品ID</p>
+									<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
 								</li>
 							</ul>
 							<!--点击展开-->
-							<div id="selectDiv" class="open" style="display:none;">
 								<ul>
-									<li class="col-md-6">
-										<p class="word">商品ID</p>
-										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
-									</li>
 									<li class="col-md-6">
 										<p class="word">商品类型</p>
 										<p>
@@ -67,7 +64,6 @@
 									</script>
 								</li>
 							</ul>
-							</div>
 								<ul>
 									<li class="width-xlag">
 										<p class="word">&nbsp;</p>
