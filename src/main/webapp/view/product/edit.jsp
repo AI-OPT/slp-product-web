@@ -12,6 +12,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<title>运营管理</title>
 	<%@ include file="/inc/inc.jsp" %>
+	<link rel="stylesheet" type="text/css" href="${spmRes}/webuploader/webuploader.css"/>
 	<style type="text/css">
 		.form-label span {
 			color: rgb(0, 0, 0);
@@ -91,6 +92,7 @@
 </div>
 <!--选择省份 大结束-->
 <input type="file" id="uploadFile" style="display: none;">
+
 <div class="content-wrapper-iframe"><!--外围框架-->
 	<div class="row"><!--外围框架-->
 		<div class="col-lg-12"><!--删格化-->
@@ -297,7 +299,8 @@
 							<h5 class="pull-left">商品预览图</h5>
 						</header>
 						<!--标题结束-->
-						<div class="form-label bd-bottom"><!--查询条件-->
+						<div id="imgDiv" class="form-label bd-bottom"><!--查询条件-->
+							<div id="filePickerer" attrVal="0">选择图片</div>
 							<ul>
 								<li class="width-xlag pl-40">
 									提示：请上传商品主体正面照片jpg/png格式，不小于700x700px的方形图片，单张不能超过3M，最多6张。
@@ -335,8 +338,9 @@
 											</p>
 										</c:forEach>
 									</div>
-									<p ><input type="button" class="biu-btn btn-primary btn-large mt-25" value="上传图片" attrVal = "0"/>
-										<!--<input type="file" class="file">--></p>
+									<p>
+										<input type="button" class="biu-btn btn-primary btn-large mt-25" value="上传图片" attrVal = "0"/>
+									</p>
 								</li>
 							</ul>
 							<%-- 属性值图片 --%>
@@ -434,10 +438,20 @@
 		<%-- 上传图片 --%>
 		$('.width-xlag').delegate('input[attrVal]','click',function(){
 			picAttrVal = $(this).attr('attrVal');
+			var inputFiles = $("#filePicker input:file");
+			var objects = $("#filePicker object");
+			var clickObj = $("#filePicker param[name='movie']");
 			if (window.console) {
 				console.log("img up attrValId:" + picAttrVal);
+				console.log(inputFiles.length);
+				console.log(objects.length);
 			}
-			return $("#uploadFile").click();
+			if (inputFiles.length >0){
+				inputFiles[0].click();
+			}
+			else if(clickObj.length >0){
+				clickObj[0].click();
+			}
 		});
 		<%-- 图片删除 --%>
 		$(".img").delegate(".fa.fa-times","click",function(){
