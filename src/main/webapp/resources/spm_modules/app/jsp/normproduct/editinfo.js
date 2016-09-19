@@ -93,7 +93,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 		_convertKeyAttr:function(){
 			var attrValArray = [];
 			//获取所有
-			$("#keyAttrDiv .word").each(function(i){
+			$("#keyAttrDiv .word3").each(function(i){
 				var attrId = $(this).attr('attrId');
 				var valWay = $(this).attr('valueType');
 				switch (valWay){
@@ -129,7 +129,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 		_convertSaleAttr:function(){
 			var attrValArray = [];
 			//获取所有
-			$("#saleAttrDiv .word").each(function(i){
+			$("#saleAttrDiv .word3").each(function(i){
 				var attrId = $(this).attr('attrId');
 				var valWay = $(this).attr('valueType');
 				switch (valWay){
