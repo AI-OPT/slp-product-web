@@ -24,22 +24,22 @@
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性名称</p>
-					                    <p><input name="attrName" type="text" class="int-text int-medium" maxlength="15"
+					                    <p><input name="attrName0" type="text" class="int-text int-medium" maxlength="15"
 					                              required data-msg-required="属性名称不能为空"
-                                                  val-tag="attrName0"></p>
+                                                  val-tag="attrName"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>名称首字母(大写)</p>
-										<p><input  name="firstLetter" type="text" class="int-text int-medium"  maxlength="1"
+										<p><input  name="firstLetter0" type="text" class="int-text int-medium"  maxlength="1"
 												  required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
-                                                  data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter0"></p>
+                                                  data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter"></p>
 									</li>
 					             </ul>
 					             <ul>
 					             	<li class="col-md-12 ui-form-item">
 					             		<p class="word"><span>*</span>属性值输入方式</p>
 					             		<p>
-					                    	<select id="test" name="valueWay" class="select select-medium">
+					                    	<select id="test" name="valueWay0" class="select select-medium">
 							                   	<option value="1">下拉单选</option>
 							                   	<option value="2">多选</option>
 							                   	<option value="3">可输入文本框(单行)</option>
@@ -92,26 +92,28 @@
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性名称</p>
-					                    <p><input name="attrName" type="text" class="int-text int-medium" 
-											maxlength="20"></p>
+					                    <p><input name="attrName{{:num}}" type="text" class="int-text int-medium" 
+											 maxlength="15"
+					                         required data-msg-required="属性名称不能为空"
+                                             val-tag="attrName"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>属性名称首字母</p>
-										<p><input  name="firstLetter" type="text" class="int-text int-medium" 
-										   maxlength="1"></p>
+										<p><input  name="firstLetter{{:num}}" type="text" class="int-text int-medium" 
+										     maxlength="1"
+										     required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
+                                             data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter"></p>
 									</li>
 					             </ul>
 					             <ul>
 					             	<li class="col-md-12 ui-form-item">
 					             		<p class="word"><span>*</span>属性值输入方式</p>
 					             		<p>
-					                    	<select id="test" name="valueWay" class="select select-medium">
+					                    	<select id="test" name="valueWay{{:num}}" class="select select-medium">
 							                   	<option value="1">下拉单选</option>
 							                   	<option value="2">多选</option>
 							                   	<option value="3">可输入文本框(单行)</option>
 							                   	<option value="4">可输入文本框(多行)</option>
-							                   	<option value="5">日期时间</option>
-							                   	<option value="6">日期时间段</option>
 					                    	</select>
 					                    </p>
 					            	</li>
@@ -139,95 +141,4 @@
         });
     })();
 </script>
-
-<!-- <script type="text/javascript">
-	var pager;
-	var count = '${count}';
-	(function () {
-		seajs.use('app/jsp/prodAttr/addAttr', function(
-				addAttrPager) {
-			pager = new addAttrPager({
-				element : document.body
-			});
-			pager.render();
-		});
-	})();
-</script> -->
-
-<!-- <script type="text/javascript">
-	var i=1;
-	function add(){
-		i++;
-		var div=document.createElement('div');
-		var html= '<div class="col-lg-12"><div class="row"><div class="col-lg-12"><div class="main-box clearfix"><div class="form-label"><ul><li><p class="word">'
-		+'属性名称</p><p><input id="attrName_'+i +'"class="int-text int-medium"></p></li><li class="width-xlag"><p class="word">'
-		+'属性名称首字母</p><p><input id="firstLetter_'+i+'"class="int-text int-medium"></p></li></ul><ul><li><p class="word">'
-		+'属性值输入方式</p><p><select id="valueWay_'+i+'"class="select select-medium"><option value="1">全部</option><option value="1">下拉单选</option><option value="2">多选</option></select></p> '
-		+' <a href="javascript:" class="biu-btn btn-blue btn-mini" onclick="RemoveAdd('+i+')">删除</a></li></ul></div></div></div></div>';
-		div.innerHTML=html;
-		div.setAttribute("id","talbe"+i);
-		div.class="row";
-		document.getElementById('table0').appendChild(div);
-	 }
-	
-	function RemoveAdd(id)
-	{
-	 var div=document.getElementById('talbe'+id);
-	 var div2=document.getElementById('table0');
-	 div2.removeChild(div);
-	}  
-	
-</script> -->
-
-
-
-<!-- <script type="text/javascript">
-	function a2(){
-		i = 1;
-		var a  = $("#table_0");
-		var b = a.clone(true);
-		
-		var div = $("#table_0");
-		div.append(b);
-		i = i + 1;
-		}
-</script> -->
-
-
-<!-- <script type="text/javascript">
-		i = 1;
- 	document.getElementById("add").onclick=function(){
-	  
-		 document.getElementById("table1").innerHTML+=
-			 '<div id="table_'+i+'"><div class="row"><div class="col-lg-12"><div class="row"><div class="col-lg-12"><div class="main-box clearfix"><div class="form-label"><ul><li><p class="word">属性名称</p><p><input id="attrName_'+i +'"class="int-text int-medium"></p></li><li class="width-xlag"><p class="word">属性名称首字母</p><p><input id="firstLetter_'+i+'"class="int-text int-medium"></p></li></ul><ul><li><p class="word">属性值输入方式</p><p><select id="valueWay_'+i+'"class="select select-medium"><option value="1">全部</option><option value="1">下拉单选</option><option value="2">多选</option></select></p>  <input type="button" class="biu-btn btn-blue btn-mini" value="删除"  onclick="del('+i+')"/></li></ul></div></div></div></div></div></div>'
-		 
-	  i = i + 1;
-	} 
-	function del(o){
-	 document.getElementById("table1").removeChild(document.getElementById("table_"+o));
-	}
-</script> -->
-
-<!-- <script type="text/javascript">
-//提交表单
-function submitForm(){
-	//有效性验证
-	if(!$('#itemAddForm').form('validate')){
-		$.messager.alert('提示','还未填写完成!');
-		return ;
-	}
-	
-	if("" == $("input[id='attrName']").val()){
-		$.messager.alert('提示','属性名未填写!');
-		return ;
-	}
-	
-	$.post("/item/save",$("#itemAddForm").serialize(), function(data){
-		if(data.status == 200){
-			$.messager.alert('提示','新增成功!');
-		}
-	});
-}
-</script> -->
-
 </html>
