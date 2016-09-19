@@ -183,9 +183,9 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
 				data:{"commentId":commentId},
 				success: function(data){
 					if(data != null && data != 'undefined' && data.length>0){
-	            		var template = $.templates("#searchCommentTemple");
-	            	    var htmlOutput = template.render(data);
-	            	    $("#searchCommentData").html(htmlOutput);
+//	            		var template = $.templates("#searchCommentTemple");
+//	            	    var htmlOutput = template.render(data);
+//	            	    $("#searchCommentData").html(htmlOutput);
 	            	}
 				}
 			});

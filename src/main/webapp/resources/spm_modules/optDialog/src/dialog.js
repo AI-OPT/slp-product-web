@@ -324,6 +324,19 @@ $.extend(prototype, {
      */
 	
 	/**
+	 * 关闭图标是否显示
+	 * @param {boolean} 
+	 */
+	closeIconShow:function(value){
+		var $close = this._$('close');
+		if(value){
+			$close.css("display","block");
+		}else{
+			$close.css("display","none");
+		}
+	},
+	
+	/**
 	 * 图标
 	 * @param {String} 图标类型
 	 */
