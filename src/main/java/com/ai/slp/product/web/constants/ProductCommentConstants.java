@@ -28,4 +28,12 @@ public class ProductCommentConstants {
 		 */
 		public static final String NO = "0";
 	}
+	
+	/**
+	 * 配置中心key
+	 */
+	public final class CCSKey{
+		public static final String userserver_ip = "/product.comment.userserver-ip";
+		public static final String userserver_appkey = "/product.comment.userserver-appkey";
+	}
 }

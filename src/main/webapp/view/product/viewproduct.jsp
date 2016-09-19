@@ -53,7 +53,7 @@
                                 <ul>
                                     <li class="col-md-12">
                                         <p class="word3">商品卖点：</p>
-                                        <p>${productInfo.productSellPoint}</p>
+                                        <p class="wide-field">${productInfo.productSellPoint}</p>
                                     </li>
                                 </ul>
                             </div>

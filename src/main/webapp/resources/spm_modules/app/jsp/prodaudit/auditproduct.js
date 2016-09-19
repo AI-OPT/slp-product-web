@@ -35,8 +35,11 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 	            "click #auditCloseImg":"_closeAudit",
 	            "click #refuseBtn-close":"_closeRefuse",
 	            "click #refuseCloseImg":"_closeRefuse",
+	            "click #successCloseImg":"_closeRefuse",
 	    		"click #submitBtn":"_auditProduct",//审核商品
 	    		"click #refuseBtn":"_auditRefuse",//审核拒绝商品
+	    		"click #successRefuseBtn":"_successRefuseBtn",//审核拒绝成功
+	    		"click #successPassBtn":"_successPassBtn",//审核拒绝成功
 	            "click #auditMoreBtn":"_showAuditMore",
 	            "click #refuseMoreBtn":"_showRefuseMore"
 	            },
@@ -55,7 +58,7 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 				$('#eject-mask').fadeIn(100);
 				$('#audit-small').slideDown(200);
 			},
-			//确认提示框
+			//确认提示框关闭
 			_closeAudit:function(){
 				$('#eject-mask').fadeOut(100);
 				$('#audit-small').slideUp(150);
@@ -67,7 +70,8 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 			var prodId = $("#prodId").val();
 			prodIdList.push(prodId);
 			//prodIdList[0]=prodId;
-			this._closeAudit();
+			//this._closeAudit();
+			this._showRefuseSuccess();
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
@@ -92,7 +96,7 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 				var refuseDes = $("#refuseDes").val();
 				prodIdList.push(prodId);
 				//prodIdList[0]=prodId;
-				this._closeAudit();
+				this._showRefuseSuccess();
 				ajaxController.ajax({
 					type: "post",
 					processing: true,
@@ -103,14 +107,33 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 						//获取数据成功
 						if("1"===data.statusCode){
 							//返回列表
-							window.history.go(-1)
+							//window.history.go(-1)
+							//_showRefuseSuccess()
 						}
 					}
 				});
 			},
 			
+			//审核拒绝成功后弹框
+			_showRefuseSuccess:function(){
+				$("#refuseReason").val("");
+				$("#refuseDes").val("");
+				$('#eject-mask').fadeIn(100);
+				$('#successRefuse-small').slideDown(200);
+			},
+			_successRefuseBtn:function(){
+				window.history.go(-1);
+			},
 			
-			//审核拒绝
+			//审核通过成功弹框
+			_showPassSuccess:function(){
+				$('#eject-mask').fadeIn(100);
+				$('#_showRefuseSuccess').slideDown(200);
+			},
+			_successPassBtn:function(){
+				window.history.go(-1);
+			},
+			//审核拒绝弹框
 			_showRefuseMore:function(){
 				$('#eject-mask').fadeIn(100);
 				$('#refuse-small').slideDown(200);

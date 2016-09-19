@@ -93,13 +93,13 @@ require("app/util/aiopt-validate-ext");
 					console.log(index + " form-label");
 				}
 				//属性名称
-				var attrName = $(this).find("input[name='attrName']")[0];
+				var attrName = $(this).find("input[val-tag='attrName']")[0];
 				attrObj['attrName'] = attrName.value;
 				//首字母
-				var firstLetter = $(this).find("input[name='firstLetter']")[0];
+				var firstLetter = $(this).find("input[val-tag='firstLetter']")[0];
 				attrObj['firstLetter'] = firstLetter.value;
 				//输入值方式
-				var valueWay = $(this).find("select[name='valueWay']")[0];
+				var valueWay = $(this).find("select[id='test']")[0];
 				attrObj['valueWay'] = valueWay.value;
 				attrArr.push(attrObj);
 			});

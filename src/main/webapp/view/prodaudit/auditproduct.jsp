@@ -84,27 +84,43 @@
 </div>
 <!-- 拒绝提示框结束 -->
 
-<!-- 拒绝确认提示框 -->
+<!-- 拒绝成功提示框 -->
 <div class="eject-big">
     <div class="eject-samll" id="successRefuse-small">
-        <div class="eject-medium-title">
-            <p id="successCloseImg" class="img"><i class="fa fa-times"></i></p>
-        </div>
 
         <div class="eject-medium-complete">
             <p><img src="${uedroot}/images/eject-icon-success.png"></p>
-            <p class="word">成功</p>
+            <p class="word">商品审核拒绝成功</p>
         </div>
         <!--按钮-->
         <div class="row mt-15"><!--删格化-->
             <p class="center pr-30 mt-30">
-                <input id="successsubmitBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+                <input id="successRefuseBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
             </p>
         </div>
     </div>
     <div class="mask" id="eject-mask"></div>
 </div>
-<!-- 拒绝确认提示框结束 -->
+<!-- 拒绝成功提示框结束 -->
+
+<!-- 审核通过成功提示框 -->
+<div class="eject-big">
+    <div class="eject-samll" id="successPass-small">
+
+        <div class="eject-medium-complete">
+            <p><img src="${uedroot}/images/eject-icon-success.png"></p>
+            <p class="word">商品审核通过成功</p>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="successPassBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+            </p>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
+<!-- 审核通过成功提示框结束 -->
 
 
 <div class="content-wrapper-iframe"><!--外围框架-->
@@ -146,7 +162,7 @@
 								<ul>
 									<li class="col-md-12">
 										<p class="word3">商品卖点：</p>
-										<p>${productInfo.productSellPoint}</p>
+										<p class="wide-field">${productInfo.productSellPoint}</p>
 									</li>
 								</ul>
 							</div>
@@ -270,12 +286,12 @@
 								<h5 class="pull-left">商品预览图</h5>
 							</header>
 							<div class="form-label bd-bottom"><!--查询条件-->
-								<%
+								<%-- <%
 									String picSize = "78x78";
 									IImageClient imageClient = IDPSClientFactory.getImageClient(SysCommonConstants.ProductImage.IDPSNS);
 									request.setAttribute("imgClient",imageClient);
 									request.setAttribute("picSize",picSize);
-								%>
+								%> --%>
 								<ul>
 									<li class="width-xlag">
 										<p class="word"><b class="red">*</b>商品主图</p>

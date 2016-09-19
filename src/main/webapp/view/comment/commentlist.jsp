@@ -37,9 +37,19 @@
 							<div id="selectDiv" class="open" style="display:none;">
 								<ul>
 									<li class="col-md-6">
-										<p class="word">评价时间</p>
-										<p><input id="commentTimeBegin" type="text" class="int-text int-medium"></p>
-										<p><input id="commentTimeEnd" type="text" class="int-text int-medium"></p>
+										<p class="word">评价开始时间</p>
+										<p><input id="commentTimeBegin" name="commentTimeBegin" class="int-text int-medium "
+											  type="text" readonly
+											  onfocus="WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentTimeEnd\');}'})"/>
+										<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
+									</li>
+									<li class="col-md-6">
+										<p class="word">评价结束时间</p>
+										<p><input id="commentTimeEnd" name="commentTimeEnd" class="int-text int-medium "
+											  type="text" readonly
+											  onfocus="WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'commentTimeBegin\');}'})"/>
+										<span class="time"> <i class="fa  fa-calendar" ></i></span>
+										</p>
 									</li>
 								</ul>
 								<ul>
@@ -50,8 +60,8 @@
 											<option value="1">1分</option>
 											<option value="2">2分</option>
 											<option value="3">3分</option>
-											<option value="3">4分</option>
-											<option value="3">5分</option>
+											<option value="4">4分</option>
+											<option value="5">5分</option>
 										</select>
 									</li>
 									<li class="col-md-6">
@@ -61,8 +71,8 @@
 											<option value="1">1分</option>
 											<option value="2">2分</option>
 											<option value="3">3分</option>
-											<option value="3">4分</option>
-											<option value="3">5分</option>
+											<option value="4">4分</option>
+											<option value="5">5分</option>
 										</select>
 									</li>
 								</ul>
@@ -97,8 +107,14 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!--标题-->
 						<header class="main-box-header clearfix">
-							<h2 class="pull-left">查询结果</h2>
+							<h2 class="pull-left">商品评论列表</h2>
 						</header>
+						<div class="row"><!--删格化-->
+                                <p class="right pr-30">
+                                    <input id="discardMoreBtn" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
+                                           value="批量屏蔽">
+                                </p>
+                        </div>
 						<!--标题结束-->
 						<div class="main-box-body clearfix">
 							<!--table表格-->
@@ -106,7 +122,7 @@
 								<table id="TableView" class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th><input id="checkall" name="checkall" type="checkbox" value="" />&nbsp;全选</th>
+										<th><input id="checkall" name="checkall" type="checkbox" value="" /></th>
 										<th>商品评价</th>
 										<th>评价时间</th>
 										<th>评价人</th>
@@ -145,7 +161,13 @@
 											<div class="center-hind" >{{:commentBody}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:commentBody}}</div>
 										</td>
-										<td></td>
+										<td>
+											{{if isPicture=="Y"}}
+												<a href="javaScript:void(0)" onclick="pager._showImages({{:commentId}})" class="blue-border">查看图片</a>
+											{{else}}
+												无
+											{{/if}}
+										</td>
 										<td>
 											{{if shopScoreFw != null}}
 												{{:shopScoreFw}}分
@@ -163,7 +185,7 @@
 										</td>
 										<td>{{:orderId}}</td>
                                         <td>
-											<a href="javaScript:void(0)" onclick="pager._discardCommentById('{{:commentId}}')" class="blue-border">废弃</a>
+											<a href="javaScript:void(0)" onclick="pager._discardCommentById('{{:commentId}}')" class="blue-border">屏蔽</a>
 										</td>
 									</tr>
 								</script>
@@ -174,6 +196,32 @@
 								</ul>
 							</div>
 							<!--分页结束-->
+							
+						<script id="commentImageTemple" type="text/x-jsrender">
+                         <div id="picarea">
+                           <div id="bigpicarea">
+							 {{for bigImagesUrl}}
+								<div id="image-{{: #getIndex()+1}}" class="image"><a href="javascript:void(0)"><img alt="" src="{{:#data}}" width="360" height="457"></a><div class="word"></div>
+                            	</div>
+							 {{/for}}
+						   </div>
+						 </div>
+                         <div id="smallpicarea">
+                            <div id="thumbs">
+                                <ul>
+                                    <li class="first btnPrev"><i id="play_prev" class="icon-angle-left"></i></li>
+                                	{{for smallImagesUrl}}
+										{{if #index<4}}
+										<li class="slideshowItem"><a id="thumb-{{: #getIndex()+1}}" href="javascript:"><img src="{{:#data}}"></a></li>
+                                		{{else}}
+										<li class="slideshowItem" style="display:none"><a id="thumb-{{: #getIndex()+1}}" href="javascript:"><img src="{{:#data}}"></a></li>
+										{{/if}}
+										{{/for}}
+                                    <li class="last btnNext"><i id="play_next" class="icon-angle-right"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                   		</script>
 						</div>
 					</div>
 				</div>
@@ -184,6 +232,10 @@
 </body>
 <script type="text/javascript">
 	var pager;
+	<%-- 展示日历 --%>
+	$('#selectDiv').delegate('.fa.fa-calendar','click',function(){
+		$(this).parent().prev().focus();
+	});
 	<%-- 全选 --%>
 	$('#TableView').delegate("input[name='checkall']",'click',function(){
 		pager._clickAll($(this));
