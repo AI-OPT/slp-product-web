@@ -10,6 +10,31 @@
 </head>
 
 <body>
+<!--图片展示 -->
+<div class="eject-big" >
+		<div class="eject-medium" id="look" >
+			<div class="eject-medium-title">
+				<p>查看图片</p>
+				<p class="img" id="imageCloseBtn"><i class="fa fa-times"></i></p>
+			</div>
+			<div class="roll-scroll">
+			 <div id="loopedSlider">
+	            <div class="slidepic" id="imageData">
+	            </div>
+	            <ul class="nav-buttons">
+	                <li class="p"><a href="javascript:void(0);" class="previous"><i class=" icon-chevron-left"></i></a></li>
+	                <li class="n"><a href="javascript:void(0);" class="next"><i class="icon-chevron-right"></i></a></li>
+	            </ul>
+	        </div>
+	        <script id="imageTemple" type="text/template">
+				<div id="photo-{{:#index+1}}"><img src="{{:picAddr}}" width="400" height="230"/></div>
+			</script>
+			</div>
+		</div>	
+		<div class="mask" id="eject-mask"></div>
+</div>
+<!--图片展示结束-->	
+
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
 	<div class="row"><!--外围框架-->
 		<div class="col-lg-12"><!--删格化-->
@@ -196,32 +221,6 @@
 								</ul>
 							</div>
 							<!--分页结束-->
-							
-						<script id="commentImageTemple" type="text/x-jsrender">
-                         <div id="picarea">
-                           <div id="bigpicarea">
-							 {{for bigImagesUrl}}
-								<div id="image-{{: #getIndex()+1}}" class="image"><a href="javascript:void(0)"><img alt="" src="{{:#data}}" width="360" height="457"></a><div class="word"></div>
-                            	</div>
-							 {{/for}}
-						   </div>
-						 </div>
-                         <div id="smallpicarea">
-                            <div id="thumbs">
-                                <ul>
-                                    <li class="first btnPrev"><i id="play_prev" class="icon-angle-left"></i></li>
-                                	{{for smallImagesUrl}}
-										{{if #index<4}}
-										<li class="slideshowItem"><a id="thumb-{{: #getIndex()+1}}" href="javascript:"><img src="{{:#data}}"></a></li>
-                                		{{else}}
-										<li class="slideshowItem" style="display:none"><a id="thumb-{{: #getIndex()+1}}" href="javascript:"><img src="{{:#data}}"></a></li>
-										{{/if}}
-										{{/for}}
-                                    <li class="last btnNext"><i id="play_next" class="icon-angle-right"></i></li>
-                                </ul>
-                            </div>
-                        </div>
-                   		</script>
 						</div>
 					</div>
 				</div>
