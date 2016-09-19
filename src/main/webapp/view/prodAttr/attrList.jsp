@@ -40,7 +40,6 @@
 								   5.日期时间 6.日期时间段 -->
                    <p>
                    	<select id="upValueWay" class="select select-medium">
-	                   	<option value="">全部</option>
 	                   	<option value="1">下拉单选</option>
 	                   	<option value="2">多选</option>
 	                   	<option value="3">可输入文本框</option>
