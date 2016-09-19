@@ -98,10 +98,10 @@ require("app/util/aiopt-validate-ext");
 				var attrId = $(this).find("input[name='attrId']")[0];
 				attrObj['attrId'] = attrId.value;
 				//属性名称
-				var attrValueName = $(this).find("input[name='attrValueName']")[0];
+				var attrValueName = $(this).find("input[val-tag='attrValueName']")[0];
 				attrObj['attrValueName'] = attrValueName.value;
 				//首字母
-				var firstLetter = $(this).find("input[name='firstLetter']")[0];
+				var firstLetter = $(this).find("input[val-tag='firstLetter']")[0];
 				attrObj['firstLetter'] = firstLetter.value;
 				attrArrValue.push(attrObj);
 			});
