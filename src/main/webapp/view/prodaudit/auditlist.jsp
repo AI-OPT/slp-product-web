@@ -12,7 +12,7 @@
 <body>
 <!-- 拒绝提示框 -->
 <div class="eject-big">
-    <div class="eject-samll" id="refuse-small">
+    <div class="eject-medium" id="refuse-small">
         <!-- <div class="eject-medium-title">
             <p>审核拒接操作！</p>
             <p id="refuseCloseImg" class="img"><i class="fa fa-times"></i></p>
@@ -38,11 +38,8 @@
 	               <li>
 	                   <p class="word"><span>*</span>问题描述</p>
 	                   <p><textarea id="refuseDes" name="refuseDes" class="int-text textarea-xlarge"
-									maxlength="100" style="width:190px;height:80px;"></textarea></p>
-	                 <!--   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(100字符以内)</p> -->
+									maxlength="100" style="width:190px;height:80px;"
+									required data-msg-required="问题描述不能为空"></textarea></p>
 	               </li>
 	           </ul>
          </form> 	 
@@ -59,7 +56,43 @@
     <div class="mask" id="eject-mask"></div>
 </div>
 <!-- 拒绝提示框结束 -->
+<!-- 拒绝成功提示框 -->
+<div class="eject-big">
+    <div class="eject-samll" id="successRefuse-small">
 
+        <div class="eject-medium-complete">
+            <p><img src="${uedroot}/images/eject-icon-success.png"></p>
+            <p class="word">商品审核拒绝成功</p>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="successRefuseBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+            </p>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
+<!-- 拒绝成功提示框结束 -->
+
+<!-- 审核通过成功提示框 -->
+<div class="eject-big">
+    <div class="eject-samll" id="successPass-small">
+
+        <div class="eject-medium-complete">
+            <p><img src="${uedroot}/images/eject-icon-success.png"></p>
+            <p class="word">商品审核通过成功</p>
+        </div>
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="successPassBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
+            </p>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
+<!-- 审核通过成功提示框结束 -->
 
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
 	<div class="row"><!--外围框架-->

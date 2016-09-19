@@ -13,7 +13,8 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
     require("opt-paging/aiopt.pagination");
     require("twbs-pagination/jquery.twbsPagination.min");
    
-    
+    require("jquery-validation/1.15.1/jquery.validate");
+	require("app/util/aiopt-validate-ext");
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
@@ -38,6 +39,8 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
             "click #refuseCloseImg":"_closeRefuse",
             "click #submitBtn":"_auditProduct",//批量审核通过
             "click #refuseBtn":"_refuseProduct",//批量审核拒绝
+            "click #successRefuseBtn":"_successRefuseBtn",//审核拒绝成功
+    		"click #successPassBtn":"_successPassBtn",//审核拒绝成功
     		//查询
             "click #selectProductList":"_selectProductList"
             },
@@ -221,7 +224,8 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 					//获取数据成功
 					if ("1" === data.statusCode) {
 						//返回列表
-						window.location.reload();
+						//window.location.reload();
+						_this._showPassSuccess();
 					}
 				}
 			});
@@ -231,13 +235,17 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 		_refuseProduct: function () {
 			var _this = this;
 			var prodId = '';
+			var validateForm = $("#prodAttrForm").validate();
+			if(!validateForm.form()){
+				return;
+			}
 			var refuseReason = $("#refuseReason").val();
 			var refuseDes = $("#refuseDes").val();
 			//获取列表中的选中项
 			$("[name='box']:checked").each(function (index, element) {
 				prodId += $(this).val() + ",";
 			});
-			this._closeAudit();
+			this._closeRefuse();
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
@@ -248,10 +256,12 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 					//获取数据成功
 					if ("1" === data.statusCode) {
 						//返回列表
-						window.location.reload();
+						//window.location.reload();
+						_this._showRefuseSuccess();
 					}
 				}
 			});
+			
 		},
 		
 		//批量审核拒绝
@@ -272,7 +282,25 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 				$('#refuse-small').slideDown(200);
 			}
 		},
-			
+		
+		//审核拒绝成功后弹框
+		_showRefuseSuccess:function(){
+			$('#eject-mask').fadeIn(100);
+			$('#successRefuse-small').slideDown(200);
+		},
+		_successRefuseBtn:function(){
+			window.location.reload();
+		},
+		
+		//审核通过成功弹框
+		_showPassSuccess:function(){
+			$('#eject-mask').fadeIn(100);
+			$('#successPass-small').slideDown(200);
+		},
+		_successPassBtn:function(){
+			window.location.reload();
+		},
+		
 		//关闭确认提示框
 		_closeRefuse:function(){
 			$('#eject-mask').fadeOut(100);
