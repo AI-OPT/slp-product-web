@@ -23,7 +23,7 @@
 
         <div class="eject-medium-complete">
             <p><img src="${uedroot}/images/eject-icon-prompt.png"></p>
-            <p class="word">该类目的子类目将一起删除，确定删除该类目吗？</p>
+            <p class="word">确定删除该类目吗？</p>
         </div>
         <!--按钮-->
         <div class="row mt-15"><!--删格化-->
