@@ -27,6 +27,7 @@
 </script>
 
 <!-- <link rel="stylesheet" type="text/css" href="${_base}/resources/slpmall/styles/bootstrap.css"> -->
+<link rel="stylesheet" type="text/css" href="${spmRes}/optDialog/css/ui-dialog.css"/>
 
 <link rel="stylesheet" type="text/css" href="${uedroot}/css/bootstrap/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="${uedroot}/css/bootstrap/font-awesome.css"/>

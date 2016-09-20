@@ -22,33 +22,71 @@ function Popup () {
     this.destroyed = false;
 
 
-    this.__popup = $('<div />')
-    /*使用 <dialog /> 元素可能导致 z-index 永远置顶的问题(chrome)*/
-    .css({
-        display: 'none',
-        position: 'absolute',
-        /*
-        left: 0,
-        top: 0,
-        bottom: 'auto',
-        right: 'auto',
-        margin: 0,
-        padding: 0,
-        border: '0 none',
-        background: 'transparent'
-        */
-        outline: 0
-    })
-    .attr('tabindex', '-1')
-    .html(this.innerHTML)
-    .appendTo('body');
+    //如果当前窗口包含在iframe中，则弹出窗体要覆盖顶级窗口
+    if(top.location!=self.location){
+    	$('#popup',window.top.document).remove();
+    	$('body',window.top.document).append('<div id="popup" />');
+    	this.__popup = $('#popup',window.top.document)
+        /*使用 <dialog /> 元素可能导致 z-index 永远置顶的问题(chrome)*/
+        .css({
+            display: 'none',
+            position: 'absolute',
+            /*
+            left: 0,
+            top: 0,
+            bottom: 'auto',
+            right: 'auto',
+            margin: 0,
+            padding: 0,
+            border: '0 none',
+            background: 'transparent'
+            */
+            outline: 0
+        })
+        .attr('tabindex', '-1')
+        .html(this.innerHTML);
+        //.appendTo('body');
+    	
+    	
+    	$('#backdrop',window.top.document).remove();
+    	$('body',window.top.document).append('<div id="backdrop" />');
+        this.__backdrop = this.__mask = $('#backdrop',window.top.document)
+        .css({
+            opacity: .7,
+            background: '#ddd'
+        });
+    }
+    else{
+    	this.__popup = $('<div />')
+        /*使用 <dialog /> 元素可能导致 z-index 永远置顶的问题(chrome)*/
+        .css({
+            display: 'none',
+            position: 'absolute',
+            /*
+            left: 0,
+            top: 0,
+            bottom: 'auto',
+            right: 'auto',
+            margin: 0,
+            padding: 0,
+            border: '0 none',
+            background: 'transparent'
+            */
+            outline: 0
+        })
+        .attr('tabindex', '-1')
+        .html(this.innerHTML)
+        .appendTo('body');
 
 
-    this.__backdrop = this.__mask = $('<div />')
-    .css({
-        opacity: .7,
-        background: '#000'
-    });
+        this.__backdrop = this.__mask = $('<div />')
+        .css({
+            opacity: .7,
+            background: '#000'
+        });
+    }
+    	
+    
 
 
     // 使用 HTMLElement 作为外部接口使用，而不是 jquery 对象
@@ -271,11 +309,10 @@ $.extend(Popup.prototype, {
             Popup.current = null;
         }
 
-
-        // 从 DOM 中移除节点
-        this.__popup.remove();
-        this.__backdrop.remove();
-        this.__mask.remove();
+    	// 从 DOM 中移除节点
+    	this.__popup.remove();
+    	this.__backdrop.remove();
+    	this.__mask.remove();        	
 
 
         if (!_isIE6) {
