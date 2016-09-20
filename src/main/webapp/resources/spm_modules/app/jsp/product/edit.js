@@ -11,6 +11,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 
 	require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
+	require("ajaxFileUpload/ajaxfileupload");
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
@@ -240,99 +241,66 @@ define('app/jsp/product/edit', function (require, exports, module) {
 		//上传文件
 		_uploadFile:function(){
 			var _this = this;
+			//上传之前进行检查
 			var checkFileData = this._checkFileData();
-			if(!checkFileData){
+			if (!checkFileData) {
 				this._closeDialog();
 				return false;
 			}
-			var form = new FormData();
-			form.append("uploadFile", document.getElementById("uploadFile").files[0]);
-			form.append("imgSize","78x78");
+
 			var processingDialog = Dialog({
 				icon:"loading",
+				closeIconShow:false,//不显示关闭按钮
 				content: "<div class='word'>图片上传中，请稍候..</div>"
 			});
-			// XMLHttpRequest 对象
-			var xhr = new XMLHttpRequest();
-			var uploadURL = _base+"/home/upImg";
-			xhr.open("post", uploadURL, true);
-			processingDialog.showModal();
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState == 4) {// 4 = "loaded"
+			processingDialog.show();
+			$.ajaxFileUpload({
+				url:_base+"/home/upImg",
+				secureuri:false,
+				fileElementId:"uploadFile",//file标签的id
+				dataType: 'json',//返回数据的类型
+				data:{"imgSize":"78x78"},//一同上传的数据
+				success: function (responseData) {
 					processingDialog.close();
-					if (xhr.status == 200) {
-						var responseData = $.parseJSON(xhr.response);
-						if(responseData.statusCode=="1"){
-							var fileData = responseData.data;
-							//文件上传成功
-							if(fileData){
-								//文件标识
-								var filePosition = fileData.vfsId;
-								//文件类型
-								var fileName = fileData.fileType;
-								//文件地址
-								var fileUrl = fileData.imgUrl;
-								//_this._showMsg("上传成功:"+filePosition+","+fileName);
-								_this._closeDialog();
-								_this._showProdPicPreview(filePosition,fileName,fileUrl);
-								return;
-							}
-						}//上传失败
-						else if(responseData.statusCode=="0"){
-							_this._showFail(responseData.statusInfo);
+					if(responseData.statusCode=="1"){
+						var fileData = responseData.data;
+						//文件上传成功
+						if(fileData){
+							//文件标识
+							var filePosition = fileData.vfsId;
+							//文件类型
+							var fileName = fileData.fileType;
+							//文件地址
+							var fileUrl = fileData.imgUrl;
+							//_this._showMsg("上传成功:"+filePosition+","+fileName);
 							_this._closeDialog();
+							_this._showProdPicPreview(filePosition,fileName,fileUrl);
 							return;
 						}
+					}//上传失败
+					else if(responseData.statusCode=="0"){
+						_this._showFail(responseData.statusInfo);
+						_this._closeDialog();
+						return;
 					}
-					_this._showFail("文件上失败,状态:"+xhr.status);
+				},
+				error: function (data, status, e) {
+					processingDialog.close();
+					_this._showFail("文件上失败,状态:"+status);
 					_this._closeDialog();
 				}
-			};
-			xhr.send(form);
+			});
 		},
 		//检查文件
 		_checkFileData:function(){
-			var img = new Image();
 			var fileupload = document.getElementById("uploadFile");
 			var fileLocation = fileupload.value;
 			if(fileLocation == "" || fileLocation == null || fileLocation == undefined){
 				return false;
 			}
 
-			var fileType = fileLocation.substring(fileLocation.lastIndexOf("."));
+			var fileType = fileLocation.substring(fileLocation.lastIndexOf(".")+1).toLowerCase();
 			var fileName,fileSize;
-			if (fileupload.files && fileupload.files[0]) {
-				fileName = fileupload.files[0].name;
-				var size = fileupload.files[0].size;
-				fileSize = size/(1024 * 1024);
-				var fileSize = fileupload.files[0].size;
-			} else {
-				fileupload.select();
-				fileupload.blur();
-				var filepath = document.selection.createRange().text;
-				try {
-					var fso, f, fsize;
-					fso = new ActiveXObject("Scripting.FileSystemObject");
-					f = fso.GetFile(filepath); //文件的物理路径
-					fileName = fso.GetFileName(filepath); //文件名（包括扩展名）
-					fileSize = f.Size; //文件大小（bit）
-				} catch (e) {
-					var msgDialog = Dialog({
-						title: '提示',
-						content: e + "\n 跳出此消息框，是由于你的activex控件没有设置好,\n" +
-						"你可以在浏览器菜单栏上依次选择\n" +
-						"工具->internet选项->\"安全\"选项卡->自定义级别,\n" +
-						"打开\"安全设置\"对话框，把\"对没有标记为安全的\n" +
-						"ActiveX控件进行初始化和脚本运行\"，改为\"启动\"即可",
-						ok: function () {
-							this.close();
-						}
-					});
-					msgDialog.showModal();
-					return false;
-				}
-			}
-			fileType = fileType.toLowerCase();
 			if (window.console) {
 				console.log("上传图片信息,图片名称:" + fileName + ",图片大小:" + fileSize);
 			}
@@ -340,21 +308,9 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			var checkSize = true;
 			//文件类型
 			var checkType = true;
-			if(fileSize > ProdEditPager.FILE_MAX_SIZE){
-				this._showWarn('图片不能超过3M');
-				checkSize = false;
-			}else if($.inArray(fileType, ProdEditPager.FILE_TYPES)<0){
+			if($.inArray(fileType, ProdEditPager.FILE_TYPES)<0){
 				this._showWarn('请上传jpg/png格式图片');
 				checkType = false;
-			}else {
-				img.src = "file:///"+fileLocation;
-				img.onload=function() {
-					alert(img.width);
-					alert(img.height);
-					if (window.console) {
-						console.log("图片宽:" + img.width + ",高:" + img.height);
-					}
-				}
 			}
 			return checkSize&&checkType;
 		},

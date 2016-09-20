@@ -91,7 +91,7 @@
 	<div class="mask" id="eject-mask"></div>
 </div>
 <!--选择省份 大结束-->
-<input type="file" id="uploadFile" style="display: none;">
+<input type="file" id="uploadFile" name="uploadFile" style="display: none;" accept="image/jpeg,image/png">
 
 <div class="content-wrapper-iframe"><!--外围框架-->
 	<div class="row"><!--外围框架-->
@@ -437,20 +437,10 @@
 		<%-- 上传图片 --%>
 		$('.width-xlag').delegate('input[attrVal]','click',function(){
 			picAttrVal = $(this).attr('attrVal');
-			var inputFiles = $("#filePicker input:file");
-			var objects = $("#filePicker object");
-			var clickObj = $("#filePicker param[name='movie']");
 			if (window.console) {
 				console.log("img up attrValId:" + picAttrVal);
-				console.log(inputFiles.length);
-				console.log(objects.length);
 			}
-			if (inputFiles.length >0){
-				inputFiles[0].click();
-			}
-			else if(clickObj.length >0){
-				clickObj[0].click();
-			}
+			return $("#uploadFile").click();
 		});
 		<%-- 图片删除 --%>
 		$(".img").delegate(".fa.fa-times","click",function(){
