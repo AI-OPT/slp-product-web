@@ -12,6 +12,7 @@
  *
  */
 define(function(require){
+	require("app/jsp/comment/jquery.easing.js");
 	var $ = require('jquery');
  	$.fn.extend({ 
  		loopedSlider: function(options) {

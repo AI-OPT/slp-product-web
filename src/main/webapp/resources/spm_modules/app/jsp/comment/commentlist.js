@@ -12,7 +12,7 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
     require("app/util/jsviews-ext");
     require("opt-paging/aiopt.pagination");
     require("twbs-pagination/jquery.twbsPagination.min");
-    require("app/jsp/comment/jquery.easing.js");
+    
     require("app/jsp/comment/loopedSlider.js");
    
     
@@ -35,7 +35,9 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
     		//查询在售商品
             "click #selectCommentList":"_selectCommentList",
             "click #discardMoreBtn":"_discardMoreComment",
-            "click #imageCloseBtn":"_closeImageDialog"
+            "click #imageCloseBtn":"_closeImageDialog",
+            "click #previousBtn":"_previousImage",
+            "click #nextBtn":"_nextImage"
             },
     	//重写父类
     	setup: function () {
@@ -181,6 +183,7 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
     	 * 显示图片
     	 */
     	_showImages:function(commentId){
+    		imageCount = 0;
     		ajaxController.ajax({
 				type: "post",
 				processing: true,
@@ -200,6 +203,8 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
 	    					slideSpeed: 150,
 	    					containerClick: true,
 	    				});
+	            	    imageCount = data.data.length;
+	            	    $("#imageCount").html("1/"+imageCount);
 						$('#eject-mask').fadeIn(100);
 			    		$('#look').slideDown(200);
 	            	}
@@ -213,6 +218,33 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
     		$('#eject-mask').fadeOut(100);
     		$('#look').slideUp(150);
     	},
+    	/**
+    	 * 上张图片
+    	 */
+    	_previousImage:function(){
+    		var parentId = $("#imageData").find(".current")[0].id;
+			var parentSplit = parentId.split('-');
+			var x = ((parentSplit[1]*1)-1);
+			if(x == 0){
+				x=imageCount;
+			}
+			$("#imageCount").html(x+"/"+imageCount);
+    	},
+    	/**
+    	 * 下张图片
+    	 */
+    	_nextImage:function(){
+    		var parentId = $("#imageData").find(".current")[0].id;
+			var parentSplit = parentId.split('-');
+			var x = ((parentSplit[1]*1)+1);
+			if(x > imageCount){
+				x=1;
+			}
+			$("#imageCount").html(x+"/"+imageCount);
+    	},
+    	/**
+    	 * 屏蔽评论
+    	 */
     	_discardCommentById:function(commentId){
     		var _this = this;
     		Dialog({

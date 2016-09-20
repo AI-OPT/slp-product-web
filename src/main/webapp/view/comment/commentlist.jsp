@@ -22,13 +22,18 @@
 	            <div class="slidepic" id="imageData">
 	            </div>
 	            <ul class="nav-buttons">
-	                <li class="p"><a href="javascript:void(0);" class="previous"><i class=" icon-chevron-left"></i></a></li>
-	                <li class="n"><a href="javascript:void(0);" class="next"><i class="icon-chevron-right"></i></a></li>
+	                <li class="p"><a href="javascript:void(0);" onclick="pager._previousImage()" class="previous"><i class=" icon-chevron-left"></i></a></li>
+	                <li class="n"><a href="javascript:void(0);" onclick="pager._nextImage()" class="next"><i class="icon-chevron-right"></i></a></li>
 	            </ul>
 	        </div>
 	        <script id="imageTemple" type="text/template">
 				<div id="photo-{{:#index+1}}"><img src="{{:picAddr}}" width="400" height="230"/></div>
 			</script>
+			</div>
+			<div class="prompt-samll-confirm">
+				<ul>
+					<li id="imageCount" class="word">1/5</li>
+				</ul>
 			</div>
 		</div>	
 		<div class="mask" id="eject-mask"></div>
@@ -231,6 +236,7 @@
 </body>
 <script type="text/javascript">
 	var pager;
+	var imageCount = 0;
 	<%-- 展示日历 --%>
 	$('#selectDiv').delegate('.fa.fa-calendar','click',function(){
 		$(this).parent().prev().focus();
