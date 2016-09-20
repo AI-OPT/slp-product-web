@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -33,8 +36,10 @@ import com.ai.slp.product.api.normproduct.param.AttrMap;
 import com.ai.slp.product.api.normproduct.param.AttrQuery;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
 import com.ai.slp.product.api.product.interfaces.IProductSV;
+import com.ai.slp.product.api.product.interfaces.IProductServerSV;
 import com.ai.slp.product.api.product.param.*;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
+import com.ai.slp.product.api.productcat.param.AttrInfo;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.api.productcat.param.ProductCatInfo;
 import com.ai.slp.product.api.productcat.param.ProductCatUniqueReq;
@@ -527,5 +532,54 @@ public class ProdQueryController {
 		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
 		uiModel.addAttribute("catInfoList", productCatMap);
+	}
+	
+	/**
+	 * 查询商品被拒绝原因
+	 */
+	/*@RequestMapping("/toViewReason/{id}")
+	private void getRefuseReason(@PathVariable("id") String prodId,Model uiModel){
+		
+		IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+		ProductEditQueryReq queryReq = new ProductEditQueryReq();
+		queryReq.setTenantId(AdminUtil.getTenantId());
+		queryReq.setSupplierId(AdminUtil.getSupplierId());
+		queryReq.setProdId(prodId);
+		PageInfoResponse<ProductEditUp> refuse = productManagerSV.queryRefuse(queryReq);
+		String refuseDes;
+		
+		if (StringUtil.isBlank(refuse.getResult().get(0).getRefuseDes())) {
+			refuseDes = "没有记商品审核拒绝描述";
+		}else{
+			refuseDes = refuse.getResult().get(0).getRefuseDes();
+		}
+		uiModel.addAttribute("refuseDes", refuseDes);
+	}*/
+	
+	
+	
+	@RequestMapping("/toViewReason/{id}")
+	@ResponseBody
+	private ResponseData<PageInfoResponse<ProductEditUp>> getRefuseReason(@PathVariable("id") String prodId){
+		ResponseData<PageInfoResponse<ProductEditUp>> responseData;
+		//根据商品ID查询商品被拒绝的原因
+		
+			IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+			ProductEditQueryReq queryReq = new ProductEditQueryReq();
+			queryReq.setTenantId(AdminUtil.getTenantId());
+			queryReq.setSupplierId(AdminUtil.getSupplierId());
+			queryReq.setProdId(prodId);
+			PageInfoResponse<ProductEditUp> refuse = productManagerSV.queryRefuse(queryReq);
+			
+			if (StringUtil.isBlank(refuse.getResult().get(0).getRefuseDes())) {
+				responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(
+						ResponseData.AJAX_STATUS_FAILURE, "获取信息异常");
+			}else {
+				responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(
+						ResponseData.AJAX_STATUS_SUCCESS, "查询成功", refuse);
+			}
+		
+		return responseData;
+		
 	}
 }
