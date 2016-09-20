@@ -189,7 +189,7 @@
 										<td>{{:~timesToFmatter(operTime)}}</td>
 										<td>{{:operName}}</td>
 
-										{{if valueWay == "可输入文本框（单行）" || valueWay == "可输入文本框（多行）"}}
+										{{if valueWay == "可输入文本框" || valueWay == "可输入文本框（多行）"}}
 											<td>
 												<div>
 													<a attrId="{{:attrId}}" name="editView" href="#" class="blue-border">编辑</a>
