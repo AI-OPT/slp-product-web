@@ -37,6 +37,8 @@ import com.ai.slp.user.api.keyinfo.param.UcGroupKeyInfoVo;
 @RequestMapping("/home")
 public class HomeController {
 	private static Logger logger = LoggerFactory.getLogger(HomeController.class);
+	//图片最大体积 3M 单位B
+	private static long MAX_IMG_SIEZ = 3*1024*1024;
 
 	@RequestMapping({"","/"})
 	public String index(Model uiModel) {
@@ -80,6 +82,9 @@ public class HomeController {
 	public ResponseData<ImgFileInfoVo> uploadImg(@RequestParam("uploadFile") MultipartFile file,String imgSize){
 		ResponseData<ImgFileInfoVo> responseData = null;
 		try {
+			//图片不能大于3M
+			if (file.getSize() > MAX_IMG_SIEZ)
+				throw new BusinessException("图片大小不能超过3M");
 			ImgFileInfoVo imgFileInfoVo = saveImg(file,imgSize,700,700);
 			logger.info("\rfileUid:"+imgFileInfoVo.getVfsId()+"\rfileUrl:"+imgFileInfoVo.getImgUrl());
 			responseData = new ResponseData<ImgFileInfoVo>(ResponseData.AJAX_STATUS_SUCCESS,"上传成功",imgFileInfoVo);
