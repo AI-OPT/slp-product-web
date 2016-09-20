@@ -12,25 +12,24 @@
 <body>
 <!-- 查看原因弹框 -->
 <div class="eject-big">
-	<div class="eject-medium" id="increase-samll">
+	<div class="eject-samll" id="refuseReason-samll">
 		<!--编辑-->
 		<div class="eject-medium-title">
             <p>商品审核拒绝原因</p>
-            <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
+            <p id="refuseReasonCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
 		<div class="form-label">
            <ul>	
                <li>
-               <p><textarea id="refuseDes" name="refuseDes" class="int-text textarea-xlarge"
-						    style="width:190px;height:80px;"></textarea></p>
+               <p><textarea id="refuseDes" name="refuseDes"
+						    style="width:360px;height:100px;" readonly></textarea></p>
                </li>
            </ul>
 		</div>
 		<!--按钮-->
         <div class="row mt-15"><!--删格化-->
             <p class="center pr-30 mt-30">
-                <input id="upAttrBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="确  定">
-                <input id="increase-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
+                <input id="refuseReasonBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="确  定">
             </p>
         </div>
 	</div>	

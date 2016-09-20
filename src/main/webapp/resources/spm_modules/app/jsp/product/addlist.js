@@ -32,6 +32,8 @@ define('app/jsp/product/addlist', function (require, exports, module) {
     	},
     	//事件代理
     	events: {
+    		"click #refuseReasonCloseImg":"_closeEditDiv",
+    		"click #refuseReasonBtn":"_closeEditDiv",
     		//查询
             "click #selectProductList":"_selectProductList"
             },
@@ -133,14 +135,22 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 						var reason= data.data;
 						//_this._showSuccessMsg(reason);
 						
-						$("#refuseDes").val(reason.result.get(0).refuseDes);
+						$("#refuseDes").val(reason.refuseDes);
 
 						$('#eject-mask').fadeIn(100);
-						$('#increase-samll').slideDown(200);
+						$('#refuseReason-samll').slideDown(200);
 					}
 				}
 			});
 
+		},
+		
+		//关闭编辑页面弹出
+		_closeEditDiv:function(){
+			$('#eject-mask').fadeOut(100);
+			$('#refuseReason-samll').slideUp(150);
+			//清空数据
+			$("#refuseDes").val("");
 		},
 		 //显示信息
        /* _showSuccessMsg:function(msg){
