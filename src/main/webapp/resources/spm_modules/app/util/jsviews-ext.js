@@ -36,6 +36,12 @@ function fmoney(s, n) {
 	}
 	return t.split("").reverse().join("") + "." + r;
 }
+
+function fmoneyNoSplit(s, n) {
+	n = n > 0 && n <= 20 ? n : 2;
+	s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+	return s;
+}
 	
 /**
  * jsview标签 去除时间后两位 .0
@@ -179,7 +185,7 @@ $.views.helpers({
 		if(isNaN(li) || !li){
 			return null;
 		}
-        return fmoney(parseInt(li)/1000, 2);
+        return fmoneyNoSplit(parseInt(li)/1000, 2);
 	}
 });
 
