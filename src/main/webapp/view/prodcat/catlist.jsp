@@ -182,9 +182,11 @@
                                         <tr>
                                             <td>{{:#index+1}}</td>
                                             <td>{{:productCatId}}</td>
-                                            <td class="hind1">
+                                            <td>
+                                                <div class="hind1">
                                                 <div class="center-hind" >{{:productCatName}}</div>
                                                 <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
+                                                </div>
                                             </td>
                                             <td>{{if isChild=='Y'}}是{{else}}否{{/if}}</td>
                                             <td>{{:serialNumber}}</td>

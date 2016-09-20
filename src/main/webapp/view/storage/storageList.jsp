@@ -118,13 +118,17 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td class="hind1 text-l pl-15">
+										<td>
+											<div class="hind1 text-l pl-15">
 											<div class="center-hind" >{{:productName}}</div>
 											<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
+											</div>
 										</td>
-										<td class="hind1 text-l pl-15">
+										<td>
+											<div class="hind1 text-l pl-15">
 											<div class="center-hind" >{{:catName}}</div>
 											<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+												</div>
 										</td>
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
