@@ -537,47 +537,27 @@ public class ProdQueryController {
 	/**
 	 * 查询商品被拒绝原因
 	 */
-	/*@RequestMapping("/toViewReason/{id}")
-	private void getRefuseReason(@PathVariable("id") String prodId,Model uiModel){
-		
-		IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
-		ProductEditQueryReq queryReq = new ProductEditQueryReq();
-		queryReq.setTenantId(AdminUtil.getTenantId());
-		queryReq.setSupplierId(AdminUtil.getSupplierId());
-		queryReq.setProdId(prodId);
-		PageInfoResponse<ProductEditUp> refuse = productManagerSV.queryRefuse(queryReq);
-		String refuseDes;
-		
-		if (StringUtil.isBlank(refuse.getResult().get(0).getRefuseDes())) {
-			refuseDes = "没有记商品审核拒绝描述";
-		}else{
-			refuseDes = refuse.getResult().get(0).getRefuseDes();
-		}
-		uiModel.addAttribute("refuseDes", refuseDes);
-	}*/
-	
-	
-	
 	@RequestMapping("/toViewReason/{id}")
 	@ResponseBody
-	private ResponseData<PageInfoResponse<ProductEditUp>> getRefuseReason(@PathVariable("id") String prodId){
-		ResponseData<PageInfoResponse<ProductEditUp>> responseData;
-		//根据商品ID查询商品被拒绝的原因
-		
+	private ResponseData<ProdStateLog> getRefuseReason(@PathVariable("id") String prodId){
+		ResponseData<ProdStateLog> responseData;
+			//根据商品ID查询商品被拒绝的原因
 			IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
-			ProductEditQueryReq queryReq = new ProductEditQueryReq();
+			ProductInfoQuery queryReq = new ProductInfoQuery();
 			queryReq.setTenantId(AdminUtil.getTenantId());
 			queryReq.setSupplierId(AdminUtil.getSupplierId());
-			queryReq.setProdId(prodId);
-			PageInfoResponse<ProductEditUp> refuse = productManagerSV.queryRefuse(queryReq);
+			queryReq.setProductId(prodId);
+		    ProdStateLog refuse = productManagerSV.queryRefuseByPordId(queryReq);
+		    ResponseHeader header = refuse.getResponseHeader();
 			
-			if (StringUtil.isBlank(refuse.getResult().get(0).getRefuseDes())) {
-				responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(
-						ResponseData.AJAX_STATUS_FAILURE, "获取信息异常");
-			}else {
-				responseData = new ResponseData<PageInfoResponse<ProductEditUp>>(
-						ResponseData.AJAX_STATUS_SUCCESS, "查询成功", refuse);
-			}
+			 //保存错误
+	        if (header!=null && !header.isSuccess()){
+	        	LOG.error("Query by prodId is fail,prodId:{},headInfo:\r\n",prodId, JSON.toJSONString(header));
+	            responseData = new ResponseData<ProdStateLog>(
+	                    ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
+	        }else
+	            responseData = new ResponseData<ProdStateLog>(
+	                    ResponseData.AJAX_STATUS_SUCCESS, "OK",refuse);
 		
 		return responseData;
 		
