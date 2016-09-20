@@ -155,9 +155,11 @@
 								<script id="searchNormProductTemple" type="text/template">
 									<tr>
 											<td>{{:standedProdId}}</td>
-											<td class="hind1">
-											<div class="center-hind" >{{:productCatName}}</div>
-                                          	<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
+											<td>
+												<div class="hind1">
+												<div class="center-hind" >{{:productCatName}}</div>
+                                          		<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
+												</div>
 											</td>
 											<td>{{:productTypeName}}</td>
 											{{if picUrl==null || picUrl==""}}
@@ -165,9 +167,11 @@
 											{{else}}
 											<td><img src="{{:picUrl}}"></td>
 											{{/if}}
-											<td class="hind1">
-											<div class="center-hind" >{{:prodName}}</div>
-                                          	<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
+											<td>
+												<div class="hind1">
+												<div class="center-hind" >{{:prodName}}</div>
+                                          		<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
+												</div>
 											</td>
 											<td>{{:stateName}}</td>
 											<td>{{:~timesToFmatter(upTime)}}</td>

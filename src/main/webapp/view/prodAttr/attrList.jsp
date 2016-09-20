@@ -180,9 +180,11 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:attrId}}</td>
-										<td class="hind1">
+										<td>
+											<div class="hind1">
 											<div class="center-hind" >{{:attrName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:attrName}}</div>
+											</div>
 										</td>
 										<td>{{:valueWay}}</td>
 										<td>{{:attrValNum}}</td>
