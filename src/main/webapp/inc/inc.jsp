@@ -41,7 +41,7 @@
 <script src="${_base}/resources/spm_modules/seajs/2.3.0/dist/sea.js"></script>
 <script src="${_base}/resources/spm_modules/seajs/seajs-css.js"></script>
 <script src="${_base}/resources/spm_modules/app/core/config.js"></script>
-<!-- 公共事件 -->
+<!-- å¬å±äºä»¶ -->
 <script src="${_base}/resources/spm_modules/app/util/common.js" type="text/javascript"></script>
 <script src="${uedroot}/scripts/modular/p-skin-changer.js"></script>
 
