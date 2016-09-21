@@ -183,6 +183,28 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
     	 * 显示图片
     	 */
     	_showImages:function(commentId){
+    		var innerHtml = "<div class='roll-scroll'>"
+			 +"<div id='loopedSlider'>"
+			 +"   <div class='slidepic' id='imageData'>"
+			 +"   </div>"
+			 +"   <ul class='nav-buttons'>"
+			 +"      <li class='p'><a href='javascript:void(0);' onclick='pager._previousImage()' class='previous'><i class=' icon-chevron-left'></i></a></li>"
+			 +"      <li class='n'><a href='javascript:void(0);' onclick='pager._nextImage()' class='next'><i class='icon-chevron-right'></i></a></li>"
+			 +"   </ul>"
+			 +"</div>"
+			 +"</div>"
+			 +"<div class='prompt-samll-confirm'>"
+			 +"	<ul>"
+			 +"		<li id='imageCount' class='word'>1/5</li>"
+			 +"	</ul>"
+			 +"</div>";
+    		var d = Dialog({
+    			title:"查看图片",
+    			width:"600px",
+    			innerHtml:innerHtml
+    		});
+    		d.show();
+    			
     		imageCount = 0;
     		ajaxController.ajax({
 				type: "post",
@@ -205,8 +227,6 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
 	    				});
 	            	    imageCount = data.data.length;
 	            	    $("#imageCount").html("1/"+imageCount);
-						$('#eject-mask').fadeIn(100);
-			    		$('#look').slideDown(200);
 	            	}
 				}
 			});

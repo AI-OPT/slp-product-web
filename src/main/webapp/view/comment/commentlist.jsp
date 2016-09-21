@@ -10,35 +10,6 @@
 </head>
 
 <body>
-<!--图片展示 -->
-<div class="eject-big" >
-		<div class="eject-medium" id="look" >
-			<div class="eject-medium-title">
-				<p>查看图片</p>
-				<p class="img" id="imageCloseBtn"><i class="fa fa-times"></i></p>
-			</div>
-			<div class="roll-scroll">
-			 <div id="loopedSlider">
-	            <div class="slidepic" id="imageData">
-	            </div>
-	            <ul class="nav-buttons">
-	                <li class="p"><a href="javascript:void(0);" onclick="pager._previousImage()" class="previous"><i class=" icon-chevron-left"></i></a></li>
-	                <li class="n"><a href="javascript:void(0);" onclick="pager._nextImage()" class="next"><i class="icon-chevron-right"></i></a></li>
-	            </ul>
-	        </div>
-	        <script id="imageTemple" type="text/template">
-				<div id="photo-{{:#index+1}}"><img src="{{:picAddr}}" width="400" height="230"/></div>
-			</script>
-			</div>
-			<div class="prompt-samll-confirm">
-				<ul>
-					<li id="imageCount" class="word">1/5</li>
-				</ul>
-			</div>
-		</div>	
-		<div class="mask" id="eject-mask"></div>
-</div>
-<!--图片展示结束-->	
 
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
 	<div class="row"><!--外围框架-->
@@ -238,6 +209,9 @@
 	</div>
 </div>
 </body>
+<script id="imageTemple" type="text/template">
+	<div id="photo-{{:#index+1}}"><img src="{{:picAddr}}" width="400" height="230"/></div>
+</script>
 <script type="text/javascript">
 	var pager;
 	var imageCount = 0;
