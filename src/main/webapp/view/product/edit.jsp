@@ -357,19 +357,19 @@
 														<c:when test="${valInd<attrValSize && attrValPic.get(valInd)!=null}">
 															<c:set var="valInfo" value="${attrValPic.get(valInd)}"></c:set>
 															<img src="<c:out value='${imgClient.getImageUrl(valInfo.vfsId,valInfo.picType,picSize)}'/>" imgId="${valInfo.vfsId}"
-																 imgType="${valInfo.picType}" attrVal="${attrValPicEnt.key.attrValId}" picInd="${valInd}"
-																 id="prodPicId${attrValPicEnt.key.attrValId}ind${valInd}" /><i class="fa fa-times"></i>
+																 imgType="${valInfo.picType}" attrVal="${attrValInfo.attrValId}" picInd="${valInd}"
+																 id="prodPicId${attrValInfo.attrValId}ind${valInd}" /><i class="fa fa-times"></i>
 														</c:when>
 														<c:otherwise>
-															<img src="${_slpres}/images/sp-03-a.png" id="prodPicId${attrValPicEnt.key.attrValId}ind${valInd}" imgId="" imgType=""
-																 attrVal="${attrValPicEnt.key.attrValId}" picInd="${valInd}"/><i></i>
+															<img src="${_slpres}/images/sp-03-a.png" id="prodPicId${attrValInfo.attrValId}ind${valInd}" imgId="" imgType=""
+																 attrVal="${attrValInfo.attrValId}" picInd="${valInd}"/><i></i>
 														</c:otherwise>
 													</c:choose>
 												</p>
 											</c:forEach>
 										</div>
 										<p>
-											<input type="button" class="biu-btn btn-primary btn-large mt-25" value="上传图片" attrVal = "${attrValPicEnt.key.attrValId}"/>
+											<input type="button" class="biu-btn btn-primary btn-large mt-25" value="上传图片" attrVal = "${attrValInfo.attrValId}"/>
 										</p>
 									</li>
 								</ul>
