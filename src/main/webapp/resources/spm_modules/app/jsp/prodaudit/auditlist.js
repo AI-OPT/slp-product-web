@@ -321,11 +321,31 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 				success: function(data){
 					//获取数据成功
 					if("1"===data.statusCode){
-						var reason= data.data;
-						//_this._showSuccessMsg(reason);
-						$("#prodRefuseDes").val(reason.refuseDes);
-						$('#eject-mask').fadeIn(100);
-						$('#refuseReason-samll').slideDown(200);
+						//获取数据成功
+						if("1"===data.statusCode){
+							var reason= data.data.refuseDes;
+							//$("#refuseDes").val(reason.refuseDes);
+							var reasonHtml="<textarea id=\"refuseDes\" name=\"refuseDes\" " +
+									"style=\"width:270px;height:160px;overflow:hidden; resize:none;\">";
+							reasonHtml += reason+"</textarea>";
+							new Dialog({
+								content:reasonHtml,
+								okValue: '确 定',
+								title:'商品拒绝原因',
+								ok:function(){
+									window.history.go(-1);
+								}
+							}).show();
+							
+							
+							//this._showSuccessMsg(jkjkj);
+							
+							/*var reason= data.data;
+							$("#refuseDes").val(reason.refuseDes);
+
+							$('#eject-mask').fadeIn(100);
+							$('#refuseReason-samll').slideDown(200);*/
+						}
 					}
 				}
 			});

@@ -123,6 +123,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
     	
     	//弹出原因框
     	_showReason:function(prodId){
+    		var _this = this;
 			//后台获取数据,
 			ajaxController.ajax({
 				type: "get",
@@ -132,13 +133,28 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 				success: function(data){
 					//获取数据成功
 					if("1"===data.statusCode){
-						var reason= data.data;
-						//_this._showSuccessMsg(reason);
+						var reason= data.data.refuseDes;
+						//$("#refuseDes").val(reason.refuseDes);
+						var reasonHtml="<textarea id=\"refuseDes\" name=\"refuseDes\" " +
+								"style=\"width:270px;height:160px;overflow:hidden; resize:none;\">";
+						reasonHtml += reason+"</textarea>";
+						new Dialog({
+							content:reasonHtml,
+							okValue: '确 定',
+							title:'商品拒绝原因',
+							ok:function(){
+								window.history.go(-1);
+							}
+						}).show();
 						
+						
+						//this._showSuccessMsg(jkjkj);
+						
+						/*var reason= data.data;
 						$("#refuseDes").val(reason.refuseDes);
 
 						$('#eject-mask').fadeIn(100);
-						$('#refuseReason-samll').slideDown(200);
+						$('#refuseReason-samll').slideDown(200);*/
 					}
 				}
 			});
@@ -153,7 +169,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 			$("#refuseDes").val("");
 		},
 		 //显示信息
-       /* _showSuccessMsg:function(msg){
+        _showSuccessMsg:function(msg){
             var d = Dialog({
                 content:msg,
                 okValue: '确 定',
@@ -162,7 +178,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
                 }
             });
             d.show();
-        },*/
+        },
     	//滚动到顶部
     	_returnTop:function(){
     		var container = $('.wrapper-right');
