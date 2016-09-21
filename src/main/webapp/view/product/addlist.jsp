@@ -21,8 +21,10 @@
 		<div class="form-label">
            <ul>	
                <li>
-               <p><textarea id="refuseDes" name="refuseDes"
-						    style="width:360px;height:100px;" readonly></textarea></p>
+               <!-- <p><textarea id="refuseDes" name="refuseDes"
+						    style="width:360px;height:100px;" readonly></textarea></p> -->
+               <p><input id="refuseDes" name="refuseDes" type="text" size="20" class="wide-field"
+						    style="width:360px;height:100px;" ></p>
                </li>
            </ul>
 		</div>

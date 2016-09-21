@@ -156,13 +156,13 @@
 								<ul class="big-word">
 									<li class="col-md-12">
 										<p class="word3">商品名称：</p>
-										<p class="wide-field">${productInfo.prodName}</p>
+										<p class="wide-field" style="word-break:break-all;">${productInfo.prodName}</p>
 									</li>
 								</ul>
 								<ul>
 									<li class="col-md-12">
 										<p class="word3">商品卖点：</p>
-										<p class="wide-field">${productInfo.productSellPoint}</p>
+										<p class="wide-field" style="word-break:break-all;">${productInfo.productSellPoint}</p>
 									</li>
 								</ul>
 							</div>
@@ -239,7 +239,7 @@
 												<p>全部地域</p>
 											</c:when>
 											<c:when test="${productInfo.isSaleNationwide == 'N'}">
-												<p class="wide-field">${areaInfoStr}</p>
+												<p class="wide-field" style="word-break:break-all;">${areaInfoStr}</p>
 											</c:when>
 										</c:choose>
 									</li>
@@ -272,7 +272,7 @@
 											<c:if test="${productInfo.upshelfType == '2'}">放入仓库</c:if>
 											<c:if test="${productInfo.upshelfType == '4'}">预售上架：</c:if>
 										</p>
-										<p class="wide-field">
+										<p class="wide-field" style="word-break:break-all;">
 											<c:if test="${productInfo.upshelfType == '4'}">
 												预售时间&emsp;<fmt:formatDate value="${productInfo.presaleBeginTime}" type="both"></fmt:formatDate>
 												至
