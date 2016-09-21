@@ -23,7 +23,7 @@ function Popup () {
 
 
     //如果当前窗口包含在iframe中，则弹出窗体要覆盖顶级窗口
-    if(top.location!=self.location){
+    if(false/*top.location!=self.location*/){
     	$('#popup',window.top.document).remove();
     	$('body',window.top.document).append('<div id="popup" />');
     	this.__popup = $('#popup',window.top.document)

@@ -42,7 +42,7 @@ function fmoneyNoSplit(s, n) {
 	s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
 	return s;
 }
-
+	
 /**
  * jsview标签 去除时间后两位 .0
  */

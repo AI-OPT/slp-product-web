@@ -181,7 +181,7 @@
 										<td>{{:#index+1}}</td>
 										<td>{{:attrId}}</td>
 										<td>
-											<div class="hind1">
+											<div class="hind1 text-l pl-15">
 											<div class="center-hind" >{{:attrName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:attrName}}</div>
 											</div>

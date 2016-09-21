@@ -156,7 +156,7 @@
 									<tr>
 											<td>{{:standedProdId}}</td>
 											<td>
-												<div class="hind1">
+												<div class="hind1 text-l pl-15">
 												<div class="center-hind" >{{:productCatName}}</div>
                                           		<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
 												</div>
@@ -168,7 +168,7 @@
 											<td><img src="{{:picUrl}}"></td>
 											{{/if}}
 											<td>
-												<div class="hind1">
+												<div class="hind1 text-l pl-15">
 												<div class="center-hind" >{{:prodName}}</div>
                                           		<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
 												</div>
