@@ -187,9 +187,11 @@
 										</td>
 										<td>{{:~timesToFmatter(commentTime)}}</td>
 										<td>{{:userName}}</td>
-										<td class="hind1-medium text-l pl-15">
-											<div class="center-hind" >{{:commentBody}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:commentBody}}</div>
+										<td>
+											<div class="hind1 text-l pl-15">
+                                                <div class="center-hind" >{{:commentBody}}</div>
+                                                <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:commentBody}}</div>
+                                            </div>
 										</td>
 										<td>
 											{{if isPicture=="Y"}}
@@ -209,9 +211,11 @@
 											{{/if}}
 										</td>
 										<td>{{:standedProdId}}</td>
-										<td class="hind1-medium text-l pl-15">
-											<div class="center-hind" >{{:prodName}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
+										<td>
+											<div class="hind1 text-l pl-15">
+                                                <div class="center-hind" >{{:prodName}}</div>
+                                                <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
+                                            </div>
 										</td>
 										<td>{{:orderId}}</td>
                                         <td>

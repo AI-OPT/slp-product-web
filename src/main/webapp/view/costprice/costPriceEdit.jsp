@@ -118,14 +118,18 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:supplyId}}</td>
-										<td class="hind1 text-l pl-15">
-											<div class="center-hind" >{{:supplyName}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:supplyName}}</div>
+										<td>
+											<div class="hind1 text-l pl-15">
+                                                <div class="center-hind" >{{:supplyName}}</div>
+                                                <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:supplyName}}</div>
+                                            </div>
 										</td>
 										<td>{{:routeId}}</td>
-										<td class="hind1 text-l pl-15">
-											<div class="center-hind" >{{:routeName}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:routeName}}</div>
+										<td>
+											<div class="hind1 text-l pl-15">
+                                                <div class="center-hind" >{{:routeName}}</div>
+                                                <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:routeName}}</div>
+                                            </div>
 										</td>
 										<td>{{:usableNum}}</td>
                                         <td class="text-l">

@@ -141,8 +141,6 @@
 										<th width="20%">所属类目</th>
 										<th width="10%">类型</th>
 										<th width="10%">商品状态</th>
-										<!-- <th>操作时间</th>
-										<th>操作人</th> -->
 										<th width="15%">操作</th>
 									</tr>
 									</thead>
@@ -155,18 +153,20 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
-										<td class="hind1 text-l pl-15">
-											<div class="center-hind" >{{:productName}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
+										<td>
+											<div class="hind1 text-l pl-15">
+                                                <div class="center-hind" >{{:productName}}</div>
+                                                <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productName}}</div>
+                                            </div>
 										</td>
-										<td class="hind1 text-l pl-15">
-											<div class="center-hind" >{{:catName}}</div>
-                                          	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+										<td>
+											<div class="hind1 text-l pl-15">
+                                                <div class="center-hind" >{{:catName}}</div>
+                                                <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
+                                            </div>
 										</td>
 										<td>{{:productType}}</td>
 										<td>{{:state}}</td>
-										<!-- <td>{{:~timesToFmatter(operTime)}}</td>
-										<td>{{:operName}}</td> -->
                                         <td>
 											<a href="${_base}/normprodquery/{{:productId}}" class="blue-border">查看详情</a>
 											<a href="${_base}/normprodedit/{{:productId}}" class="blue-border">编辑</a>
