@@ -47,13 +47,13 @@
                                 <ul class="big-word">
                                     <li class="col-md-12">
                                         <p class="word3">商品名称：</p>
-                                        <p class="wide-field">${productInfo.prodName}</p>
+                                        <p class="wide-field" style="word-break:break-all;">${productInfo.prodName}</p>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="col-md-12">
                                         <p class="word3">商品卖点：</p>
-                                        <p class="wide-field">${productInfo.productSellPoint}</p>
+                                        <p class="wide-field" style="word-break:break-all;">${productInfo.productSellPoint}</p>
                                     </li>
                                 </ul>
                             </div>
@@ -72,12 +72,12 @@
 												<c:when test="${aav.key.attrType == '2'}">
 													<div class="cit-width">
 														<c:forEach var="attrVal" items="${aav.value}">
-															<p class="wide-field">${attrVal.attrVal}</p>
+															<p class="wide-field" style="word-break:break-all;">${attrVal.attrVal}</p>
 														</c:forEach>
 													</div>
 												</c:when>
 												<c:when test="${!aav.value.isEmpty()}">
-													<p class="wide-field">${aav.value.get(0).attrVal}</p>
+													<p class="wide-field" style="word-break:break-all;">${aav.value.get(0).attrVal}</p>
 												</c:when>
 												<c:otherwise>
 													<p></p>
@@ -102,12 +102,12 @@
 												<c:when test="${attr.valueWay == '2'}">
 													<div class="cit-width">
 														<c:forEach var="attrVal" items="${noKeyAttrVals}">
-															<p class="wide-field">${attrVal.attrVal}</p>
+															<p class="wide-field" style="word-break:break-all;">${attrVal.attrVal}</p>
 														</c:forEach>
 													</div>
 												</c:when>
 												<c:when test="${!noKeyAttrVals.isEmpty()}">
-													<p class="wide-field">${noKeyAttrVals.get(0).attrVal}</p>
+													<p class="wide-field" style="word-break:break-all;">${noKeyAttrVals.get(0).attrVal}</p>
 												</c:when>
 												<c:otherwise>
 													<p></p>
@@ -130,7 +130,7 @@
 												<p>全部地域</p>
 											</c:when>
 											<c:when test="${productInfo.isSaleNationwide == 'N'}">
-												<p class="wide-field">${areaInfoStr}</p>
+												<p class="wide-field" style="word-break:break-all;">${areaInfoStr}</p>
 											</c:when>
 										</c:choose>
 									</li>

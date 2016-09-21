@@ -1,6 +1,3 @@
-<%@ page import="com.ai.opt.sdk.components.idps.IDPSClientFactory" %>
-<%@ page import="com.ai.paas.ipaas.image.IImageClient" %>
-<%@ page import="com.ai.slp.product.web.constants.SysCommonConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html>
@@ -162,7 +159,7 @@
 								<ul>
 									<li class="col-md-12">
 										<p class="word3">商品卖点：</p>
-										<p class="wide-field">${productInfo.productSellPoint}</p>
+										<p class="wide-field" style="word-break:break-all;">${productInfo.productSellPoint}</p>
 									</li>
 								</ul>
 							</div>
@@ -186,10 +183,10 @@
 													</div>
 												</c:when>
 												<c:when test="${!aav.value.isEmpty()}">
-													<p>${aav.value.get(0).attrVal}</p>
+													<p class="wide-field" style="word-break:break-all;">${aav.value.get(0).attrVal}</p>
 												</c:when>
 												<c:otherwise>
-													<p></p>
+													<p class="wide-field" style="word-break:break-all;"></p>
 												</c:otherwise>
 											</c:choose>
 										</li>
@@ -216,10 +213,10 @@
 													</div>
 												</c:when>
 												<c:when test="${!noKeyAttrVals.isEmpty()}">
-													<p>${noKeyAttrVals.get(0).attrVal}</p>
+													<p class="wide-field" style="word-break:break-all;">${noKeyAttrVals.get(0).attrVal}</p>
 												</c:when>
 												<c:otherwise>
-													<p></p>
+													<p class="wide-field" style="word-break:break-all;"></p>
 												</c:otherwise>
 											</c:choose>
 										</li>
