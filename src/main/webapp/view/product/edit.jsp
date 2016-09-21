@@ -130,7 +130,7 @@
 							<ul>
 								<li class="width-xlag">
 									<p class="word3"><b class="red">*</b>商品名称</p>
-									<p class="wide-field">${productInfo.prodName}</p>
+									<p class="wide-field" style="word-break:break-all;">${productInfo.prodName}</p>
 									<input type="hidden" name="prodName" value="${productInfo.prodName}">
 								</li>
 							</ul>
@@ -163,10 +163,10 @@
 												</div>
 											</c:when>
 											<c:when test="${!aav.value.isEmpty()}">
-												<p>${aav.value.get(0).attrVal}</p>
+												<p class="wide-field" style="word-break:break-all;">${aav.value.get(0).attrVal}</p>
 											</c:when>
 											<c:otherwise>
-												<p></p>
+												<p class="wide-field" style="word-break:break-all;"></p>
 											</c:otherwise>
 										</c:choose>
 									</li>
