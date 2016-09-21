@@ -163,7 +163,7 @@
 										   <c:if test="${productInfo.upshelfType == '2'}">放入仓库</c:if>
 										   <c:if test="${productInfo.upshelfType == '4'}">预售上架：</c:if>
 									   </p>
-									   <p class="wide-field">
+									   <p class="wide-field" style="word-break:break-all;">
 										   <c:if test="${productInfo.upshelfType == '4'}">
 											   预售时间&emsp;<fmt:formatDate value="${productInfo.presaleBeginTime}" type="both"></fmt:formatDate>
 											   至

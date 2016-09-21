@@ -153,7 +153,7 @@
 								<ul class="big-word">
 									<li class="col-md-12">
 										<p class="word3">商品名称：</p>
-										<p class="wide-field">${productInfo.prodName}</p>
+										<p class="wide-field" style="word-break:break-all;">${productInfo.prodName}</p>
 									</li>
 								</ul>
 								<ul>
@@ -178,7 +178,7 @@
 												<c:when test="${aav.key.attrType == '2'}">
 													<div class="cit-width">
 														<c:forEach var="attrVal" items="${aav.value}">
-															<p>${attrVal.attrVal}</p>
+															<p class="wide-field" style="word-break:break-all;">${attrVal.attrVal}</p>
 														</c:forEach>
 													</div>
 												</c:when>
@@ -208,7 +208,7 @@
 												<c:when test="${attr.valueWay == '2'}">
 													<div class="cit-width">
 														<c:forEach var="attrVal" items="${noKeyAttrVals}">
-															<p>${attrVal.attrVal}</p>
+															<p class="wide-field" style="word-break:break-all;">${attrVal.attrVal}</p>
 														</c:forEach>
 													</div>
 												</c:when>
@@ -236,7 +236,7 @@
 												<p>全部地域</p>
 											</c:when>
 											<c:when test="${productInfo.isSaleNationwide == 'N'}">
-												<p class="wide-field">${areaInfoStr}</p>
+												<p class="wide-field" style="word-break:break-all;">${areaInfoStr}</p>
 											</c:when>
 										</c:choose>
 									</li>
@@ -269,7 +269,7 @@
 											<c:if test="${productInfo.upshelfType == '2'}">放入仓库</c:if>
 											<c:if test="${productInfo.upshelfType == '4'}">预售上架：</c:if>
 										</p>
-										<p class="wide-field">
+										<p class="wide-field" style="word-break:break-all;">
 											<c:if test="${productInfo.upshelfType == '4'}">
 												预售时间&emsp;<fmt:formatDate value="${productInfo.presaleBeginTime}" type="both"></fmt:formatDate>
 												至
