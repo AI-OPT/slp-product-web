@@ -11,83 +11,6 @@
 </head>
 
 <body>
-
-<!--删除 弹出框  小-->
-<%-- <div class="eject-big">
-    <div class="eject-samll" id="aband-small">
-       <!--  <input type="hidden" id="delCatId"> -->
-        <div class="eject-medium-title">
-            <p>删除类目</p>
-            <p id="delCloseImg" class="img"><i class="fa fa-times"></i></p>
-        </div>
-
-        <div class="eject-medium-complete">
-            <p><img src="${uedroot}/images/eject-icon-prompt.png"></p>
-            <p class="word">确定删除该类目吗？</p>
-        </div>
-        <!--按钮-->
-        <div class="row mt-15"><!--删格化-->
-            <p class="center pr-30 mt-30">
-                <input id="delCatBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
-                <input id="aband-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
-            </p>
-        </div>
-    </div>
-     <div class="mask" id="eject-mask"></div>
-</div> --%>
-<!-- 更新信息展示 -->
-<!-- <div class="eject-big">
-    <div class="eject-medium" id="increase-samll">
-        <div class="eject-medium-title">
-            <p>更新类目</p>
-            <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
-        </div> -->
-        <!-- <div id="editDialogDiv" style="display:none">
-        <div class="form-label ml-50">
-            <form id="upCatForm">
-            <input type="hidden" name="productCatId" id="upCatId">
-            <input type="hidden" name="parentProductCatId" id="parentCatId">
-            <ul>
-                <li>
-                    <p class="word"><span>*</span>类目名称:</p>
-                    <p><input id="upCatName" type="text" class="int-text int-small"
-                              name="productCatName" maxlength="10"></p>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <p class="word"><span>*</span>名称首字母(大写):</p>
-                    <p><input id="upFletter" type="text" class="int-text int-small"
-                              name="firstLetter" maxlength="1"></p>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <p class="word"><span>*</span>排序:</p>
-                    <p><input id="upSerialNum" type="text" class="int-text int-small"
-                              name="upSerialNum" maxlength="3"></p>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <input type="hidden" id="upIsChile" name="upIsChile">
-                    <p class="word">是否存在子分类:</p>
-                    <p id="isChildVal"></p>
-                </li>
-            </ul>
-            </form>
-        </div>
-        </div> -->
-      <!--   按钮
-        <div class="row mt-15">删格化
-            <p class="center pr-30 mt-30">
-                <input id="upCatBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="确  定">
-                <input id="increase-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
-            </p>
-        </div>
-    </div>
-    <div class="mask" id="eject-mask"></div>
-    </div> -->
     <div class="content-wrapper-iframe"><!--右侧灰色背景-->
     <!--框架标签结束-->
     <div class="row"><!--外围框架-->
@@ -185,7 +108,7 @@
                                             <td>{{:#index+1}}</td>
                                             <td>{{:productCatId}}</td>
                                             <td>
-                                                <div class="hind1">
+                                                <div class="hind1 text-l pl-15">
                                                 <div class="center-hind" >{{:productCatName}}</div>
                                                 <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
                                                 </div>
