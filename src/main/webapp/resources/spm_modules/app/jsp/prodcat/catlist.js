@@ -20,7 +20,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     var clickId = "";
-	var upValidator;
+    var upValidator;
     //定义页面组件类
     var catListPager = Widget.extend({
     	
@@ -35,9 +35,6 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #selectList":"_selectPageList",
-			"click #increase-close":"_closeEditDiv",
-			"click #upCloseImg":"_closeEditDiv",
-			"click #upCatBtn":"_updateCat",//提交更新
 			"click #aband-close":"_closeDelConf",
 			"click #delCloseImg":"_closeDelConf",
 			"click #delCatBtn":"_delCat"
@@ -46,10 +43,6 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     	setup: function () {
 			catListPager.superclass.setup.call(this);
 			this._selectPageList();
-			upValidator = this._initValidator();
-			$(":input").bind("focusout",function(){
-				upValidator.element(this);
-			});
     	},
 		//初始化表单验证
     	_initValidator:function(){
@@ -125,6 +118,63 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     	},
 		//显示类目编辑页面
 		_showCat:function(catId){
+			var _this = this;
+//			var innerHtml=$("#editDialogDiv").html();
+			var innerHtml = "<div class='form-label ml-50'>"
+            +"<form id='upCatForm'>"
+            +"<input type='hidden' name='productCatId' id='upCatId'>"
+            +"<input type='hidden' name='parentProductCatId' id='parentCatId'>"
+            +"<ul>"
+            +"    <li>"
+            +"        <p class='word'><span>*</span>类目名称:</p>"
+            +"        <p><input id='upCatName' type='text' class='int-text int-small'"
+            +"                  name='productCatName' maxlength='10'></p>"
+            +"    </li>"
+            +"</ul>"
+            +"<ul>"
+            +"    <li>"
+            +"        <p class='word'><span>*</span>名称首字母(大写):</p>"
+            +"        <p><input id='upFletter' type='text' class='int-text int-small'"
+            +"                  name='firstLetter' maxlength='1'></p>"
+            +"    </li>"
+            +"</ul>"
+            +"<ul>"
+            +"   <li>"
+            +"        <p class='word'><span>*</span>排序:</p>"
+            +"        <p><input id='upSerialNum' type='text' class='int-text int-small'"
+            +"                  name='upSerialNum' maxlength='3'></p>"
+            +"    </li>"
+            +"</ul>"
+            +"<ul>"
+            +"    <li>"
+            +"        <input type='hidden' id='upIsChile' name='upIsChile'>"
+            +"        <p class='word'>是否存在子分类:</p>"
+            +"        <p id='isChildVal'></p>"
+            +"    </li>"
+            +"</ul>"
+            +"</form>"
+            +"</div>";
+			var d = Dialog({
+				title:"更新类目",
+				width:"500px",
+				innerHtml:innerHtml,
+				okValue: '确 定',
+				ok: function () {
+					//upValidator = _this._initValidator();
+					//验证不通过,则不处理
+					if (upValidator.form()){
+						_this._updateCat();
+						this.close();
+					}else{
+						return false;
+					}
+				},
+				cancelValue: '取消',
+				cancel: function () {
+					this.close();
+				}
+			});
+			d.show();
 			//后台获取数据,
 			ajaxController.ajax({
 				type: "get",
@@ -146,46 +196,37 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 							$("#isChildVal").html("是");
 						else
 							$("#isChildVal").html("否");
-						$('#eject-mask').fadeIn(100);
-						$('#increase-samll').slideDown(200);
 					}
 				}
 			});
-
+			upValidator = this._initValidator();
+			$("#upCatForm input").bind("focusout",function(){
+				upValidator.element(this);
+			});
 		},
 		//删除确认提示框
 		_showDelConf:function(catId){
-			$('#eject-mask').fadeIn(100);
-			$('#aband-small').slideDown(200);
-			if (window.console) {
-				console.log("del cat id is " + catId);
-			}
-			$("#delCatId").val(catId);
-		},
-		//关闭编辑页面弹出
-		_closeEditDiv:function(){
-			$('#eject-mask').fadeOut(100);
-			$('#increase-samll').slideUp(150);
-			//清空数据
-			$("#upCatId").val("");//类目标识
-			$("#parentCatId").val("");//父类目
-			$("#upCatName").val("");//类目名称
-			$("#upFletter").val("");//首字母
-			$("#upSerialNum").val("");//序列号
-			$("#upIsChile").val("");//是否有子分类
-			upValidator.resetForm();
-		},
-		//关闭确认提示框
-		_closeDelConf:function(){
-			$('#eject-mask').fadeOut(100);
-			$('#aband-small').slideUp(150);
-			$("#delCatId").val('');
+			var _this=this;
+			var d = Dialog({
+				title:"删除类目",
+				content: '确定删除该类目吗？',
+				icon:'help',
+				okValue: '确 定',
+				ok: function () {
+					var isOk =_this._delCat(catId);
+					if(isOk){
+						this.close();
+					}
+				},
+				cancelValue: '取消',
+				cancel: function () {
+					this.close();
+				}
+			});
+			d.show();
 		},
 		//提交更新
 		_updateCat:function(){
-			//验证不通过,则不处理
-			if (upValidator.valid()!=true)
-				return;
 			var _this = this;
 			var catId = $("#upCatId").val();//类目标识
 			var parentId = $("#parentCatId").val();//父类目
@@ -193,7 +234,6 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 			var fLetter = $("#upFletter").val();//首字母
 			var sn = $("#upSerialNum").val();//序列号
 			var isChild = $("#upIsChile").val();
-			this._closeEditDiv();
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
@@ -211,10 +251,8 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 			});
 		},
 		//删除类目
-		_delCat:function(){
+		_delCat:function(catId){
 			var _this = this;
-			var catId = $("#delCatId").val();//类目标识
-			this._closeDelConf();
 			ajaxController.ajax({
 				type: "get",
 				processing: true,

@@ -13,9 +13,9 @@
 <body>
 
 <!--删除 弹出框  小-->
-<div class="eject-big">
+<%-- <div class="eject-big">
     <div class="eject-samll" id="aband-small">
-        <input type="hidden" id="delCatId">
+       <!--  <input type="hidden" id="delCatId"> -->
         <div class="eject-medium-title">
             <p>删除类目</p>
             <p id="delCloseImg" class="img"><i class="fa fa-times"></i></p>
@@ -33,15 +33,16 @@
             </p>
         </div>
     </div>
-    <div class="mask" id="eject-mask"></div>
-</div>
+     <div class="mask" id="eject-mask"></div>
+</div> --%>
 <!-- 更新信息展示 -->
-<div class="eject-big">
+<!-- <div class="eject-big">
     <div class="eject-medium" id="increase-samll">
         <div class="eject-medium-title">
             <p>更新类目</p>
             <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
-        </div>
+        </div> -->
+        <!-- <div id="editDialogDiv" style="display:none">
         <div class="form-label ml-50">
             <form id="upCatForm">
             <input type="hidden" name="productCatId" id="upCatId">
@@ -76,8 +77,9 @@
             </ul>
             </form>
         </div>
-        <!--按钮-->
-        <div class="row mt-15"><!--删格化-->
+        </div> -->
+      <!--   按钮
+        <div class="row mt-15">删格化
             <p class="center pr-30 mt-30">
                 <input id="upCatBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="确  定">
                 <input id="increase-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
@@ -85,7 +87,7 @@
         </div>
     </div>
     <div class="mask" id="eject-mask"></div>
-    </div>
+    </div> -->
     <div class="content-wrapper-iframe"><!--右侧灰色背景-->
     <!--框架标签结束-->
     <div class="row"><!--外围框架-->
@@ -191,8 +193,8 @@
                                             <td>{{if isChild=='Y'}}是{{else}}否{{/if}}</td>
                                             <td>{{:serialNumber}}</td>
                                             <td>
-                                                <a href="javaScript:void(0);" name="editView" catId="{{:productCatId}}">编辑</a>
-                                                <a href="javaScript:void(0);" name="delView" catId="{{:productCatId}}">删除</a>
+                                                <a href="javaScript:void(0);" name="editViewBtn" catId="{{:productCatId}}">编辑</a>
+                                                <a href="javaScript:void(0);" name="delViewBtn" catId="{{:productCatId}}">删除</a>
                                                 <%-- 判断有子分类 --%>
                                                 {{if isChild=='Y'}}
                                                 <a href="${_base}/cat/query?parentProductCatId={{:productCatId}}">&nbsp;管理子分类&nbsp;</a>
@@ -231,7 +233,7 @@
     var pager;
     (function () {
         <%-- 编辑按钮 --%>
-        $('#listData').delegate("a[name='editView']", 'click', function () {
+        $('#listData').delegate("a[name='editViewBtn']", 'click', function () {
             var catId = $(this).attr('catId');
             if (window.console) {
                 console.log("编辑链接:" + catId);
@@ -239,7 +241,7 @@
             pager._showCat(catId);
         });
         <%-- 删除按钮 --%>
-        $('#listData').delegate("a[name='delView']", 'click', function () {
+        $('#listData').delegate("a[name='delViewBtn']", 'click', function () {
             var catId = $(this).attr('catId');
             if (window.console) {
                 console.log("删除链接:" + catId);
