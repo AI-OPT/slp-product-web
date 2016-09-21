@@ -173,8 +173,8 @@
 											<!-- <td>{{:productCatName}}</td> -->
 											<td>
 												<div class="hind1">
-											<div class="center-hind" >{{:productCatName}}</div>
-                                          	<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
+												<div class="center-hind text-l pl-15" >{{:productCatName}}</div>
+                                          		<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
 												</div>
 											</td>
 											<td>{{:productTypeName}}</td>
@@ -185,9 +185,9 @@
 											{{/if}}
 											<!--	<td>{{:prodName}}</td>-->
 											<td>
-												<div class="hind1">
-											<div class="center-hind" >{{:prodName}}</div>
-                                          	<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
+												<div class="hind1 text-l pl-15">
+												<div class="center-hind" >{{:prodName}}</div>
+                                          		<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
 												</div>
 											</td>
 											<td>{{:stateName}}</td>

@@ -152,7 +152,7 @@
 											<!-- <td>{{:prodId}}</td> -->
 											<td>{{:standedProdId}}</td>
 											<td>
-												<div class="hind1">
+												<div class="hind1 text-l pl-15">
 												<div class="center-hind" >{{:productCatName}}</div>
                                           		<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
 												</div>
@@ -164,14 +164,13 @@
 											<td><img src="{{:picUrl}}"></td>
 											{{/if}}
 											<td>
-												<div class="hind1">
+												<div class="hind1 text-l pl-15">
 												<div class="center-hind" >{{:prodName}}</div>
                                           		<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
 												</div>
 											</td>
 											<td>{{:stateName}}</td>
 											<!-- <td>{{:~timesToFmatter(createTime)}}</td> -->
-
 
 											{{if state=="6"}}
 											<td>
@@ -184,7 +183,7 @@
 											<td>
 												<div>
 													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
-													<p><a name="#" id="#" href="#" class="blue-border">查看商品</a></p> 
+													<p><a href="${_base}/prodquery/{{:prodId}}" class="blue-border">查看商品</a></p> 
 												</div>
 											</td>
 											{{/if}}

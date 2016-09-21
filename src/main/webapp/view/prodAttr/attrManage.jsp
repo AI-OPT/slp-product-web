@@ -191,7 +191,7 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:attrvalueDefId}}</td>
-										<td class="hind1">
+										<td class="hind1 text-l pl-15">
 											<div class="center-hind" >{{:attrValueName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:attrValueName}}</div>
 										</td>
