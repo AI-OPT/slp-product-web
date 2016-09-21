@@ -1,5 +1,19 @@
 package com.ai.slp.product.web.controller.prodAttr;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
@@ -15,18 +29,6 @@ import com.ai.slp.product.api.productcat.param.*;
 import com.ai.slp.product.web.model.prodAttr.ProdAttrValueInfo;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 属性值管理
@@ -221,7 +223,7 @@ public class AttrValueController {
             String errMsg = header==null?"未知错误":header.getResultMessage();
             LOG.error("Delete attr value is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
             responseData = new ResponseData<String>(
-                    ResponseData.AJAX_STATUS_FAILURE, errorCode,errMsg);
+                    ResponseData.AJAX_STATUS_FAILURE, errMsg);
         }
         return responseData;
 	}

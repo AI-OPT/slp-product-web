@@ -1,5 +1,14 @@
 package com.ai.slp.product.web.controller.prodAttr;
 
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.constants.ExceptCodeConstants;
@@ -9,14 +18,6 @@ import com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV;
 import com.ai.slp.product.api.productcat.param.AttrPam;
 import com.ai.slp.product.api.productcat.param.AttrParam;
 import com.ai.slp.product.web.util.AdminUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * 
@@ -51,7 +52,7 @@ public class AttrEditController {
         return responseData;
 	}
 	/**
-	 * 单个属性值的删除
+	 * 单个属性的删除
 	 */
 	@RequestMapping("/delAttr/{id}")
 	@ResponseBody
@@ -77,7 +78,7 @@ public class AttrEditController {
             String errMsg = header==null?"未知错误":header.getResultMessage();
             logger.error("Delete attr is error,errorCode:{},errorMsg:{}",errorCode,errMsg);
             responseData = new ResponseData<String>(
-                    ResponseData.AJAX_STATUS_FAILURE, errorCode,errMsg);
+                    ResponseData.AJAX_STATUS_FAILURE, errMsg);
         }
         return responseData;
 	}
