@@ -72,12 +72,12 @@
 												<c:when test="${aav.key.attrType == '2'}">
 													<div class="cit-width">
 														<c:forEach var="attrVal" items="${aav.value}">
-															<p class="wide-field">${attrVal.attrVal}</p>
+															<p class="wide-field" style="word-break:break-all;">${attrVal.attrVal}</p>
 														</c:forEach>
 													</div>
 												</c:when>
 												<c:when test="${!aav.value.isEmpty()}">
-													<p class="wide-field">${aav.value.get(0).attrVal}</p>
+													<p class="wide-field" style="word-break:break-all;">${aav.value.get(0).attrVal}</p>
 												</c:when>
 												<c:otherwise>
 													<p></p>

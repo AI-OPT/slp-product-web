@@ -181,12 +181,12 @@
 												<c:when test="${aav.key.attrType == '2'}">
 													<div class="cit-width">
 														<c:forEach var="attrVal" items="${aav.value}">
-															<p>${attrVal.attrVal}</p>
+															<p class="wide-field" style="word-break:break-all;">${attrVal.attrVal}</p>
 														</c:forEach>
 													</div>
 												</c:when>
 												<c:when test="${!aav.value.isEmpty()}">
-													<p>${aav.value.get(0).attrVal}</p>
+													<p class="wide-field" style="word-break:break-all;">${aav.value.get(0).attrVal}</p>
 												</c:when>
 												<c:otherwise>
 													<p></p>
@@ -211,12 +211,12 @@
 												<c:when test="${attr.valueWay == '2'}">
 													<div class="cit-width">
 														<c:forEach var="attrVal" items="${noKeyAttrVals}">
-															<p>${attrVal.attrVal}</p>
+															<p class="wide-field" style="word-break:break-all;">${attrVal.attrVal}</p>
 														</c:forEach>
 													</div>
 												</c:when>
 												<c:when test="${!noKeyAttrVals.isEmpty()}">
-													<p>${noKeyAttrVals.get(0).attrVal}</p>
+													<p class="wide-field" style="word-break:break-all;">${noKeyAttrVals.get(0).attrVal}</p>
 												</c:when>
 												<c:otherwise>
 													<p></p>
