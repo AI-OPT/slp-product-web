@@ -195,7 +195,7 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
 			 +"</div>"
 			 +"<div class='prompt-samll-confirm'>"
 			 +"	<ul>"
-			 +"		<li id='imageCount' class='word'>1/5</li>"
+			 +"		<li id='imageCount' class='word'></li>"
 			 +"	</ul>"
 			 +"</div>";
     		var d = Dialog({
