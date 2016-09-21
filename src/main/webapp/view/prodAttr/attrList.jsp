@@ -180,16 +180,18 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:attrId}}</td>
-										<td class="hind1">
+										<td>
+											<div class="hind1">
 											<div class="center-hind" >{{:attrName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:attrName}}</div>
+											</div>
 										</td>
 										<td>{{:valueWay}}</td>
 										<td>{{:attrValNum}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
 										<td>{{:operName}}</td>
 
-										{{if valueWay == "可输入文本框（单行）" || valueWay == "可输入文本框（多行）"}}
+										{{if valueWay == "可输入文本框" || valueWay == "可输入文本框（多行）"}}
 											<td>
 												<div>
 													<a attrId="{{:attrId}}" name="editView" href="#" class="blue-border">编辑</a>

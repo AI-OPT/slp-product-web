@@ -41,6 +41,8 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
             "click #refuseBtn":"_refuseProduct",//批量审核拒绝
             "click #successRefuseBtn":"_successRefuseBtn",//审核拒绝成功
     		"click #successPassBtn":"_successPassBtn",//审核拒绝成功
+    		"click #refuseReasonCloseImg":"_closeEditDiv",
+    		"click #refuseReasonBtn":"_closeEditDiv",
     		//查询
             "click #selectProductList":"_selectProductList"
             },
@@ -307,6 +309,34 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 			$('#refuse-small').slideUp(150);
 			$("#refuseReason").val("");
 			$("#refuseDes").val("");
+		},
+		//弹出原因框
+    	_showReason:function(prodId){
+			//后台获取数据,
+			ajaxController.ajax({
+				type: "get",
+				processing: true,
+				message: "数据获取中,请等待...",
+				url: _base+"/prodquery/toViewReason/"+prodId,
+				success: function(data){
+					//获取数据成功
+					if("1"===data.statusCode){
+						var reason= data.data;
+						//_this._showSuccessMsg(reason);
+						$("#prodRefuseDes").val(reason.refuseDes);
+						$('#eject-mask').fadeIn(100);
+						$('#refuseReason-samll').slideDown(200);
+					}
+				}
+			});
+
+		},
+		//关闭编辑页面弹出
+		_closeEditDiv:function(){
+			$('#eject-mask').fadeOut(100);
+			$('#refuseReason-samll').slideUp(150);
+			//清空数据
+			$("#prodRefuseDes").val("");
 		}
     });
     

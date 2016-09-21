@@ -94,6 +94,34 @@
 </div>
 <!-- 审核通过成功提示框结束 -->
 
+<!-- 查看原因弹框 -->
+<div class="eject-big">
+	<div class="eject-samll" id="refuseReason-samll">
+		<!--编辑-->
+		<div class="eject-medium-title">
+            <p>商品审核拒绝原因</p>
+            <p id="refuseReasonCloseImg" class="img"><i class="fa fa-times"></i></p>
+        </div>
+		<div class="form-label">
+           <ul>	
+               <li>
+               <p><textarea id="prodRefuseDes" name="refuseDes"
+						    style="width:360px;height:100px;" readonly></textarea></p>
+               </li>
+           </ul>
+		</div>
+		<!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="refuseReasonBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="确  定">
+            </p>
+        </div>
+	</div>	
+	<div class="mask" id="eject-mask"></div>	
+</div>
+<!-- 查看原因弹框结束 -->
+
+
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
 	<div class="row"><!--外围框架-->
 		<div class="col-lg-12"><!--删格化-->
@@ -246,9 +274,11 @@
 
 											<td>{{:standedProdId}}</td>
 
-											<td class="hind1">
-											<div class="center-hind" >{{:productCatName}}</div>
-                                          	<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
+											<td>
+												<div class="hind1">
+												<div class="center-hind" >{{:productCatName}}</div>
+    	                                      	<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:productCatName}}</div>
+												</div>
 											</td>
 
 											<td>{{:productTypeName}}</td>
@@ -259,9 +289,11 @@
 											<td><img src="{{:picUrl}}"></td>
 											{{/if}}
 
-											<td class="hind1">
-											<div class="center-hind" >{{:prodName}}</div>
-                                          	<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
+											<td>
+												<div class="hind1">
+												<div class="center-hind" >{{:prodName}}</div>
+	                                          	<div class="showbj showbj1"><i class="fa fa-posi fa-caret-up"></i>{{:prodName}}</div>
+												</div>
 											</td>
 
 											<td>{{:stateName}}</td>
@@ -272,7 +304,7 @@
 													{{if state=="3"}}
 													<p><a href="${_base}/prodquery/audit/{{:prodId}}" class="blue-border">审核商品</a></p>
 													{{else}}
-													<p><a href="#" class="blue-border">查看原因</a></p>
+													<p><a prodId="{{:prodId}}" name="toViewReason" href="javaScript:void(0);" class="blue-border">查看原因</a></p>
 													{{/if}}
 													<p><a href="${_base}/prodquery/{{:prodId}}" class="blue-border">查看商品</a></p>
 												</div>
@@ -333,7 +365,14 @@
 		$('#TableView').delegate("input[name='refuseMoreBtn']",'click',function(){
 			pager._showRefuseMore();
 		});		
-
+		<%-- 查看原因 --%>
+        $('#searchNormProductData').delegate("a[name='toViewReason']", 'click', function () {
+            var prodId = $(this).attr('prodId');
+			if (window.console) {
+				console.log("编辑链接:" + prodId);
+			}
+			pager._showReason(prodId);
+        });
 		
 		seajs.use(['app/jsp/prodaudit/auditlist','app/util/center-hind'], function(auditlistPager,centerHind) {
 			pager = new auditlistPager({element : document.body});

@@ -10,6 +10,33 @@
 </head>
 
 <body>
+<!-- 查看原因弹框 -->
+<div class="eject-big">
+	<div class="eject-samll" id="refuseReason-samll">
+		<!--编辑-->
+		<div class="eject-medium-title">
+            <p>商品审核拒绝原因</p>
+            <p id="refuseReasonCloseImg" class="img"><i class="fa fa-times"></i></p>
+        </div>
+		<div class="form-label">
+           <ul>	
+               <li>
+               <p><textarea id="refuseDes" name="refuseDes"
+						    style="width:360px;height:100px;" readonly></textarea></p>
+               </li>
+           </ul>
+		</div>
+		<!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <input id="refuseReasonBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="确  定">
+            </p>
+        </div>
+	</div>	
+	<div class="mask" id="eject-mask"></div>	
+</div>
+<!-- 查看原因弹框结束 -->
+
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
 	<div class="row"><!--外围框架-->
 		<div class="col-lg-12"><!--删格化-->
@@ -182,7 +209,7 @@
 													{{/if}}
 													
 													{{if state=="4"}}
-													<p><a href="#" class="blue">查看原因</a></p>
+													<p><a prodId="{{:prodId}}" name="toViewReason" href="javaScript:void(0);" class="blue-border">查看原因</a></p>
 													{{/if}}
 													<p><a href="${_base}/prodquery/{{:prodId}}" class="blue-border">查看商品</a></p>
 												</div>
@@ -224,6 +251,14 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
+		<%-- 查看原因 --%>
+        $('#searchNormProductData').delegate("a[name='toViewReason']", 'click', function () {
+            var prodId = $(this).attr('prodId');
+			if (window.console) {
+				console.log("编辑链接:" + prodId);
+			}
+			pager._showReason(prodId);
+        });
 		seajs.use(['app/jsp/product/addlist','app/util/center-hind'], function(addlistPager,centerHind) {
 			pager = new addlistPager({element : document.body});
 			pager.render();

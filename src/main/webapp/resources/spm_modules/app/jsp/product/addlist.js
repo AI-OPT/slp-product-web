@@ -32,6 +32,8 @@ define('app/jsp/product/addlist', function (require, exports, module) {
     	},
     	//事件代理
     	events: {
+    		"click #refuseReasonCloseImg":"_closeEditDiv",
+    		"click #refuseReasonBtn":"_closeEditDiv",
     		//查询
             "click #selectProductList":"_selectProductList"
             },
@@ -118,6 +120,49 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 	            }
     		});
     	},
+    	
+    	//弹出原因框
+    	_showReason:function(prodId){
+			//后台获取数据,
+			ajaxController.ajax({
+				type: "get",
+				processing: true,
+				message: "数据获取中,请等待...",
+				url: _base+"/prodquery/toViewReason/"+prodId,
+				success: function(data){
+					//获取数据成功
+					if("1"===data.statusCode){
+						var reason= data.data;
+						//_this._showSuccessMsg(reason);
+						
+						$("#refuseDes").val(reason.refuseDes);
+
+						$('#eject-mask').fadeIn(100);
+						$('#refuseReason-samll').slideDown(200);
+					}
+				}
+			});
+
+		},
+		
+		//关闭编辑页面弹出
+		_closeEditDiv:function(){
+			$('#eject-mask').fadeOut(100);
+			$('#refuseReason-samll').slideUp(150);
+			//清空数据
+			$("#refuseDes").val("");
+		},
+		 //显示信息
+       /* _showSuccessMsg:function(msg){
+            var d = Dialog({
+                content:msg,
+                okValue: '确 定',
+                ok:function(){
+                    this.close();
+                }
+            });
+            d.show();
+        },*/
     	//滚动到顶部
     	_returnTop:function(){
     		var container = $('.wrapper-right');

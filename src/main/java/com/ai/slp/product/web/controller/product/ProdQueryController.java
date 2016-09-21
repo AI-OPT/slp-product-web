@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfoResponse;
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -33,8 +36,10 @@ import com.ai.slp.product.api.normproduct.param.AttrMap;
 import com.ai.slp.product.api.normproduct.param.AttrQuery;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
 import com.ai.slp.product.api.product.interfaces.IProductSV;
+import com.ai.slp.product.api.product.interfaces.IProductServerSV;
 import com.ai.slp.product.api.product.param.*;
 import com.ai.slp.product.api.productcat.interfaces.IProductCatSV;
+import com.ai.slp.product.api.productcat.param.AttrInfo;
 import com.ai.slp.product.api.productcat.param.ProdCatInfo;
 import com.ai.slp.product.api.productcat.param.ProductCatInfo;
 import com.ai.slp.product.api.productcat.param.ProductCatUniqueReq;
@@ -527,5 +532,34 @@ public class ProdQueryController {
 		List<ProdCatInfo> productCatMap = prodCatService.loadRootCat();
 		uiModel.addAttribute("count", productCatMap.size() - 1);
 		uiModel.addAttribute("catInfoList", productCatMap);
+	}
+	
+	/**
+	 * 查询商品被拒绝原因
+	 */
+	@RequestMapping("/toViewReason/{id}")
+	@ResponseBody
+	private ResponseData<ProdStateLog> getRefuseReason(@PathVariable("id") String prodId){
+		ResponseData<ProdStateLog> responseData;
+			//根据商品ID查询商品被拒绝的原因
+			IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+			ProductInfoQuery queryReq = new ProductInfoQuery();
+			queryReq.setTenantId(AdminUtil.getTenantId());
+			queryReq.setSupplierId(AdminUtil.getSupplierId());
+			queryReq.setProductId(prodId);
+		    ProdStateLog refuse = productManagerSV.queryRefuseByPordId(queryReq);
+		    ResponseHeader header = refuse.getResponseHeader();
+			
+			 //保存错误
+	        if (header!=null && !header.isSuccess()){
+	        	LOG.error("Query by prodId is fail,prodId:{},headInfo:\r\n",prodId, JSON.toJSONString(header));
+	            responseData = new ResponseData<ProdStateLog>(
+	                    ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
+	        }else
+	            responseData = new ResponseData<ProdStateLog>(
+	                    ResponseData.AJAX_STATUS_SUCCESS, "OK",refuse);
+		
+		return responseData;
+		
 	}
 }
