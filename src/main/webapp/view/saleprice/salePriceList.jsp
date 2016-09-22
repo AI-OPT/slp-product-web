@@ -125,8 +125,8 @@
 											<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
 												</div>
 										</td>
-										<td>{{:productType}}</td>
-										<td>{{:state}}</td>
+										<td>{{:productTypeName}}</td>
+										<td>{{:stateName}}</td>
 										<td><a href="${_base}/saleprice/query/{{:productId}}" class="blue-border">修改销售价</a></td>
 									</tr>
 								</script>

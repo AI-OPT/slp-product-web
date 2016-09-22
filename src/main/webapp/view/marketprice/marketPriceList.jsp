@@ -126,7 +126,7 @@
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
 											</div>
 										</td>
-										<td>{{:productType}}</td>
+										<td>{{:productTypeName}}</td>
 										<td class="text-r pr-15">{{:~liToYuan(marketPrice)}}</td>
 										<!-- <td>{{:state}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>
