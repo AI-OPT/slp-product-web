@@ -1,3 +1,6 @@
+<%@ page import="com.ai.opt.sdk.components.idps.IDPSClientFactory" %>
+<%@ page import="com.ai.paas.ipaas.image.IImageClient" %>
+<%@ page import="com.ai.slp.product.web.constants.SysCommonConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html>
@@ -280,9 +283,15 @@
 							</div>
 							<!-- 商品预览图 -->
 							<header class="main-box-header clearfix">
-								<h5 class="pull-left">商品预览图</h5>
-							</header>
+                                <h5 class="pull-left">商品预览图</h5>
+                            </header>
 							<div class="form-label bd-bottom"><!--查询条件-->
+								<%
+									String picSize = "78x78";
+									IImageClient imageClient = IDPSClientFactory.getImageClient(SysCommonConstants.ProductImage.IDPSNS);
+									request.setAttribute("imgClient",imageClient);
+									request.setAttribute("picSize",picSize);
+								%>
 								<ul>
 									<li class="width-xlag">
 										<p class="word"><b class="red">*</b>商品主图</p>
@@ -330,7 +339,7 @@
 									</ul>
 								</c:forEach>
 							</div>
-							<!-- 商品预览图 -->
+							<!-- 商品图文描述 -->
 							<header class="main-box-header clearfix">
 								<h5 class="pull-left">商品图文描述</h5>
 							</header>
