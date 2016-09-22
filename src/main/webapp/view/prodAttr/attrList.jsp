@@ -61,33 +61,6 @@
 	</div>
 <!-- 编辑弹框结束 -->
 
-<!-- 删除单个属性弹框 -->
-<div class="eject-big">
-    <div class="eject-samll" id="aband-small">
-        <input type="hidden" id="delAttrId">
-        <div class="eject-medium-title">
-            <p>删除属性</p>
-            <p id="delCloseImg" class="img"><i class="fa fa-times"></i></p>
-        </div>
-
-        <div class="eject-medium-complete">
-            <p><img src="${uedroot}/images/eject-icon-prompt.png"></p>
-            <p class="word">确定删除该属性吗？</p>
-        </div>
-        <!--按钮-->
-        <div class="row mt-15"><!--删格化-->
-            <p class="center pr-30 mt-30">
-                <input id="delAttrBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="确  认">
-                <input id="aband-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
-            </p>
-        </div>
-    </div>
-    <div class="mask" id="eject-mask"></div>
-</div>
-<!-- 删除单个属性弹框结束 -->
-
-
-
 
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
 	<div class="row"><!--外围框架-->

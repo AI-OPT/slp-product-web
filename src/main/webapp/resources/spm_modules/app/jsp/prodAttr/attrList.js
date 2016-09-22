@@ -40,10 +40,7 @@ require("app/util/aiopt-validate-ext");
             "click #selectAttrList":"_selectAttrList",
             "click #upCloseImg":"_closeEditDiv",
             "click #increase-close":"_closeEditDiv",
-            "click #upAttrBtn":"_updateAttr",
-            "click #delAttrBtn":"_delAttr",
-            "click #delCloseImg":"_closeDelConf",
-            "click #aband-close":"_closeDelConf"
+            "click #upAttrBtn":"_updateAttr"
             },
     	//重写父类
     	setup: function () {
@@ -202,17 +199,25 @@ require("app/util/aiopt-validate-ext");
 		
 		//删除确认提示框
 		_showDelConf:function(attrId){
-			$('#eject-mask').fadeIn(100);
-			$('#aband-small').slideDown(200);
-			if (window.console) {
-				console.log("del attr id is " + attrId);
-			}
-			$("#delAttrId").val(attrId);
+			var _this = this;
+    		new Dialog({
+				content:'确定删除该属性吗？',
+				icon:'help',
+				okValue: '确 定',
+				title:'删除属性',
+				ok:function(){
+					this.close();
+					_this._delAttr(attrId);
+				},
+				cancelValue: '取消',
+				cancel: function () {
+					this.close();
+				}
+			}).show();
 		},
 		//删除
-		_delAttr:function(){
+		_delAttr:function(attrId){
 			var _this = this;
-			var attrId = $("#delAttrId").val();//类目标识
 			this._closeDelConf();
 			ajaxController.ajax({
 				type: "get",
