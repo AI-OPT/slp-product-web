@@ -134,7 +134,6 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 					//获取数据成功
 					if("1"===data.statusCode){
 						var reason= data.data.refuseDes;
-						//$("#refuseDes").val(reason.refuseDes);
 						var reasonHtml="<textarea id=\"refuseDes\" name=\"refuseDes\" " +
 								"style=\"width:270px;height:160px;overflow:hidden; resize:none;\">";
 						reasonHtml += reason+"</textarea>";
@@ -147,9 +146,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 							}
 						}).show();
 						
-						
 						//this._showSuccessMsg(jkjkj);
-						
 						/*var reason= data.data;
 						$("#refuseDes").val(reason.refuseDes);
 

@@ -11,9 +11,8 @@
 
 <body>
 <!-- 查看原因弹框 -->
-<div class="eject-big">
+<!-- <div class="eject-big">
 	<div class="eject-samll" id="refuseReason-samll">
-		<!--编辑-->
 		<div class="eject-medium-title">
             <p>商品审核拒绝原因</p>
             <p id="refuseReasonCloseImg" class="img"><i class="fa fa-times"></i></p>
@@ -25,15 +24,14 @@
 						    style="width:360px;height:100px;overflow:hidden; resize:none;"></textarea></p>
            </ul>
 		</div>
-		<!--按钮-->
-        <div class="row mt-15"><!--删格化-->
+        <div class="row mt-15">
             <p class="center pr-30 mt-30">
                 <input id="refuseReasonBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="确  定">
             </p>
         </div>
 	</div>	
 	<div class="mask" id="eject-mask"></div>	
-</div>
+</div> -->
 <!-- 查看原因弹框结束 -->
 
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
