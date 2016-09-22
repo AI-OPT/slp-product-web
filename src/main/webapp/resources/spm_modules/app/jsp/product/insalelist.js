@@ -34,9 +34,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     	events: {
     		//查询
             "click #selectProductList":"_selectProductList",
-            "click #submitBtn":"_prodToDownSale",//商品下架
-            "click #addBtn-close":"_closeConf",
-            "click #createCloseImg":"_closeConf",
+            "click #submitBtn":"_prodToDownSale"//商品下架
             },
     	//重写父类
     	setup: function () {
@@ -127,13 +125,32 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     	},
     	
     	//确认下架提示弹框
-    	_showDownSale:function(productId){
+/*    	_showDownSale:function(productId){
     		$('#eject-mask').fadeIn(100);
-			$('#aband-small').slideDown(200);
-			if (window.console) {
-				console.log("downsale id is " + productId);
-			}
-			$("#downsaleId").val(productId);
+    		$('#aband-small').slideDown(200);
+    		if (window.console) {
+    			console.log("downsale id is " + productId);
+    		}
+    		$("#downsaleId").val(productId);
+    	},
+*/    	
+    	_showDownSale:function(productId){
+    		var _this = this;
+    		new Dialog({
+				content:'确认要将商品下架吗?',
+				icon:'help',
+				okValue: '确 定',
+				title:'确认下架',
+				ok:function(){
+					this.close();
+					_this._prodToDownSale(productId);
+				},
+				cancelValue: '取消',
+				cancel: function () {
+					this.close();
+				}
+			}).show();
+    	
     	},
 
     	//关闭确认提示框
@@ -146,9 +163,9 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     	},
     	
     	//商品下架
-    	_prodToDownSale:function(){
+    	_prodToDownSale:function(productId){
     		var _this = this;
-    		var productId = $("#downsaleId").val();
+    		//var productId = $("#downsaleId").val();
     		_this._closeConf();
     		ajaxController.ajax({
     			type: "post",
