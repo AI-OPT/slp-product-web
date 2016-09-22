@@ -105,7 +105,7 @@ public class CostPriceController {
 				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(), ComCacheConstants.TypeProduct.CODE,
 						ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE, productType);
 				String productTypeName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
-				normProdResponse.setProductType(productTypeName);
+				normProdResponse.setProductTypeName(productTypeName);
 			}
 
 		}

@@ -130,8 +130,8 @@
 											<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
 												</div>
 										</td>
-										<td>{{:productType}}</td>
-										<td>{{:state}}</td>
+										<td>{{:productTypeName}}</td>
+										<td>{{:stateName}}</td>
 										<td ><a href="${_base}/storage/{{:productId}}" class="blue-border">编辑</a></td>
 									</tr>
 								</script>
