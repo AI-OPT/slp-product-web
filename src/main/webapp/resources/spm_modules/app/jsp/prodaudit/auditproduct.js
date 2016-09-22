@@ -32,15 +32,8 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 	    	},
 	    	//事件代理
 	    	events: {
-	    		"click #auditBtn-close":"_closeAudit",
-	            "click #auditCloseImg":"_closeAudit",
 	            "click #refuseBtn-close":"_closeRefuse",
-	            "click #refuseCloseImg":"_closeRefuse",
-	            "click #successCloseImg":"_closeRefuse",
-	    		"click #submitBtn":"_auditProduct",//审核商品
 	    		"click #refuseBtn":"_auditRefuse",//审核拒绝商品
-	    		"click #successRefuseBtn":"_successRefuseBtn",//审核拒绝成功
-	    		"click #successPassBtn":"_successPassBtn",//审核拒绝成功
 	            "click #auditMoreBtn":"_showAuditMore",
 	            "click #refuseMoreBtn":"_showRefuseMore"
 	            },
@@ -55,23 +48,44 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 	    		container.scrollTop(0);//滚动到div 顶部
 	    	},
 	    	 //审核通过
-	         _showAuditMore:function(){
-				$('#eject-mask').fadeIn(100);
-				$('#audit-small').slideDown(200);
+/*	    	_showAuditMore:function(){
+	    		$('#eject-mask').fadeIn(100);
+	    		$('#audit-small').slideDown(200);
+	    	},
+*/
+	    	_showAuditMore:function(){
+	    		var _this = this;
+				var d = Dialog({
+					content:"确定此商品通过您的审核？",
+					icon:'help',
+					okValue: '确 定',
+					title:'审核通过操作确认',
+					ok:function(){
+						this.close();
+						_this._auditProduct();
+						//window.history.go(-1);
+					},
+					cancelValue: '取消',
+					cancel: function () {
+						this.close();
+					}
+				});
+			 d.show();
 			},
 			//确认提示框关闭
 			_closeAudit:function(){
 				$('#eject-mask').fadeOut(100);
 				$('#audit-small').slideUp(150);
 			},
+			
 			//点击确认通过审核
 			_auditProduct:function(){
-			var _this = this;
-			var prodIdList = new Array();
-			var prodId = $("#prodId").val();
-			prodIdList.push(prodId);
-			//prodIdList[0]=prodId;
-			this._closeAudit();
+				var _this = this;
+				var prodIdList = new Array();
+				var prodId = $("#prodId").val();
+				prodIdList.push(prodId);
+				//prodIdList[0]=prodId;
+				this._closeAudit();
 			
 			ajaxController.ajax({
 				type: "post",
@@ -103,9 +117,6 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 				var refuseReason = $("#refuseReason").val();
 				var refuseDes = $("#refuseDes").val();
 				prodIdList.push(prodId);
-				
-				//prodIdList[0]=prodId;
-				//this._showRefuseSuccess();
 				this._closeRefuse();
 				ajaxController.ajax({
 					type: "post",
@@ -127,20 +138,30 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 			
 			//审核拒绝成功后弹框
 			_showRefuseSuccess:function(){
-				$('#eject-mask').fadeIn(100);
-				$('#successRefuse-small').slideDown(200);
-			},
-			_successRefuseBtn:function(){
-				window.history.go(-1);
+				var d = Dialog({
+					content:"商品审核拒绝成功",
+					icon:'success',
+					okValue: '确 定',
+					ok:function(){
+						this.close();
+						window.history.go(-1);
+					}
+				});
+			 d.show();
 			},
 			
 			//审核通过成功弹框
 			_showPassSuccess:function(){
-				$('#eject-mask').fadeIn(100);
-				$('#successPass-small').slideDown(200);
-			},
-			_successPassBtn:function(){
-				window.history.go(-1);
+				var d = Dialog({
+					content:"商品审核通过成功",
+					icon:'success',
+					okValue: '确 定',
+					ok:function(){
+						this.close();
+						window.history.go(-1);
+					}
+				});
+			 d.show();
 			},
 			//审核拒绝弹框
 			_showRefuseMore:function(){

@@ -33,16 +33,10 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
     	},
     	//事件代理
     	events: {
-    		"click #auditBtn-close":"_closeAudit",
-            "click #auditCloseImg":"_closeAudit",
             "click #refuseBtn-close":"_closeRefuse",
             "click #refuseCloseImg":"_closeRefuse",
             "click #submitBtn":"_auditProduct",//批量审核通过
             "click #refuseBtn":"_refuseProduct",//批量审核拒绝
-            "click #successRefuseBtn":"_successRefuseBtn",//审核拒绝成功
-    		"click #successPassBtn":"_successPassBtn",//审核拒绝成功
-    		"click #refuseReasonCloseImg":"_closeEditDiv",
-    		"click #refuseReasonBtn":"_closeEditDiv",
     		//查询
             "click #selectProductList":"_selectProductList"
             },
@@ -177,7 +171,7 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 			if (checkNum == 0) {
 				var d = Dialog({
 					content: "请选择商品进行处理!",
-					icon: 'warning',
+					icon: 'prompt',
 					okValue: '确 定',
 					ok: function () {
 						this.close();
@@ -187,8 +181,8 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 			} else {
 				Dialog({
 					title:"审核通过操作确认!",
-					content: "确定全部通过审核吗!",
-					icon: 'prompt',
+					content: "确定全部通过审核吗?",
+					icon: 'help',
 					cancelValue:'取 消',
 					okValue: '确 定',
 					ok: function () {
@@ -272,7 +266,7 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
         	 if (checkNum == 0) {
         		 var d = Dialog({
 						content:"请选择商品进行处理!",
-						icon:'warning',
+						icon:'prompt',
 						okValue: '确 定',
 						ok:function(){
 							this.close();
@@ -287,21 +281,32 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 		
 		//审核拒绝成功后弹框
 		_showRefuseSuccess:function(){
-			$('#eject-mask').fadeIn(100);
-			$('#successRefuse-small').slideDown(200);
-		},
-		_successRefuseBtn:function(){
-			window.location.reload();
+			var d = Dialog({
+				content:"商品审核拒绝成功",
+				icon:'success',
+				okValue: '确 定',
+				ok:function(){
+					this.close();
+					window.location.reload();
+				}
+			});
+		 d.show();
 		},
 		
 		//审核通过成功弹框
 		_showPassSuccess:function(){
-			$('#eject-mask').fadeIn(100);
-			$('#successPass-small').slideDown(200);
+			var d = Dialog({
+				content:"商品审核通过成功",
+				icon:'success',
+				okValue: '确 定',
+				ok:function(){
+					this.close();
+					window.location.reload();
+				}
+			});
+		 d.show();
 		},
-		_successPassBtn:function(){
-			window.location.reload();
-		},
+		
 		
 		//关闭确认提示框
 		_closeRefuse:function(){
@@ -324,7 +329,6 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 						//获取数据成功
 						if("1"===data.statusCode){
 							var reason= data.data.refuseDes;
-							//$("#refuseDes").val(reason.refuseDes);
 							var reasonHtml="<textarea id=\"refuseDes\" name=\"refuseDes\" " +
 									"style=\"width:270px;height:160px;overflow:hidden; resize:none;\">";
 							reasonHtml += reason+"</textarea>";
@@ -333,18 +337,9 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 								okValue: '确 定',
 								title:'商品拒绝原因',
 								ok:function(){
-									window.history.go(-1);
+									this.close();
 								}
 							}).show();
-							
-							
-							//this._showSuccessMsg(jkjkj);
-							
-							/*var reason= data.data;
-							$("#refuseDes").val(reason.refuseDes);
-
-							$('#eject-mask').fadeIn(100);
-							$('#refuseReason-samll').slideDown(200);*/
 						}
 					}
 				}

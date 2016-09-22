@@ -89,7 +89,7 @@
 												
 												<%--多选--%>
 												<c:when test="${keyAttr.valueWay == '2'}">
-													<div class="cit-width">
+													<div class="cit-width" style="padding:0 200px 0 210px;">
 														<c:forEach var="valInfo" items="${keyAttr.attrValList}">
 															<p><input required type="checkbox" class="checkbox-small" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(keyAttrSet,valInfo.attrvalueDefId)}">checked</c:if>>${valInfo.attrValueName}</p>
 														</c:forEach>
@@ -144,7 +144,7 @@
 													
 													<%--多选--%>
 													<c:when test="${saleAttr.valueWay == '2'}">
-														<div class="cit-width">
+														<div class="cit-width"  style="padding:0 200px 0 210px;">
 															<c:forEach var="valInfo" items="${saleAttr.attrValList}">
 																<p><input required type="checkbox" class="checkbox-small" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" value="${valInfo.attrvalueDefId}" <c:if test="${fn:contains(saleAttrSet,valInfo.attrvalueDefId)}">checked</c:if>>${valInfo.attrValueName}</p>
 															</c:forEach>

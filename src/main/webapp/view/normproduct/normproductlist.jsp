@@ -165,12 +165,14 @@
                                                 <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
                                             </div>
 										</td>
-										<td>{{:productType}}</td>
-										<td>{{:state}}</td>
+										<td>{{:productTypeName}}</td>
+										<td>{{:stateName}}</td>
                                         <td>
 											<a href="${_base}/normprodquery/{{:productId}}" class="blue-border">查看详情</a>
-											<a href="${_base}/normprodedit/{{:productId}}" class="blue-border">编辑</a>
-                                            <a href="javaScript:void(0)" onclick="pager._isDiscardDialog('{{:productId}}')" class="blue-border">废弃</a>
+											{{if state!='0'}}
+												<a href="${_base}/normprodedit/{{:productId}}" class="blue-border">编辑</a>
+                                            	<a href="javaScript:void(0)" onclick="pager._isDiscardDialog('{{:productId}}')" class="blue-border">废弃</a>
+											{{/if}}
 										</td>
 									</tr>
 								</script>

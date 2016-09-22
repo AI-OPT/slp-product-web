@@ -11,7 +11,7 @@
 
 <body>
 <!--确认是否上架弹出框 -->
-<div class="eject-big">
+<%-- <div class="eject-big">
     <div class="eject-samll" id="aband-small">
         <input type="hidden" id="insaleId">
         <div class="eject-medium-title">
@@ -20,7 +20,7 @@
         </div>
 
         <div class="eject-medium-complete">
-            <p><img src="${uedroot}/images/eject-icon-prompt.png"></p>
+            <p><img src="${uedroot}/images/eject-icon-help.png"></p>
             <p class="word">确定上架销售吗？</p>
         </div>
         <!--按钮-->
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="mask" id="eject-mask"></div>
-</div>
+</div> --%>
 <!--确认是否上架弹出框 结束-->
 
 <div class="content-wrapper-iframe"><!--右侧灰色背景-->
@@ -175,7 +175,7 @@
 											{{if state=="6"}}
 											<td>
 												<div>
-													<p><a name="insaleBtnView" prodId="{{:prodId}}" href="#" class="blue-border">上架销售</a></p> 
+													<p><a name="insaleBtnView" prodId="{{:prodId}}" href="javaScript:void(0)" class="blue-border">上架销售</a></p> 
 													<p><a href="${_base}/prodedit/{{:prodId}}" class="blue-border">编辑商品</a></p>
 												</div>
 											</td>
