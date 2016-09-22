@@ -11,7 +11,7 @@
 
 <body>
 <!-- 确认提示框 -->
-<div class="eject-big">
+<%-- <div class="eject-big">
     <div class="eject-samll" id="audit-small">
         <div class="eject-medium-title">
             <p>审核通过操作确认！</p>
@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="mask" id="eject-mask"></div>
-</div>
+</div> --%>
 <!-- 确认提示框结束 -->
 
 <!-- 拒绝提示框 -->
@@ -82,7 +82,7 @@
 <!-- 拒绝提示框结束 -->
 
 <!-- 拒绝成功提示框 -->
-<div class="eject-big">
+<%-- <div class="eject-big">
     <div class="eject-samll" id="successRefuse-small">
 
         <div class="eject-medium-complete">
@@ -97,11 +97,11 @@
         </div>
     </div>
     <div class="mask" id="eject-mask"></div>
-</div>
+</div> --%>
 <!-- 拒绝成功提示框结束 -->
 
 <!-- 审核通过成功提示框 -->
-<div class="eject-big">
+<%-- <div class="eject-big">
     <div class="eject-samll" id="successPass-small">
 
         <div class="eject-medium-complete">
@@ -116,7 +116,7 @@
         </div>
     </div>
     <div class="mask" id="eject-mask"></div>
-</div>
+</div> --%>
 <!-- 审核通过成功提示框结束 -->
 
 
