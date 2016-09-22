@@ -142,7 +142,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 							okValue: '确 定',
 							title:'商品拒绝原因',
 							ok:function(){
-								window.history.go(-1);
+								this.close();
 							}
 						}).show();
 						
