@@ -71,8 +71,8 @@
 												<%--多选--%>
 												<c:when test="${aav.key.attrType == '2'}">
 													<div class="cit-width">
-														<c:forEach var="attrVal" items="${aav.value}">
-															<p>${attrVal.attrVal}</p>
+														<c:forEach var="attrVal" items="${aav.value}" varStatus="stat">
+															<p>${attrVal.attrVal}<c:if test="${!stat.last}">、</c:if></p>
 														</c:forEach>
 													</div>
 												</c:when>
@@ -100,11 +100,11 @@
 											<c:choose>
 												<%--多选--%>
 												<c:when test="${attr.valueWay == '2'}">
-													<div class="cit-width">
-														<c:forEach var="attrVal" items="${noKeyAttrVals}">
-															<p>${attrVal.attrVal}</p>
+													<p class="wide-field">
+														<c:forEach var="attrVal" items="${noKeyAttrVals}" varStatus="stat">
+															${attrVal.attrVal}<c:if test="${!stat.last}">、</c:if>
 														</c:forEach>
-													</div>
+													</p>
 												</c:when>
 												<c:when test="${!noKeyAttrVals.isEmpty()}">
 													<p>${noKeyAttrVals.get(0).attrVal}</p>

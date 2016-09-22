@@ -156,17 +156,17 @@
 										<c:choose>
 											<%--多选--%>
 											<c:when test="${aav.key.attrType == '2'}">
-												<div class="cit-width">
-													<c:forEach var="attrVal" items="${aav.value}">
-														<p>${attrVal.attrVal}</p>
+												<p class="wide-field">
+													<c:forEach var="attrVal" items="${aav.value}" varStatus="stat">
+														${attrVal.attrVal}<c:if test="${!stat.last}">、</c:if>
 													</c:forEach>
-												</div>
+												</p>
 											</c:when>
 											<c:when test="${!aav.value.isEmpty()}">
-												<p class="wide-field" style="word-break:break-all;">${aav.value.get(0).attrVal}</p>
+												<p>${aav.value.get(0).attrVal}</p>
 											</c:when>
 											<c:otherwise>
-												<p class="wide-field" style="word-break:break-all;"></p>
+												<p></p>
 											</c:otherwise>
 										</c:choose>
 									</li>
