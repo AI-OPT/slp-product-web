@@ -87,6 +87,18 @@ require("app/util/aiopt-validate-ext");
     		var _this = this;
     		
     		var attrId = $("#attrId").val().trim();
+    		if (isNaN(attrId)) {
+    			var d = Dialog({
+					content:"请输入正确格式的属性ID.",
+					icon:'prompt',
+					okValue: '确 定',
+					ok:function(){
+						this.close();
+					}
+				});
+				d.show();
+				return;
+			}
     		var attrName = $("#attrName").val().trim();
     		var valueWay = $("#valueWay").val().trim();
     		
