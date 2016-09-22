@@ -99,7 +99,12 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
 			settings.type=options.type?options.type:"post";
 			var q="ajax_req_random="+new Date().getTime();
 			settings.url += (settings.url.indexOf('?') >= 0 ? '&' : '?') + q;  
-			if(processing)processingDialog.content("<div class='word'>"+message+"</div>").showModal();
+			if(processing){
+				if(message){
+					processingDialog.content("<div class='word'>"+message+"</div>");	
+				}
+				processingDialog.showModal();	
+			}
 			if(options.postselectors && options.postselectors.length==1){ 
 				settings.semantic=true; 
 				var postContainerSelector=options.postselectors[0]; 
