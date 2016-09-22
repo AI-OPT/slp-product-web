@@ -42,8 +42,9 @@
 <script src="${_base}/resources/spm_modules/seajs/2.3.0/dist/sea.js"></script>
 <script src="${_base}/resources/spm_modules/seajs/seajs-css.js"></script>
 <script src="${_base}/resources/spm_modules/app/core/config.js"></script>
-<!-- å¬å±äºä»¶ -->
+<!-- 公共事件 -->
 <script src="${_base}/resources/spm_modules/app/util/common.js" type="text/javascript"></script>
+<script src="${uedroot}/scripts/modular/theme.js"></script>
 <script src="${uedroot}/scripts/modular/p-skin-changer.js"></script>
 
 <script src="${uedroot}/scripts/plugin/jquery.nanoscroller.min.js"></script>

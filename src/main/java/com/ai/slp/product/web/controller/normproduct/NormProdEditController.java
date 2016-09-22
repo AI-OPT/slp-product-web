@@ -238,7 +238,7 @@ public class NormProdEditController {
 		paramNormProdUniqueReq.setTenantId(AdminUtil.getTenantId());
 		paramNormProdUniqueReq.setSupplierId(AdminUtil.getSupplierId());
 		paramNormProdUniqueReq.setProductId(prodId);
-		BaseResponse discardProduct = normProductSV.discardProduct(paramNormProdUniqueReq );
+		BaseResponse discardProduct = normProductSV.discardProductWithStorage(paramNormProdUniqueReq );
 		if(discardProduct.getResponseHeader().isSuccess()){
 			return new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "操作成功");
 		}else{
