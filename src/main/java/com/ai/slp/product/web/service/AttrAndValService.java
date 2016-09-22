@@ -14,7 +14,7 @@ import java.util.*;
 public class AttrAndValService {
 
     public Map<ProdCatAttrInfo, List<AttrValInfo>> getAttrAndVals(AttrMap attrMap) {
-        Map<ProdCatAttrInfo, List<AttrValInfo>> attrAndValMap = new HashMap<>();
+        Map<ProdCatAttrInfo, List<AttrValInfo>> attrAndValMap = new LinkedHashMap<>();
         Set<Map.Entry<Long, List<Long>>> entrySet = attrMap.attrAndVal.entrySet();
         for (Map.Entry<Long, List<Long>> mapEntry : entrySet) {
             ProdCatAttrInfo attrInfo = attrMap.getAttrDefMap().get(mapEntry.getKey());
