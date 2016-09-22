@@ -144,7 +144,7 @@
     var standedProdId = "${standedProdId}";
     var productCatId = "${productCatId}";
     (function () {
-        seajs.use('app/jsp/marketprice/addMarketPrice', function (addMarketPricePager) {
+        seajs.use('app/jsp/marketprice/marketPriceEdit', function (addMarketPricePager) {
             pager = new addMarketPricePager({element: document.body});
             pager.render();
         });

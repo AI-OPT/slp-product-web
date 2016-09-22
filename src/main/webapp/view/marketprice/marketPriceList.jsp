@@ -169,7 +169,7 @@
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
 		});
-		seajs.use(['app/jsp/marketprice/priceList','app/util/center-hind'], function(priceListPager,centerHind) {
+		seajs.use(['app/jsp/marketprice/marketPriceList','app/util/center-hind'], function(priceListPager,centerHind) {
 			pager = new priceListPager({element : document.body});
 			pager.render();
 			new centerHind({element : document.body}).render();

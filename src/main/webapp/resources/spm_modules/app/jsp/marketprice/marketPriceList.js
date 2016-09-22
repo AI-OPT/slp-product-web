@@ -1,4 +1,4 @@
-define('app/jsp/marketprice/priceList', function (require, exports, module) {
+define('app/jsp/marketprice/marketPriceList', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
