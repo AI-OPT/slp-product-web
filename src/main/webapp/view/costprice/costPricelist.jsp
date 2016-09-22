@@ -122,7 +122,7 @@
                                                 <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:catName}}</div>
                                             </div>
 										</td>
-										<td>{{:productType}}</td>
+										<td>{{:productTypeName}}</td>
                                         <td>
 											<a href="${_base}/costprice/{{:productId}}" class="blue-border">修改成本价</a>
 										</td>
