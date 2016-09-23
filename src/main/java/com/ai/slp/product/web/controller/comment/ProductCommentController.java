@@ -1,11 +1,7 @@
 package com.ai.slp.product.web.controller.comment;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,12 +22,7 @@ import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.productcomment.interfaces.IProdCommentManagerSV;
-import com.ai.slp.product.api.productcomment.param.CommentPageRequest;
-import com.ai.slp.product.api.productcomment.param.CommentPageResponse;
-import com.ai.slp.product.api.productcomment.param.CommentPictureQueryRequset;
-import com.ai.slp.product.api.productcomment.param.CommentPictureQueryResponse;
-import com.ai.slp.product.api.productcomment.param.PictureVO;
-import com.ai.slp.product.api.productcomment.param.UpdateCommentStateRequest;
+import com.ai.slp.product.api.productcomment.param.*;
 import com.ai.slp.product.web.constants.ProductCommentConstants;
 import com.ai.slp.product.web.model.comment.CommentPageInfo;
 import com.ai.slp.product.web.util.AdminUtil;
@@ -96,6 +87,7 @@ public class ProductCommentController {
 						Map<String, String> queryMap = new HashMap<String, String>();
 						queryMap.put("uid", pageInfo.getUserId());
 						String queryParam = JSON.toJSONString(queryMap);
+						//获取地址
 						String userServerIp = CCSClientFactory.getDefaultConfigClient()
 								.get(ProductCommentConstants.CCSKey.userserver_ip);
 						String url = "http://" + userServerIp + "/opaas/http/srv_up_user_getuserdetialbyuid_reg";
