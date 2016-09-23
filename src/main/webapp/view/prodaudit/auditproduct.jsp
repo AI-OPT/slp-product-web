@@ -53,7 +53,7 @@
                    <p>
                    	<select id="refuseReason" class="select select-medium">
 	                   	<option value="10">信息有误</option>
-	                   	<option value="11">信息为完善</option>
+	                   	<option value="11">信息未完善</option>
 	                   	<option value="99">其他</option>
                    	</select>
                    </p>
@@ -211,7 +211,10 @@
 												<c:when test="${attr.valueWay == '2'}">
 													<div class="wide-width">
 														<c:forEach var="attrVal" items="${noKeyAttrVals}" varStatus="stat">
-															${attrVal.attrVal}<c:if test="${!stat.last}">、</c:if>
+															<c:if test="${attrVal.productAttrValId != null}">
+																${attrVal.attrVal}、
+															</c:if>
+															<%-- ${attrVal.attrVal}<c:if test="${!stat.last}">、</c:if> --%>
 														</c:forEach>
 													</div>
 												</c:when>

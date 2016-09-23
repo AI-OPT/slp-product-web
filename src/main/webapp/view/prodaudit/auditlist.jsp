@@ -28,7 +28,7 @@
                    <p>
                    	<select id="refuseReason" class="select select-medium">
 	                   	<option value="10">信息有误</option>
-	                   	<option value="11">信息为完善</option>
+	                   	<option value="11">信息未完善</option>
 	                   	<option value="99">其他</option>
                    	</select>
                    </p>

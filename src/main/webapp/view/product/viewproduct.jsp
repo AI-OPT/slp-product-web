@@ -102,7 +102,9 @@
 												<c:when test="${attr.valueWay == '2'}">
 													<p class="wide-field">
 														<c:forEach var="attrVal" items="${noKeyAttrVals}" varStatus="stat">
-															${attrVal.attrVal}<c:if test="${!stat.last}">、</c:if>
+															<c:if test="${attrVal.productAttrValId != null}">
+																${attrVal.attrVal}、
+															</c:if>
 														</c:forEach>
 													</p>
 												</c:when>
