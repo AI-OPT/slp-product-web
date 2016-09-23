@@ -307,7 +307,7 @@
                                                 <td>${status.index + 1}</td>
                                                 <td>${storage.storageId}</td>
                                                 <td id="stoName${storage.storageId}">${storage.storageName}</td>
-                                                <td>${storage.totalNum}</td>
+                                                <td>${storage.usableNum}</td>
                                                 <td>${storage.stateName}</td>
                                                 <td>
                                                     <c:choose>
