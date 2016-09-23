@@ -210,9 +210,11 @@
 												<%--多选--%>
 												<c:when test="${attr.valueWay == '2'}">
 													<div class="wide-width">
+														<c:set var="choseInt" value="0"></c:set>
 														<c:forEach var="attrVal" items="${noKeyAttrVals}" varStatus="stat">
 															<c:if test="${attrVal.productAttrValId != null}">
-																${attrVal.attrVal}、
+																<c:if test="${choseInt>0}">、</c:if>${attrVal.attrVal}
+																<c:set var="choseInt" value="${choseInt+1 }"></c:set>
 															</c:if>
 															<%-- ${attrVal.attrVal}<c:if test="${!stat.last}">、</c:if> --%>
 														</c:forEach>

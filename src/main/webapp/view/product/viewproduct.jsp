@@ -1,6 +1,8 @@
 <%@ page import="com.ai.opt.sdk.components.idps.IDPSClientFactory" %>
 <%@ page import="com.ai.paas.ipaas.image.IImageClient" %>
 <%@ page import="com.ai.slp.product.web.constants.SysCommonConstants" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html>
@@ -100,12 +102,15 @@
 											<c:choose>
 												<%--多选--%>
 												<c:when test="${attr.valueWay == '2'}">
+												<c:set var="choseInt" value="0"></c:set>
 													<p class="wide-field">
-														<c:forEach var="attrVal" items="${noKeyAttrVals}" varStatus="stat">
+														<c:forEach var="attrVal" items="${noKeyAttrVals}">
 															<c:if test="${attrVal.productAttrValId != null}">
-																${attrVal.attrVal}、
+																<c:if test="${choseInt>0}">、</c:if>${attrVal.attrVal}
+																<c:set var="choseInt" value="${choseInt+1 }"></c:set>
 															</c:if>
 														</c:forEach>
+														
 													</p>
 												</c:when>
 												<c:when test="${!noKeyAttrVals.isEmpty()}">
