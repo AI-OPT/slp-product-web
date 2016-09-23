@@ -48,6 +48,9 @@ require("app/util/aiopt-validate-ext");
     		
     		var validateForm = $("#prodForm").validate();
 			if(!validateForm.form()){
+				errorPlacement: function(error, element) {  
+					error.appendTo($("#marketPriceValidate"));                           
+					}
 				return;
 			}
 			
