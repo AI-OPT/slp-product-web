@@ -1,8 +1,6 @@
 <%@ page import="com.ai.opt.sdk.components.idps.IDPSClientFactory" %>
 <%@ page import="com.ai.paas.ipaas.image.IImageClient" %>
 <%@ page import="com.ai.slp.product.web.constants.SysCommonConstants" %>
-<%@ page import="org.apache.commons.lang.StringUtils" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html>
