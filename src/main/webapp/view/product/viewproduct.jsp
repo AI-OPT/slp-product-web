@@ -100,12 +100,15 @@
 											<c:choose>
 												<%--多选--%>
 												<c:when test="${attr.valueWay == '2'}">
+												<c:set var="choseInt" value="0"></c:set>
 													<p class="wide-field">
-														<c:forEach var="attrVal" items="${noKeyAttrVals}" varStatus="stat">
+														<c:forEach var="attrVal" items="${noKeyAttrVals}">
 															<c:if test="${attrVal.productAttrValId != null}">
-																${attrVal.attrVal}、
+																<c:if test="${choseInt>0}">、</c:if>${attrVal.attrVal}
+																<c:set var="choseInt" value="${choseInt+1 }"></c:set>
 															</c:if>
 														</c:forEach>
+														
 													</p>
 												</c:when>
 												<c:when test="${!noKeyAttrVals.isEmpty()}">

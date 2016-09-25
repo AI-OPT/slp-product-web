@@ -111,8 +111,9 @@
 	                            	<ul class="big-word">
 	                                    <li class="col-md-12">
 	                                        <p class="word3">市场价：</p>
-	                                        <p><input name="marketPrice" id="marketPrice"  type="text" value="${price}" class="int-text int-medium" onkeyup="marketPriceCopy.value=this.value"> (元)</p>
-	                                        <p><input name="marketPriceCopy" type="text" style="width:0px; height:20px;" regexp="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$" data-msg-regexp="请输入正确市场价"></p>
+	                                        <p><input name="marketPrice" id="marketPrice"  type="text" value="${price}" class="int-text int-medium"
+	                                        	 regexp="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$" data-msg-regexp="请输入正确市场价"> (元)</p>
+	                                        <p id="marketPriceValidate"></p>
 	                                    </li>
 	                                </ul>
                                 </form>
