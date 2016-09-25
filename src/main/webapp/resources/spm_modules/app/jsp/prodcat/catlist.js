@@ -3,7 +3,6 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
 	    Dialog = require("optDialog/src/dialog"),
-	    Paging = require('paging/0.0.1/paging-debug'),
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");

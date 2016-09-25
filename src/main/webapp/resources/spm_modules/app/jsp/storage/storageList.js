@@ -3,25 +3,24 @@ define('app/jsp/storage/storageList', function (require, exports, module) {
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
 	    Dialog = require("optDialog/src/dialog"),
-	    Paging = require('paging/0.0.1/paging-debug'),
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
     require("my97DatePicker/WdatePicker");
     require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
-    require("opt-paging/aiopt.pagination");
+
     require("twbs-pagination/jquery.twbsPagination.min");
+	//require('paging/0.0.1/paging-debug');
+	require("opt-paging/aiopt.pagination");
     
-    var SendMessageUtil = require("app/util/sendMessage");
-    
+
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     var clickId = "";
     //定义页面组件类
     var storageList = Widget.extend({
     	
-    	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
     	attrs: {
     		clickId:""
