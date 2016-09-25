@@ -12,7 +12,7 @@
 //start of seajs
 define(function (require, exports, module) {
 
-require("jquery-validation/1.15.1/jquery.validate");
+	require("jquery-validation/1.15.1/jquery.validate");
 
 /***====AIOPT 扩展校验方法   开始====***/
 /**
