@@ -1,10 +1,9 @@
-define("opt-paging/aiopt.pagination", [], function(require, exports, module){
-
+define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagination.min"], function(require, exports, module){
 	 var AjaxController=require('opt-ajax/1.0.0/index');
 	//实例化AJAX控制处理对象
 	 var ajaxController = new AjaxController();
-	
-	
+
+
 	/*!
  * jQuery runner pagination plugin v1.0.0
  * based on jquery.pagController.js  jquery.twbsPagination.js
@@ -12,7 +11,6 @@ define("opt-paging/aiopt.pagination", [], function(require, exports, module){
  * Released under Apache 2.0 license
  * http://apache.org/licenses/LICENSE-2.0.html
  */
-;
 (function ($, window, document, undefined) {
 
     'use strict';
