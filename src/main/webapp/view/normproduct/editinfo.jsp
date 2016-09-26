@@ -177,7 +177,7 @@
 	                            <div class="form-label  bd-bottom"> 
 		                            <ul>
 						                <li class="width-xlag">
-				                            <p class="word3"><b class="red">*</b>状态：</p>
+				                            <p class="word3"><b class="red">*</b>状态</p>
 				                            <p>
 				                            	<select required id="state" name="state" class="select select-medium">
 								                   	<option value="1"<c:if test="${productInfo.state == '1'}">selected="selected"</c:if>>可使用</option>
