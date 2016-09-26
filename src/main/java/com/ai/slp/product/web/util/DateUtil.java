@@ -1,11 +1,5 @@
 package com.ai.slp.product.web.util;
 
-import com.ai.opt.base.exception.SystemException;
-import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -14,6 +8,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ai.opt.base.exception.SystemException;
 
 public final class DateUtil {
 
@@ -98,9 +99,7 @@ public final class DateUtil {
         if (StringUtils.isBlank(pattern)) {
             throw new SystemException("请指定格式");
         }
-        DateFormat dfmt = new SimpleDateFormat(pattern);
-        Date date = time;
-        return date != null ? dfmt.format(date) : "";
+        return new SimpleDateFormat(pattern).format(time);
     }
 
     /**
@@ -119,8 +118,7 @@ public final class DateUtil {
         if (StringUtils.isBlank(pattern)) {
             throw new SystemException("请指定格式");
         }
-        SimpleDateFormat sdfmt = new SimpleDateFormat(pattern);
-        return date != null ? sdfmt.format(date) : "";
+        return new SimpleDateFormat(pattern).format(date);
     }
 
     /**

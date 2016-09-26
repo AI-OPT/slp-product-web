@@ -115,12 +115,13 @@ public class HomeController {
 		IUcKeyInfoSV ucKeyInfoSV = DubboConsumerFactory.getService(IUcKeyInfoSV.class);
 		PageInfoResponse<UcGroupKeyInfoVo> infoResponse = ucKeyInfoSV.queryGroupInfo(infoRequest);
 		ResponseHeader header = infoResponse.getResponseHeader();
-		if (header!=null && header.isSuccess()){
-			responseData = new ResponseData<PageInfoResponse<UcGroupKeyInfoVo>>(ResponseData.AJAX_STATUS_SUCCESS,
-					"查询成功",infoResponse);
-		}else {
+		//若head不为空,且不是成功标识
+		if (header!=null && !header.isSuccess()){
 			responseData = new ResponseData<PageInfoResponse<UcGroupKeyInfoVo>>(ResponseData.AJAX_STATUS_FAILURE,
 					"查询失败:"+header.getResultMessage());
+		}else {
+			responseData = new ResponseData<PageInfoResponse<UcGroupKeyInfoVo>>(ResponseData.AJAX_STATUS_SUCCESS,
+					"查询成功",infoResponse);
 		}
 		return responseData;
 	}

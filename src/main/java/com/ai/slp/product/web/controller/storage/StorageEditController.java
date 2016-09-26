@@ -1,5 +1,17 @@
 package com.ai.slp.product.web.controller.storage;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -9,16 +21,6 @@ import com.ai.slp.product.api.storage.param.*;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 /**
  * Created by jackieliu on 16/8/22.
@@ -182,7 +184,6 @@ public class StorageEditController {
         ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "操作成功");
         IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
         NameUpReq upReq = new NameUpReq();
-        StorageStatus storageStatus = new StorageStatus();
         upReq.setTenantId(AdminUtil.getTenantId());
         upReq.setSupplierId(AdminUtil.getSupplierId());
         upReq.setId(stoId);
