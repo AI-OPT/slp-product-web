@@ -25,7 +25,7 @@
                                     test="${!stat.last}">&gt;</c:if></c:forEach></h5>
                         </header>
                         <!--标题结束-->
-                        <div class="relation-title main-box-header">1、关键属性</div>
+                        <div class="relation-title main-box-header">关键属性</div>
                         <div class="main-box-body clearfix">
                             <!--table表格-->
                             <div class="table-responsive clearfix relation-special">
@@ -71,57 +71,6 @@
                                     </c:forEach>
                                     <!--点击行为表现层结束-->
 
-                                </table>
-
-                            </div>
-                            <!--/table表格结束-->
-                        </div>
-                        <div class="relation-title main-box-header">2、销售属性</div>
-                        <div class="main-box-body clearfix">
-                            <!--table表格-->
-                            <div class="table-responsive clearfix relation-special">
-                                <table width="100%" border="0" class="table table-hover  table-bordered table-special">
-                                    <tr class="bj">
-                                        <thead>
-                                        <th width="60%" class="right-none text-c"  align="center">属性</th>
-                                        <th width="40%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
-                                        </thead>
-                                    </tr>
-
-                                    <!--点击展开-->
-                                    <c:forEach var="attr" items="${saleAttr}">
-                                    <tbody>
-                                        <!--点击展开-->
-                                        <tr>
-                                            <td colspan="1" class="click right-none">
-                                                <!--点击行为层-->
-                                                <table width="40%" border="0"  class="table-border">
-                                                    <tr class="click">
-                                                        <td style="min-width:2%;"  class="ctr border-bot-none"><A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}</td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td class="left-none">${attr.serialNumber}</td>
-                                            <!--点击行为层结束-->
-                                        </tr>
-                                        <!--点击行为表现层-->
-                                        <c:if test="${attr.attrValList!=null && attr.attrValList.size()>0}">
-                                            <tr class="zhank"  style=" display:none;">
-                                                <td colspan="2" >
-                                                    <table width="100%" border="0" >
-                                                        <c:forEach items="${attr.attrValList}" var="attrVal">
-                                                            <tr class="border-bot-none">
-                                                                <td  width="45%" class="right-text">${attrVal.attrValueName}</td>
-                                                                <td  width="55%">${attrVal.serialNumber}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </c:if>
-                                    </tbody>
-                                    </c:forEach>
-                                    <!--点击行为表现层结束-->
                                 </table>
 
                             </div>

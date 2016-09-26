@@ -46,7 +46,7 @@
                         </header>
                         <input type="hidden" name="catId" id="catId" value="${catId}">
                         <!--标题结束-->
-                        <div class="relation-title main-box-header">1、关键属性(添加保存标准品后，关键属性不可修改，请认真选择）
+                        <div class="relation-title main-box-header">关键属性(添加保存标准品后，关键属性不可修改，请认真选择）
                             <a href="${_base}/cat/query/attr/view/${catId}?attrType=<%=ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY%>">选择属性</a></div>
                         <div class="main-box-body clearfix">
                             <!--table表格-->
@@ -109,80 +109,7 @@
                             </div>
                             <!--/table表格结束-->
                         </div>
-                        <div class="relation-title main-box-header">2、销售属性（添加保存标准品后，关键属性不可修改，请认真选择）
-                            <a href="${_base}/cat/query/attr/view/${catId}?attrType=<%=ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE%>">选择属性</a></div>
-                        <div class="main-box-body clearfix">
-                            <!--table表格-->
-                            <div class="table-responsive clearfix relation-special">
-                                <table width="100%" border="0" class="table table-hover  table-bordered table-special">
-                                    <tr class="bj">
-                                        <thead>
-                                        <th width="60%" class="right-none text-c"  align="center">属性</th>
-                                        <th width="30%" class="left-none right-none text-c" align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
-                                        <th width="10%" class="left-none right-none text-c" >是否需要上传图片</th>
-                                        </thead>
-                                    </tr>
-
-                                    <!--点击展开-->
-                                    <c:forEach var="attr" items="${saleAttr}">
-                                    <tbody id="attrTbody1_${attr.catAttrId}">
-                                        <!--点击展开-->
-                                        <tr>
-                                            <td colspan="1" class="click right-none">
-                                                <!--点击行为层-->
-                                                <table width="60%" border="0"  class="table-border">
-                                                    <tr class="click">
-                                                        <td style="min-width:2%;"  class="ctr border-bot-none">
-                                                            <A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}<i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td class="left-none right-none">
-                                                <input type="number" class="int-text int-mini" catAttrId="${attr.catAttrId}"
-                                                       catAttrId="${attr.catAttrId}" name="attrSn" min="0" max="1000"
-                                                       placeholder="属性排序" value="${attr.serialNumber}">
-                                            </td>
-                                            <td class="left-none ">
-                                                <span class="radio-sp">
-                                                    <input type="radio" name="isPic${attr.catAttrId}" catAttrId="${attr.catAttrId}" value="Y"
-                                                           <c:if test="${attr.isPicture == 'Y'}">checked="checked"</c:if>>是</span>
-                                                <span class="radio-sp">
-                                                    <input type="radio" name="isPic${attr.catAttrId}" catAttrId="${attr.catAttrId}" value="N"
-                                                           <c:if test="${attr.isPicture != 'Y'}">checked="checked"</c:if>>否</span>
-                                            </td>
-                                            <!--点击行为层结束-->
-                                        </tr>
-                                        <!--点击行为表现层-->
-                                        <c:if test="${attr.attrValList!=null && attr.attrValList.size()>0}">
-                                            <tr class="zhank"  style=" display:none;">
-                                                <td colspan="3" >
-                                                    <table width="100%" border="0" >
-                                                        <c:forEach items="${attr.attrValList}" var="attrVal">
-                                                            <tr id="attrValTr2_${attrVal.catAttrValId}" class="border-bot-none">
-                                                                <td  width="45%" class="right-text">${attrVal.attrValueName}
-                                                                    <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
-                                                                <td  width="55%">
-                                                                    <input type="number" class="int-text int-mini" placeholder="属性值排序"
-                                                                           catAttrValId="${attrVal.catAttrValId}" name="attrValSn"
-                                                                           value="${attrVal.serialNumber}" min="0" max="1000">
-                                                                </td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </c:if>
-                                    </tbody>
-                                    </c:forEach>
-                                    <!--点击行为表现层结束-->
-                                </table>
-
-                            </div>
-                            <!--/table表格结束-->
-                        </div>
-                        <div class="relation-title main-box-header">3、非关键属性
+                        <div class="relation-title main-box-header">非关键属性
                             <a href="${_base}/cat/query/attr/view/${catId}?attrType=<%=ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_NONKEY%>">选择属性</a></div>
                         <div class="main-box-body clearfix">
                             <!--table表格-->
