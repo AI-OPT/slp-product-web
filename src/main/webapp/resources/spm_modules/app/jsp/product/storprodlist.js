@@ -11,9 +11,7 @@ define('app/jsp/product/storprodlist', function (require, exports, module) {
     require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
     require("opt-paging/aiopt.pagination");
-    require("twbs-pagination/jquery.twbsPagination.min");
-   
-    
+
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象

@@ -2,7 +2,6 @@ define('app/jsp/marketprice/marketPriceEdit', function (require, exports, module
     'use strict';
     var $=require('jquery'),
     Widget = require('arale-widget/1.2.0/widget'),
-	Validator = require("arale-validator/0.10.2/index"),
     Dialog = require("optDialog/src/dialog"),
     AjaxController = require('opt-ajax/1.0.0/index');
 require("jsviews/jsrender.min");

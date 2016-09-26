@@ -10,8 +10,7 @@ define('app/jsp/salableproduct/salableProductList', function (require, exports, 
 	SendMessageUtil = require("app/util/sendMessage");
 
 	require("bootstrap-paginator/bootstrap-paginator.min");
-	require("twbs-pagination/jquery.twbsPagination.min");
-	require('opt-paging/aiopt.pagination'),
+	require('opt-paging/aiopt.pagination');
 
     require("jsviews/jsrender.min");
 	require("jsviews/jsviews.min");

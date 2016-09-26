@@ -5,13 +5,13 @@ define('app/jsp/prodAttr/addAttrValue', function (require, exports, module) {
 	Validator = require("arale-validator/0.10.2/index"),
     Dialog = require("optDialog/src/dialog"),
     AjaxController = require('opt-ajax/1.0.0/index');
-require("jsviews/jsrender.min");
-require("jsviews/jsviews.min");
-require("bootstrap-paginator/bootstrap-paginator.min");
-require("app/util/jsviews-ext");
+	require("jsviews/jsrender.min");
+	require("jsviews/jsviews.min");
+	require("bootstrap-paginator/bootstrap-paginator.min");
+	require("app/util/jsviews-ext");
 
-require("jquery-validation/1.15.1/jquery.validate");
-require("app/util/aiopt-validate-ext");
+	require("jquery-validation/1.15.1/jquery.validate");
+	require("app/util/aiopt-validate-ext");
 
 
     var SendMessageUtil = require("app/util/sendMessage");

@@ -3,7 +3,6 @@ define('app/jsp/marketprice/marketPriceList', function (require, exports, module
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
 	    Dialog = require("optDialog/src/dialog"),
-	    Paging = require('paging/0.0.1/paging-debug'),
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
@@ -11,9 +10,7 @@ define('app/jsp/marketprice/marketPriceList', function (require, exports, module
     require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
     require("opt-paging/aiopt.pagination");
-    require("twbs-pagination/jquery.twbsPagination.min");
-   
-    
+
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
