@@ -2,7 +2,7 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
 	 var AjaxController=require('opt-ajax/1.0.0/index');
 	//实例化AJAX控制处理对象
 	 var ajaxController = new AjaxController();
-
+	require("twbs-pagination/jquery.twbsPagination.min");
 
 	/*!
  * jQuery runner pagination plugin v1.0.0

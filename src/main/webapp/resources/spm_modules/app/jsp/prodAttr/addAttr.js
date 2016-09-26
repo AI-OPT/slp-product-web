@@ -2,17 +2,13 @@ define('app/jsp/prodAttr/addAttr', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
     Widget = require('arale-widget/1.2.0/widget'),
-	Validator = require("arale-validator/0.10.2/index"),
     Dialog = require("optDialog/src/dialog"),
-  //  Paging = require('paging/0.0.1/paging'),
     AjaxController = require('opt-ajax/1.0.0/index');
 require("jsviews/jsrender.min");
 require("jsviews/jsviews.min");
 require("bootstrap-paginator/bootstrap-paginator.min");
 require("app/util/jsviews-ext");
 
-/*require("arale-validator/0.10.2/alice.components.ui-button-orange-1.3-full.css");
-require("arale-validator/0.10.2/alice.components.ui-form-1.0-src.css");*/
 require("jquery-validation/1.15.1/jquery.validate");
 require("app/util/aiopt-validate-ext");
 

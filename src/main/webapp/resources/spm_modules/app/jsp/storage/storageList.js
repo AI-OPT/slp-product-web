@@ -10,7 +10,6 @@ define('app/jsp/storage/storageList', function (require, exports, module) {
     require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
 
-    require("twbs-pagination/jquery.twbsPagination.min");
 	//require('paging/0.0.1/paging-debug');
 	require("opt-paging/aiopt.pagination");
     
