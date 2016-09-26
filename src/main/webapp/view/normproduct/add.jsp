@@ -25,7 +25,7 @@
 						<div class="main-box-body clearfix">
 							<!-- 类目链 -->
                             <header class="main-box-header clearfix">
-                                <h5 class="pull-left"><div id="productCatValues">您当前选择的商品类别是：${productCatValues}</div>
+                                <h5 class="pull-left"><div id="productCatValues">您当前选择的商品类目是：${productCatValues}</div>
                                 </h5>
                             </header>
                             <header class="main-box-header clearfix">
