@@ -1,24 +1,16 @@
 # Pull base image
-FROM 10.19.13.18:5000/jdk:7
+FROM 10.19.13.18:5000/tomcat:7
 MAINTAINER gucl<gucl@asiainfo.com>
-WORKDIR /
 
-# deploy user dubbo service
-COPY ./build/libs /general-common-service/libs/
-COPY ./build/config /general-common-service/config/
+# Install tomcat7
+RUN rm -rf /opt/apache-tomcat-7.0.72/webapps/* && mkdir /opt/apache-tomcat-7.0.72/webapps/ROOT
+# 此处的uac.war 各中心要根据情况自己修改，
+# 如商品中心的为product-web.war
+COPY ./build/libs/product-web.war /opt/apache-tomcat-7.0.72/webapps/ROOT/ROOT.war
+RUN cd /opt/apache-tomcat-7.0.72/webapps/ROOT && jar -xf ROOT.war && rm -rf /opt/apache-tomcat-7.0.72/webapps/ROOT.war
 
-#mkdir logs path
-RUN cd /general-common-service && mkdir logs && cd /general-common-service/logs && mkdir ch-logs && mkdir slp-logs
-
-## copy start script
-COPY ./script/general-common-service.sh /general-common-service.sh
-RUN chmod 755 /general-common-service.sh
-
-# set start parameter for dubbo service
-ENV COMMON_LIB_HOME /general-common-service
-
-# Expose ports.
-EXPOSE 10885
+ADD ./script/start-web.sh /start-web.sh
+RUN chmod 755 /*.sh
 
 # Define default command.
-CMD ["./general-common-service.sh"]
+CMD ["/start-web.sh"]
