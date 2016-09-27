@@ -76,7 +76,7 @@
                             </div>
                             <!--/table表格结束-->
                         </div>
-                        <div class="relation-title main-box-header">3、非关键属性</div>
+                        <div class="relation-title main-box-header">非关键属性</div>
                         <div class="main-box-body clearfix">
                             <!--table表格-->
                             <div class="table-responsive clearfix relation-special">
