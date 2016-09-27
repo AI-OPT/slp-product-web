@@ -400,7 +400,7 @@
 						<div>
 							<p class="center pr-30">
 							<input id="save" type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="保 存">
-							<input type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="返  回" onclick="window.history.go(-1);">
+							<input type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="返  回" onclick="javaScript:window.history.go(-1);">
 							</p>
 						</div>
 						</div>
