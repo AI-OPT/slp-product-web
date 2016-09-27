@@ -75,6 +75,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 							content:"获取类目信息出错:"+data.statusInfo,
 							icon:'fail',
 							okValue: '确 定',
+							title: '提示',
 							ok:function(){
 								this.close();
 							}
@@ -168,6 +169,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
             var d = Dialog({
                 content:msg,
                 okValue: '确 定',
+                title: '提示',
                 ok:function(){
                     this.close();
                 }

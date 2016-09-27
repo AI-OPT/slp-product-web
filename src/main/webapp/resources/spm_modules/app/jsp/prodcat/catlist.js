@@ -206,7 +206,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 		_showDelConf:function(catId){
 			var _this=this;
 			var d = Dialog({
-				title:"删除类目",
+				title:"提示",
 				content: '确定删除该类目吗？',
 				icon:'help',
 				okValue: '确 定',

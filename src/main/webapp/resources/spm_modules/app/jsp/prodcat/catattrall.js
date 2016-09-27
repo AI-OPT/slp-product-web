@@ -94,6 +94,7 @@ define('app/jsp/prodcat/catattrall', function (require, exports, module) {
                     content:"未选择任何属性值",
                     icon:'warning',
                     okValue: '确 定',
+                    title:'提示',
                     ok:function(){
                         this.close();
                     }
