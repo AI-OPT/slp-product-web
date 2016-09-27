@@ -67,7 +67,7 @@
                                             <!--点击行为层-->
                                             <table width="60%" border="0"  class="table-border">
                                                 <tr class="click">
-                                                    <td style="min-width:2%;"  class="ctr border-bot-none">
+                                                    <td style="min-width:2%;"  class="ctr border-bot-none text-l pl-20">
                                                         <A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}<i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i>
                                                     </td>
                                                 </tr>
@@ -83,11 +83,11 @@
                                     <!--点击行为表现层-->
                                         <c:if test="${attr.attrValList!=null && attr.attrValList.size()>0}">
                                     <tr class="zhank"  style=" display:none;">
-                                        <td colspan="2" >
+                                        <td colspan="2" class="text-l pl-40">
                                             <table width="100%" border="0" >
                                                 <c:forEach items="${attr.attrValList}" var="attrVal">
                                                 <tr id="attrValTr2_${attrVal.catAttrValId}" class="border-bot-none">
-                                                    <td  width="45%" class="right-text">${attrVal.attrValueName}
+                                                    <td  width="45%" class="text-l pl-40">${attrVal.attrValueName}
                                                         <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                     <td  width="55%">
                                                         <input type="number" class="int-text int-mini" placeholder="属性值排序"
@@ -117,8 +117,8 @@
                                 <table width="100%" border="0" class="table table-hover  table-bordered table-special">
                                     <tr class="bj">
                                         <thead>
-                                        <th width="40%" class="right-none text-c"  align="center">属性</th>
-                                        <th width="60%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
+                                        <th width="60%" class="right-none text-c"  align="center">属性</th>
+                                        <th width="40%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
                                         </thead>
                                     </tr>
                                     <c:forEach var="attr" items="${noKeyAttr}">
@@ -129,7 +129,7 @@
                                                 <!--点击行为层-->
                                                 <table width="60%" border="0"  class="table-border">
                                                     <tr class="click">
-                                                        <td style="min-width:2%;"  class="ctr border-bot-none">
+                                                        <td style="min-width:2%;"  class="ctr border-bot-none text-l pl-20">
                                                             <A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}<i class="fa fa-times i-close" catAttrId="${attr.catAttrId}"></i>
                                                         </td>
                                                     </tr>
@@ -145,11 +145,11 @@
                                         <!--点击行为表现层-->
                                         <c:if test="${attr.attrValList!=null && attr.attrValList.size()>0}">
                                             <tr class="zhank"  style=" display:none;">
-                                                <td colspan="2" >
+                                                <td colspan="2" class="text-l pl-40" >
                                                     <table width="100%" border="0" >
                                                         <c:forEach items="${attr.attrValList}" var="attrVal">
                                                             <tr id="attrValTr2_${attrVal.catAttrValId}" class="border-bot-none">
-                                                                <td  width="45%" class="right-text">${attrVal.attrValueName}
+                                                                <td  width="45%" class="text-l pl-40">${attrVal.attrValueName}
                                                                     <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                                 <td  width="55%">
                                                                     <input type="number" class="int-text int-mini" placeholder="属性值排序"

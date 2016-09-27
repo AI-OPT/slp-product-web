@@ -45,7 +45,8 @@
                                             <!--点击行为层-->
                                             <table width="40%" border="0"  class="table-border">
                                                 <tr class="click">
-                                                    <td style="min-width:2%;"  class="ctr border-bot-none"><A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}</td>
+                                                    <td style="min-width:2%;"  class="ctr border-bot-none text-l pl-20">
+                                                        <A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}</td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -55,11 +56,11 @@
                                     <!--点击行为表现层-->
                                         <c:if test="${attr.attrValList!=null && attr.attrValList.size()>0}">
                                     <tr class="zhank"  style=" display:none;">
-                                        <td colspan="2" >
+                                        <td colspan="2" class="text-l pl-40">
                                             <table width="100%" border="0" >
                                                 <c:forEach items="${attr.attrValList}" var="attrVal">
                                                 <tr class="border-bot-none">
-                                                    <td  width="45%" class="right-text">${attrVal.attrValueName}</td>
+                                                    <td  width="45%" class="text-l pl-40">${attrVal.attrValueName}</td>
                                                     <td  width="55%">${attrVal.serialNumber}</td>
                                                 </tr>
                                                 </c:forEach>
@@ -76,7 +77,7 @@
                             </div>
                             <!--/table表格结束-->
                         </div>
-                        <div class="relation-title main-box-header">3、非关键属性</div>
+                        <div class="relation-title main-box-header">非关键属性</div>
                         <div class="main-box-body clearfix">
                             <!--table表格-->
                             <div class="table-responsive clearfix relation-special">
@@ -95,7 +96,9 @@
                                                 <!--点击行为层-->
                                                 <table width="40%" border="0"  class="table-border">
                                                     <tr class="click">
-                                                        <td style="min-width:2%;"  class="ctr border-bot-none"><A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}</td>
+                                                        <td style="min-width:2%;"  class="ctr border-bot-none text-l pl-20">
+                                                            <A href="javascript:"><i class="fa fa-plus"></i></A>${attr.attrName}
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -105,11 +108,11 @@
                                         <!--点击行为表现层-->
                                         <c:if test="${attr.attrValList!=null && attr.attrValList.size()>0}">
                                             <tr class="zhank"  style=" display:none;">
-                                                <td colspan="2" >
+                                                <td colspan="2" class="text-l pl-40">
                                                     <table width="100%" border="0" >
                                                         <c:forEach items="${attr.attrValList}" var="attrVal">
                                                             <tr class="border-bot-none">
-                                                                <td  width="45%" class="right-text">${attrVal.attrValueName}</td>
+                                                                <td  width="45%" class="text-l pl-40">${attrVal.attrValueName}</td>
                                                                 <td  width="55%">${attrVal.serialNumber}</td>
                                                             </tr>
                                                         </c:forEach>
