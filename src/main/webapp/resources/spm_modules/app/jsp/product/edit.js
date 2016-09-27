@@ -11,7 +11,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 
 	require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
-	require("ajaxFileUpload/ajaxfileupload");
+	require("webuploader/webuploader.min");
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
@@ -84,6 +84,12 @@ define('app/jsp/product/edit', function (require, exports, module) {
 					upshelfType:"请选择上架类型"
 				}
 			});
+			if ( !WebUploader.Uploader.support() ) {
+				this._showWarn( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
+				throw new Error( 'WebUploader does not support the browser you are using.' );
+			}else{
+				this._initUpLoad();
+			}
 		},
 		//上架类型变更
 		_changeUpShel:function(){
@@ -238,58 +244,83 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			$('#noKeyAttrStr').val(noKeyJsonStr);
 			return true;
 		},
-		//上传文件
-		_uploadFile:function(){
+		//初始化图片上传
+		_initUpLoad:function(){
 			var _this = this;
-			//上传之前进行检查
-			var checkFileData = this._checkFileData();
-			if (!checkFileData) {
-				this._closeDialog();
-				return false;
-			}
+			this._consoleShow("init upLoader");
 
-			var processingDialog = Dialog({
-				icon:"loading",
-				closeIconShow:false,//不显示关闭按钮
-				content: "<div class='word'>图片上传中，请稍候..</div>"
-			});
-			processingDialog.show();
-			$.ajaxFileUpload({
-				url:_base+"/home/upImg",
-				secureuri:false,
-				fileElementId:"uploadFile",//file标签的id
-				dataType: 'json',//返回数据的类型
-				data:{"imgSize":"78x78"},//一同上传的数据
-				success: function (responseData) {
-					processingDialog.close();
-					if(responseData.statusCode=="1"){
-						var fileData = responseData.data;
-						//文件上传成功
-						if(fileData){
-							//文件标识
-							var filePosition = fileData.vfsId;
-							//文件类型
-							var fileName = fileData.fileType;
-							//文件地址
-							var fileUrl = fileData.imgUrl;
-							//_this._showMsg("上传成功:"+filePosition+","+fileName);
-							_this._closeDialog();
-							_this._showProdPicPreview(filePosition,fileName,fileUrl);
-							return;
-						}
-					}//上传失败
-					else if(responseData.statusCode=="0"){
-						_this._showFail(responseData.statusInfo);
-						_this._closeDialog();
-						return;
-					}
-				},
-				error: function (data, status, e) {
-					processingDialog.close();
-					_this._showFail("文件上失败,状态:"+status);
-					_this._closeDialog();
+			uploader = WebUploader.create({
+				auto:true,
+				swf: _base+"/resources/spm_modules/webuploader/Uploader.swf",
+				server:_base+"/home/upImg",
+				pick:'#filePicker',
+				resize:false,
+				fileVal:"uploadFile",
+				formData:{"imgSize":"78x78"},
+				accept:{
+					title:"Images",
+					extensions:"jpg,jpeg,png",
+					mimeTypes:"image/jpg,image/jpeg,image/png"
 				}
 			});
+			//文件加入队列前进行验证
+			uploader.on("beforeFileQueued",function(file){
+				//文件大小
+				var checkSize = true;
+				//文件类型
+				var checkType = true;
+				if(file.size > ProdEditPager.FILE_MAX_SIZE){
+					_this._showWarn('图片不能超过3M');
+					checkSize = false;
+				}else if($.inArray(file.ext, ProdEditPager.FILE_TYPES)<0){
+					_this._showWarn('请上传jpg/png格式图片');
+					checkType = false;
+				}
+				return checkSize&&checkType;
+
+			});
+			//开始上传
+			uploader.on("startUpload",function(){
+				//显示上传
+				processingDialog.show();
+			});
+			//上传失败
+			uploader.on("uploadError",function(file,reason){
+				_this._showFail(reason);
+				_this._closeDialog();
+			});
+			//上传成功
+			uploader.on("uploadSuccess",function(file,responseData){
+				if(responseData.statusCode=="1"){
+					var fileData = responseData.data;
+					//文件上传成功
+					if(fileData){
+						//文件标识
+						var filePosition = fileData.vfsId;
+						//文件类型
+						var fileName = fileData.fileType;
+						//文件地址
+						var fileUrl = fileData.imgUrl;
+						//_this._showMsg("上传成功:"+filePosition+","+fileName);
+						_this._closeDialog();
+						_this._showProdPicPreview(filePosition,fileName,fileUrl);
+						return;
+					}
+				}//上传失败
+				else if(responseData.statusCode=="0"){
+					_this._showFail(responseData.statusInfo);
+					_this._closeDialog();
+					return;
+				}
+			});
+			//上传完成,包括成功和失败
+			uploader.on("uploadFinished",function(){
+				processingDialog.close();
+			});
+		},
+		//启动上传
+		_execUpLoader:function(){
+			uploader.getRuntime().exec();
 		},
 		//检查文件
 		_checkFileData:function(){
