@@ -388,13 +388,20 @@
 							</ul>
 							<input type="hidden" name="proDetailContent" value="${productInfo.proDetailContent}">
 							<textarea style="display: none;" name="detailConVal" id="detailConVal"></textarea>
-							<ul>
+							<!-- <ul>
 								<li>
-									<%--<p><input id="submitAudit" type="button" class="biu-btn btn-primary btn-large mr-10" value="提交审核"></p>--%>
-									<p><input id="save" type="button" class="biu-btn btn-primary btn-large mr-10" value="保存"></p>
-									<%--<p><input type="button" class="biu-btn btn-primary btn-large mr-10" value="预览"></p>--%>
+									<p>
+									<input id="save" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="保存">
+									<input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="返  回" onclick="window.history.go(-1);">
+									</p>
 								</li>
-							</ul>
+							</ul> -->
+						</div>
+						<div>
+							<p class="center pr-30">
+							<input id="save" type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="保 存">
+							<input type="button" class="biu-btn  btn-primary  btn-small  ml-5" value="返  回" onclick="window.history.go(-1);">
+							</p>
 						</div>
 						</div>
 						</form>
