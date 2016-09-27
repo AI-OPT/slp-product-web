@@ -98,12 +98,12 @@
 												
 												<%--单行输入--%>
 												<c:when test="${keyAttr.valueWay  == '3'}">
-													<p><input required type="text" class="int-text int-xlarge" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" maxlength="100" value="${keyAttrValue}"></p>
+													<p><input required type="text" class="int-text int-xlarge" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" maxlength="20" value="${keyAttrValue}"></p>
 												</c:when>
 												
 												<%--多行输入--%>
 												<c:when test="${attr.valueWay == '4'}">
-													<p><textarea required class="textarea-xlarge"  maxlength="100" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" value="${keyAttrValue}"</textarea></p>
+													<p><textarea required class="textarea-xlarge"  maxlength="20" name="keyAttr${keyAttr.attrId}" attrId="keyAttr${keyAttr.attrId}" value="${keyAttrValue}"</textarea></p>
 												</c:when>
 												
 											</c:choose></p>
@@ -153,12 +153,12 @@
 													
 													<%--单行输入--%>
 													<c:when test="${saleAttr.valueWay  == '3'}">
-														<p><input required type="text" class="int-text int-xlarge" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" maxlength="100" value="${saleAttrValue}"></p>
+														<p><input required type="text" class="int-text int-xlarge" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" maxlength="20" value="${saleAttrValue}"></p>
 													</c:when>
 													
 													<%--多行输入--%>
 													<c:when test="${saleAttr.valueWay == '4'}">
-														<p><textarea required class="int-text textarea-xlarge" maxlength="100" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" value="${saleAttrValue}"></textarea></p>
+														<p><textarea required class="int-text textarea-xlarge" maxlength="20" name="saleAttr${saleAttr.attrId}" attrId="saleAttr${saleAttr.attrId}" value="${saleAttrValue}"></textarea></p>
 													</c:when>
 													
 												</c:choose></p>
