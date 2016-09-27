@@ -20,45 +20,43 @@
 						<div class="form-label">
 
 							<ul>
-								<li class="col-md-12">
+								<li class="col-md-6">
 									<p class="word">商品名称</p>
 									<p><input id="standedProductName" type="text" class="int-text int-medium"></p>
-									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
+									<!-- <p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
+									</p> -->
+								</li>
+								<li class="col-md-6">
+									<p class="word">商品ID</p>
+									<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
+								</li>
+							</ul>
+							<ul>
+								<li class="col-md-6">
+									<p class="word">商品类型</p>
+									<p>
+										<select id="productType" class="select select-medium">
+											<option value="">全部</option>
+											<option value="1">实物</option>
+											<option value="2">虚拟</option>
+										</select>
 									</p>
 								</li>
 							</ul>
-							<!--点击展开-->
-							<div id="selectDiv" class="open" style="display:none;">
-								<ul>
-									<li class="col-md-6">
-										<p class="word">商品ID</p>
-										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
-									</li>
-									<li class="col-md-6">
-										<p class="word">商品类型</p>
-										<p>
-											<select id="productType" class="select select-medium">
-												<option value="">全部</option>
-												<option value="1">实物</option>
-												<option value="2">虚拟</option>
-											</select>
-										</p>
-									</li>
-								</ul>
-								<input type="hidden" id="state" value="1"/>
-								<%-- 类目 --%>
-								<ul id="data1ProdCat">
-									<li class="col-md-12">
-										<p class="word">商品类目</p>
-										<p id="productCat0">
-											<select id="catFirst" class="select select-small" onChange="pager._selectChange(this);">
-												<option value="">全部</option>
-												<c:forEach var="info" items="${catInfoList}">
-													<option value="${info.productCatId}">${info.productCatName}</option>
-												</c:forEach>
-											</select>
-										</p>
-										<script id="prodCatTemple" type="text/template">
+							<input type="hidden" id="state" value="1"/>
+							<%-- 类目 --%>
+							<ul id="data1ProdCat">
+								<li class="col-md-12">
+									<p class="word">商品类目</p>
+									<p id="productCat0">
+										<select id="catFirst" class="select select-small" onChange="pager._selectChange(this);">
+											<option value="">全部</option>
+											<c:forEach var="info" items="${catInfoList}">
+												<option value="${info.productCatId}">${info.productCatName}</option>
+											</c:forEach>
+										</select>
+									</p>
+									<script id="prodCatTemple" type="text/template">
 											<p id="productCat{{:level}}">
 												<select class="select select-small" onChange="pager._selectChange(this);">
 													{{for prodCatList}}
@@ -67,16 +65,15 @@
 												</select>
 											</p>
 										</script>
-									</li>
-								</ul>
-							</div>
-								<ul>
-									<li class="width-xlag">
-										<p class="word">&nbsp;</p>
-										<p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
-												  id="selectNormProductList" value="查  询"></p>
-									</li>
-								</ul>
+								</li>
+							</ul>
+							<ul>
+								<li class="width-xlag">
+									<p class="word">&nbsp;</p>
+									<p><input type="button" class="biu-btn  btn-primary btn-blue btn-medium ml-10"
+											  id="selectNormProductList" value="查  询"></p>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
