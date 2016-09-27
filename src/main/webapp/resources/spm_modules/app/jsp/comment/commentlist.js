@@ -199,6 +199,7 @@ define('app/jsp/comment/commentlist', function (require, exports, module) {
     		var d = Dialog({
     			title:"查看图片",
     			width:"600px",
+    			closeIconShow:true,
     			innerHtml:innerHtml
     		});
     		d.show();
