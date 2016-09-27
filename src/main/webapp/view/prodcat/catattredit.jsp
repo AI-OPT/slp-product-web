@@ -171,7 +171,7 @@
                             <!--/table表格结束-->
                         </div>
                         <div class="row"><!--删格化-->
-                            <p class="right pr-30">
+                            <p class="center pr-30">
                                 <input id="sumBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="保  存"/>
                                 <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="返  回"
                                        onclick="pager._backList();">
