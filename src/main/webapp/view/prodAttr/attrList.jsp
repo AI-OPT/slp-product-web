@@ -29,7 +29,7 @@
 	           </ul>
 	           <ul>	
 	               <li>
-	                   <p class="word"><span>*</span>属性名称首字母(大写)</p>
+	                   <p class="word"><span>*</span>名称首字母(大写)</p>
 	                   <p><input id="upFirstLetter" type="text" class="int-text int-medium" name="firstLetter" maxlength="1"></p>
 	               </li>
 	           </ul>
