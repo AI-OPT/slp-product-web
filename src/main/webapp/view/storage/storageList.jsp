@@ -97,7 +97,6 @@
 									   style="table-layout:fixed;">
 									<thead>
 									<tr>
-										<th width="5%">序号</th>
 										<th width="17%">商品ID</th>
 										<th width="28%">商品名称</th>
 										<th width="20%">所属类目</th>
@@ -113,7 +112,6 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
 									<tr>
-										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
 										<td>
 											<div class="hind1 text-l pl-15">
