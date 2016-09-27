@@ -174,7 +174,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     			success: function(data){
     				if ("1"===data.statusCode) {
     					var d = Dialog({
-    						content:"下架成功.",
+    						content:"下架成功",
 							icon:'success',
 							okValue: '确 定',
 							ok:function(){

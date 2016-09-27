@@ -70,7 +70,7 @@
                    <p><input id=upAttrValueName type="text" name="productAttrValueName" class="int-text int-medium" maxlength="20"></p>
                </li>
 				<li class="width-xlag">
-					<p class="word">属性值名称首字母（大写）</p>
+					<p class="word">名称首字母(大写)</p>
 					<p><input id="upFirstLetter" type="text" name="firstLetter" class="int-text int-medium" maxlength="1" ></p>
 				</li>
 	        </ul>
@@ -156,7 +156,7 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!--标题-->
 						<header class="main-box-header clearfix">
-							<h2 class="pull-left">查询结果</h2>
+							<h2 class="pull-left">属性值列表</h2>
 						</header>
 						<div class="row"  id="addAttrValueBtn"><!--删格化-->
                                 <%-- <p class="right pr-30">
@@ -191,9 +191,11 @@
 									<tr>
 										<td>{{:#index+1}}</td>
 										<td>{{:attrvalueDefId}}</td>
-										<td class="hind1 text-l pl-15">
+										<td>
+											<div class="hind1 text-l pl-15">
 											<div class="center-hind" >{{:attrValueName}}</div>
                                           	<div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:attrValueName}}</div>
+											</div>
 										</td>
 										<td>{{:firstLetter}}</td>
 										<td>{{:~timesToFmatter(operTime)}}</td>

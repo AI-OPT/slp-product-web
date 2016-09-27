@@ -246,7 +246,7 @@
                                                 <ul>
                                                     <li>
                                                         <p>库存组</p>
-                                                        <p>总库存量:${stoGroup.storageTotal}</p>
+                                                        <p>总库存量：${stoGroup.storageTotal}</p>
                                                         <c:if test="${noDicard}">
                                                         <p><input type="button" onclick="pager._addPriorityNumber('${stoGroup.storageGroupId}')"
                                                                   class="biu-btn  btn-primary  btn-auto" value="增加优先级 ">
@@ -264,7 +264,7 @@
                                                                        class="biu-btn  btn-primary  btn-auto" value="${statusBtn}">
                                                         </p>
                                                         </c:if>
-                                                        <p>状态:${stoGroup.stateName}</p>
+                                                        <p>状态：${stoGroup.stateName}</p>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -365,7 +365,7 @@
                             </c:forEach>
                         </div>
                         <div class="row"><!--删格化-->
-                            <p class="right pr-30">
+                            <p class="center pr-30">
                                 <input type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="返  回"
                                        onclick="javaScript:window.history.go(-1);">
                             </p>

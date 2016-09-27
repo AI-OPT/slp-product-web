@@ -29,7 +29,7 @@
 	           </ul>
 	           <ul>	
 	               <li>
-	                   <p class="word"><span>*</span>属性名称首字母(大写)</p>
+	                   <p class="word"><span>*</span>名称首字母(大写)</p>
 	                   <p><input id="upFirstLetter" type="text" class="int-text int-medium" name="firstLetter" maxlength="1"></p>
 	               </li>
 	           </ul>
@@ -117,7 +117,7 @@
 					<div class="main-box clearfix"><!--白色背景-->
 						<!--标题-->
 						<header class="main-box-header clearfix">
-							<h2 class="pull-left">查询结果</h2>
+							<h2 class="pull-left">属性列表</h2>
 						</header>
 						<div class="row"><!--删格化-->
                                 <%-- <p class="right pr-30">
