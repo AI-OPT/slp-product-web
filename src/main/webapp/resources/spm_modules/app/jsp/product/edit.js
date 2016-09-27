@@ -318,6 +318,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			//上传完成,包括成功和失败
 			uploader.on("uploadFinished",function(){
 				processingDialog.close();
+				uploader.reset();
 			});
 		},
 		//启动上传
