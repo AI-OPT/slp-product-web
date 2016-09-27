@@ -107,8 +107,9 @@
 								</table>
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
+									{{for result ~pageNo=pageNo ~pageSize=pageSize}}
 									<tr>
-										<td>{{:#index+1}}</td>
+										<td>{{:(~pageNo-1)*~pageSize+#index+1)}}</td>
 										<td>{{:productId}}</td>
 										<td>
 											<div class="hind1 text-l pl-15">
@@ -127,6 +128,7 @@
 											<a href="${_base}/costprice/{{:productId}}" class="blue-border">修改成本价</a>
 										</td>
 									</tr>
+									{{/for}}
 								</script>
 							</div>
 							<!--分页-->

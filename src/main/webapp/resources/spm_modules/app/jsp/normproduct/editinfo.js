@@ -64,8 +64,8 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 								title:"提示",
 								content:data.statusInfo,
 								icon:'success',
-								okValue: '确 定',
-								ok:function(){
+								cancelValue: '确 定',
+								cancel:function(){
 									this.close();
 									//保存成功,回退到进入的列表页
 									window.location.href = _base+'/normprodquery/list';
@@ -77,8 +77,8 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 								title:"错误",
 								content:data.statusInfo,
 								icon:'fail',
-								okValue: '确 定',
-								ok:function(){
+								cancelValue: '确 定',
+								cancel:function(){
 									this.close();
 								}
 							});
@@ -159,42 +159,7 @@ define('app/jsp/normproduct/editinfo', function (require, exports, module) {
 			}
 			$('#saleAttrStr').val(saleJsonStr);
 			return true;
-		},
-		//商品信息保存检查
-		_checkInput:function(){
-			//品名称不能为空
-			var standedProductName = $('#productName').val();
-			if (standedProductName==null || standedProductName==''){
-				this._showMsg("商品名称不能为空");
-				return false;
-			}
-			//类型不能为空
-			var productType = $('#productType').val();
-			if (productType==null || productType==''){
-				this._showMsg("商品类型不能为空");
-				return false;
-			}
-			//商品状态不能为空
-			var state = $("#state").val().trim();
-			if (state==null || state=="") {
-				this._showMsg("请选择商品状态");
-				return false;
-			}
-			
-			return true;
-		},
-		
-		_showMsg:function(msg){
-			var msg = Dialog({
-				title: '提示',
-				content:msg,
-				ok:function(){
-					this.close();
-				}
-			});
-			msg.showModal();
 		}
-		
     });
     module.exports = prodEditPager
 });

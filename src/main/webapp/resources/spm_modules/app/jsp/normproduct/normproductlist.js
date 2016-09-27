@@ -125,8 +125,8 @@ define('app/jsp/normproduct/normproductlist', function (require, exports, module
 	 			
 	           	pageSize: normproductlistPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
-	            render: function (data) {
-	            	if(data != null && data != 'undefined' && data.length>0){
+	           	callback: function (data) {
+	            	if(data && data.result && data.result.length>0){
 	            		var template = $.templates("#searchNormProductTemple");
 	            	    var htmlOutput = template.render(data);
 	            	    $("#searchNormProductData").html(htmlOutput);

@@ -115,8 +115,9 @@
 								</table>
 								<div id="showMessageDiv"></div>
 								<script id="searchProdRouteTemple" type="text/template">
+									{{for result ~pageNo=pageNo ~pageSize=pageSize}}
 									<tr>
-										<td>{{:#index+1}}</td>
+										<td>{{:(~pageNo-1)*~pageSize+#index+1)}}</td>
 										<td>{{:supplyId}}</td>
 										<td>
 											<div class="hind1 text-l pl-15">
@@ -137,6 +138,7 @@
 											<div id="costPrice{{:#index}}" style="float:left;text-align:left;"></div>
 										</td>
 									</tr>
+									{{/for}}
 								</script>
 							</div>
 							</form>
