@@ -170,8 +170,6 @@
                                 <p class="right pr-30">
                                     <input name="refuseMoreBtn" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
                                            value="批量审核拒绝" onclick="#">
-                                </p>
-                                <p class="right pr-30">
                                     <input name="auditMoreBtn" type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
                                            value="批量审核通过" onclick="#">
                                 </p>
