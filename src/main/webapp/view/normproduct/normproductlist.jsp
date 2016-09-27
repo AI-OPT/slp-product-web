@@ -115,9 +115,8 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th width="5%">序号</th>
 										<th width="20%">商品ID</th>
-										<th width="20%">商品名称</th>
+										<th width="25%">商品名称</th>
 										<th width="20%">所属类目</th>
 										<th width="10%">类型</th>
 										<th width="10%">商品状态</th>
@@ -132,7 +131,6 @@
 								<script id="searchNormProductTemple" type="text/template">
 									{{for result ~pageNo=pageNo ~pageSize=pageSize}}
 									<tr>
-										<td>{{:(~pageNo-1)*~pageSize+#index+1)}}</td>
 										<td>{{:productId}}</td>
 										<td>
 											<div class="hind1 text-l pl-15">

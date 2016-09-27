@@ -95,9 +95,8 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th width="5%">序号</th>
-										<th width="17%">商品ID</th>
-										<th width="28%">商品名称</th>
+										<th width="20%">商品ID</th>
+										<th width="30%">商品名称</th>
 										<th width="20%">所属类目</th>
 										<th width="10%">类型</th>
 										<th width="10%">商品状态</th>
@@ -111,7 +110,6 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
 									<tr>
-										<td>{{:#index+1}}</td>
 										<td>{{:productId}}</td>
 										<td>
 											<div class="hind1-medium text-l pl-15">

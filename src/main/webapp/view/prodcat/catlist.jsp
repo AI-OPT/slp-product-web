@@ -85,7 +85,6 @@
                                     <table class="table table-hover table-border table-bordered">
                                         <thead>
                                         <tr>
-                                            <th>序号</th>
                                             <th>类目ID</th>
                                             <th>类目名称</th>
                                             <th>是否有子分类</th>
@@ -99,7 +98,6 @@
                                     <div id="showMessageDiv"></div>
                                     <script id="searchTemple" type="text/template">
                                         <tr>
-                                            <td>{{:#index+1}}</td>
                                             <td>{{:productCatId}}</td>
                                             <td>
                                                 <div class="hind1 text-l pl-15">

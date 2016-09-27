@@ -207,7 +207,7 @@ require("app/util/aiopt-validate-ext");
 				content:'确定删除该属性值吗？',
 				icon:'help',
 				okValue: '确 定',
-				title:'删除属性值',
+				title:'提示',
 				ok:function(){
 					this.close();
 					_this._delAttrValue(attrvalueDefId);

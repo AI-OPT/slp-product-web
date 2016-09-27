@@ -31,7 +31,7 @@ define({
     icon: '',
     
     //右上角关闭图标是否显示标识
-    closeIconShow: true,
+    closeIconShow: false,
     
     // 自定义按钮
     button: null,

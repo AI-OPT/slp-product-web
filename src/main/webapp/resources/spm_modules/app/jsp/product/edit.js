@@ -167,6 +167,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 								content:"提交成功",
 								icon:'success',
 								okValue: '确 定',
+								title: '提示',
 								ok:function(){
 									window.history.go(-1);
 								}
@@ -423,6 +424,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				content:msg,
 				icon:'success',
 				okValue: '确 定',
+				title: '提示',
 				ok:function(){
 					this.close();
 				}
@@ -433,6 +435,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				content:msg,
 				icon:'warning',
 				okValue: '确 定',
+				title: '提示',
 				ok:function(){
 					this.close();
 				}

@@ -419,6 +419,15 @@ $.extend(prototype, {
     /** 设置宽度 */
     width: function (value) {
         this._$('showView').css('width', value);
+        var widthVal;
+        var index = value.indexOf('px');
+        if(index > -1){
+        	value = value.substr(0,index);
+        	widthVal = parseInt(value);
+        }else{
+        	widthVal = parseInt(value);
+        }
+        this._$('showView').css('margin-left',-(widthVal/2));
         return this.reset();
     },
 

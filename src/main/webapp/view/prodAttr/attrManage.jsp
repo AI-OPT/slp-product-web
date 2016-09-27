@@ -175,7 +175,6 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th>序号</th>
 										<th>属性值ID</th>
 										<th>属性值名称</th>
 										<th>输入值首字母</th>
@@ -189,7 +188,6 @@
 								<div id="showMessageDiv"></div>
 								<script id="searchAttrTemple" type="text/template">
 									<tr>
-										<td>{{:#index+1}}</td>
 										<td>{{:attrvalueDefId}}</td>
 										<td>
 											<div class="hind1 text-l pl-15">
