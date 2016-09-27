@@ -2,6 +2,7 @@ define('app/jsp/prodAttr/attrManage', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
     Widget = require('arale-widget/1.2.0/widget'),
+    Dialog = require("optDialog/src/dialog"),
     AjaxController = require('opt-ajax/1.0.0/index');
     
 require("jsviews/jsrender.min");
@@ -54,9 +55,9 @@ require("app/util/aiopt-validate-ext");
             "click #increase-close":"_closeEditDiv",
             "click #upCloseImg":"_closeEditDiv",
             "click #upAttrValueBtn":"_updateAttr",
-            "click #delAttrValueBtn":"_delAttr",
-            "click #aband-close":"_closeDelConf",
-            "click #delCloseImg":"_closeDelConf",
+//           "click #delAttrValueBtn":"_delAttr",
+//            "click #aband-close":"_closeDelConf",
+//            "click #delCloseImg":"_closeDelConf",
             /*"click #addAttrValueButton":"_addAttrValueButton",*/
             /*"click #addAttrValue-close":"_closeAddAttrValueDiv",*/
             /*"click #createCloseImg":"_closeAddAttrValueDiv",*/
@@ -200,6 +201,27 @@ require("app/util/aiopt-validate-ext");
 		
 		//删除确认提示框
 		_showDelConf:function(attrvalueDefId){
+
+			var _this = this;
+    		new Dialog({
+				content:'确定删除该属性值吗？',
+				icon:'help',
+				okValue: '确 定',
+				title:'删除属性值',
+				ok:function(){
+					this.close();
+					_this._delAttrValue(attrvalueDefId);
+				},
+				cancelValue: '取消',
+				cancel: function () {
+					this.close();
+				}
+			}).show();
+		
+		},
+		
+		
+/*		_showDelConf:function(attrvalueDefId){
 			
 			//后台获取数据,
 			ajaxController.ajax({
@@ -220,17 +242,16 @@ require("app/util/aiopt-validate-ext");
 				}
 			});
 			
-			/*$('#eject-mask').fadeIn(100);
+			$('#eject-mask').fadeIn(100);
 			$('#aband-small').slideDown(200);
 			console.log("del attrvalue id is "+ attrvalueDefId);
-			$("#delAttrValueId").val(attrvalueDefId);*/
-		},
+			$("#delAttrValueId").val(attrvalueDefId);
+		},*/
 		
 		//删除
-		_delAttr:function(){
+		_delAttrValue:function(attrvalueDefId){
 			var _this = this;
-			var attrvalueDefId = $("#delAttrvalueDefId").val();
-			var attrId = $("#delAttrId").val();
+			var attrId = $("#attrId").val();
 			
 			this._closeDelConf();
 			ajaxController.ajax({
