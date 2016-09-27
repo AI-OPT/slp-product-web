@@ -111,6 +111,7 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
                 content:msg,
                 icon:'success',
                 okValue: '确 定',
+                title:'提示',
                 ok:function(){
                     this.close();
                 }

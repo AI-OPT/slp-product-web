@@ -59,7 +59,7 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 					content:"确定此商品通过您的审核？",
 					icon:'help',
 					okValue: '确 定',
-					title:'审核通过操作确认',
+					title: '提示',
 					ok:function(){
 						this.close();
 						_this._auditProduct();
@@ -142,6 +142,7 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 					content:"商品审核拒绝成功",
 					icon:'success',
 					okValue: '确 定',
+					title: '提示',
 					ok:function(){
 						this.close();
 						window.history.go(-1);
@@ -156,6 +157,7 @@ define('app/jsp/prodaudit/auditproduct', function (require, exports, module) {
 					content:"商品审核通过成功",
 					icon:'success',
 					okValue: '确 定',
+					title: '提示',
 					ok:function(){
 						this.close();
 						window.history.go(-1);

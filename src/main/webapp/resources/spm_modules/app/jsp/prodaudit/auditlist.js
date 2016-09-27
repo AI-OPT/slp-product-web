@@ -79,6 +79,7 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 							content:"获取类目信息出错:"+data.statusInfo,
 							icon:'fail',
 							okValue: '确 定',
+							title: '提示',
 							ok:function(){
 								this.close();
 							}
@@ -172,6 +173,7 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 					content: "请选择商品进行处理!",
 					icon: 'prompt',
 					okValue: '确 定',
+					title: '提示',
 					ok: function () {
 						this.close();
 					}
@@ -179,7 +181,7 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 				d.show();
 			} else {
 				Dialog({
-					title:"审核通过操作确认!",
+					title: '提示',
 					content: "确定全部通过审核吗?",
 					icon: 'help',
 					cancelValue:'取 消',
@@ -267,6 +269,7 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 						content:"请选择商品进行处理!",
 						icon:'prompt',
 						okValue: '确 定',
+						title: '提示',
 						ok:function(){
 							this.close();
 						}
@@ -284,6 +287,7 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 				content:"商品审核拒绝成功",
 				icon:'success',
 				okValue: '确 定',
+				title: '提示',
 				ok:function(){
 					this.close();
 					window.location.reload();
@@ -298,6 +302,7 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 				content:"商品审核通过成功",
 				icon:'success',
 				okValue: '确 定',
+				title: '提示',
 				ok:function(){
 					this.close();
 					window.location.reload();

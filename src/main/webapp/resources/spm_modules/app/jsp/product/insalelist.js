@@ -74,6 +74,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
 							content:"获取类目信息出错:"+data.statusInfo,
 							icon:'fail',
 							okValue: '确 定',
+							title: '提示',
 							ok:function(){
 								this.close();
 							}
@@ -138,7 +139,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
 				content:'确认要将商品下架吗?',
 				icon:'help',
 				okValue: '确 定',
-				title:'确认下架',
+				title: '提示',
 				ok:function(){
 					this.close();
 					_this._prodToDownSale(productId);
@@ -177,6 +178,7 @@ define('app/jsp/product/insalelist', function (require, exports, module) {
     						content:"下架成功",
 							icon:'success',
 							okValue: '确 定',
+							title: '提示',
 							ok:function(){
 								this.close();
 								_this._selectProductList();

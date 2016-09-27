@@ -76,6 +76,7 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 								content:"获取类目信息出错:"+data.statusInfo,
 								icon:'fail',
 								okValue: '确 定',
+								title: '提示',
 								ok:function(){
 									this.close();
 								}
@@ -137,7 +138,7 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 					content:'确定上架销售吗?',
 					icon:'help',
 					okValue: '确 定',
-					title:'确认上架',
+					title: '提示',
 					ok:function(){
 						this.close();
 						_this._prodToInSale(productId);
@@ -170,6 +171,7 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 								content:"上架成功",
 								icon:'success',
 								okValue: '确 定',
+								title: '提示',
 								ok:function(){
 									this.close();
 									_this._selectProductList();
@@ -181,6 +183,7 @@ define('app/jsp/product/stayuplist', function (require, exports, module) {
 								content:"上架失败:"+data.statusInfo,
 								icon:'fail',
 								okValue: '确 定',
+								title: '提示',
 								ok:function(){
 									this.close();
 								}
