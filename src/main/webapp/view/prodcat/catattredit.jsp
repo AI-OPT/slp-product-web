@@ -54,8 +54,8 @@
                                 <table width="100%" border="0" class="table table-hover  table-bordered table-special">
                                     <tr class="bj">
                                         <thead>
-                                        <th width="60%" class="right-none text-c"  align="center">属性</th>
-                                        <th width="40%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
+                                        <th width="40%" class="right-none text-c"  align="center">属性</th>
+                                        <th width="60%" class="left-none text-c"  align="center">排序(只限填大于0小于1000的整数，值越小，排序越靠前)</th>
                                         </thead>
                                     </tr>
 

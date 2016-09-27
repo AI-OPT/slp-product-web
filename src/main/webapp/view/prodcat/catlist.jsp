@@ -64,15 +64,13 @@
                         <div class="main-box clearfix"><!--白色背景-->
                             <!--标题-->
                             <header class="main-box-header clearfix">
-                                <h2 class="pull-left">查询结果&emsp;</h2>
+                                <h2 class="pull-left">类目列表</h2>
 
                             </header>
                             <div class="row"><!--删格化-->
                                 <c:set var="secondParentCat" value=""/>
-                                <p class="left pl-40">
-                                    上级类目:<c:forEach var="catInfo" items="${catLink}"
-                                               varStatus="stat"> ${catInfo.productCatName}<c:if
-                                            test="${!stat.last}">&gt;
+                                <p class="left pl-40">上级类目:<c:forEach var="catInfo" items="${catLink}"
+                                       varStatus="stat"> ${catInfo.productCatName}<c:if test="${!stat.last}">&gt;
                                     <c:set var="secondParentCat" value="${catInfo.productCatId}"/></c:if></c:forEach>
                                 </p>
                                 <p class="right pr-30">
