@@ -24,6 +24,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 	var selectUserType;
 	var uploader;
 	var processingDialog = Dialog({
+		title: '提示',
 		icon:"loading",
 		content: "<div class='word'>图片上传中，请稍候..</div>"
 	});

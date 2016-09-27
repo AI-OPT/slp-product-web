@@ -300,7 +300,7 @@
 						</header>
 						<!--标题结束-->
 						<div id="imgDiv" class="form-label bd-bottom"><!--查询条件-->
-							<div id="filePicker" attrVal="0">选择图片</div>
+							<div id="filePicker" attrVal="0" style="display: none;">选择图片</div>
 							<ul>
 								<li class="width-xlag pl-40">
 									提示：请上传商品主体正面照片jpg/png格式，不小于700x700px的方形图片，单张不能超过3M，最多6张。
