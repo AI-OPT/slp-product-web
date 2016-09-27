@@ -93,10 +93,11 @@ define('app/jsp/costprice/editinfo', function (require, exports, module) {
 					success: function(data){
 						if("1"===data.statusCode){
 							var d = Dialog({
+								title:"提示",
 								content:data.statusInfo,
 								icon:'success',
-								okValue: '确 定',
-								ok:function(){
+								cancelValue: '确 定',
+								cancel:function(){
 									this.close();
 									//保存成功,回退到进入的列表页
 									window.location.href=_base+"/costprice/"+standedProdId;
@@ -105,10 +106,11 @@ define('app/jsp/costprice/editinfo', function (require, exports, module) {
 							d.show();
 						}else{
 							var d = Dialog({
+								title:"错误",
 								content:data.statusInfo,
 								icon:'fail',
-								okValue: '确 定',
-								ok:function(){
+								cancelValue: '确 定',
+								cancel:function(){
 									this.close();
 								}
 							});
@@ -116,16 +118,6 @@ define('app/jsp/costprice/editinfo', function (require, exports, module) {
 						}
 					}
 				});
-		},
-		_showMsg:function(msg){
-			var msg = Dialog({
-				title: '提示',
-				content:msg,
-				ok:function(){
-					this.close();
-				}
-			});
-			msg.showModal();
 		}
 		
     });
