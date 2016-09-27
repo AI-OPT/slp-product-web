@@ -87,6 +87,7 @@ require("app/util/aiopt-validate-ext");
 					content:"请输入正确格式的属性ID.",
 					icon:'prompt',
 					okValue: '确 定',
+					title:'提示',
 					ok:function(){
 						this.close();
 					}
@@ -202,7 +203,7 @@ require("app/util/aiopt-validate-ext");
 				content:'确定删除该属性吗？',
 				icon:'help',
 				okValue: '确 定',
-				title:'删除属性',
+				title:'提示',
 				ok:function(){
 					this.close();
 					_this._delAttr(attrId);
