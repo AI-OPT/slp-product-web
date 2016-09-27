@@ -85,12 +85,12 @@ public class ProductCommentController {
 						CommentPageInfo pageInfo = new CommentPageInfo();
 						BeanUtils.copyProperties(pageInfo, comment);
 						Map<String, String> queryMap = new HashMap<String, String>();
-						queryMap.put("uid", pageInfo.getUserId());
+						queryMap.put("openId", pageInfo.getUserId());
 						String queryParam = JSON.toJSONString(queryMap);
 						//获取地址
 						String userServerIp = CCSClientFactory.getDefaultConfigClient()
 								.get(ProductCommentConstants.CCSKey.userserver_ip);
-						String url = "http://" + userServerIp + "/opaas/http/srv_up_user_getuserdetialbyuid_reg";
+						String url = "http://" + userServerIp + "/opaas/http/srv_up_user_getuserinfobyopenid_qry";
 						Map<String, String> header = new HashMap<String, String>();
 						String userServerAppKey = CCSClientFactory.getDefaultConfigClient()
 								.get(ProductCommentConstants.CCSKey.userserver_appkey);

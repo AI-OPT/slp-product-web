@@ -159,7 +159,7 @@
 										<td>{{:~timesToFmatter(commentTime)}}</td>
 										<td>{{:userName}}</td>
 										<td>
-											<div class="hind1 text-l pl-15">
+											<div class="hind1 text-l">
                                                 <div class="center-hind" >{{:commentBody}}</div>
                                                 <div class="showbj"><i class="fa fa-posi fa-caret-up"></i>{{:commentBody}}</div>
                                             </div>
