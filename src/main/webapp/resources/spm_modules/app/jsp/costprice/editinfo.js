@@ -50,8 +50,8 @@ define('app/jsp/costprice/editinfo', function (require, exports, module) {
 	 			data: {"standedProdId":standedProdId},
 	           	pageSize: prodEditPager.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
-	            render: function (data) {
-	            	if(data != null && data != 'undefined' && data.length>0){
+	           	callback: function (data) {
+	            	if(data && data.result && data.result.length>0){
 	            		var template = $.templates("#searchProdRouteTemple");
 	            	    var htmlOutput = template.render(data);
 	            	    $("#searchProdRouteData").html(htmlOutput);

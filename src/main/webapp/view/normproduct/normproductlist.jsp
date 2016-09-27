@@ -19,20 +19,19 @@
 						<!-- 查询条件 -->
 						<div class="form-label">
 							<ul>
-								<li class="col-md-12">
+								<li class="col-md-6">
 									<p class="word">商品名称</p>
 									<p><input id="standedProductName" type="text" class="int-text int-medium"></p>
-									<p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a>
-									</p>
+									<!-- <p class="sos"><a href="javascript:void(0);">高级搜索<i class="fa fa-caret-down"></i></a></p> -->
+								</li>
+								<li class="col-md-6">
+									<p class="word">商品ID</p>
+									<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
 								</li>
 							</ul>
 							<!--点击展开-->
-							<div id="selectDiv" class="open" style="display:none;">
+							<!-- <div id="selectDiv" class="open" style="display:none;"> -->
 								<ul>
-									<li class="col-md-6">
-										<p class="word">商品ID</p>
-										<p><input id="standedProdId" type="text" class="int-text int-medium"></p>
-									</li>
 									<li class="col-md-6">
 										<p class="word">商品状态</p>
 										<p>
@@ -44,8 +43,6 @@
 											</select>
 										</p>
 									</li>
-								</ul>
-								<ul>
 									<li class="col-md-6">
 										<p class="word">商品类型</p>
 										<p>
@@ -56,25 +53,8 @@
 											</select>
 										</p>
 									</li>
-									<!-- <li class="col-md-6">
-										<p class="word">操作员</p>
-										<p><input id="operId" type="text" class="int-text int-medium"></p>
-									</li> -->
 								</ul>
-								<!-- <ul>
-									<li class="col-md-6">
-										<p class="word">操作开始时间</p>
-										<p><input type="text" class="int-text int-medium" id="operStartTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span></p>
-									</li>
-									<li class="col-md-6">
-										<p class="word">操作结束时间</p>
-										<p><input type="text" class="int-text int-medium" id="operEndTime">
-											<span class="time"> <i class="fa  fa-calendar" ></i></span>
-										</p>
-									</li>
-								</ul> -->
-								<%-- 类目 --%>
+							<%-- 类目 --%>
 							<ul id="data1ProdCat">
 								<li class="col-md-12">
 									<p class="word">商品类目</p>
@@ -99,7 +79,7 @@
 									</script>
 								</li>
 							</ul>
-							</div>
+							<!-- </div> -->
 								<ul>
 									<li class="width-xlag">
 										<p class="word">&nbsp;</p>
@@ -150,8 +130,9 @@
 								</table>
 								<div id="showMessageDiv"></div>
 								<script id="searchNormProductTemple" type="text/template">
+									{{for result ~pageNo=pageNo ~pageSize=pageSize}}
 									<tr>
-										<td>{{:#index+1}}</td>
+										<td>{{:(~pageNo-1)*~pageSize+#index+1)}}</td>
 										<td>{{:productId}}</td>
 										<td>
 											<div class="hind1 text-l pl-15">
@@ -175,6 +156,7 @@
 											{{/if}}
 										</td>
 									</tr>
+									{{/for}}
 								</script>
 							</div>
 							<!--分页-->
@@ -205,10 +187,10 @@
 			WdatePicker({el:timeId,readOnly:true});
 		}); */
 		<%-- 高级区域 --%>
-		$(".form-label ul li .sos a").click(function () {
+		/* $(".form-label ul li .sos a").click(function () {
 			$(".open ").slideToggle(100);
 			$(".nav-form ").toggleClass("reorder remove");
-		});
+		}); */
 		seajs.use(['app/jsp/normproduct/normproductlist','app/util/center-hind'], function(storageList,centerHind) {
 			pager = new storageList({element : document.body});
 			pager.render();
