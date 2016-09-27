@@ -101,7 +101,6 @@
 								<table class="table table-hover table-border table-bordered">
 									<thead>
 									<tr>
-										<th>序号</th>
 										<th>商品ID</th>
 										<th>商品名称</th>
 										<th>仓库ID</th>
@@ -117,7 +116,6 @@
 								<script id="searchProdRouteTemple" type="text/template">
 									{{for result ~pageNo=pageNo ~pageSize=pageSize}}
 									<tr>
-										<td>{{:(~pageNo-1)*~pageSize+#index+1)}}</td>
 										<td>{{:supplyId}}</td>
 										<td>
 											<div class="hind1 text-l pl-15">
