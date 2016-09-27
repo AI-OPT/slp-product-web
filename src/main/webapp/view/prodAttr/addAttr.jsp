@@ -97,7 +97,7 @@
                                              val-tag="attrName"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
-										<p class="word"><span>*</span>属性名称首字母</p>
+										<p class="word"><span>*</span>名称首字母(大写)</p>
 										<p><input  name="firstLetter{{:num}}" type="text" class="int-text int-medium" 
 										     maxlength="1"
 										     required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
