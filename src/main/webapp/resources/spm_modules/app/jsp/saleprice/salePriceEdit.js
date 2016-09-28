@@ -117,6 +117,11 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 						var template = $.templates("#skuInfoTemp");
 	            	    var htmlOutput = template.render(data.data.skuInfoList);
 	            	    $("#skuInfo").html(htmlOutput);
+						//是否显示"取消"按钮
+						if(data.data.upPrice)
+							$("#edit-close").show();
+						else
+							$("#edit-close").hide();
 						$('#eject-mask').fadeIn(100);
 						$('#edit-medium').slideDown(200);
 					}
