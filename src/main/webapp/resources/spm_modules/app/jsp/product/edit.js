@@ -24,6 +24,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 	var selectUserType;
 	var uploader;
 	var processingDialog = Dialog({
+		title: '提示',
 		icon:"loading",
 		content: "<div class='word'>图片上传中，请稍候..</div>"
 	});
@@ -317,6 +318,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			//上传完成,包括成功和失败
 			uploader.on("uploadFinished",function(){
 				processingDialog.close();
+				uploader.reset();
 			});
 		},
 		//启动上传
