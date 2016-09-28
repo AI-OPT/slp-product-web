@@ -16,7 +16,7 @@
 		<!--编辑-->
 		<div class="eject-medium-title">
             <p>更新属性</p>
-            <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
+            <!-- <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p> -->
         </div>
 		<div class="form-label">
 		<form id="prodAttrForm">

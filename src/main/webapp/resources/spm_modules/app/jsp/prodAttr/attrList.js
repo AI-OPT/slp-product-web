@@ -36,7 +36,7 @@ require("app/util/aiopt-validate-ext");
     	events: {
     		//查询
             "click #selectAttrList":"_selectAttrList",
-            "click #upCloseImg":"_closeEditDiv",
+//            "click #upCloseImg":"_closeEditDiv",
             "click #increase-close":"_closeEditDiv",
             "click #upAttrBtn":"_updateAttr"
             },

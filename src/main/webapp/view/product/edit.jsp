@@ -300,6 +300,7 @@
 						</header>
 						<!--标题结束-->
 						<div id="imgDiv" class="form-label bd-bottom"><!--查询条件-->
+							<div id="filePicker" attrVal="0" style="display: none;">选择图片</div>
 							<ul>
 								<li class="width-xlag pl-40">
 									提示：请上传商品主体正面照片jpg/png格式，不小于700x700px的方形图片，单张不能超过3M，最多6张。
@@ -444,10 +445,14 @@
 		<%-- 上传图片 --%>
 		$('.width-xlag').delegate('input[attrVal]','click',function(){
 			picAttrVal = $(this).attr('attrVal');
+			var inputFiles = $("#filePicker input:file");
 			if (window.console) {
 				console.log("img up attrValId:" + picAttrVal);
+				console.log(inputFiles.length);
 			}
-			return $("#uploadFile").click();
+			if (inputFiles.length >0){
+				inputFiles[0].click();
+			}
 		});
 		<%-- 图片删除 --%>
 		$(".img").delegate(".fa.fa-times","click",function(){

@@ -134,7 +134,7 @@ define('app/jsp/product/addlist', function (require, exports, module) {
 					if("1"===data.statusCode){
 						var reason= data.data.refuseDes;
 						var reasonHtml="<textarea id=\"refuseDes\" name=\"refuseDes\" " +
-								"style=\"width:270px;height:160px;overflow:hidden; resize:none;\">";
+								"style=\"width:270px;height:160px;overflow:hidden; resize:none;\" readOnly=\"true\">";
 						reasonHtml += reason+"</textarea>";
 						new Dialog({
 							content:reasonHtml,
