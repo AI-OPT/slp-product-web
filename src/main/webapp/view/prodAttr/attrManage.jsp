@@ -10,47 +10,6 @@
 </head>
 
 <body>
-<!-- 属性值新增弹框 -->
-<%-- 
-<div class="eject-big" id="addViewDiv">
-	<div class="eject-samll" id="addAttrValue-samll">
-		<!-- 新增 -->
-		<div class="eject-medium-title">
-            <p>属性值</p>
-            <p id="createCloseImg" class="img"><i class="fa fa-times"></i></p>
-        </div>
-		<div class="form-label">
-				<input type="hidden" id="attrId" name="attrId" value="${attrId}"/>
-				<ul>
-	               <li>
-	                   <p class="word"><span>*</span>属性值名称</p>
-	                   <p><input id="attrValueName" name="attrValueName" type="text" class="int-text int-medium"></p>
-	               </li>
-	               <li class="width-xlag">
-					<p class="word"><span>*</span>名称首字母(大写)</p>
-					<p><input id="firstLetter" name="firstLetter" type="text" class="int-text int-medium"></p>
-					</li>
-	           </ul>
-	           <div class="title-right">
-	             	<p id="addAttrValueButton" class="plus-word btn-primary" >
-	             		 <a href="javaScript:void(0);"><i class="fa fa-plus"></i>新  增</a>
-	             	</p>
-	           </div>
-		</div>
-		<!-- 按钮 -->
-        <div id="subDiv" class="row mt-15"><!-- 删格化 -->
-            <p class="center pr-30 mt-30">
-                <input id="submitAddBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="提  交">
-                <input id="addAttrValue-close" type="button" class="biu-btn  btn-primary  btn-auto  ml-5 " value="取  消">
-                <!-- <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5"
-                                           value="返  回" onclick="javaScript:window.history.go(-1);"> -->
-            </p>
-        </div>
-	</div>	
-	<div class="mask" id="eject-mask"></div>	
-</div> --%>
-<!-- 属性值新增弹框结束 -->
-
 
 <!-- 点击编辑按钮弹框 -->
 <div class="eject-big">
@@ -58,7 +17,6 @@
 		<!--编辑-->
 		<div class="eject-medium-title">
             <p>更新属性值</p>
-            <p id="upCloseImg" class="img"><i class="fa fa-times"></i></p>
         </div>
 		<div class="form-label">
 		<form id="prodAttrValueForm">
