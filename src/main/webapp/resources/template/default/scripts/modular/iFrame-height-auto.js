@@ -38,4 +38,4 @@ var browserVersion = window.navigator.userAgent.toUpperCase();
         eval("window.IE9MoreRealHeight" + iframeId + "=0");
         window.setInterval("reinitIframe('" + iframeId + "'," + minHeight + ")", 200);
     }
-    startInit('mainFrame', 1000);
+    startInit('mainFrame', 100);
