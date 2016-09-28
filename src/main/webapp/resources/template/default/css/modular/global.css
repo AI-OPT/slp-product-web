@@ -396,7 +396,7 @@ pre ol.linenums li {
 
 /**上传按钮**/
 .btn-upload{width:auto;position: relative; display:inline-block;height:36px; *display:inline;overflow:hidden;vertical-align:middle;cursor:pointer}
-.btn-upload .int-file{width:320px;position:absolute;left:0;top:0;height:36px;opacity:0;filter: alpha(opacity=0)}
+.btn-upload .int-file{width:320px;position:absolute;left:0;top:0;height:36px;opacity:0;filter: alpha(opacity=0);z-index: 999;}
 
 /************************进度条************************/
 .biu-progress{max-width:500px;background-color:#eee;border-radius:4px;}
