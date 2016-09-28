@@ -18,7 +18,6 @@
     <div class="eject-medium" id="edit-medium">
         <div class="eject-medium-title">
             <p>商品销售价</p>
-            <p class="img" onclick="pager._closeSkuPriceView();"><i class="fa fa-times"></i></p>
         </div>
         <div class="form-label">
         </div>
