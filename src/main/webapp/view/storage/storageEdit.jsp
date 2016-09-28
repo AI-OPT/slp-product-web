@@ -22,7 +22,7 @@
     <div class="eject-medium" id="edit-medium">
         <div class="eject-medium-title">
             <p id="editTitle">编辑库存</p>
-            <p class="img" onclick="pager._closeAddStoView();"><i class="fa fa-times"></i></p>
+           <!--  <p class="img" onclick="pager._closeAddStoView();"><i class="fa fa-times"></i></p> -->
         </div>
         <div class="form-label">
             <input type="hidden" id="storageId">
@@ -30,13 +30,13 @@
             <input type="hidden" id="stoAddGroupPn">
             <ul>
                 <li>
-                    <p class="word"><span>*</span>库存名称:</p>
+                    <p class="word"><span>*</span>库存名称</p>
                     <p><input type="text" id="newStorageName" class="int-text int-small" maxlength="15"></p>
                 </li>
             </ul>
             <ul>
                 <li>
-                    <p class="word">库存量:</p>
+                    <p class="word">库存量</p>
                     <p><input type="text" id="newTotalNum" class="int-text int-small" value="0"
                               <c:if test="${!saleAttr.isEmpty()}">readonly</c:if> maxlength="10"></p>
                 </li>
@@ -92,7 +92,7 @@
     <div class="eject-medium" id="info-medium">
         <div class="eject-medium-title">
             <p>库存信息</p>
-            <p class="img" onclick="pager._closeStorageInfo();"><i class="fa fa-times"></i></p>
+            <!-- <p class="img" onclick="pager._closeStorageInfo();"><i class="fa fa-times"></i></p> -->
         </div>
         <div class="form-label center">
             <ul>
