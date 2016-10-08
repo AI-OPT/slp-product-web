@@ -102,7 +102,6 @@ public class ProductEditInfo {
      */
     private String prodCode;
 
-    
     public String getProdCode() {
 		return prodCode;
 	}
