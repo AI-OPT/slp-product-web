@@ -51,6 +51,12 @@
                                     </li>
                                 </ul>
                                 <ul>
+									<li class="col-md-12">
+										<p class="word3">商品编码：</p>
+										<p class="wide-field" style="word-break:break-all;">${productInfo.prodCode}</p>
+									</li>
+								</ul>
+                                <ul>
                                     <li class="col-md-12">
                                         <p class="word3">商品卖点：</p>
                                         <p class="wide-field" style="word-break:break-all;">${productInfo.productSellPoint}</p>
