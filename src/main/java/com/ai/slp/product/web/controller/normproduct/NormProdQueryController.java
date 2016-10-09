@@ -118,14 +118,20 @@ public class NormProdQueryController {
 				String productType = productInfo.getProductType();
 				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(), ComCacheConstants.TypeProduct.CODE,
 						ComCacheConstants.TypeProduct.PROD_PRODUCT_TYPE, productType);
-				String productTypeName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
-				productInfo.setProductTypeName(productTypeName);
+				SysParam sysParamSingle = cacheSV.getSysParamSingle(sysParamSingleCond);
+				if(sysParamSingle != null){
+					String productTypeName = sysParamSingle.getColumnDesc();
+					productInfo.setProductTypeName(productTypeName);
+				}
 				// 获取状态
 				String state = productInfo.getState();
 				sysParamSingleCond = new SysParamSingleCond(AdminUtil.getTenantId(), ComCacheConstants.NormProduct.CODE,
 						ComCacheConstants.NormProduct.STATUS, state);
-				String stateName = cacheSV.getSysParamSingle(sysParamSingleCond).getColumnDesc();
-				productInfo.setStateName(stateName);
+				sysParamSingle = cacheSV.getSysParamSingle(sysParamSingleCond);
+				if(sysParamSingle!=null){
+					String stateName = sysParamSingle.getColumnDesc();
+					productInfo.setStateName(stateName);
+				}
 
 				// 设置人员名称
 				// SysUserQueryRequest userQuery = new SysUserQueryRequest();
@@ -219,7 +225,9 @@ public class NormProdQueryController {
 		paramSingleCond.setColumnValue(normProdInfoResponse.getProductType());
 		ICacheSV cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
 		SysParam sysParam = cacheSV.getSysParamSingle(paramSingleCond);
-		uiModel.addAttribute("prodType", sysParam.getColumnDesc());
+		if(sysParam != null){
+			uiModel.addAttribute("prodType", sysParam.getColumnDesc());
+		}
 		// 标准品关键属性
 		AttrQuery attrQuery = new AttrQuery();
 		attrQuery.setTenantId(AdminUtil.getTenantId());
