@@ -135,15 +135,6 @@
 								</li>
 							</ul>
 							<ul>
-								<li>
-									<p class="word3"><b class="red">*</b>商品编码</p>
-									<p>
-										<input name="prodCode" type="text" class="int-text int-medium" 
-										 maxlength="16" value="${productInfo.prodCode}" required data-msg-required="商品编码不能为空">
-									</p>
-								</li>
-							</ul>
-							<ul>
 								<li class="width-xlag">
 									<p class="word3">商品卖点</p>
 									<p>
