@@ -81,7 +81,7 @@
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>
-                classpath*:context/springmvc-servlet.xml
+                classpath:context/springmvc-servlet.xml
             </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
