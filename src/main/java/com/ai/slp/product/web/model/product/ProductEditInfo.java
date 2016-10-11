@@ -97,18 +97,6 @@ public class ProductEditInfo {
      * 预售结束时间
      */
     private String presaleEndTimeStr;
-    /**
-     * 商品编码
-     */
-    private String prodCode;
-
-    public String getProdCode() {
-		return prodCode;
-	}
-
-	public void setProdCode(String prodCode) {
-		this.prodCode = prodCode;
-	}
 
 	public String getProdId() {
         return prodId;
