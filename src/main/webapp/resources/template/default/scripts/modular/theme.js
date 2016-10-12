@@ -25,6 +25,7 @@ String.prototype.getParameter = function (key) {
 	
 $(document).ready(function(){
 	var theme = document.URL.getParameter("theme");
+	var mgmtPath = document.URL.getParameter("mgmtPath");
 	if(theme !=null && theme!="null"){
 		setCookie("theme_index", theme, 60*60*24);	
 	}
@@ -34,6 +35,17 @@ $(document).ready(function(){
 	if(theme==null||theme=="null"||theme==""){
 		theme="theme-whbl"
 	}
+	
+	if(mgmtPath !=null && mgmtPath!="null"){
+		setCookie("mgmtPath", mgmtPath, 60*60*24);	
+	}
+	if(mgmtPath== null|| mgmtPath=="null"){	
+		
+		mgmtPath=unescape(getcookie("mgmtPath"));		
+	}
 	$("body").attr("id",theme);
 	$("body").attr("class",theme);
+
+	$("<iframe id='myifr' style='display:none' src='"+mgmtPath+"/static/agentifram.jsp'></iframe>").prependTo("body"); 
+	$("<script type='text/javascript' src='"+mgmtPath+"/static/iframhight.js'></script>").prependTo("body");
 })
