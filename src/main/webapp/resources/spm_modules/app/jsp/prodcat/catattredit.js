@@ -9,6 +9,9 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
         Dialog = require("optDialog/src/dialog"),
         AjaxController = require('opt-ajax/1.0.0/index');
 
+    require("jquery-validation/1.15.1/jquery.validate");
+    require("app/util/aiopt-validate-ext");
+
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     //定义页面组件类
@@ -53,6 +56,11 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
         },
         //提交添加
         _submitCatList:function() {
+            //验证输入是否正确
+            var validateForm = $("#catAttrEditForm").validate();
+            if(!validateForm.form()){
+                return;
+            }
             var _this=this;
             var attrMap = {};
             var catUpParams = [];
@@ -65,7 +73,7 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
                 attrMap[attrId] = $(this).val();
             });
             //获取属性顺序
-            $("input[type=number][name=attrSn]").each(function(index,form){
+            $("input[type=text][snType=attrSn]").each(function(index,form){
                 var catAttrId = $(this).attr('catAttrId');
                 var catUp = {};
                 catUp['updateObjId'] = catAttrId;
@@ -78,7 +86,7 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
                 catUpParams.push(catUp);
             });
             //获取属性值顺序
-            $("input[type=number][name=attrValSn]").each(function(index,form){
+            $("input[type=text][snType=attrValSn]").each(function(index,form){
                 var catAttrId = $(this).attr('catAttrValId');
                 var catUp = {};
                 catUp['updateObjId'] = catAttrId;
