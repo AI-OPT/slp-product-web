@@ -444,7 +444,11 @@
 		});
 		<%-- 上传图片 --%>
 		$('.width-xlag').delegate('input[attrVal]','click',function(){
-			picAttrVal = $(this).attr('attrVal');
+			var attrValTemp = $(this).attr('attrVal');
+			if(!pager._checkProdPicUp(attrValTemp)){
+				return;
+			}
+			picAttrVal = attrValTemp;
 			var inputFiles = $("#filePicker input:file");
 			if (window.console) {
 				console.log("img up attrValId:" + picAttrVal);
