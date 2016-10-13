@@ -255,7 +255,11 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				auto:true,
 				swf: _base+"/resources/spm_modules/webuploader/Uploader.swf",
 				server:_base+"/home/upImg",
-				pick:'#filePicker',
+				//pick:'#filePicker',
+				pick:{
+					id:"#filePicker",
+					multiple:false
+				},
 				resize:false,
 				fileVal:"uploadFile",
 				formData:{"imgSize":"78x78"},
