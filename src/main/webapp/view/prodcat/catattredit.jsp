@@ -44,6 +44,7 @@
                                                                   varStatus="stat">${catInfo.productCatName}<c:if
                                     test="${!stat.last}">&gt;<c:set var="parnetCat" value="${catInfo.productCatId}"></c:set> </c:if></c:forEach></h5>
                         </header>
+                        <form id="catAttrEditForm">
                         <input type="hidden" name="catId" id="catId" value="${catId}">
                         <!--标题结束-->
                         <div class="relation-title main-box-header">关键属性(添加保存标准品后，关键属性不可修改，请认真选择）
@@ -74,9 +75,11 @@
                                             </table>
                                         </td>
                                         <td class="left-none">
-                                            <input type="number" class="int-text int-mini" min="0" max="1000"
-                                                   catAttrId="${attr.catAttrId}" name="attrSn"
-                                                   placeholder="属性排序" value="${attr.serialNumber}">
+                                            <input type="text" class="int-text int-mini" min="1" max="999" maxlength="3"
+                                                   catAttrId="${attr.catAttrId}" name="keyAttrSn_${attr.catAttrId}"
+                                                   placeholder="属性排序" value="${attr.serialNumber}" snType="attrSn"
+                                                   digits required data-msg="请输入1至999的整数"
+                                            >
                                         </td>
                                         <!--点击行为层结束-->
                                     </tr>
@@ -90,9 +93,12 @@
                                                     <td  width="45%" class="text-l pl-40">${attrVal.attrValueName}
                                                         <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                     <td  width="55%">
-                                                        <input type="number" class="int-text int-mini" placeholder="属性值排序"
-                                                               catAttrValId="${attrVal.catAttrValId}" name="attrValSn"
-                                                               value="${attrVal.serialNumber}" min="0" max="1000">
+                                                        <input type="text" class="int-text int-mini" placeholder="属性值排序"
+                                                               catAttrValId="${attrVal.catAttrValId}" snType="attrValSn"
+                                                               name="keyValSn_${attr.catAttrId}_${attrVal.catAttrValId}"
+                                                               value="${attrVal.serialNumber}" min="0" max="1000" maxlength="3"
+                                                               digits required data-msg="请输入1至999的整数"
+                                                        >
                                                     </td>
                                                 </tr>
                                                 </c:forEach>
@@ -103,9 +109,7 @@
                                     </tbody>
                                     </c:forEach>
                                     <!--点击行为表现层结束-->
-
                                 </table>
-
                             </div>
                             <!--/table表格结束-->
                         </div>
@@ -136,9 +140,11 @@
                                                 </table>
                                             </td>
                                             <td class="left-none">
-                                                <input type="number" class="int-text int-mini" min="0" max="1000"
-                                                       catAttrId="${attr.catAttrId}" name="attrSn"
-                                                       placeholder="属性排序" value="${attr.serialNumber}">
+                                                <input type="text" class="int-text int-mini" min="0" max="1000" maxlength="3"
+                                                       catAttrId="${attr.catAttrId}" name="noKeyAttrSn_${attr.catAttrId}"
+                                                       placeholder="属性排序" value="${attr.serialNumber}" snType="attrSn"
+                                                       digits required data-msg="请输入1至999的整数"
+                                                >
                                             </td>
                                             <!--点击行为层结束-->
                                         </tr>
@@ -152,9 +158,12 @@
                                                                 <td  width="45%" class="text-l pl-40">${attrVal.attrValueName}
                                                                     <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
                                                                 <td  width="55%">
-                                                                    <input type="number" class="int-text int-mini" placeholder="属性值排序"
-                                                                           catAttrValId="${attrVal.catAttrValId}" name="attrValSn"
-                                                                           value="${attrVal.serialNumber}" min="0" max="1000">
+                                                                    <input type="text" class="int-text int-mini" placeholder="属性值排序"
+                                                                           catAttrValId="${attrVal.catAttrValId}"  snType="attrValSn"
+                                                                           name="noKeyValSn_${attr.catAttrId}_${attrVal.catAttrValId}"
+                                                                           value="${attrVal.serialNumber}" min="0" max="1000" maxlength="3"
+                                                                           digits required data-msg="请输入1至999的整数"
+                                                                    >
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -170,6 +179,7 @@
                             </div>
                             <!--/table表格结束-->
                         </div>
+                        </form>
                         <div class="row"><!--删格化-->
                             <p class="center pr-30">
                                 <input id="sumBtn" type="button" class="biu-btn  btn-primary  btn-auto  ml-5" value="保  存"/>
