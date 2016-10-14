@@ -74,11 +74,11 @@
                                                 </tr>
                                             </table>
                                         </td>
-                                        <td class="left-none">
+                                        <td class="left-none text-l pl-40">
                                             <input type="text" class="int-text int-mini" min="1" max="999" maxlength="3"
                                                    catAttrId="${attr.catAttrId}" name="keyAttrSn_${attr.catAttrId}"
                                                    placeholder="属性排序" value="${attr.serialNumber}" snType="attrSn"
-                                                   digits required data-msg="请输入1至999的整数"
+                                                   digits="true" required data-msg="请输入1至999的整数"
                                             >
                                         </td>
                                         <!--点击行为层结束-->
@@ -90,14 +90,14 @@
                                             <table width="100%" border="0" >
                                                 <c:forEach items="${attr.attrValList}" var="attrVal">
                                                 <tr id="attrValTr2_${attrVal.catAttrValId}" class="border-bot-none">
-                                                    <td  width="45%" class="text-l pl-40">${attrVal.attrValueName}
+                                                    <td  width="65%" class="text-l pl-40">${attrVal.attrValueName}
                                                         <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
-                                                    <td  width="55%">
+                                                    <td  width="35%" class="text-l pl-15">
                                                         <input type="text" class="int-text int-mini" placeholder="属性值排序"
                                                                catAttrValId="${attrVal.catAttrValId}" snType="attrValSn"
                                                                name="keyValSn_${attr.catAttrId}_${attrVal.catAttrValId}"
-                                                               value="${attrVal.serialNumber}" min="0" max="1000" maxlength="3"
-                                                               digits required data-msg="请输入1至999的整数"
+                                                               value="${attrVal.serialNumber}" min="1" max="999" maxlength="3"
+                                                               digits="true" required data-msg="请输入1至999的整数"
                                                         >
                                                     </td>
                                                 </tr>
@@ -139,11 +139,11 @@
                                                     </tr>
                                                 </table>
                                             </td>
-                                            <td class="left-none">
-                                                <input type="text" class="int-text int-mini" min="0" max="1000" maxlength="3"
+                                            <td class="left-none text-l pl-40">
+                                                <input type="text" class="int-text int-mini" min="1" max="999" maxlength="3"
                                                        catAttrId="${attr.catAttrId}" name="noKeyAttrSn_${attr.catAttrId}"
                                                        placeholder="属性排序" value="${attr.serialNumber}" snType="attrSn"
-                                                       digits required data-msg="请输入1至999的整数"
+                                                       digits="true" required data-msg="请输入1至999的整数"
                                                 >
                                             </td>
                                             <!--点击行为层结束-->
@@ -155,14 +155,14 @@
                                                     <table width="100%" border="0" >
                                                         <c:forEach items="${attr.attrValList}" var="attrVal">
                                                             <tr id="attrValTr2_${attrVal.catAttrValId}" class="border-bot-none">
-                                                                <td  width="45%" class="text-l pl-40">${attrVal.attrValueName}
+                                                                <td  width="65%" class="text-l pl-40">${attrVal.attrValueName}
                                                                     <i class="fa fa-times i-close1" catAttrValId="${attrVal.catAttrValId}"></i></td>
-                                                                <td  width="55%">
+                                                                <td  width="35%" class="text-l pl-15">
                                                                     <input type="text" class="int-text int-mini" placeholder="属性值排序"
                                                                            catAttrValId="${attrVal.catAttrValId}"  snType="attrValSn"
                                                                            name="noKeyValSn_${attr.catAttrId}_${attrVal.catAttrValId}"
-                                                                           value="${attrVal.serialNumber}" min="0" max="1000" maxlength="3"
-                                                                           digits required data-msg="请输入1至999的整数"
+                                                                           value="${attrVal.serialNumber}" min="1" max="999" maxlength="3"
+                                                                           digits="true" required data-msg="请输入1至999的整数"
                                                                     >
                                                                 </td>
                                                             </tr>
