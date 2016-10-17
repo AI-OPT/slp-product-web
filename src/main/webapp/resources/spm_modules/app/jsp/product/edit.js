@@ -255,7 +255,11 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				auto:true,
 				swf: _base+"/resources/spm_modules/webuploader/Uploader.swf",
 				server:_base+"/home/upImg",
-				pick:'#filePicker',
+				//pick:'#filePicker',
+				pick:{
+					id:"#filePicker",
+					multiple:false
+				},
 				resize:false,
 				fileVal:"uploadFile",
 				formData:{"imgSize":"78x78"},
@@ -375,6 +379,18 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			imgObj.attr('src',imgUrl);
 			//添加删除按钮
 			imgObj.next().addClass('fa fa-times');
+		},
+		//检查是否能上传图片
+		_checkProdPicUp:function(picAttrVal){
+			//确定当前要显示商品属性
+			var msgValType = picAttrVal === "0"?"商品主图":"此属性值";
+			var nullNum = $("#prod_pic_"+picAttrVal+" img[imgId='']").length;
+			var isUp = true;
+			if (nullNum < 1){
+				this._showWarn(msgValType+"的图片张数已达到上传上限");
+				isUp=false;
+			}
+			return isUp;
 		},
 		//删除图片
 		_delProdPic:function(attrValId,picInd){

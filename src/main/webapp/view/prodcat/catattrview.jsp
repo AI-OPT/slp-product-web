@@ -50,7 +50,7 @@
                                                 </tr>
                                             </table>
                                         </td>
-                                        <td class="left-none">${attr.serialNumber}</td>
+                                        <td class="left-none text-l pl-40">${attr.serialNumber}</td>
                                         <!--点击行为层结束-->
                                     </tr>
                                     <!--点击行为表现层-->
@@ -60,8 +60,8 @@
                                             <table width="100%" border="0" >
                                                 <c:forEach items="${attr.attrValList}" var="attrVal">
                                                 <tr class="border-bot-none">
-                                                    <td  width="45%" class="text-l pl-40">${attrVal.attrValueName}</td>
-                                                    <td  width="55%">${attrVal.serialNumber}</td>
+                                                    <td  width="65%" class="text-l pl-40">${attrVal.attrValueName}</td>
+                                                    <td  width="35%" class="text-l pl-15">${attrVal.serialNumber}</td>
                                                 </tr>
                                                 </c:forEach>
                                             </table>
@@ -102,7 +102,7 @@
                                                     </tr>
                                                 </table>
                                             </td>
-                                            <td class="left-none">${attr.serialNumber}</td>
+                                            <td class="left-none text-l pl-40">${attr.serialNumber}</td>
                                             <!--点击行为层结束-->
                                         </tr>
                                         <!--点击行为表现层-->
@@ -112,8 +112,8 @@
                                                     <table width="100%" border="0" >
                                                         <c:forEach items="${attr.attrValList}" var="attrVal">
                                                             <tr class="border-bot-none">
-                                                                <td  width="45%" class="text-l pl-40">${attrVal.attrValueName}</td>
-                                                                <td  width="55%">${attrVal.serialNumber}</td>
+                                                                <td  width="65%" class="text-l pl-40">${attrVal.attrValueName}</td>
+                                                                <td  width="35%" class="text-l pl-15">${attrVal.serialNumber}</td>
                                                             </tr>
                                                         </c:forEach>
                                                     </table>

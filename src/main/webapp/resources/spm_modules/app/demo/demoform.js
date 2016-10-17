@@ -48,7 +48,8 @@ define('app/demo/demoform', function (require, exports, module) {
     				productCatName: {
     					required:true,
     					maxlength:10,
-    					minlength:3
+    					minlength:3,
+    					commonText:true
     					},
     				firstLetter: {
     					required:true,

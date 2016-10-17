@@ -10,11 +10,67 @@
 
 
 //start of seajs
-define(function (require, exports, module) {
+define(["jquery","jquery-validation/1.15.1/jquery.validate"],function (require, exports, module) {
 
-	require("jquery-validation/1.15.1/jquery.validate");
+require("jquery-validation/1.15.1/jquery.validate");
 
 /***====AIOPT 扩展校验方法   开始====***/
+/**
+* FUNCTION: isDate 校验日期是否合法yyyy-mm-dd这种格式的日期
+* PARAMETER: 字符串s
+* RETURNS: true/false
+*/
+$.validator.addMethod( "commonText", function( value, element, param ) {
+	if(param==false)return true;
+	/*如果参数值存在，则进行校验*/
+	var empty = $.trim(value).length?false:true;
+	if(empty)return true;
+	var re = /^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/;
+	var valid =  (re.test(value))?true:false;		
+	return valid;
+}, $.validator.format( "只能包含中英文、数字_-()" ) );
+
+/**
+* 校验文本是否满足没有非法字符要求 
+* @param value:元素取值,单string或array
+* @param param:规则绑定设定的参数,必须为true
+* @return true/false:校验不通过为false
+**/
+$.validator.addMethod( "inputFilter", function( value, element, param ) {
+	if(!param)return true;
+	if(value==undefined || value=='') return true;
+	
+	var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]","g") 
+		var rs = ""; 
+		for (var i = 0; i < value.length; i++) { 
+			rs += value.substr(i, 1).replace(pattern, ''); 
+		} 
+	var valid= value.length==rs.length
+	
+	return valid;
+}, $.validator.format( "文本中含有非法字符." ) );
+
+/**
+* 校验备注是否满足没有非法字符要求 
+* @param value:元素取值,单string或array
+* @param param:规则绑定设定的参数,必须为true
+* @return true/false:校验不通过为false
+**/
+$.validator.addMethod( "remarkFilter", function( value, element, param ) {
+	if(!param)return true;
+	if(value==undefined || value=='') return true;
+	
+	var pattern = new RegExp("[`~@#$^&*<>￥]","g") 
+		var rs = ""; 
+		for (var i = 0; i < value.length; i++) { 
+			rs += value.substr(i, 1).replace(pattern, ''); 
+		} 
+	var valid= value.length==rs.length
+	
+	return valid;
+}, $.validator.format( "还有非法字符." ) );
+
+
 /**
 * 校验某日期取值的最大值 add by gucl 20160828
 * @param value:元素取值,单string，日期格式 yyyy-mm-dd 或者yyyy-mm-dd hh:mm:ss
