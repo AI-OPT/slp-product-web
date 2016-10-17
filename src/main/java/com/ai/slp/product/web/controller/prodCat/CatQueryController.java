@@ -36,7 +36,7 @@ import com.alibaba.fastjson.JSON;
 @Controller
 @RequestMapping("/cat/query")
 public class CatQueryController {
-    private static Logger logger = LoggerFactory.getLogger(CatQueryController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CatQueryController.class);
     @Autowired
     private ProdCatService prodCatService;
 
@@ -66,8 +66,9 @@ public class CatQueryController {
                 do{
                     // 查询同一级的类目信息
                     List<ProdCatInfo> productCatInfos = productCatSV.queryCatByNameOrFirst(catQuery);
-                    if (CollectionUtil.isEmpty(productCatInfos))
-                        break;
+                    if (CollectionUtil.isEmpty(productCatInfos)){
+                    	break;
+                    }
                     prodCatInfo = productCatInfos.get(0);
                     ProdQueryCatVo prodQueryCatVo = new ProdQueryCatVo();
                     prodQueryCatVo.setLevel((short)(prodCatInfo.getCatLevel()-1));
@@ -120,9 +121,10 @@ public class CatQueryController {
         if (header!=null && !header.isSuccess()){
             responseData = new ResponseData<PageInfoResponse<ProductCatInfo>>(
                     ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
-        }else
+        }else{
             responseData = new ResponseData<PageInfoResponse<ProductCatInfo>>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK",catInfoPageRes);
+        }
 
         return responseData;
     }
@@ -147,9 +149,10 @@ public class CatQueryController {
             logger.error("Query by catId is fail,catId:{},headInfo:\r\n",catId, JSON.toJSONString(header));
             responseData = new ResponseData<ProductCatInfo>(
                     ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
-        }else
+        }else{
             responseData = new ResponseData<ProductCatInfo>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK",catInfo);
+        }
         return responseData;
     }
 
@@ -262,7 +265,9 @@ public class CatQueryController {
 
     //删除不适用于销售属性的属性
     private List<AttrDef> delNoSaleAttr(List<AttrDef> attrDefList){
-        if (CollectionUtil.isEmpty(attrDefList)) return attrDefList;
+        if (CollectionUtil.isEmpty(attrDefList)){
+        	return attrDefList;
+        } 
         List<AttrDef> newAttrDefList = new ArrayList<>();
         for (AttrDef attrDef:attrDefList){
             //若是复选框,则选中.

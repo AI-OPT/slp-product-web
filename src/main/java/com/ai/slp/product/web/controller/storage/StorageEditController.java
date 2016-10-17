@@ -52,9 +52,10 @@ public class StorageEditController {
         if (header!=null && !header.isSuccess()){
             responseData = new ResponseData<String>(
                     ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
-        }else
+        }else{
             responseData = new ResponseData<String>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK","");
+        }
         return responseData;
     }
 
@@ -85,9 +86,10 @@ public class StorageEditController {
         if (header!=null && !header.isSuccess()){
             responseData = new ResponseData<String>(
                     ResponseData.AJAX_STATUS_FAILURE, "更新状态 "+header.getResultMessage());
-        }else
+        }else{
             responseData = new ResponseData<String>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK","");
+        }
         return responseData;
     }
 

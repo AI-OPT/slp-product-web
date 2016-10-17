@@ -36,7 +36,7 @@ import com.ai.slp.user.api.keyinfo.param.UcGroupKeyInfoVo;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
-	private static Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	//图片最大体积 3M 单位B
 	private static long MAX_IMG_SIEZ = 3*1024*1024;
 
@@ -83,8 +83,9 @@ public class HomeController {
 		ResponseData<ImgFileInfoVo> responseData = null;
 		try {
 			//图片不能大于3M
-			if (file.getSize() > MAX_IMG_SIEZ)
+			if (file.getSize() > MAX_IMG_SIEZ){
 				throw new BusinessException("图片大小不能超过3M");
+			}
 			ImgFileInfoVo imgFileInfoVo = saveImg(file,imgSize,700,700);
 			logger.info("\rfileUid:"+imgFileInfoVo.getVfsId()+"\rfileUrl:"+imgFileInfoVo.getImgUrl());
 			responseData = new ResponseData<ImgFileInfoVo>(ResponseData.AJAX_STATUS_SUCCESS,"上传成功",imgFileInfoVo);
@@ -165,18 +166,21 @@ public class HomeController {
 	 * @return
      */
 	private ImgFileInfoVo saveImg(MultipartFile file,String imgSize,int minWidth,int minHeight) throws PaasRuntimeException,IOException {
-		if (file==null)
+		if (file==null){
 			throw new BusinessException("","上传文件为空");
+		}
 		String fileName = file.getOriginalFilename();
 		String fileExt = getFileExtName(fileName);
 		IImageClient imageClient = IDPSClientFactory.getImageClient(SysCommonConstants.ProductImage.IDPSNS);
 //		String fileUid = imageClient.upLoadImage(file.getBytes(),fileName);
 		String fileUid = imageClient.upLoadImage(file.getBytes(),fileName,minWidth,minHeight);
 		String imageUrl = "";
-		if (StringUtils.isNotBlank(imgSize))
+		if (StringUtils.isNotBlank(imgSize)){
 			imageUrl = imageClient.getImageUrl(fileUid, fileExt,imgSize);
-		else
+		}
+		else{
 			imageUrl = imageClient.getImageUrl(fileUid, fileExt);
+		}
 		ImgFileInfoVo fileInfoVo = new ImgFileInfoVo();
 		fileInfoVo.setVfsId(fileUid);
 		fileInfoVo.setImgUrl(imageUrl);

@@ -82,8 +82,9 @@ public class StorageController {
                 // 获取库存状态名
                 for (StorageRes storageRes : storageGroupRes.getStorageList().get(key)) {
                     SysParam param = paramMap.get(storageRes.getState());
-                    if (param!=null)
-                        storageRes.setStateName(param.getColumnDesc());
+                    if (param!=null){
+                    	storageRes.setStateName(param.getColumnDesc());
+                    }
                 }
             }
         }
@@ -124,9 +125,10 @@ public class StorageController {
         if (header!=null && !header.isSuccess()){
             responseData = new ResponseData<SkuSetForProduct>(
                     ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
-        }else
+        }else{
             responseData = new ResponseData<SkuSetForProduct>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK",skuSetForProduct);
+        }
         return responseData;
     }
     /**
@@ -165,8 +167,9 @@ public class StorageController {
             List<SkuInfo> skuInfoList = skuSetForProduct.getSkuInfoList();
             for (SkuInfo skuInfo:skuInfoList){
                 SkuStorageInfo info = infoMap.get(skuInfo.getSkuId());
-                if (info!=null)
-                    skuInfo.setTotalNum(info.getTotalNum());
+                if (info!=null){
+                	skuInfo.setTotalNum(info.getTotalNum());
+                }
             }
             responseData = new ResponseData<SkuSetForProduct>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK",skuSetForProduct);

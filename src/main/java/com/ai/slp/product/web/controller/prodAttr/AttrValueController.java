@@ -39,7 +39,7 @@ import com.alibaba.fastjson.JSON;
 @Controller
 @RequestMapping("/attrManage")
 public class AttrValueController {
-	private static Logger LOG = LoggerFactory.getLogger(AttrController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AttrController.class);
 	/**
 	 * 进入页面
 	 */

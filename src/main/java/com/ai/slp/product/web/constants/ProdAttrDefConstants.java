@@ -7,7 +7,7 @@ public final class ProdAttrDefConstants {
     /**
      * 值输入方式
      */
-    public final class ValueWay{
+    public static final class ValueWay{
         /**
          * 单选
          */

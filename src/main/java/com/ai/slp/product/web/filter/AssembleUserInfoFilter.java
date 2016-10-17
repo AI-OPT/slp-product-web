@@ -93,8 +93,9 @@ public class AssembleUserInfoFilter implements Filter {
     }
 
     private boolean shouldFilter(HttpServletRequest req) {
-        if (ignorSuffixStr==null || "".equals(ignorSuffixStr))
-            return true;
+        if (ignorSuffixStr==null || "".equals(ignorSuffixStr)){
+        	return true;
+        }
         String uri = req.getRequestURI().toLowerCase();
         /*if (ignor_suffix != null && ignor_suffix.length > 0) {
             String uri = req.getRequestURI().toLowerCase();
