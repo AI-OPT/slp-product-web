@@ -31,7 +31,7 @@ public class AmountUtil {
     /**  
      * 将厘为单位的转换为元 （除1000）  
      */    
-    public static String Li2Yuan(Long amount) throws Exception{
+    public static String li2Yuan(Long amount) throws Exception{
         if(amount == null){
             return "0.00";
         }
@@ -42,7 +42,7 @@ public class AmountUtil {
     /**  
      * 将厘为单位的转换为元 （除1000）  
      */    
-    public static String Li2Yuan(Double amount) throws Exception{
+    public static String li2Yuan(Double amount) throws Exception{
         String result = "0.00";
         if(amount != null){
             BigDecimal balance = BigDecimal.valueOf(amount).divide(new BigDecimal(1000L),2,BigDecimal.ROUND_HALF_UP);

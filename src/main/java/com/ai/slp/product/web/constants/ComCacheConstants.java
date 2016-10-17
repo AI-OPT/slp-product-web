@@ -9,7 +9,7 @@ public final class ComCacheConstants {
 	 * @author Gavin
 	 *
 	 */
-	public final class NormProduct{
+	public static final class NormProduct{
 		public static final String CODE = "STANDEDPRODUCT";
 		
 		public static final String STATUS = "STATE";
@@ -18,7 +18,7 @@ public final class ComCacheConstants {
 	/**
 	 * 类目属性
 	 */
-	public final class ProdAttr{
+	public static final class ProdAttr{
 		public static final String CODE = "PRODATTRDEF";
 		
 		
@@ -29,7 +29,7 @@ public final class ComCacheConstants {
     /**
      * 商品TYPE
      */
-    public final class TypeProduct{
+    public static final class TypeProduct{
         public static final String CODE = "PRODUCT";
         /**
          * 商品类型
@@ -50,7 +50,7 @@ public final class ComCacheConstants {
     /**
      * 库存和库存组状态
      */
-    public final class StateStorage{
+    public static final class StateStorage{
     	/**
     	 * 库存TYPE
     	 */

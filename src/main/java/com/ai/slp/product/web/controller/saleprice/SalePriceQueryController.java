@@ -42,7 +42,7 @@ import com.ai.slp.product.web.vo.SkuPriceVo;
 @Controller
 @RequestMapping("/saleprice/query")
 public class SalePriceQueryController {
-    private static Logger logger = LoggerFactory.getLogger(SalePriceQueryController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SalePriceQueryController.class);
 
     @Autowired
     StandedProdService standedProdService;
@@ -119,8 +119,9 @@ public class SalePriceQueryController {
                     continue;
                 }
                 skuInfo.setSalePrice(infoMap.get(skuInfo.getSkuId()));
-                if (!needUpPrice && skuInfo.getSalePrice()==null)
+                if (!needUpPrice && skuInfo.getSalePrice()==null){
                     needUpPrice = true;
+                }
                 skuInfoListNew.add(skuInfo);
             }
             SkuPriceVo skuPriceVo = new SkuPriceVo();

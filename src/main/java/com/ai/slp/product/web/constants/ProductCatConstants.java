@@ -7,7 +7,7 @@ package com.ai.slp.product.web.constants;
  */
 public final class ProductCatConstants {
 
-    public final class ProductCat{
+    public static final class ProductCat{
         public final class IsChild{
             /**
              * 有子分类
@@ -28,7 +28,7 @@ public final class ProductCatConstants {
         }
     }
 
-    public final class ProductCatAttr{
+    public static final class ProductCatAttr{
         public final class AttrType{
             /**
              * 关键属性类型

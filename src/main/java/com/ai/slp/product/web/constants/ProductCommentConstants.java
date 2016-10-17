@@ -1,7 +1,7 @@
 package com.ai.slp.product.web.constants;
 
 public class ProductCommentConstants {
-	public final class State{
+	public static final class State{
         /**
          * 失效
          */
@@ -13,12 +13,12 @@ public class ProductCommentConstants {
         public static final String ENABLE = "1";
     }
 	
-	public final class HasPicture{
+	public static final class HasPicture{
 		public static final String YSE = "Y";
 		public static final String NO = "N";
 	}
 	
-	public final class ReplyState{
+	public static final class ReplyState{
 		/**
 		 * 已回复
 		 */
@@ -32,7 +32,7 @@ public class ProductCommentConstants {
 	/**
 	 * 配置中心key
 	 */
-	public final class CCSKey{
+	public static final class CCSKey{
 		public static final String userserver_ip = "/product.comment.userserver-ip";
 		public static final String userserver_appkey = "/product.comment.userserver-appkey";
 	}

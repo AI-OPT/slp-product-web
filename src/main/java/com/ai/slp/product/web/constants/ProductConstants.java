@@ -7,7 +7,7 @@ package com.ai.slp.product.web.constants;
  */
 public final class ProductConstants {
 
-    public final class NormProduct{
+    public static final class NormProduct{
         public final class State{
             /**
              * 失效
@@ -26,7 +26,7 @@ public final class ProductConstants {
         }
     }
 
-    public final class IsSaleNationwide{
+    public static final class IsSaleNationwide{
         /**
          * 为全国
          */

@@ -39,7 +39,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/attr")
 public class AttrController {
-	private static Logger LOG = LoggerFactory.getLogger(AttrController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AttrController.class);
 	
 	/**
 	 * 进入页面
@@ -84,8 +84,9 @@ public class AttrController {
 			Long attrIdLong = Long.valueOf(request.getParameter("attrId")).longValue();
 			attrDefParam.setAttrId(attrIdLong);
 		}
-		if (StringUtils.isNotBlank(request.getParameter("attrName"))) 
+		if (StringUtils.isNotBlank(request.getParameter("attrName"))){
 			attrDefParam.setAttrName(request.getParameter("attrName"));
+		} 
 		
 	}
 	/**
@@ -183,9 +184,10 @@ public class AttrController {
         	LOG.error("Query by attrId is fail,attrId:{},headInfo:\r\n",attrId, JSON.toJSONString(header));
             responseData = new ResponseData<AttrInfo>(
                     ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
-        }else
+        }else{
             responseData = new ResponseData<AttrInfo>(
                     ResponseData.AJAX_STATUS_SUCCESS, "OK",attrInfo);
+        }
         return responseData;
 	}
 	

@@ -242,8 +242,9 @@ public class ProdQueryController {
 		ResponseData<PageInfoResponse<ProductEditUp>> responseData = null;
         try {
             // 查询条件
-            if (StringUtils.isNotBlank(productName))
-                queryInfo.setProdName(productName);
+            if (StringUtils.isNotBlank(productName)){
+            	queryInfo.setProdName(productName);
+            }
             // 设置状态
             List<String> stateList = new ArrayList<>();
             if (StringUtil.isBlank(state)) {
@@ -281,8 +282,9 @@ public class ProdQueryController {
 	@ResponseBody
 	public ResponseData<PageInfoResponse<ProductEditUp>> getSaleDownProduct(
 			HttpServletRequest request,ProductEditQueryReq productEditQueryReq){
-		if(!request.getParameter("productName").isEmpty())
+		if(!request.getParameter("productName").isEmpty()){
 			productEditQueryReq.setProdName(request.getParameter("productName"));
+		}
 		// 设置状态，62停用下架.
 		List<String> stateList = new ArrayList<>();
 		stateList.add("61");
@@ -298,8 +300,9 @@ public class ProdQueryController {
 	@ResponseBody
 	public ResponseData<PageInfoResponse<ProductEditUp>> getStorStopProduct(
 			HttpServletRequest request,ProductEditQueryReq productEditQueryReq){
-		if(!request.getParameter("productName").isEmpty())
+		if(!request.getParameter("productName").isEmpty()){
 			productEditQueryReq.setProdName(request.getParameter("productName"));
+		}
 		// 设置状态，62停用下架.
 		List<String> stateList = new ArrayList<>();
 		stateList.add("62");
@@ -367,9 +370,10 @@ public class ProdQueryController {
         //查询商品其他设置
         OtherSetOfProduct otherSet = productManagerSV.queryOtherSetOfProduct(productInfoQuery);
         uiModel.addAttribute("otherSet",otherSet);
-		if (ProductConstants.IsSaleNationwide.NO.equals(productInfo.getIsSaleNationwide()))
+		if (ProductConstants.IsSaleNationwide.NO.equals(productInfo.getIsSaleNationwide())){
 			//目标地域
 			uiModel.addAttribute("areaInfoStr",getTargetOfProduct(otherSet.getAreaInfos()));
+		}
 
         //商品主图
         uiModel.addAttribute("prodPic",otherSet.getProductPics());
@@ -432,8 +436,9 @@ public class ProdQueryController {
 	private void queryBuilder(HttpServletRequest request, ProductEditQueryReq productEditQueryReq) {
 		productEditQueryReq.setTenantId(AdminUtil.getTenantId());
 		productEditQueryReq.setSupplierId(AdminUtil.getSupplierId());
-		if(!request.getParameter("productName").isEmpty())
+		if(!request.getParameter("productName").isEmpty()){
 			productEditQueryReq.setProdName(request.getParameter("productName"));
+		}
 
 	}
 
@@ -499,10 +504,12 @@ public class ProdQueryController {
 	 */
 	private String getImageUrl(String attrImageSize, String vfsId, String picType) {
 		IImageClient imageClient = IDPSClientFactory.getImageClient(SysCommonConstants.ProductImage.IDPSNS);
-		if (StringUtils.isBlank(picType))
+		if (StringUtils.isBlank(picType)){
 			picType = ".jpg";
-		if (!picType.startsWith("."))
+		}
+		if (!picType.startsWith(".")){
 			picType = "." + picType;
+		}
 		return imageClient.getImageUrl(vfsId, picType, attrImageSize);
 	}
 
@@ -512,16 +519,20 @@ public class ProdQueryController {
 	 * @return
      */
 	private String getTargetOfProduct(List<ProdTargetAreaInfo> areaInfoList){
-		if (CollectionUtil.isEmpty(areaInfoList)) return "";
+		if (CollectionUtil.isEmpty(areaInfoList)){
+			return "";
+		} 
 		StringBuffer sb = new StringBuffer();
 		for (ProdTargetAreaInfo areaInfo:areaInfoList){
-			if (areaInfo.isOwn())
+			if (areaInfo.isOwn()){
 				sb.append(areaInfo.getAreaName()+"、");
+			}
 		}
 		//删除最后一个分隔号
 		int last = sb.lastIndexOf("、");
-		if (last==(sb.length()-1))
+		if (last==(sb.length()-1)){
 			sb.deleteCharAt(last);
+		}
 		return sb.toString();
 	}
 
@@ -555,9 +566,10 @@ public class ProdQueryController {
 	        	LOG.error("Query by prodId is fail,prodId:{},headInfo:\r\n",prodId, JSON.toJSONString(header));
 	            responseData = new ResponseData<ProdStateLog>(
 	                    ResponseData.AJAX_STATUS_FAILURE, "获取信息失败 "+header.getResultMessage());
-	        }else
+	        }else{
 	            responseData = new ResponseData<ProdStateLog>(
 	                    ResponseData.AJAX_STATUS_SUCCESS, "OK",refuse);
+	        }
 		
 		return responseData;
 		

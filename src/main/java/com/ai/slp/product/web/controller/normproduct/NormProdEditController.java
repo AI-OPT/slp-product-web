@@ -55,10 +55,12 @@ public class NormProdEditController {
 	private IProductCatSV productCatSV;
 
 	public void initConsumer() {
-		if (normProductSV == null)
+		if (normProductSV == null){
 			normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
-		if (productCatSV == null)
+		}
+		if (productCatSV == null){
 			productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
+		}
 	}
 
 	/**

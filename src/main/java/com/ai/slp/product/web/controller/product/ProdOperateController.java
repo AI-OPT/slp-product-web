@@ -1,6 +1,7 @@
 package com.ai.slp.product.web.controller.product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -91,7 +92,7 @@ public class ProdOperateController {
     @ResponseBody
     public ResponseData<String> passProduct(String id) {
         ProductCheckParam productCheckParam = new ProductCheckParam();
-        ArrayList<String> idList = new ArrayList<>();
+        List<String> idList = new ArrayList<>();
         idList.add(id);
         productCheckParam.setProdIdList(idList);
         return auditProduct(productCheckParam, AuditStatus.PASS);
@@ -108,7 +109,7 @@ public class ProdOperateController {
     public ResponseData<String> passProducts(String ids) {
         ProductCheckParam productCheckParam = new ProductCheckParam();
         String id[] = ids.split(",");
-        ArrayList<String> idList = new ArrayList<>();
+        List<String> idList = new ArrayList<>();
         for (int i = 0; i < id.length; i++) {
             idList.add(id[i]);
         }
@@ -135,7 +136,7 @@ public class ProdOperateController {
     @ResponseBody
     public ResponseData<String> rejectProducts(String ids, ProductCheckParam productCheckParam) {
         String id[] = ids.split(",");
-        ArrayList<String> idList = new ArrayList<>();
+        List<String> idList = new ArrayList<>();
         for (int i = 0; i < id.length; i++) {
             idList.add(id[i]);
         }

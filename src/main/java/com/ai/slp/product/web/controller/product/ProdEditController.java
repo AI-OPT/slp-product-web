@@ -50,7 +50,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/prodedit")
 public class ProdEditController {
-    private static Logger logger = LoggerFactory.getLogger(ProdEditController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProdEditController.class);
     @Autowired
     private AttrAndValService attrAndValService;
     IProductManagerSV productManagerSV;
@@ -60,16 +60,21 @@ public class ProdEditController {
     IProductCatSV productCatSV;
 
     public void initConsumer() {
-        if (productManagerSV == null)
-            productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
-        if (productSV == null)
-            productSV = DubboConsumerFactory.getService(IProductSV.class);
-        if (cacheSV == null)
-            cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
-        if (normProductSV == null)
-            normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
-        if (productCatSV == null)
-            productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
+        if (productManagerSV == null){
+        	productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+        }
+        if (productSV == null){
+        	productSV = DubboConsumerFactory.getService(IProductSV.class);
+        }
+        if (cacheSV == null){
+        	cacheSV = DubboConsumerFactory.getService(ICacheSV.class);
+        }
+        if (normProductSV == null){
+        	normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
+        }
+        if (productCatSV == null){
+        	productCatSV = DubboConsumerFactory.getService(IProductCatSV.class);
+        }
     }
     /**
      * 显示商品编辑页面
@@ -168,8 +173,9 @@ public class ProdEditController {
             fileId = "";
         }
 
-        if (StringUtils.isNotBlank(detailConVal))
-            fileId = client.insert(detailConVal);
+        if (StringUtils.isNotBlank(detailConVal)){
+        	fileId = client.insert(detailConVal);
+        }
         logger.info("fileId="+fileId);
         editInfo.setProDetailContent(fileId);
         //非关键属性
@@ -182,14 +188,17 @@ public class ProdEditController {
         prodInfo.setOperId(AdminUtil.getAdminId(session));
         prodInfo.setNoKeyAttrValMap(attrValMap);
         //添加省份编码
-        if ("N".equals(editInfo.getIsSaleNationwide()) && StringUtils.isNotBlank(editInfo.getTargetProd()))
-            prodInfo.setProvCodes(JSON.parseArray(editInfo.getTargetProd(),Long.class));
+        if ("N".equals(editInfo.getIsSaleNationwide()) && StringUtils.isNotBlank(editInfo.getTargetProd())){
+        	prodInfo.setProvCodes(JSON.parseArray(editInfo.getTargetProd(),Long.class));
+        }
         //添加企业受众
-        if ("1".equals(editInfo.getAudiencesEnterprise()) && StringUtils.isNotBlank(editInfo.getAudiEntIds()))
-            prodInfo.setEnterpriseIds(JSON.parseArray(editInfo.getAudiEntIds(),String.class));
+        if ("1".equals(editInfo.getAudiencesEnterprise()) && StringUtils.isNotBlank(editInfo.getAudiEntIds())){
+        	prodInfo.setEnterpriseIds(JSON.parseArray(editInfo.getAudiEntIds(),String.class));
+        }
         //代理商受众
-        if ("1".equals(editInfo.getAudiencesAgents()) && StringUtils.isNotBlank(editInfo.getAudiAgentIds()))
-            prodInfo.setAgentIds(JSON.parseArray(editInfo.getAudiAgentIds(),String.class));
+        if ("1".equals(editInfo.getAudiencesAgents()) && StringUtils.isNotBlank(editInfo.getAudiAgentIds())){
+        	prodInfo.setAgentIds(JSON.parseArray(editInfo.getAudiAgentIds(),String.class));
+        }
         //商品图片
         Map<String,List<ProdPicInfo>> picInfoMap = genProdAttrPic(editInfo.getProdId(),editInfo.getProdPicStr());
         //属性值为0,表示为商品图片
@@ -197,12 +206,14 @@ public class ProdEditController {
         //属性值图片
         picInfoMap = genProdAttrPic(editInfo.getProdId(),editInfo.getProdAttrValPicStr());
         prodInfo.setAttrValPics(picInfoMap);
-        if (StringUtils.isNotBlank(editInfo.getPresaleBeginTimeStr()))
+        if (StringUtils.isNotBlank(editInfo.getPresaleBeginTimeStr())){
             prodInfo.setPresaleBeginTime(
                     DateUtil.getTimestamp(editInfo.getPresaleBeginTimeStr(),DateUtil.DATETIME_FORMAT));
-        if (StringUtils.isNotBlank(editInfo.getPresaleEndTimeStr()))
+        }
+        if (StringUtils.isNotBlank(editInfo.getPresaleEndTimeStr())){
             prodInfo.setPresaleEndTime(
                     DateUtil.getTimestamp(editInfo.getPresaleEndTimeStr(),DateUtil.DATETIME_FORMAT));
+        }
         //保存商品详情信息
         BaseResponse response = productManagerSV.updateProduct(prodInfo);
         ResponseHeader header = response.getResponseHeader();
@@ -281,8 +292,9 @@ public class ProdEditController {
      */
     private Map<String,List<ProdPicInfo>> genProdAttrPic(String prodId,String prodAttrPic){
         Map<String,List<ProdPicInfo>> attrPicMap = new HashMap<>();
-        if (StringUtils.isBlank(prodAttrPic))
-            return attrPicMap;
+        if (StringUtils.isBlank(prodAttrPic)){
+        	return attrPicMap;
+        }
         List<ProdPicInfo> picInfoList = JSON.parseArray(prodAttrPic,ProdPicInfo.class);
         for (ProdPicInfo picInfo:picInfoList){
             picInfo.setProdId(prodId);
@@ -290,8 +302,9 @@ public class ProdEditController {
             picInfo.setSerialNumber((short)(picInfo.getSerialNumber()+1));
             if (picInfo.getSerialNumber().equals(new Short("1"))){
                 picInfo.setIsMainPic("Y");
-            }else
-                picInfo.setIsMainPic("N");
+            }else{
+            	picInfo.setIsMainPic("N");
+            }
             List<ProdPicInfo> infoList = attrPicMap.get(picInfo.getAttrvalueDefId());
             if (infoList==null){
                 infoList = new ArrayList<ProdPicInfo>();

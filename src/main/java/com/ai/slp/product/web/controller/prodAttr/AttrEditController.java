@@ -29,7 +29,7 @@ import com.ai.slp.product.web.util.AdminUtil;
 @Controller
 @RequestMapping("/attrEdit")
 public class AttrEditController {
-	private static Logger logger = LoggerFactory.getLogger(AttrEditController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AttrEditController.class);
 	
 	/**
 	 * 单个属性的编辑

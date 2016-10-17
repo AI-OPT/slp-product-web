@@ -35,7 +35,7 @@ import com.alibaba.fastjson.TypeReference;
 @Controller
 @RequestMapping("/cat/edit")
 public class CatEditController {
-    private static Logger logger = LoggerFactory.getLogger(CatEditController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CatEditController.class);
 
     /**
      * 显示添加页面

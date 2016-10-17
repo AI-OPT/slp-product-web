@@ -30,8 +30,9 @@ public class ProdCatService {
         do {
             // 查询同一级的类目信息
             List<ProdCatInfo> productCatInfos = productCatSV.queryCatByNameOrFirst(catQuery);
-            if (CollectionUtil.isEmpty(productCatInfos))
-                break;
+            if (CollectionUtil.isEmpty(productCatInfos)){
+            	break;
+            }
             prodCatInfo = productCatInfos.get(0);
             // 把类目信息按照类目等级放入集合
             productCatMap.put(prodCatInfo.getCatLevel(), productCatInfos);

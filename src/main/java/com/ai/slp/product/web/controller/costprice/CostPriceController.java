@@ -120,10 +120,12 @@ public class CostPriceController {
 		productRequest.setTenantId(AdminUtil.getTenantId());
 		productRequest.setSupplierId(AdminUtil.getSupplierId());
 		productRequest.setState(ProductConstants.NormProduct.State.ENABLE);
-		if (!request.getParameter("productId").isEmpty())
+		if (!request.getParameter("productId").isEmpty()){
 			productRequest.setStandedProdId(request.getParameter("productId"));
-		if (!request.getParameter("productName").isEmpty())
+		}
+		if (!request.getParameter("productName").isEmpty()){
 			productRequest.setStandedProductName(request.getParameter("productName"));
+		}
 	}
 
 	/**
