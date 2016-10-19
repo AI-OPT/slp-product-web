@@ -172,7 +172,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 					this.close();
 				}
 			});
-			d.show();
+
 			//后台获取数据,
 			ajaxController.ajax({
 				type: "get",
@@ -194,6 +194,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 							$("#isChildVal").html("是");
 						else
 							$("#isChildVal").html("否");
+						d.show();
 					}
 				}
 			});
