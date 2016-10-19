@@ -11,7 +11,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     require("app/util/jsviews-ext");
     require("opt-paging/aiopt.pagination");
 
-	require("jquery-validation/1.15.1/jquery.validate");
+	//require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
     var SendMessageUtil = require("app/util/sendMessage");
 
