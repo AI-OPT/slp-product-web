@@ -97,6 +97,9 @@ public class CatQueryController {
         if (StringUtils.isNotBlank(parentProductCatId)) {
             uiModel.addAttribute("catLink", prodCatService.queryLink(parentProductCatId));
             uiModel.addAttribute("parentProductCatId",parentProductCatId);
+        }//默认只查询根类目
+        else {
+            uiModel.addAttribute("parentProductCatId","0");
         }
         return "prodcat/catlist";
     }

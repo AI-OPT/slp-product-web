@@ -128,7 +128,7 @@
                                 </div>
                                 <!--分页结束-->
                             </div>
-                            <c:if test="${parentProductCatId!=null && parentProductCatId!=''}">
+                            <c:if test="${parentProductCatId!=null && parentProductCatId!='' && parentProductCatId!='0'}">
                             <div  class="row pt-30"><!--删格化-->
                                 <p class="center pr-30">
                                     <input id="goBackBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
