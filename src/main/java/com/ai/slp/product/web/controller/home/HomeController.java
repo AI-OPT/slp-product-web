@@ -1,6 +1,7 @@
 package com.ai.slp.product.web.controller.home;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -148,12 +149,7 @@ public class HomeController {
 	private void printParams(HttpServletRequest request){
 		Map<String,String[]> paramMap = request.getParameterMap();
 		for (Map.Entry<String,String[]> entry:paramMap.entrySet()){
-			System.out.println("the param:"+entry.getKey());
-			String[] vals = entry.getValue();
-			for (String val:vals){
-				System.out.print(val+",");
-			}
-			System.out.println("\r");
+			logger.debug("the param:"+entry.getKey()+ Arrays.toString(entry.getValue()));
 		}
 	}
 

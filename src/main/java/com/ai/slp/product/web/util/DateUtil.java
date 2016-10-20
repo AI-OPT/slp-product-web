@@ -657,8 +657,7 @@ public final class DateUtil {
     }
 
     public static Timestamp getTimestamp(long time) {
-        Timestamp ts = new Timestamp(time);
-        return ts;
+        return new Timestamp(time);
     }
 
     /**

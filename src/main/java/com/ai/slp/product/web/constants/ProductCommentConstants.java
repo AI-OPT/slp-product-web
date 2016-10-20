@@ -1,10 +1,9 @@
 package com.ai.slp.product.web.constants;
 
 public class ProductCommentConstants {
-	
 	private ProductCommentConstants() {
-		// TODO Auto-generated constructor stub
 	}
+
 	public static final class State{
 		private State() {
 			// TODO Auto-generated constructor stub

@@ -59,7 +59,6 @@ public class CatEditController {
         List<ProductCatParam> catParamList = new ArrayList<>();
         for (ProdCatInfo catInfo:catInfoList){
             ProductCatParam catParam = new ProductCatParam();
-            System.out.println(catInfo.getProductCatName()+":"+catInfo.getParentProductCatId());
             BeanUtils.copyProperties(catParam,catInfo);
             catParam.setTenantId(AdminUtil.getTenantId());
             catParam.setOperId(AdminUtil.getAdminId(session));

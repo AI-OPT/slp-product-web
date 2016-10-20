@@ -211,6 +211,9 @@ public class CatQueryController {
             case ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_NONKEY:
                 nowMap = noKeyMap;
                 break;
+            default:
+                logger.debug("未知类型");
+                break;
         }
         //查询所有属性及属性值
         IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
