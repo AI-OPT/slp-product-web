@@ -55,11 +55,9 @@ public class AttrController {
 	 */
 	@RequestMapping("/getAttrList")
 	@ResponseBody
-	private ResponseData<PageInfoResponse<AttrDefInfo>> queryAttrList(HttpServletRequest request,AttrDefParam attrDefParam){
+	public ResponseData<PageInfoResponse<AttrDefInfo>> queryAttrList(HttpServletRequest request,AttrDefParam attrDefParam){
 		ResponseData<PageInfoResponse<AttrDefInfo>> responseData = null;
 		try {
-			//查询条件
-//			queryBuilder(request, attrDefParam);
 			attrDefParam.setTenantId(AdminUtil.getTenantId());
 			
 			PageInfoResponse<AttrDefInfo> result = queryAttrByValueWay(attrDefParam);
@@ -72,23 +70,7 @@ public class AttrController {
 		}
 		return responseData;
 	}
-	/**
-	 * 查询条件检查设置  
-	 */
-	private void queryBuilder(HttpServletRequest request,AttrDefParam attrDefParam) {
-		attrDefParam.setTenantId(AdminUtil.getTenantId());
-		attrDefParam.setValueWay(request.getParameter("valueWay"));
-		
-		if (StringUtils.isNotBlank(request.getParameter("attrId"))) {
-
-			Long attrIdLong = Long.valueOf(request.getParameter("attrId")).longValue();
-			attrDefParam.setAttrId(attrIdLong);
-		}
-		if (StringUtils.isNotBlank(request.getParameter("attrName"))){
-			attrDefParam.setAttrName(request.getParameter("attrName"));
-		} 
-		
-	}
+	
 	/**
 	 * 查询属性列表
 	 * 

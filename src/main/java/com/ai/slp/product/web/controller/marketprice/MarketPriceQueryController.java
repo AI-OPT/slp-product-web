@@ -75,7 +75,7 @@ public class MarketPriceQueryController {
 	 */
 	@RequestMapping("/getMarketPriceList")
 	@ResponseBody
-	private ResponseData<PageInfoResponse<NormProdResponse>> queryNormProduct(HttpServletRequest request,NormProdRequest productRequest){
+	public ResponseData<PageInfoResponse<NormProdResponse>> queryNormProduct(HttpServletRequest request,NormProdRequest productRequest){
 		ResponseData<PageInfoResponse<NormProdResponse>> responseData = null;
 		try {
 			//查询条件

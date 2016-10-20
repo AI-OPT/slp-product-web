@@ -6,11 +6,23 @@ package com.ai.slp.product.web.constants;
  */
 public final class SysCommonConstants {
 
-    public static final class ProductImage {
-        public static final String IDPSNS = "slp-mall-web-idps";
+    private SysCommonConstants() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static final class ProductImage {
+        private ProductImage() {
+			// TODO Auto-generated constructor stub
+		}
+
+		public static final String IDPSNS = "slp-mall-web-idps";
     }
 
     public static final class ProductDetail{
-        public static final String DSSNS = "slp-product-detail-dss";
+        private ProductDetail() {
+			// TODO Auto-generated constructor stub
+		}
+
+		public static final String DSSNS = "slp-product-detail-dss";
     }
 }

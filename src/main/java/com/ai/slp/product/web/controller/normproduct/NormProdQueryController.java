@@ -75,7 +75,7 @@ public class NormProdQueryController {
 	 */
 	@RequestMapping("/getNormProductList")
 	@ResponseBody
-	private ResponseData<PageInfoResponse<NormProdQueryInfo>> queryNormProduct(HttpServletRequest request,
+	public ResponseData<PageInfoResponse<NormProdQueryInfo>> queryNormProduct(HttpServletRequest request,
 			NormProdRequest productRequest) {
 		ResponseData<PageInfoResponse<NormProdQueryInfo>> responseData = null;
 		try {

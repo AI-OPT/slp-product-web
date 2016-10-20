@@ -138,7 +138,7 @@ public class StorageController {
      */
     @RequestMapping("/skuSto/{id}")
     @ResponseBody
-    private ResponseData<SkuSetForProduct> querySkuStorage(@PathVariable("id")String storageId,String groupId){
+    public ResponseData<SkuSetForProduct> querySkuStorage(@PathVariable("id")String storageId,String groupId){
         ResponseData<SkuSetForProduct> responseData;
         IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
         StorageInfoQuery infoQuery = new StorageInfoQuery();

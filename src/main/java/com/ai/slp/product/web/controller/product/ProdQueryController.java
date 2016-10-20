@@ -550,7 +550,7 @@ public class ProdQueryController {
 	 */
 	@RequestMapping("/toViewReason/{id}")
 	@ResponseBody
-	private ResponseData<ProdStateLog> getRefuseReason(@PathVariable("id") String prodId){
+	public ResponseData<ProdStateLog> getRefuseReason(@PathVariable("id") String prodId){
 		ResponseData<ProdStateLog> responseData;
 			//根据商品ID查询商品被拒绝的原因
 			IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
