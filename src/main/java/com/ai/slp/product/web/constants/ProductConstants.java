@@ -8,7 +8,7 @@ package com.ai.slp.product.web.constants;
 public final class ProductConstants {
 
     public static final class NormProduct{
-        public final class State{
+        public static final class State{
             /**
              * 失效
              */

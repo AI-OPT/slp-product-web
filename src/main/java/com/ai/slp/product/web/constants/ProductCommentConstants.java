@@ -1,6 +1,9 @@
 package com.ai.slp.product.web.constants;
 
 public class ProductCommentConstants {
+	private ProductCommentConstants() {
+	}
+
 	public static final class State{
         /**
          * 失效
