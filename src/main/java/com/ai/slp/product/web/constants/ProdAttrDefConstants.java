@@ -4,11 +4,18 @@ package com.ai.slp.product.web.constants;
  * Created by jackieliu on 16/9/13.
  */
 public final class ProdAttrDefConstants {
-    /**
+    private ProdAttrDefConstants() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * 值输入方式
      */
     public static final class ValueWay{
-        /**
+        private ValueWay() {
+			// TODO Auto-generated constructor stub
+		}
+		/**
          * 单选
          */
         public static final String RADIO = "1";

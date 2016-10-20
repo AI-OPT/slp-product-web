@@ -7,9 +7,17 @@ package com.ai.slp.product.web.constants;
  */
 public final class ProductCatConstants {
 
-    public static final class ProductCat{
+    private ProductCatConstants() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static final class ProductCat{
         public final class IsChild{
-            /**
+            private IsChild() {
+				// TODO Auto-generated constructor stub
+			}
+
+			/**
              * 有子分类
              */
             public static final String HAS_CHILD = "Y";
@@ -21,7 +29,11 @@ public final class ProductCatConstants {
         }
 
         public final class ParentProductCatId {
-            /**
+            private ParentProductCatId() {
+				// TODO Auto-generated constructor stub
+			}
+
+			/**
              * 根类目标识
              */
             public static final String ROOT_CAT = "0";
@@ -29,7 +41,11 @@ public final class ProductCatConstants {
     }
 
     public static final class ProductCatAttr{
-        public final class AttrType{
+        private ProductCatAttr() {
+			// TODO Auto-generated constructor stub
+		}
+
+		public final class AttrType{
             /**
              * 关键属性类型
              */

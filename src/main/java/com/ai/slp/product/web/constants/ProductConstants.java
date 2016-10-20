@@ -7,9 +7,17 @@ package com.ai.slp.product.web.constants;
  */
 public final class ProductConstants {
 
-    public static final class NormProduct{
-        public static final class State{
-            /**
+    private ProductConstants() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static final class NormProduct{
+        public final class State{
+            private State() {
+				// TODO Auto-generated constructor stub
+			}
+
+			/**
              * 失效
              */
             public static final String INACTIVE = "0";
@@ -27,7 +35,10 @@ public final class ProductConstants {
     }
 
     public static final class IsSaleNationwide{
-        /**
+        private IsSaleNationwide() {
+			// TODO Auto-generated constructor stub
+		}
+		/**
          * 为全国
          */
         public static final String YES = "Y";

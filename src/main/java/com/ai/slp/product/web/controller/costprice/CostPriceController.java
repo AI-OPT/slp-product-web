@@ -67,7 +67,7 @@ public class CostPriceController {
 	 */
 	@RequestMapping("/getProductList")
 	@ResponseBody
-	private ResponseData<PageInfoResponse<NormProdResponse>> queryNormProduct(HttpServletRequest request,
+	public ResponseData<PageInfoResponse<NormProdResponse>> queryNormProduct(HttpServletRequest request,
 			NormProdRequest productRequest) {
 		ResponseData<PageInfoResponse<NormProdResponse>> responseData = null;
 		try {

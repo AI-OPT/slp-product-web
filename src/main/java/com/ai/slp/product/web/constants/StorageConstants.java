@@ -5,7 +5,11 @@ package com.ai.slp.product.web.constants;
  * Created by jackieliu on 16/8/24.
  */
 public class StorageConstants {
-    /**
+    private StorageConstants() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * 库存启用
      */
     public static final String STATUS_ACTIVE = "1";

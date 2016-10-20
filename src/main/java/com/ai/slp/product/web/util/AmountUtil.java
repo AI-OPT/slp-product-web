@@ -4,7 +4,11 @@ import java.math.BigDecimal;
 
 public class AmountUtil {
     
-    /**  
+    private AmountUtil() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**  
      * 将厘为单位的转换为元 （除1000）  
      *   
      * @param amount  

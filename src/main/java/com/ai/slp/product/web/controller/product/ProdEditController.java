@@ -270,21 +270,6 @@ public class ProdEditController {
     }
 
     /**
-     * 产生测试数据
-     * @return
-     */
-    private Map<String,ProdAudiencesInfo> genDemoAudiData(int num){
-        Map<String,ProdAudiencesInfo> audiMap = new HashMap<>();
-        for (int i=0;i<num;i++){
-            ProdAudiencesInfo audInfo = new ProdAudiencesInfo();
-            audInfo.setUserId(i+"id");
-            audInfo.setUserName("test"+i);
-            audiMap.put(audInfo.getUserId(),audInfo);
-        }
-        return audiMap;
-    }
-
-    /**
      * 获取商品主图图片
      * @param prodId
      * @param prodAttrPic

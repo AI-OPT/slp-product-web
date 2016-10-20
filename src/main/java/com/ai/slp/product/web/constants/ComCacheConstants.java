@@ -4,12 +4,20 @@ package com.ai.slp.product.web.constants;
  * Created by jackieliu on 16/6/17.
  */
 public final class ComCacheConstants {
+	private ComCacheConstants() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * 标准品TYPE
 	 * @author Gavin
 	 *
 	 */
 	public static final class NormProduct{
+		private NormProduct() {
+			// TODO Auto-generated constructor stub
+		}
+
 		public static final String CODE = "STANDEDPRODUCT";
 		
 		public static final String STATUS = "STATE";
@@ -19,6 +27,11 @@ public final class ComCacheConstants {
 	 * 类目属性
 	 */
 	public static final class ProdAttr{
+		private ProdAttr() {
+			// TODO Auto-generated constructor stub
+		}
+
+
 		public static final String CODE = "PRODATTRDEF";
 		
 		
@@ -30,7 +43,11 @@ public final class ComCacheConstants {
      * 商品TYPE
      */
     public static final class TypeProduct{
-        public static final String CODE = "PRODUCT";
+        private TypeProduct() {
+			// TODO Auto-generated constructor stub
+		}
+
+		public static final String CODE = "PRODUCT";
         /**
          * 商品类型
          */
@@ -51,7 +68,10 @@ public final class ComCacheConstants {
      * 库存和库存组状态
      */
     public static final class StateStorage{
-    	/**
+    	private StateStorage() {
+			// TODO Auto-generated constructor stub
+		}
+		/**
     	 * 库存TYPE
     	 */
         public static final String STORAGE_TYPR_CODE = "STORAGE";

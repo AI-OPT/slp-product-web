@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ImageUtil {
-   public static String getImage(String vsid,String pictype){
+	private ImageUtil() {
+		// TODO Auto-generated constructor stub
+	}
+	public static String getImage(String vsid,String pictype){
        IImageClient im = null;
        //应用场景
        String idpsns="slp-mall-web-idps";
