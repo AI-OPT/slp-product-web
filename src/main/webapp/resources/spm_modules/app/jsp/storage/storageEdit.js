@@ -10,9 +10,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 	require("my97DatePicker/WdatePicker");
     require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
-    
-    require("opt-paging/aiopt.pagination");
-    require("twbs-pagination/jquery.twbsPagination.min");
+
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象

@@ -5,13 +5,11 @@ define('app/jsp/costprice/editinfo', function (require, exports, module) {
     Widget = require('arale-widget/1.2.0/widget'),
     Dialog = require("optDialog/src/dialog"),
     AjaxController = require('opt-ajax/1.0.0/index');
-	require("ckeditor/ckeditor.js")
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
     
     require("opt-paging/aiopt.pagination");
-    require("twbs-pagination/jquery.twbsPagination.min");
     
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");

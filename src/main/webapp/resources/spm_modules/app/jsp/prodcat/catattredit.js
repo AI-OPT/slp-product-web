@@ -9,7 +9,7 @@ define('app/jsp/prodcat/catattredit', function (require, exports, module) {
         Dialog = require("optDialog/src/dialog"),
         AjaxController = require('opt-ajax/1.0.0/index');
 
-    require("jquery-validation/1.15.1/jquery.validate");
+    //require("jquery-validation/1.15.1/jquery.validate");
     require("app/util/aiopt-validate-ext");
 
     //实例化AJAX控制处理对象
