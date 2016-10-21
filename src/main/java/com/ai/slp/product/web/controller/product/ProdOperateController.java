@@ -38,6 +38,7 @@ public class ProdOperateController {
     @RequestMapping("/prodToSale")
     @ResponseBody
     public ResponseData<String> prodToInSale(@RequestParam String productId, HttpSession session) {
+        LOG.info("start to in sale");
         ResponseData<String> responseData = new ResponseData<String>(
                 ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
         IProductManagerSV productManagerSV = DubboConsumerFactory
@@ -49,6 +50,7 @@ public class ProdOperateController {
         productInfoQuery.setOperId(AdminUtil.getAdminId(session));
         productInfoQuery.setProductId(productId);
         BaseResponse baseResponse = productManagerSV.changeToInSale(productInfoQuery);
+        LOG.info("call changeToInSale is end");
         LOG.debug("上架返回信息:" + JSonUtil.toJSon(baseResponse));
         ResponseHeader header = baseResponse.getResponseHeader();
         // 上架出错
@@ -56,6 +58,7 @@ public class ProdOperateController {
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
                     "添加失败:" + header.getResultMessage());
         }
+        LOG.info("to sale is finish");
         return responseData;
     }
 
