@@ -299,6 +299,7 @@
                                             <td>库存ID</td>
                                             <td>库存名称</td>
                                             <td>库存量</td>
+                                            <td>库存可用量</td>
                                             <td>状态</td>
                                             <td>操作</td>
                                         </tr>
@@ -307,6 +308,7 @@
                                                 <td>${status.index + 1}</td>
                                                 <td>${storage.storageId}</td>
                                                 <td id="stoName${storage.storageId}">${storage.storageName}</td>
+                                                <td>${storage.totalNum}</td>
                                                 <td>${storage.usableNum}</td>
                                                 <td>${storage.stateName}</td>
                                                 <td>
