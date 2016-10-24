@@ -132,7 +132,7 @@
 										</td>
 										<td>{{:usableNum}}</td>
                                         <td class="text-l">
-											<input for="costPrice" name="costPrice{{:#index}}" standedProdId="{{:standedProdId}}" supplyId="{{:supplyId}}" routeId="{{:routeId}}" value="{{:~liToYuan2(costPrice)}}" tenantId="{{:tenantId}}" type="text"  class="int-text int-mini ml-30" required moneyNumber="true" data-msg-moneyNumber="请输入正确格式">
+											<input for="costPrice" name="costPrice{{:#index}}" standedProdId="{{:standedProdId}}" supplyId="{{:supplyId}}" routeId="{{:routeId}}" value="{{:~liToYuan2(costPrice)}}" tenantId="{{:tenantId}}" type="text"  class="int-text int-mini ml-30" regexp="^(([1-9]\d{1,6})|0)(\.\d{1,2})?$" data-msg-regexp="请输入0到9999999.99的数字" required moneyNumber="true" data-msg-moneyNumber="请输入正确格式">
 											<div id="costPrice{{:#index}}" style="float:left;text-align:left;"></div>
 										</td>
 									</tr>
