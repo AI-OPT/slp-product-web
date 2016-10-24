@@ -112,7 +112,7 @@
 	                                    <li class="col-md-12">
 	                                        <p class="word3">市场价：</p>
 	                                        <p><input name="marketPrice" id="marketPrice"  type="text" value="${price}" class="int-text int-medium"
-	                                        	 regexp="^(([1-9]\d{1,6})|0)(\.\d{1,2})?$" data-msg-regexp="请输入0到9999999.99的数字" required data-msg-required="市场价不能为空"> (元)</p>
+	                                        	 regexp="^(([1-9]\d{0,6})|0)(\.\d{1,2})?$" data-msg-regexp="请输入0到9999999.99的数字" required data-msg-required="市场价不能为空"> (元)</p>
 	                                        <p id="marketPriceValidate"></p>
 	                                    </li>
 	                                </ul>
