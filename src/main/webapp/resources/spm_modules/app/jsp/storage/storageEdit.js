@@ -361,7 +361,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			if (!$("#newTotalNum").hasClass("input-disabled"))
 				$("#newTotalNum").addClass("input-disabled");
 			//名称
-			$("#newStorageName").val(nameTd.prev().html());
+			$("#newStorageName").val(nameTd.prev().prev().html());
 			$("#storageId").val(storageId);
 			$("#editTitle").html("编辑库存");
 			//若不包含销售属性,则直接返回
