@@ -174,7 +174,7 @@ require("app/util/aiopt-validate-ext");
 			if (upValidator.valid()!=true)
 				return;
 			var _this = this;
-			validator.execute();
+//			validator.execute();
 			var attrvalueDefId = $("#upAttrvalueDefId").val();
 			var attrValueName = $("#upAttrValueName").val();
 			var firstLetter = $("#upFirstLetter").val();
