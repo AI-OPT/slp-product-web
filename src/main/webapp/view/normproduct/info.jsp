@@ -117,14 +117,16 @@
 							             		<p class="word3">废弃人：</p>
 							             		<p>${normProdInfo.operName}</p>
 							             		<p class="word3">废弃时间：</p>
-							             		<p>${normProdInfo.operTime}</p>
+							             		<p><fmt:formatDate value="${normProdInfo.operTime}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
+							             		<%-- <p>${normProdInfo.operTime}</p> --%>
 											</c:when>  
 											     
 											<c:otherwise>
 					                        	<p class="word3">添加人：</p>
 						                        <p>${normProdInfo.operName}</p>
 						                        <p class="word3">添加时间：</p>
-							             		<p>${normProdInfo.operTime}</p>
+							             		<p><fmt:formatDate value="${normProdInfo.operTime}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
+<%-- 							             		<p>${normProdInfo.operTime}</p> --%>
 											</c:otherwise>
 				                        </c:choose>
 				                     </li>
