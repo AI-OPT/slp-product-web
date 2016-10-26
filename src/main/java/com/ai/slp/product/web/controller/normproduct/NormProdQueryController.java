@@ -77,7 +77,8 @@ public class NormProdQueryController {
 	@ResponseBody
 	public ResponseData<PageInfoResponse<NormProdQueryInfo>> queryNormProduct(HttpServletRequest request,
 			NormProdRequest productRequest) {
-		LOG.info("start to in getNormProductList");
+		long queryStart=System.currentTimeMillis();
+		LOG.info("====商品查询开始 start to in getNormProductList，当前时间戳："+queryStart);
 		ResponseData<PageInfoResponse<NormProdQueryInfo>> responseData = null;
 		try {
 			// 查询条件
@@ -87,13 +88,15 @@ public class NormProdQueryController {
 
 			responseData = new ResponseData<PageInfoResponse<NormProdQueryInfo>>(ResponseData.AJAX_STATUS_SUCCESS,
 					"查询成功", result);
-			LOG.info("getNormProductList is end");
+			long queryEnd=System.currentTimeMillis();
+			LOG.info("getNormProductList is end，当前时间戳："+queryEnd+",用时:"+(queryEnd-queryStart)+"毫秒");
 		} catch (Exception e) {
 			responseData = new ResponseData<PageInfoResponse<NormProdQueryInfo>>(ResponseData.AJAX_STATUS_FAILURE,
 					"获取信息异常");
 			LOG.error("获取信息出错：", e);
 		}
-		LOG.info("getNormProductList is finish");
+		long finshEnd=System.currentTimeMillis();
+		LOG.info("====商品查询结束 getNormProductList is finish，当前时间戳："+finshEnd+",用时:"+(finshEnd-queryStart)+"毫秒");
 		return responseData;
 	}
 
@@ -106,12 +109,18 @@ public class NormProdQueryController {
 	private PageInfoResponse<NormProdQueryInfo> queryProductByState(NormProdRequest productRequest) {
 		PageInfoResponse<NormProdQueryInfo> result = new PageInfoResponse<NormProdQueryInfo>();
 		INormProductSV normProductSV = DubboConsumerFactory.getService(INormProductSV.class);
+		long queryStart=System.currentTimeMillis();
+		LOG.info("开始执行商品查询normProductSV.queryNormProduct开始 ，当前时间戳："+queryStart);
 		PageInfoResponse<NormProdResponse> productPageInfo = normProductSV.queryNormProduct(productRequest);
+		long queryEnd=System.currentTimeMillis();
+		LOG.info("完成执行商品查询normProductSV.queryNormProduct，当前时间戳："+queryEnd+",用时:"+(queryEnd-queryStart)+"毫秒");
 		// ISysUserQuerySV sysUserQuerySV =
 		// DubboConsumerFactory.getService(ISysUserQuerySV.class);
 		ICacheSV cacheSV = DubboConsumerFactory.getService("iCacheSV");
 		SysParamSingleCond sysParamSingleCond = null;
 		List<NormProdQueryInfo> productList=new ArrayList<NormProdQueryInfo>();
+		long cacheStart=System.currentTimeMillis();
+		LOG.info("开始执行循环调用cacheSV.getSysParamSingle ，当前时间戳："+cacheStart);
 		for (NormProdResponse normProdResponse : productPageInfo.getResult()) {
 			NormProdQueryInfo productInfo = new NormProdQueryInfo();
 			BeanUtils.copyProperties(productInfo, normProdResponse);
@@ -162,6 +171,8 @@ public class NormProdQueryController {
 			}
 			productList.add(productInfo);
 		}
+		long cacheEnd=System.currentTimeMillis();
+		LOG.info("完成执行循环调用cacheSV.getSysParamSingle，当前时间戳："+cacheEnd+",用时:"+(cacheEnd-cacheStart)+"毫秒");
 		result.setCount(productPageInfo.getCount());
 		result.setPageCount(productPageInfo.getPageCount());
 		result.setPageNo(productPageInfo.getPageNo());
