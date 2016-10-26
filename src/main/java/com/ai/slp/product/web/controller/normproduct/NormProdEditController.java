@@ -96,11 +96,13 @@ public class NormProdEditController {
 	 */
 	@RequestMapping("/addProduct")
 	public String addinfoView(String productCatId, Model uiModel) {
+		LOG.info("start to getCatLinkList");
 		initConsumer();
 		// 设置类目ID
 		uiModel.addAttribute("productCatId", productCatId);
 		// 查询类目链
 		uiModel.addAttribute("catLinkList", prodCatService.queryLink(productCatId));
+		LOG.info("productCat is end");
 		// 标准品属性对象
 		uiModel.addAttribute("normProdInfo", new NormProdInfoResponse());
 		// 根据类目ID 加载标准品的关键属性 和 销售属性 1关键属性 2销售属性 3非关键属性
@@ -111,7 +113,8 @@ public class NormProdEditController {
 		attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
 		BaseListResponse<ProdCatAttrDef> keyAttrlist = productCatSV.queryAttrByCatAndType(attrQuery);
 		uiModel.addAttribute("keyAttrlist", keyAttrlist.getResult());
-
+		LOG.info("getKeyAttrlist is end");
+		
 		// 标准品销售属性
 		// 设置类目ID
 		// 设置属性类型
@@ -120,7 +123,8 @@ public class NormProdEditController {
 		attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
 		BaseListResponse<ProdCatAttrDef> saleAttrlist = productCatSV.queryAttrByCatAndType(attrQuery);
 		uiModel.addAttribute("saleAttrlist", saleAttrlist.getResult());
-
+		LOG.info("getSaleAttrlist is end");
+		
 		return "normproduct/editinfo";
 	}
 
@@ -171,6 +175,7 @@ public class NormProdEditController {
 	@ResponseBody
 	public ResponseData<String> saveProductInfo(NormProdSaveRequest normInfo, HttpServletRequest request,
 			HttpSession session) {
+		LOG.info("start to addProduct");
 		ResponseData<String> responseData = null;
 
 		List<AttrValRequest> attrValList = new LinkedList<AttrValRequest>();
@@ -206,6 +211,7 @@ public class NormProdEditController {
 					LOG.error("获取信息出错：", header.getResultMessage());
 				}else{
 					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
+					LOG.info("addProduct is end");
 				}
 			}
 		}else{
@@ -219,9 +225,11 @@ public class NormProdEditController {
 					LOG.error("获取信息出错：", header.getResultMessage());
 				}else{
 					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "更新成功");
+					LOG.info("addProduct is end");
 				}
 			}
 		}
+		LOG.info("addProduct is finish");
 		return responseData;
 	}
 	

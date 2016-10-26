@@ -77,6 +77,7 @@ public class NormProdQueryController {
 	@ResponseBody
 	public ResponseData<PageInfoResponse<NormProdQueryInfo>> queryNormProduct(HttpServletRequest request,
 			NormProdRequest productRequest) {
+		LOG.info("start to in getNormProductList");
 		ResponseData<PageInfoResponse<NormProdQueryInfo>> responseData = null;
 		try {
 			// 查询条件
@@ -86,11 +87,13 @@ public class NormProdQueryController {
 
 			responseData = new ResponseData<PageInfoResponse<NormProdQueryInfo>>(ResponseData.AJAX_STATUS_SUCCESS,
 					"查询成功", result);
+			LOG.info("getNormProductList is end");
 		} catch (Exception e) {
 			responseData = new ResponseData<PageInfoResponse<NormProdQueryInfo>>(ResponseData.AJAX_STATUS_FAILURE,
 					"获取信息异常");
 			LOG.error("获取信息出错：", e);
 		}
+		LOG.info("getNormProductList is finish");
 		return responseData;
 	}
 
