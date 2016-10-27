@@ -49,7 +49,11 @@ public class ProdOperateController {
         productInfoQuery.setSupplierId(AdminUtil.getSupplierId());
         productInfoQuery.setOperId(AdminUtil.getAdminId(session));
         productInfoQuery.setProductId(productId);
+        long inSaleStart = System.currentTimeMillis();
+        LOG.info("=====执行productManagerSV.changeToInSale进行上架操作,当前时间戳: " + inSaleStart );
         BaseResponse baseResponse = productManagerSV.changeToInSale(productInfoQuery);
+        long inSaleEnd = System.currentTimeMillis();
+        LOG.info("=====上架操作执行完毕,当前时间戳: " + inSaleEnd + ",用时:" + (inSaleEnd-inSaleStart) +"毫秒");
         LOG.info("call changeToInSale is end");
         LOG.debug("上架返回信息:" + JSonUtil.toJSon(baseResponse));
         ResponseHeader header = baseResponse.getResponseHeader();

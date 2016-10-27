@@ -96,13 +96,15 @@ public class NormProdEditController {
 	 */
 	@RequestMapping("/addProduct")
 	public String addinfoView(String productCatId, Model uiModel) {
-		LOG.info("start to getCatLinkList");
 		initConsumer();
 		// 设置类目ID
 		uiModel.addAttribute("productCatId", productCatId);
 		// 查询类目链
+		long queryCatLinkListStart = System.currentTimeMillis();
+		LOG.info("=====查询商品类目列开始 start to queryCatLinkListl,当前时间戳: "+queryCatLinkListStart);
 		uiModel.addAttribute("catLinkList", prodCatService.queryLink(productCatId));
-		LOG.info("productCat is end");
+		long queryCatLinkListEnd = System.currentTimeMillis();
+		LOG.info("=====查询商品类目列结束 queryCatLinkListl is end ,当前时间戳: "+ queryCatLinkListEnd + ",用时" +(queryCatLinkListEnd-queryCatLinkListStart)+"毫秒");
 		// 标准品属性对象
 		uiModel.addAttribute("normProdInfo", new NormProdInfoResponse());
 		// 根据类目ID 加载标准品的关键属性 和 销售属性 1关键属性 2销售属性 3非关键属性
@@ -111,9 +113,12 @@ public class NormProdEditController {
 		attrQuery.setTenantId(AdminUtil.getTenantId());
 		attrQuery.setProductCatId(productCatId);
 		attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_KEY);
+		long  queryAttrStart= System.currentTimeMillis();
+		LOG.info("=====查询类目下的关键属性集合 start to queryAttr, 当前时间戳" + queryAttrStart);
 		BaseListResponse<ProdCatAttrDef> keyAttrlist = productCatSV.queryAttrByCatAndType(attrQuery);
+		long  queryAttrEnd = System.currentTimeMillis();
+		LOG.info("=====查询类目下的关键属性集合 queryAttr is end, 当前时间戳"+ queryAttrEnd + ",用时:" + (queryAttrEnd-queryAttrStart) + "毫秒");
 		uiModel.addAttribute("keyAttrlist", keyAttrlist.getResult());
-		LOG.info("getKeyAttrlist is end");
 		
 		// 标准品销售属性
 		// 设置类目ID
@@ -121,9 +126,12 @@ public class NormProdEditController {
 		attrQuery.setTenantId(AdminUtil.getTenantId());
 		attrQuery.setProductCatId(productCatId);
 		attrQuery.setAttrType(ProductCatConstants.ProductCatAttr.AttrType.ATTR_TYPE_SALE);
+		long  queryAttrsStart= System.currentTimeMillis();
+		LOG.info("=====查询类目下的销售属性集合 start to queryAttr, 当前时间戳" + queryAttrStart);
 		BaseListResponse<ProdCatAttrDef> saleAttrlist = productCatSV.queryAttrByCatAndType(attrQuery);
+		long  queryAttrsEnd= System.currentTimeMillis();
+		LOG.info("=====查询类目下的销售属性集合 queryAttr is end, 当前时间戳"+ queryAttrsEnd +",用时:" + (queryAttrsEnd-queryAttrsStart) + "毫秒");
 		uiModel.addAttribute("saleAttrlist", saleAttrlist.getResult());
-		LOG.info("getSaleAttrlist is end");
 		
 		return "normproduct/editinfo";
 	}
@@ -175,12 +183,12 @@ public class NormProdEditController {
 	@ResponseBody
 	public ResponseData<String> saveProductInfo(NormProdSaveRequest normInfo, HttpServletRequest request,
 			HttpSession session) {
-		LOG.info("start to addProduct");
 		ResponseData<String> responseData = null;
 
 		List<AttrValRequest> attrValList = new LinkedList<AttrValRequest>();
 		Gson gson = new Gson();
 		// 标准品关键属性
+		
 		String keyAttrStr = request.getParameter("keyAttrStr");
 		if (!StringUtil.isBlank(keyAttrStr)) {
 			List<AttrValRequest> keyAttrValList = gson.fromJson(keyAttrStr, new TypeToken<List<AttrValRequest>>() {
@@ -201,7 +209,11 @@ public class NormProdEditController {
 		// 保存
 		if(StringUtil.isBlank(normInfo.getProductId())){
 			normInfo.setCreateId(AdminUtil.getAdminId(session));
+			long createStart = System.currentTimeMillis();
+			LOG.info("=====执行normProductSV.createProductAndStoGroup添加标准品信息,当前时间戳: " + createStart );
 			BaseResponse response = normProductSV.createProductAndStoGroup(normInfo);
+			long createEnd = System.currentTimeMillis();
+			LOG.info("=====执行normProductSV.createProductAndStoGroup添加标准品信息结束,当前时间戳: " + createEnd +",用时:" + (createEnd-createStart)+"毫秒" );
 			if(response != null){
 				ResponseHeader header = response.getResponseHeader();
 				// 保存错误
@@ -211,7 +223,6 @@ public class NormProdEditController {
 					LOG.error("获取信息出错：", header.getResultMessage());
 				}else{
 					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "添加成功");
-					LOG.info("addProduct is end");
 				}
 			}
 		}else{
@@ -225,11 +236,9 @@ public class NormProdEditController {
 					LOG.error("获取信息出错：", header.getResultMessage());
 				}else{
 					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "更新成功");
-					LOG.info("addProduct is end");
 				}
 			}
 		}
-		LOG.info("addProduct is finish");
 		return responseData;
 	}
 	
