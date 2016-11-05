@@ -95,7 +95,7 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
     	_selectProductList:function(){
     		var _this = this;
     		var div = document.getElementById("data1ProdCat");
-    		var length = document.getElementsByTagName("select").length-3;
+    		var length = document.getElementsByTagName("select").length-4;
     		var productCatId = $("#productCat"+length+" option:selected").val();
     		var productType = $("#productType").val().trim();
     		var standedProdId = $("#standedProdId").val().trim();
