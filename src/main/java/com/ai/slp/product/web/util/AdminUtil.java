@@ -51,6 +51,6 @@ public class AdminUtil {
      */
     public static String getSupplierId(){
 //        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
-        return "2000";
+        return "-1";
     }
 }
