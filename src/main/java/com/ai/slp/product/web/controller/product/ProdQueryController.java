@@ -238,6 +238,8 @@ public class ProdQueryController {
 	@RequestMapping("/getAuditList")
 	@ResponseBody
 	public ResponseData<PageInfoResponse<ProductEditUp>> queryAuditProduct(
+			@RequestParam(value = "operStartTimeStr",required = false) String operStartTimeStr,
+			@RequestParam(value = "operEndTimeStr",required = false) String operEndTimeStr,
 			String productName,String state,ProductQueryInfo queryInfo) {
 		ResponseData<PageInfoResponse<ProductEditUp>> responseData = null;
         try {
@@ -245,6 +247,16 @@ public class ProdQueryController {
             if (StringUtils.isNotBlank(productName)){
             	queryInfo.setProdName(productName);
             }
+            //设置时间
+            if (StringUtils.isNotBlank(operStartTimeStr)) {
+                String operStartTime = operStartTimeStr + " 00:00:00";
+                queryInfo.setOperStartTime(DateUtil.getTimestamp(operStartTime, "yyyy-MM-dd HH:mm:ss"));
+            }
+            if (StringUtils.isNotBlank(operEndTimeStr)) {
+                String operEndTime = operEndTimeStr + " 23:59:59";
+                queryInfo.setOperEndTime(DateUtil.getTimestamp(operEndTime, "yyyy-MM-dd HH:mm:ss"));
+            }
+            
             // 设置状态
             List<String> stateList = new ArrayList<>();
             if (StringUtil.isBlank(state)) {
