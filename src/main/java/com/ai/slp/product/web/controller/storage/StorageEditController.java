@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
+import com.ai.slp.product.web.constants.StorageConstants;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -166,6 +168,47 @@ public class StorageEditController {
         storageStatus.setOperId(AdminUtil.getAdminId(session));
         storageStatus.setState(status);
         BaseResponse baseResponse = storageSV.chargeStorageStatus(storageStatus);
+        
+       //重启库存组--根据库存ID获取库存组id
+       //获取库存组id  库存id--库存组id
+        String tenantId = AdminUtil.getTenantId();
+        String supplierId = AdminUtil.getSupplierId();
+        Long adminId = AdminUtil.getAdminId(session);
+        
+        StorageUniQuery storage = new StorageUniQuery();
+        storage.setTenantId(tenantId);
+        storage.setSupplierId(supplierId);
+        storage.setStorageId(stoId);
+		StorageRes storageRes = storageSV.queryStorageById(storage);
+		String groupId = storageRes.getStorageGroupId();
+		//获取库存组状态,启用--重启,
+		//库存id--获取库存组--获取状态
+		StorageGroupQueryPage groupQuery = new StorageGroupQueryPage();
+        groupQuery.setTenantId(tenantId);
+        groupQuery.setSupplierId(supplierId);
+        groupQuery.setStorageGroupId(groupId);
+        PageInfoResponse<StorageGroup4List> group = storageSV.queryGroup(groupQuery);
+        String state = group.getResult().get(0).getState();
+        if (state != null) {
+        	if (StorageConstants.StorageGroup.State.ACTIVE.equals(state) 
+        			|| StorageConstants.StorageGroup.State.AUTO_ACTIVE.equals(state)) {
+        		StoGroupStatus stogroupstatus = new StoGroupStatus();
+        		stogroupstatus.setTenantId(tenantId);
+        		stogroupstatus.setSupplierId(supplierId);
+        		stogroupstatus.setGroupId(groupId);
+        		stogroupstatus.setOperId(adminId);
+        		stogroupstatus.setState(StorageConstants.StorageGroup.State.STOP);
+        		storageSV.chargeStorageGroupStatus(stogroupstatus);
+        		StoGroupStatus stogroupstatus2 = new StoGroupStatus();
+        		stogroupstatus2.setTenantId(tenantId);
+        		stogroupstatus2.setSupplierId(supplierId);
+        		stogroupstatus2.setGroupId(groupId);
+        		stogroupstatus2.setOperId(adminId);
+        		stogroupstatus2.setState(StorageConstants.StorageGroup.State.ACTIVE);
+        		storageSV.chargeStorageGroupStatus(stogroupstatus2);
+			}
+		}
+      		
         ResponseHeader header = baseResponse.getResponseHeader();
         if (header != null && !header.isSuccess()) {
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "操作失败:" + header.getResultMessage());
