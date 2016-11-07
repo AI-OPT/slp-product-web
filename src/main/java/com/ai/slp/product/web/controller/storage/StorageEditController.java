@@ -17,6 +17,9 @@ import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.slp.product.api.product.interfaces.IProductSV;
+import com.ai.slp.product.api.product.param.ProductInfo;
+import com.ai.slp.product.api.product.param.ProductInfoQuery;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
 import com.ai.slp.product.web.constants.StorageConstants;
@@ -169,8 +172,7 @@ public class StorageEditController {
         storageStatus.setState(status);
         BaseResponse baseResponse = storageSV.chargeStorageStatus(storageStatus);
         
-       //重启库存组--根据库存ID获取库存组id
-       //获取库存组id  库存id--库存组id
+       //库存组re--根据库存ID获取库存组id
         String tenantId = AdminUtil.getTenantId();
         String supplierId = AdminUtil.getSupplierId();
         Long adminId = AdminUtil.getAdminId(session);
@@ -181,14 +183,25 @@ public class StorageEditController {
         storage.setStorageId(stoId);
 		StorageRes storageRes = storageSV.queryStorageById(storage);
 		String groupId = storageRes.getStorageGroupId();
-		//获取库存组状态,启用--重启,
+		String prodId = storageRes.getProdId();
+		
+		IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
+		ProductInfoQuery product = new ProductInfoQuery();
+		product.setTenantId(tenantId);
+		product.setSupplierId(supplierId);
+		product.setOperId(adminId);
+		product.setProductId(prodId);
+		ProductInfo productInfo = productSV.queryProductById(product);
+		
 		//库存id--获取库存组--获取状态
-		StorageGroupQueryPage groupQuery = new StorageGroupQueryPage();
-        groupQuery.setTenantId(tenantId);
-        groupQuery.setSupplierId(supplierId);
-        groupQuery.setStorageGroupId(groupId);
-        PageInfoResponse<StorageGroup4List> group = storageSV.queryGroup(groupQuery);
-        String state = group.getResult().get(0).getState();
+		StorageGroupQuery groupQuery = new StorageGroupQuery();
+		groupQuery.setTenantId(tenantId);
+		groupQuery.setSupplierId(supplierId);
+		groupQuery.setGroupId(groupId);
+		groupQuery.setProductId(productInfo.getStandedProdId());
+		StorageGroupRes queryGroup = storageSV.queryGroupInfoByGroupId(groupQuery);
+        
+        String state = queryGroup.getState();
         if (state != null) {
         	if (StorageConstants.StorageGroup.State.ACTIVE.equals(state) 
         			|| StorageConstants.StorageGroup.State.AUTO_ACTIVE.equals(state)) {
