@@ -50,7 +50,7 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 				}
 				if (price == null || typeof (price) == undefined || price.trim() == "" ){
 					hasError = true;
-					_this._showMsg("有部分价格为填写,无法提交");
+					_this._showMsg("有部分价格未填写,无法提交");
 					return false;
 				}
 				if (!salePriceEditPage.PRICE_REGEX.test(price)){
@@ -149,7 +149,7 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 				}
 				if (price == null || typeof (price) == undefined || price.trim() == ""){
 					hasError = true;
-					_this._showMsg("有部分价格为填写,无法提交");
+					_this._showMsg("有部分价格未填写,无法提交");
 					return false;
 				}
 				if (!salePriceEditPage.PRICE_REGEX.test(price)){
