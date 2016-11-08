@@ -22,6 +22,8 @@ import com.ai.slp.product.api.product.param.ProductInfo;
 import com.ai.slp.product.api.product.param.ProductInfoQuery;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
+import com.ai.slp.product.web.constants.ProductCommentConstants;
+import com.ai.slp.product.web.constants.ProductConstants;
 import com.ai.slp.product.web.constants.StorageConstants;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
@@ -202,7 +204,7 @@ public class StorageEditController {
 		StorageGroupRes queryGroup = storageSV.queryGroupInfoByGroupId(groupQuery);
         
         String state = queryGroup.getState();
-        if (state != null) {
+        if (state != null && productInfo.getState() != "5") {
         	if (StorageConstants.StorageGroup.State.ACTIVE.equals(state) 
         			|| StorageConstants.StorageGroup.State.AUTO_ACTIVE.equals(state)) {
         		StoGroupStatus stogroupstatus = new StoGroupStatus();
