@@ -47,4 +47,54 @@ public final class ProductConstants {
          */
         public static final String NO = "N";
     }
+    
+    public static final class Product{
+        public final class State{
+            private State() {
+				// TODO Auto-generated constructor stub
+			}
+
+            /**
+             * 新增状态
+             */
+            public static final String ADD = "0";
+            /**
+             * 未编辑
+             */
+            public static final String UNEDIT = "1";
+            /**
+             * 已编辑状态
+             */
+            public static final String EDITED = "2";
+            /**
+             * 审核中
+             */
+            public static final String VERIFYING = "3";
+            /**
+             * 审核拒绝
+             */
+            public static final String REJECT = "4";
+            /**
+             * 销售中
+             */
+            public static final String IN_SALE = "5";
+            /**
+             * 仓库中,(审核通过,手动下架后状态)
+             */
+            public static final String IN_STORE = "6";
+            /**
+             * 售罄下架
+             */
+            public static final String SALE_OUT = "61";
+            /**
+             * 停用下架
+             */
+            public static final String STOP = "62";
+            /**
+             * 废弃
+             */
+            public static final String DISCARD = "7";
+        
+        }
+    }
 }
