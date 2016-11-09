@@ -211,7 +211,51 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 				prodId += $(this).val() + ",";
 			});
 			this._closeAudit();
+			
+			//校验仓库分配地域是否大于等于商品销售地域
 			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "数据更新中,请等待...",
+				url: _base + "/prodOperate/toValidateMore",
+				data: {"ids": prodId},
+				success: function (data) {
+					//获取数据成功
+					if ("false" === data) {
+						//返回false 弹框提示
+						var d = Dialog({
+							content:"请确认商品所属仓库分配地域不少于商品销售地域!",
+							icon:'prompt',
+							okValue: '确 定',
+							title: '提示',
+							ok:function(){
+								this.close();
+							}
+						});
+						d.show();
+						_this.break;
+					}else{
+						ajaxController.ajax({
+							type: "post",
+							processing: true,
+							message: "数据更新中,请等待...",
+							url: _base + "/prodOperate/auditPassMore",
+							data: {"ids": prodId},
+							success: function (data) {
+								//获取数据成功
+								if ("1" === data.statusCode) {
+									//返回列表
+									//window.location.reload();
+									_this._showPassSuccess();
+								}
+							}
+						});
+					}
+				}
+			});
+			
+			
+			/*ajaxController.ajax({
 				type: "post",
 				processing: true,
 				message: "数据更新中,请等待...",
@@ -225,7 +269,7 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 						_this._showPassSuccess();
 					}
 				}
-			});
+			});*/
 		},
 		
 		//点击确认批量审核拒绝
@@ -356,7 +400,42 @@ define('app/jsp/prodaudit/auditlist', function (require, exports, module) {
 			$('#refuseReason-samll').slideUp(150);
 			//清空数据
 			$("#prodRefuseDes").val("");
+		},
+		
+		//审核单个商品--根据商品ID获取仓库地域信息
+		_showToAudit: function (prodId) {
+			var _this = this;
+			/*var prodId = '';*/
+			
+			//后台获取数据,
+			ajaxController.ajax({
+				type: "get",
+				processing: true,
+				message: "数据获取中,请等待...",
+				url: _base+"/prodOperate/toValidate/"+prodId,
+				success: function(data){
+					//获取数据成功
+					if("false"==data){
+						var d = Dialog({
+							content:"请确认商品所属仓库分配地域不少于商品销售地域!",
+							icon:'prompt',
+							okValue: '确 定',
+							title: '提示',
+							ok:function(){
+								this.close();
+							}
+						});
+						d.show();
+						_this.break;
+					}else{
+						window.location.href = _base+"/prodquery/audit/"+prodId;
+					
+					}
+				}
+			});
 		}
+		
+		
     });
     
     module.exports = auditlistPager;

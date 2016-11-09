@@ -57,4 +57,10 @@
 	<dubbo:reference id="iProdCommentManagerSV" interface="com.ai.slp.product.api.productcomment.interfaces.IProdCommentManagerSV"
 					 registry="slpRegistry"/>
 
+	<!-- 仓库服务 -->
+	<dubbo:reference id="iRouteItemManageSV" interface="com.ai.slp.route.api.routeitemmanage.interfaces.IRouteItemManageSV"
+					 registry="slpRegistry"/>
+	<!-- 仓库服务 -->
+	<dubbo:reference id="iRouteTargetAreaSV" interface="com.ai.slp.route.api.routetargetarea.interfaces.IRouteTargetAreaSV"
+					 registry="slpRegistry"/>
 </beans>

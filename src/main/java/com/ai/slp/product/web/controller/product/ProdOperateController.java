@@ -4,25 +4,46 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.vo.BaseListResponse;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.util.JSonUtil;
 import com.ai.slp.product.api.product.interfaces.IProductManagerSV;
+import com.ai.slp.product.api.product.interfaces.IProductSV;
+import com.ai.slp.product.api.product.param.OtherSetOfProduct;
+import com.ai.slp.product.api.product.param.ProdTargetAreaInfo;
 import com.ai.slp.product.api.product.param.ProductCheckParam;
+import com.ai.slp.product.api.product.param.ProductInfo;
 import com.ai.slp.product.api.product.param.ProductInfoQuery;
+import com.ai.slp.product.api.storage.interfaces.IStorageSV;
+import com.ai.slp.product.api.storage.param.StorageGroupQuery;
+import com.ai.slp.product.api.storage.param.StorageGroupRes;
+import com.ai.slp.product.api.storage.param.StorageGroupRestwo;
 import com.ai.slp.product.web.constants.AuditStatus;
 import com.ai.slp.product.web.util.AdminUtil;
+import com.ai.slp.route.api.routeitemmanage.interfaces.IRouteItemManageSV;
+import com.ai.slp.route.api.routeitemmanage.param.RouteGroupIdQueryRequest;
+import com.ai.slp.route.api.routeitemmanage.param.RouteItemListResponse;
+import com.ai.slp.route.api.routeitemmanage.param.RouteItemVo;
+import com.ai.slp.route.api.routetargetarea.interfaces.IRouteTargetAreaSV;
+import com.ai.slp.route.api.routetargetarea.param.AreaQueryByRouteItemIdRequest;
+import com.ai.slp.route.api.routetargetarea.param.AreaQueryByRouteItemIdResponse;
+import com.ai.slp.route.api.routetargetarea.param.AreaQueryByRouteItemIdVo;
+import com.alibaba.fastjson.JSON;
 
 /**
  * 商品管理相关的商品操作 Created by lipeng16 on 16/7/6.
@@ -170,4 +191,156 @@ public class ProdOperateController {
         return responseData;
     }
 
+	
+	/**
+	 * 单个商品的地域校验
+	 * 校验仓库分配地域是否大于等于商品销售地域
+	 */
+	@RequestMapping("/toValidate/{id}")
+	@ResponseBody
+    public String toValidate(@PathVariable("id") String prodId) {
+		
+        String tenantId = AdminUtil.getTenantId();
+        String supplierId = AdminUtil.getSupplierId();
+        Long adminId = AdminUtil.getAdminId();
+        
+        //获取商品的销售地域
+        ProductInfoQuery productInfoQuery = new ProductInfoQuery();
+        productInfoQuery.setTenantId(tenantId);
+        productInfoQuery.setSupplierId(supplierId);
+        productInfoQuery.setOperId(adminId);
+        productInfoQuery.setProductId(prodId);
+        
+        //查询单个商品的销售地域
+        IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+        OtherSetOfProduct otherSetOfProduct = productManagerSV.queryOtherSetOfProduct(productInfoQuery);
+        List<ProdTargetAreaInfo> areaInfos = otherSetOfProduct.getAreaInfos();
+        
+		//1.根据routeGroupid查询出routeItemList
+		//查询routeGroupId   prodid--standedprodid--rougroupid
+        IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
+        ProductInfo queryProductById = productSV.queryProductById(productInfoQuery);
+        
+        IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
+        StorageGroupQuery groupQuery = new StorageGroupQuery();
+        groupQuery.setTenantId(tenantId);
+        groupQuery.setSupplierId(supplierId);
+        groupQuery.setProductId(queryProductById.getStandedProdId());
+        groupQuery.setGroupId(queryProductById.getStorageGroupId());
+        StorageGroupRestwo groupRes = storageSV.queryGroupInfoAllByGroupId(groupQuery);
+        
+        IRouteItemManageSV itemManageSV = DubboConsumerFactory.getService(IRouteItemManageSV.class);
+        RouteGroupIdQueryRequest routeGroupIdQueryRequest = new RouteGroupIdQueryRequest();
+        routeGroupIdQueryRequest.setRouteGroupId(groupRes.getRouteGroupId());
+        //路由组成
+		RouteItemListResponse routeItemListResponse = itemManageSV.queryRouteItemList(routeGroupIdQueryRequest);
+		//遍历   获取集合所有地域信息
+		List<String> routeAreaList = new ArrayList<>();
+		
+		if(!CollectionUtil.isEmpty(routeItemListResponse.getVoList())){
+			for(RouteItemVo routeItemVo : routeItemListResponse.getVoList()){
+				IRouteTargetAreaSV routeTargetAreaSV = DubboConsumerFactory.getService(IRouteTargetAreaSV.class);
+				AreaQueryByRouteItemIdRequest request = new AreaQueryByRouteItemIdRequest();
+				request.setTenantId(tenantId);
+				request.setRouteItemId(routeItemVo.getRouteItemId());
+				AreaQueryByRouteItemIdResponse areaListByRouteItemId = routeTargetAreaSV.queryAreaListByRouteItemId(request);
+				for (int i = 0; i < areaListByRouteItemId.getVoList().size(); i++) {
+					routeAreaList.add(areaListByRouteItemId.getVoList().get(i).getAreaCode());
+				}
+			}
+		}
+		
+        return routeItemIdInTargetArea(areaInfos,routeAreaList);
+    }
+	
+	/**
+	 * 判断商品域的区域是否在配货组下的仓库域已经选择
+	 * @param routeItemId
+	 * @param areaQueryByRouteItemIdResponse
+	 * @return
+	 * @author jiawen
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	public String routeItemIdInTargetArea(List<ProdTargetAreaInfo> areaInfos,List<String> routeAreaList){
+		String flag = "true";
+		
+		if (routeAreaList != null && areaInfos != null) {
+			for(ProdTargetAreaInfo area :areaInfos){
+				if(!routeAreaList.contains(area.getAreaCode())){
+					flag = "false";
+					break;
+				}
+			}
+		}
+		return flag;
+	}
+	
+	/**
+	 * 批量商品的地域校验
+	 * 
+	 */
+	@RequestMapping("/toValidateMore")
+	@ResponseBody
+    public String toValidateMore(String ids) {
+		String flag = "true";
+		String[] idArry = ids.split(",");
+        List<String> idList = Arrays.asList(idArry);
+		
+		
+        String tenantId = AdminUtil.getTenantId();
+        String supplierId = AdminUtil.getSupplierId();
+        Long adminId = AdminUtil.getAdminId();
+        
+        //获取商品的销售地域
+        ProductInfoQuery productInfoQuery = new ProductInfoQuery();
+        productInfoQuery.setTenantId(tenantId);
+        productInfoQuery.setSupplierId(supplierId);
+        productInfoQuery.setOperId(adminId);
+        for (int i = 0; i < idArry.length; i++) {
+        	productInfoQuery.setProductId(idList.get(i));
+        	//查询单个商品的销售地域
+        	IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+        	OtherSetOfProduct otherSetOfProduct = productManagerSV.queryOtherSetOfProduct(productInfoQuery);
+        	List<ProdTargetAreaInfo> areaInfos = otherSetOfProduct.getAreaInfos();
+			
+        	//1.根据routeGroupid查询出routeItemList
+        	//查询routeGroupId   prodid--standedprodid--rougroupid
+        	IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
+        	ProductInfo queryProductById = productSV.queryProductById(productInfoQuery);
+        	
+        	IStorageSV storageSV = DubboConsumerFactory.getService(IStorageSV.class);
+        	StorageGroupQuery groupQuery = new StorageGroupQuery();
+        	groupQuery.setTenantId(tenantId);
+        	groupQuery.setSupplierId(supplierId);
+        	groupQuery.setProductId(queryProductById.getStandedProdId());
+        	groupQuery.setGroupId(queryProductById.getStorageGroupId());
+        	StorageGroupRestwo groupRes = storageSV.queryGroupInfoAllByGroupId(groupQuery);
+        	
+        	IRouteItemManageSV itemManageSV = DubboConsumerFactory.getService(IRouteItemManageSV.class);
+        	RouteGroupIdQueryRequest routeGroupIdQueryRequest = new RouteGroupIdQueryRequest();
+        	routeGroupIdQueryRequest.setRouteGroupId(groupRes.getRouteGroupId());
+        	//路由组成
+        	RouteItemListResponse routeItemListResponse = itemManageSV.queryRouteItemList(routeGroupIdQueryRequest);
+        	//2遍历   获取集合所有地域信息
+        	List<String> routeAreaList = new ArrayList<>();
+        	
+        	if(!CollectionUtil.isEmpty(routeItemListResponse.getVoList())){
+        		for(RouteItemVo routeItemVo : routeItemListResponse.getVoList()){
+        			IRouteTargetAreaSV routeTargetAreaSV = DubboConsumerFactory.getService(IRouteTargetAreaSV.class);
+        			AreaQueryByRouteItemIdRequest request = new AreaQueryByRouteItemIdRequest();
+        			request.setTenantId(tenantId);
+        			request.setRouteItemId(routeItemVo.getRouteItemId());
+        			AreaQueryByRouteItemIdResponse areaListByRouteItemId = routeTargetAreaSV.queryAreaListByRouteItemId(request);
+        			for (int l = 0; l < areaListByRouteItemId.getVoList().size(); l++) {
+        				routeAreaList.add(areaListByRouteItemId.getVoList().get(l).getAreaCode());
+        			}
+        		}
+        	}
+        	
+          flag = routeItemIdInTargetArea(areaInfos,routeAreaList);
+		}
+		return flag;
+    }
+	
 }

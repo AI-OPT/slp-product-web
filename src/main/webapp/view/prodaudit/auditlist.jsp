@@ -236,7 +236,8 @@
 											<td>
 												<div>
 													{{if state=="3"}}
-													<p><a href="${_base}/prodquery/audit/{{:prodId}}" class="blue-border">审核商品</a></p>
+													<!-- <p><a href="${_base}/prodquery/audit/{{:prodId}}" class="blue-border">审核商品</a></p> -->
+													<p><a prodId="{{:prodId}}" name="toValidate" href="javaScript:void(0);" class="blue-border">审核商品</a></p>
 													{{else}}
 													<p><a prodId="{{:prodId}}" name="toViewReason" href="javaScript:void(0);" class="blue-border">查看原因</a></p>
 													{{/if}}
@@ -306,6 +307,14 @@
 				console.log("编辑链接:" + prodId);
 			}
 			pager._showReason(prodId);
+        });
+		<%-- 校验单个商品的地域 --%>
+        $('#searchNormProductData').delegate("a[name='toValidate']", 'click', function () {
+            var prodId = $(this).attr('prodId');
+			if (window.console) {
+				console.log("编辑链接:" + prodId);
+			}
+			pager._showToAudit(prodId);
         });
 		
 		seajs.use(['app/jsp/prodaudit/auditlist','app/util/center-hind'], function(auditlistPager,centerHind) {
