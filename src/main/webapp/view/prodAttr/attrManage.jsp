@@ -24,12 +24,12 @@
 			<input type="hidden" id="upAttrId" />
 			<ul>
 				<li>
-                   <p class="word">属性值名称</p>
+                   <p class="word"><span>*</span>属性值名称</p>
                    <p><input id=upAttrValueName type="text" name="productAttrValueName" class="int-text int-medium" maxlength="20"></p>
                </li>
 				<li class="width-xlag">
-					<p class="word">名称首字母(大写)</p>
-					<p><input id="upFirstLetter" type="text" name="firstLetter" class="int-text int-medium" maxlength="1" ></p>
+					<p class="word"><span>*</span>名称首字母(大写)</p>
+					<p><input id="upFirstLetter" type="text" name="firstLetter" class="int-text int-medium" maxlength="1" required data-msg-required="首字母不能为空"></p>
 				</li>
 	        </ul>
 	    </form>   

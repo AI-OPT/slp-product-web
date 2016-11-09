@@ -162,8 +162,9 @@ require("app/util/aiopt-validate-ext");
 		},
 		//提交更新
 		_updateAttr:function(){
-			if (upValidator.valid()!=true)
-				return;
+			upValidator.form();
+			if ($("#prodAttrForm").valid()!=true)
+				return false;
 			
 			var _this = this;
 			var attrId = $("#upAttrId").val();
@@ -171,7 +172,11 @@ require("app/util/aiopt-validate-ext");
 			var firstLetter = $("#upFirstLetter").val();
 			var valueWay = $("#upValueWay").val();
 			this._closeEditDiv();
-			
+			if (attrName == null || typeof (attrName) == undefined || attrName.trim() == ""
+				|| firstLetter == null || typeof (firstLetter) == undefined || firstLetter.trim() == "") {
+				_this._showMsg("未填输入正确格式信息,无法提交");
+				return false;
+			}
 			/*var validateForm = $("#prodAttrForm").validate();
 			if(!validateForm.form()){
 				return;
@@ -238,6 +243,18 @@ require("app/util/aiopt-validate-ext");
 			$('#eject-mask').fadeOut(100);
 			$('#aband-small').slideUp(150);
 			$("#delAttrId").val('');
+		},
+		_showMsg:function(msg){
+			var msg = Dialog({
+				title: '提示',
+				icon:'fail',
+				content:msg,
+				okValue: '确 定',
+				ok:function(){
+					this.close();
+				}
+			});
+			msg.showModal();
 		}
 		
     	

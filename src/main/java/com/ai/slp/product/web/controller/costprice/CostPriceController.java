@@ -225,7 +225,7 @@ public class CostPriceController {
 				if(responseHeader.isSuccess()){
 					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"保存成功");
 				}else{
-					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"保存失败");
+					responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"有部分价格未填写,无法提交");
 				}
 			} catch (Exception e) {
 				responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"保存失败");

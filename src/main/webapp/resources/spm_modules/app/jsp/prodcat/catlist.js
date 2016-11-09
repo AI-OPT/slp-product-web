@@ -233,6 +233,13 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 			var fLetter = $("#upFletter").val();//首字母
 			var sn = $("#upSerialNum").val();//序列号
 			var isChild = $("#upIsChile").val();
+			
+			if (catName == null || typeof (catName) == undefined || catName.trim() == ""
+				|| fLetter == null || typeof (fLetter) == undefined || fLetter.trim() == ""
+					|| sn == null || typeof (sn) == undefined || sn.trim() == "") {
+				_this._showMsg("未填输入正确格式信息,无法提交");
+				return false;
+			}
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
@@ -265,6 +272,18 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 					}
 				}
 			});
+		},
+		_showMsg:function(msg){
+			var msg = Dialog({
+				title: '提示',
+				icon:'fail',
+				content:msg,
+				okValue: '确 定',
+				ok:function(){
+					this.close();
+				}
+			});
+			msg.showModal();
 		}
     });
     

@@ -40,7 +40,7 @@ require("app/util/aiopt-validate-ext");
     	},
     	
     	//添加输入验证
-    /*	_addValidator:function(validator){
+ /*   	_addValidator:function(validator){
     		validator.addItem({
     			element: "input[name=attrName]",
     			required: true,
@@ -71,7 +71,6 @@ require("app/util/aiopt-validate-ext");
 			if(!validateForm.form()){
 				return;
 			}
-			
 			$("#addViewDiv > .form-label.bd-bottom ").each(function(index,form){
 				
 				/*var validator = new Validator({

@@ -36,7 +36,7 @@
             </ul>
             <ul>
                 <li>
-                    <p class="word">库存量</p>
+                    <p class="word"><span>*</span>库存量</p>
                     <p><input type="text" id="newTotalNum" class="int-text int-small" value="0"
                               <c:if test="${!saleAttr.isEmpty()}">readonly</c:if> maxlength="10"></p>
                 </li>

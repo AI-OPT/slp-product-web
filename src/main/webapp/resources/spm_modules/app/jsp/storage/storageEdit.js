@@ -404,7 +404,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 		//变更库存名称
 		_saveStoName:function(){
 			var _this = this;
-			var stoName = $("#newStorageName").val();
+			var stoName = $("#newStorageName").val().trim();
 			var storageId = $("#storageId").val();
 			ajaxController.ajax({
 				type: "post",

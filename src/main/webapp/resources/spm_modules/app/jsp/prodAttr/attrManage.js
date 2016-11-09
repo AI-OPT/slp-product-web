@@ -171,8 +171,9 @@ require("app/util/aiopt-validate-ext");
 		},
 		//提交更新
 		_updateAttr:function(){
-			if (upValidator.valid()!=true)
-				return;
+			upValidator.form();
+			if ($("#prodAttrValueForm").valid()!=true)
+				return false;
 			var _this = this;
 //			validator.execute();
 			var attrvalueDefId = $("#upAttrvalueDefId").val();
@@ -180,6 +181,11 @@ require("app/util/aiopt-validate-ext");
 			var firstLetter = $("#upFirstLetter").val();
 			var attrId = $("#upAttrId").val();
 			this._closeEditDiv();
+			if (attrValueName == null || typeof (attrValueName) == undefined || attrValueName.trim() == ""
+				|| firstLetter == null || typeof (firstLetter) == undefined || firstLetter.trim() == "") {
+				_this._showMsg("未填输入正确格式信息,无法提交");
+				return false;
+			}
 			ajaxController.ajax({
 				type: "post",
 				processing: true,
@@ -277,7 +283,18 @@ require("app/util/aiopt-validate-ext");
 			$('#aband-small').slideUp(150);
 			$("#delAttrValueId").val('');
 		},
-		
+		_showMsg:function(msg){
+			var msg = Dialog({
+				title: '提示',
+				icon:'fail',
+				content:msg,
+				okValue: '确 定',
+				ok:function(){
+					this.close();
+				}
+			});
+			msg.showModal();
+		}
 		/*//新增属性值的弹框
 		_showAddAttr:function(){
 			$('#eject-mask').fadeIn(100);

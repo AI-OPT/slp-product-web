@@ -44,22 +44,24 @@ require("app/util/aiopt-validate-ext");
     	_saveMarketPrice:function(){
     		var _this=this;
     		var productId = $("#productId").val();
-    		
     		var validateForm = $("#prodForm").validate({
 				errorPlacement: function(error, element) {
 	                $("#marketPriceValidate").append( error );
 	             }
     		});
     		
-    		
 			if(!validateForm.form()){
 				return;
 			}
 			
     		var price=$("#marketPrice").val();
-    		if (price=="" && price==null && price=="0.00" && price=="0.0") {
+    		if (price=="0.00" && price=="0.0") {
     			var marketPrice = "0";
-			}else {
+			}else if (price == null || typeof (price) == undefined || price.trim() == "") {
+				_this._showMsg("有部分价格未填写,无法提交");
+				return false;
+			}
+    		else {
 				var marketPrice = price*1000;
 			}
     		
@@ -120,6 +122,18 @@ require("app/util/aiopt-validate-ext");
     		var container = $('.wrapper-right');
     		container.scrollTop(0);//滚动到div 顶部
     	},
+		_showMsg:function(msg){
+			var msg = Dialog({
+				title: '提示',
+				icon:'fail',
+				content:msg,
+				okValue: '确 定',
+				ok:function(){
+					this.close();
+				}
+			});
+			msg.showModal();
+		}
     	
     });
     
