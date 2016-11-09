@@ -34,6 +34,7 @@ import com.ai.slp.product.api.storage.param.StorageGroupQuery;
 import com.ai.slp.product.api.storage.param.StorageGroupRes;
 import com.ai.slp.product.api.storage.param.StorageGroupRestwo;
 import com.ai.slp.product.web.constants.AuditStatus;
+import com.ai.slp.product.web.constants.ProductConstants;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.ai.slp.route.api.routeitemmanage.interfaces.IRouteItemManageSV;
 import com.ai.slp.route.api.routeitemmanage.param.RouteGroupIdQueryRequest;
@@ -212,9 +213,23 @@ public class ProdOperateController {
         productInfoQuery.setProductId(prodId);
         
         //查询单个商品的销售地域
-        IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+       /* IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
         OtherSetOfProduct otherSetOfProduct = productManagerSV.queryOtherSetOfProduct(productInfoQuery);
-        List<ProdTargetAreaInfo> areaInfos = otherSetOfProduct.getAreaInfos();
+        List<ProdTargetAreaInfo> areaInfos = otherSetOfProduct.getAreaInfos();*/
+        IProductSV prodSV = DubboConsumerFactory.getService(IProductSV.class);
+		ProductInfo productInfo = prodSV.queryProductById(productInfoQuery);
+		IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+		OtherSetOfProduct otherSet = productManagerSV.queryOtherSetOfProduct(productInfoQuery);
+		List<ProdTargetAreaInfo> areaInfoList = new ArrayList<>();
+        if (ProductConstants.IsSaleNationwide.NO.equals(productInfo.getIsSaleNationwide())){
+			//目标地域
+        	for (ProdTargetAreaInfo areaInfo:otherSet.getAreaInfos()){
+        		if (areaInfo.isOwn()){
+        			areaInfoList.add(areaInfo);
+        		}
+        	}
+		}
+        
         
 		//1.根据routeGroupid查询出routeItemList
 		//查询routeGroupId   prodid--standedprodid--rougroupid
@@ -250,8 +265,10 @@ public class ProdOperateController {
 			}
 		}
 		
-        return routeItemIdInTargetArea(areaInfos,routeAreaList);
+        return routeItemIdInTargetArea(areaInfoList,routeAreaList);
     }
+	
+	
 	
 	/**
 	 * 判断商品域的区域是否在配货组下的仓库域已经选择
@@ -300,9 +317,23 @@ public class ProdOperateController {
         for (int i = 0; i < idArry.length; i++) {
         	productInfoQuery.setProductId(idList.get(i));
         	//查询单个商品的销售地域
-        	IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+/*        	IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
         	OtherSetOfProduct otherSetOfProduct = productManagerSV.queryOtherSetOfProduct(productInfoQuery);
-        	List<ProdTargetAreaInfo> areaInfos = otherSetOfProduct.getAreaInfos();
+        	List<ProdTargetAreaInfo> areaInfos = otherSetOfProduct.getAreaInfos();*/
+        	
+        	 IProductSV prodSV = DubboConsumerFactory.getService(IProductSV.class);
+     		ProductInfo productInfo = prodSV.queryProductById(productInfoQuery);
+     		IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
+     		OtherSetOfProduct otherSet = productManagerSV.queryOtherSetOfProduct(productInfoQuery);
+     		List<ProdTargetAreaInfo> areaInfoList = new ArrayList<>();
+             if (ProductConstants.IsSaleNationwide.NO.equals(productInfo.getIsSaleNationwide())){
+     			//目标地域
+             	for (ProdTargetAreaInfo areaInfo:otherSet.getAreaInfos()){
+             		if (areaInfo.isOwn()){
+             			areaInfoList.add(areaInfo);
+             		}
+             	}
+     		}
 			
         	//1.根据routeGroupid查询出routeItemList
         	//查询routeGroupId   prodid--standedprodid--rougroupid
@@ -338,7 +369,7 @@ public class ProdOperateController {
         		}
         	}
         	
-          flag = routeItemIdInTargetArea(areaInfos,routeAreaList);
+          flag = routeItemIdInTargetArea(areaInfoList,routeAreaList);
 		}
 		return flag;
     }
