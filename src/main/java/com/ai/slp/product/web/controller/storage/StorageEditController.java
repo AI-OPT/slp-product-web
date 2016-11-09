@@ -174,7 +174,7 @@ public class StorageEditController {
         storageStatus.setState(status);
         BaseResponse baseResponse = storageSV.chargeStorageStatus(storageStatus);
         
-       //库存组re--根据库存ID获取库存组id
+        //库存组re--根据库存ID获取库存组id
         String tenantId = AdminUtil.getTenantId();
         String supplierId = AdminUtil.getSupplierId();
         Long adminId = AdminUtil.getAdminId(session);
@@ -183,25 +183,25 @@ public class StorageEditController {
         storage.setTenantId(tenantId);
         storage.setSupplierId(supplierId);
         storage.setStorageId(stoId);
-		StorageRes storageRes = storageSV.queryStorageById(storage);
-		String groupId = storageRes.getStorageGroupId();
-		String prodId = storageRes.getProdId();
-		
-		IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
-		ProductInfoQuery product = new ProductInfoQuery();
-		product.setTenantId(tenantId);
-		product.setSupplierId(supplierId);
-		product.setOperId(adminId);
-		product.setProductId(prodId);
-		ProductInfo productInfo = productSV.queryProductById(product);
-		
-		//库存id--获取库存组--获取状态
-		StorageGroupQuery groupQuery = new StorageGroupQuery();
-		groupQuery.setTenantId(tenantId);
-		groupQuery.setSupplierId(supplierId);
-		groupQuery.setGroupId(groupId);
-		groupQuery.setProductId(productInfo.getStandedProdId());
-		StorageGroupRes queryGroup = storageSV.queryGroupInfoByGroupId(groupQuery);
+        StorageRes storageRes = storageSV.queryStorageById(storage);
+        String groupId = storageRes.getStorageGroupId();
+        String prodId = storageRes.getProdId();
+        
+        IProductSV productSV = DubboConsumerFactory.getService(IProductSV.class);
+        ProductInfoQuery product = new ProductInfoQuery();
+        product.setTenantId(tenantId);
+        product.setSupplierId(supplierId);
+        product.setOperId(adminId);
+        product.setProductId(prodId);
+        ProductInfo productInfo = productSV.queryProductById(product);
+        
+        //库存id--获取库存组--获取状态
+        StorageGroupQuery groupQuery = new StorageGroupQuery();
+        groupQuery.setTenantId(tenantId);
+        groupQuery.setSupplierId(supplierId);
+        groupQuery.setGroupId(groupId);
+        groupQuery.setProductId(productInfo.getStandedProdId());
+        StorageGroupRes queryGroup = storageSV.queryGroupInfoByGroupId(groupQuery);
         
         String state = queryGroup.getState();
         if (state != null && ProductConstants.Product.State.IN_SALE.equals(productInfo.getState())) {
@@ -209,7 +209,7 @@ public class StorageEditController {
         			|| StorageConstants.StorageGroup.State.AUTO_ACTIVE.equals(state)) {
         		StoGroupStatus stogroupstatus = new StoGroupStatus();
         		stogroupstatus.setTenantId(tenantId);
-        		stogroupstatus.setSupplierId(supplierId);
+        		stogroupstatus.setSupplierId(supplierId);                
         		stogroupstatus.setGroupId(groupId);
         		stogroupstatus.setOperId(adminId);
         		stogroupstatus.setState(StorageConstants.StorageGroup.State.STOP);
@@ -221,8 +221,10 @@ public class StorageEditController {
         		stogroupstatus2.setOperId(adminId);
         		stogroupstatus2.setState(StorageConstants.StorageGroup.State.ACTIVE);
         		storageSV.chargeStorageGroupStatus(stogroupstatus2);
-			}
-		}
+        	}
+        }
+        
+        
       		
         ResponseHeader header = baseResponse.getResponseHeader();
         if (header != null && !header.isSuccess()) {
