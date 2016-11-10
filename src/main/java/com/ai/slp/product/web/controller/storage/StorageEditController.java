@@ -24,6 +24,7 @@ import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.*;
 import com.ai.slp.product.web.constants.ProductCommentConstants;
 import com.ai.slp.product.web.constants.ProductConstants;
+import com.ai.slp.product.web.constants.StorageAllConstants;
 import com.ai.slp.product.web.constants.StorageConstants;
 import com.ai.slp.product.web.util.AdminUtil;
 import com.alibaba.fastjson.JSON;
@@ -205,21 +206,21 @@ public class StorageEditController {
         
         String state = queryGroup.getState();
         if (state != null && ProductConstants.Product.State.IN_SALE.equals(productInfo.getState())) {
-        	if (StorageConstants.StorageGroup.State.ACTIVE.equals(state) 
-        			|| StorageConstants.StorageGroup.State.AUTO_ACTIVE.equals(state)) {
+        	if (StorageAllConstants.StorageGroup.State.ACTIVE.equals(state) 
+        			|| StorageAllConstants.StorageGroup.State.AUTO_ACTIVE.equals(state)) {
         		StoGroupStatus stogroupstatus = new StoGroupStatus();
         		stogroupstatus.setTenantId(tenantId);
         		stogroupstatus.setSupplierId(supplierId);                
         		stogroupstatus.setGroupId(groupId);
         		stogroupstatus.setOperId(adminId);
-        		stogroupstatus.setState(StorageConstants.StorageGroup.State.STOP);
+        		stogroupstatus.setState(StorageAllConstants.StorageGroup.State.STOP);
         		storageSV.chargeStorageGroupStatus(stogroupstatus);
         		StoGroupStatus stogroupstatus2 = new StoGroupStatus();
         		stogroupstatus2.setTenantId(tenantId);
         		stogroupstatus2.setSupplierId(supplierId);
         		stogroupstatus2.setGroupId(groupId);
         		stogroupstatus2.setOperId(adminId);
-        		stogroupstatus2.setState(StorageConstants.StorageGroup.State.ACTIVE);
+        		stogroupstatus2.setState(StorageAllConstants.StorageGroup.State.ACTIVE);
         		storageSV.chargeStorageGroupStatus(stogroupstatus2);
         	}
         }
