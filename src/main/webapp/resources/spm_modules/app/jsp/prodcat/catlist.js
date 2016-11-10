@@ -237,7 +237,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 			if (catName == null || typeof (catName) == undefined || catName.trim() == ""
 				|| fLetter == null || typeof (fLetter) == undefined || fLetter.trim() == ""
 					|| sn == null || typeof (sn) == undefined || sn.trim() == "") {
-				_this._showMsg("未填输入正确格式信息,无法提交");
+				_this._showMsg("未输入正确格式信息,无法提交");
 				return false;
 			}
 			ajaxController.ajax({

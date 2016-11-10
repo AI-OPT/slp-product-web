@@ -174,7 +174,7 @@ require("app/util/aiopt-validate-ext");
 			this._closeEditDiv();
 			if (attrName == null || typeof (attrName) == undefined || attrName.trim() == ""
 				|| firstLetter == null || typeof (firstLetter) == undefined || firstLetter.trim() == "") {
-				_this._showMsg("未填输入正确格式信息,无法提交");
+				_this._showMsg("未输入正确格式信息,无法提交");
 				return false;
 			}
 			/*var validateForm = $("#prodAttrForm").validate();
