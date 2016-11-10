@@ -31,14 +31,17 @@
             <ul>
                 <li>
                     <p class="word"><span>*</span>库存名称</p>
-                    <p><input type="text" id="newStorageName" class="int-text int-small" maxlength="15"></p>
+                    <p><input type="text" id="newStorageName" class="int-text int-small" maxlength="15"
+                    required data-msg-required="库存名称不能为空" 
+                    onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"></p>
                 </li>
             </ul>
             <ul>
                 <li>
                     <p class="word"><span>*</span>库存量</p>
                     <p><input type="text" id="newTotalNum" class="int-text int-small" value="0"
-                              <c:if test="${!saleAttr.isEmpty()}">readonly</c:if> maxlength="10"></p>
+                              <c:if test="${!saleAttr.isEmpty()}">readonly</c:if> maxlength="10"  
+                              onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"></p>
                 </li>
             </ul>
         </div>

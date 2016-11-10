@@ -10,7 +10,10 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 	require("my97DatePicker/WdatePicker");
     require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
-
+ /*   require("jquery-validation/1.15.1/jquery.validate");
+	require("app/util/aiopt-validate-ext");
+    */
+    
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
@@ -364,6 +367,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			$("#newStorageName").val(nameTd.prev().prev().html());
 			$("#storageId").val(storageId);
 			$("#editTitle").html("编辑库存");
+			
 			//若不包含销售属性,则直接返回
 			if (!hasSale){
 				$('#eject-mask').fadeIn(100);
@@ -406,6 +410,11 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			var _this = this;
 			var stoName = $("#newStorageName").val().trim();
 			var storageId = $("#storageId").val();
+			//判断库存名称
+			if (stoName == null || stoName == "") {
+				_this._showMsg("库存名称不能为空");
+				return false;
+			}
 			ajaxController.ajax({
 				type: "post",
 				processing: true,

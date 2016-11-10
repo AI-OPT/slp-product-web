@@ -40,7 +40,7 @@
 					            <ul>
 					                <li class="width-xlag">
 					                    <p class="word3"><b class="red">*</b>商品名称</p>
-					                    <p><input required id="productName" name="productName" type="text" maxlength='100' class="int-text int-xlarge"  value="${productInfo.productName}"/></p>
+					                    <p><input required id="productName" name="productName" type="text" maxlength='100' class="int-text int-xlarge"  value="${productInfo.productName}" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"/></p>
 					               	 	<p id="error_productName"></p> 
 					                </li> 
 					            </ul>

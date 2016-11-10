@@ -28,14 +28,16 @@
 					                    <p><input name="attrValueName0" type="text" 
 					                    class="int-text int-medium" maxlength="20" 
 					                    required data-msg-required="属性值名称不能为空"
-                                                  val-tag="attrValueName"></p>
+                                                  val-tag="attrValueName"
+                                                  onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>名称首字母(大写)</p>
 										<p><input  name="firstLetter0" type="text" class="int-text int-medium" 
 										     maxlength="1" 
 										     required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
-                                             data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter"></p>
+                                             data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter"
+                                             onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"></p>
 									</li>
 					             </ul>
 					             
@@ -86,14 +88,14 @@
 					                    <p><input name="attrValueName{{:num}}" type="text" class="int-text int-medium" 
 											maxlength="20" 
 					                        required data-msg-required="属性值名称不能为空"
-                                            val-tag="attrValueName"></p>
+                                            val-tag="attrValueName" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>名称首字母(大写)</p>
 										<p><input  name="firstLetter{{:num}}" type="text" class="int-text int-medium" 
 											 maxlength="1" 
 											 required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
-                                             data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter"></p>
+                                             data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"></p>
 									</li>
 					             </ul>
 							</div>

@@ -39,7 +39,8 @@
 	                   <p class="word"><span>*</span>问题描述</p>
 	                   <p><textarea id="refuseDes" name="refuseDes" class="int-text textarea-xlarge"
 									maxlength="100" style="width:190px;height:80px;"
-									required data-msg-required="问题描述不能为空"></textarea></p>
+									required data-msg-required="问题描述不能为空"
+									onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"></textarea></p>
 	               </li>
 	           </ul>
          </form> 	 
