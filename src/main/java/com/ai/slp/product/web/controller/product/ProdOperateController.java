@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -228,6 +229,10 @@ public class ProdOperateController {
         			areaInfoList.add(areaInfo);
         		}
         	}
+		}else {
+			for (int i = 0; i < otherSet.getAreaInfos().size(); i++) {
+				areaInfoList.add(otherSet.getAreaInfos().get(i));
+			}
 		}
         
         
@@ -289,6 +294,8 @@ public class ProdOperateController {
 					break;
 				}
 			}
+		}else if (StringUtils.isEmpty(routeAreaList.get(0))) {
+			flag = "false";
 		}
 		return flag;
 	}
