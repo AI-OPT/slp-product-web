@@ -340,7 +340,9 @@ public class ProdOperateController {
              			areaInfoList.add(areaInfo);
              		}
              	}
-     		}
+     		}for (int n = 0; n < otherSet.getAreaInfos().size(); n++) {
+				areaInfoList.add(otherSet.getAreaInfos().get(n));
+			}
 			
         	//1.根据routeGroupid查询出routeItemList
         	//查询routeGroupId   prodid--standedprodid--rougroupid
