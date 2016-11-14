@@ -317,11 +317,11 @@ public class ProdOperateController {
         Long adminId = AdminUtil.getAdminId();
         
         //获取商品的销售地域
-        ProductInfoQuery productInfoQuery = new ProductInfoQuery();
-        productInfoQuery.setTenantId(tenantId);
-        productInfoQuery.setSupplierId(supplierId);
-        productInfoQuery.setOperId(adminId);
         for (int i = 0; i < idArry.length; i++) {
+	        ProductInfoQuery productInfoQuery = new ProductInfoQuery();
+	        productInfoQuery.setTenantId(tenantId);
+	        productInfoQuery.setSupplierId(supplierId);
+	        productInfoQuery.setOperId(adminId);
         	productInfoQuery.setProductId(idList.get(i));
         	//查询单个商品的销售地域
 /*        	IProductManagerSV productManagerSV = DubboConsumerFactory.getService(IProductManagerSV.class);
@@ -340,9 +340,11 @@ public class ProdOperateController {
              			areaInfoList.add(areaInfo);
              		}
              	}
-     		}for (int n = 0; n < otherSet.getAreaInfos().size(); n++) {
-				areaInfoList.add(otherSet.getAreaInfos().get(n));
-			}
+     		}else{
+     			for (int n = 0; n < otherSet.getAreaInfos().size(); n++) {
+    				areaInfoList.add(otherSet.getAreaInfos().get(n));
+    			}
+     		}
 			
         	//1.根据routeGroupid查询出routeItemList
         	//查询routeGroupId   prodid--standedprodid--rougroupid
