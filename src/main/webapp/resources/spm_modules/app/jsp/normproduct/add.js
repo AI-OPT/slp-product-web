@@ -75,7 +75,7 @@ define('app/jsp/normproduct/add', function (require, exports, module) {
 				ajaxController.ajax({
 					type: "post",
 					processing: false,
-					// message: "加载中，请等待...",
+				   // message: "加载中，请等待...",
 					url: _base+"/cat/query/child",
 					data:{"prodCatId":prodCatId},
 					success: function(data){
@@ -122,7 +122,31 @@ define('app/jsp/normproduct/add', function (require, exports, module) {
 					}
 				});
 				d.show();
-    		}else{
+    		}else if (productCatId != "") {
+    			ajaxController.ajax({
+					type: "post",
+					processing: false,
+				    //message: "加载中，请等待...",
+					url: _base+"/cat/query/"+productCatId,
+					data:{"prodCatId":productCatId},
+					success: function(data){
+						if(data.data.isChild=='N'){
+							window.location.href = _base+'/normprodedit/addProduct?productCatId='+productCatId
+						}else {
+							var d = Dialog({
+			    				title:"提示",
+								content:"请选择子类目",
+								icon:'warning',
+								okValue: '确 定',
+								ok:function(){
+									this.close();
+								}
+							});
+							d.show();
+						}
+					}
+				});
+			}else{
     			window.location.href = _base+'/normprodedit/addProduct?productCatId='+productCatId
     		}
     	}
