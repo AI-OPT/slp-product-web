@@ -381,6 +381,9 @@ public class ProdOperateController {
         	}
         	
           flag = routeItemIdInTargetArea(areaInfoList,routeAreaList);
+          if (flag=="false") {
+			return flag;
+          }
 		}
 		return flag;
     }
