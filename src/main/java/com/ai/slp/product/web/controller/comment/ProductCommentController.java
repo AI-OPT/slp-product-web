@@ -100,9 +100,19 @@ public class ProductCommentController {
 						JSONObject userjson = JSON.parseObject(userInfoStr);
 						String userDataStr = userjson.getString("data");
 						JSONObject userData = JSON.parseObject(userDataStr);
-						String userName = userData.getString("userName");
-						pageInfo.setUserName(userName);
-						pageInfoList.add(pageInfo);
+						
+						JSONObject data = JSON.parseObject(userData.getString("data"));
+						if (data!=null) {
+							String userName = data.getString("userName");
+							pageInfo.setUserName(userName);
+							pageInfoList.add(pageInfo);
+						}else {
+							String userName1 = "";
+							pageInfo.setUserName(userName1);
+							pageInfoList.add(pageInfo);
+						}
+						/*pageInfo.setUserName(userName);
+						pageInfoList.add(pageInfo);*/
 					}
 				}
 				commentPageResult.setResult(pageInfoList);
