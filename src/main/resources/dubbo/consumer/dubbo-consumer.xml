@@ -63,4 +63,9 @@
 	<!-- 仓库服务 -->
 	<dubbo:reference id="iRouteTargetAreaSV" interface="com.ai.slp.route.api.routetargetarea.interfaces.IRouteTargetAreaSV"
 					 registry="slpRegistry"/>
+					 
+	<dubbo:reference id="iSysMenuQuerySV"
+	interface="com.ai.platform.common.api.menu.interfaces.ISysMenuQuerySV"
+	registry="slpRegistry" />				 
+					 
 </beans>

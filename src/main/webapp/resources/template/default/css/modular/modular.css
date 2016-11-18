@@ -276,3 +276,13 @@
 .table tr td .table tr .td-height-440{height:440px;}
 .table tr td .table tr .td-height-480{height:480px;}
 .table tr td .table tr .td-height-520{height:520px;}
+
+/**欢迎界面**/
+.welcome{width:;text-align: center;padding:50px 0 0 0;}
+.welcome img{width: 100%;}
+
+/**404页面**/
+.four404{width: 100%; float: left;padding-top:60px ;text-align: center;}
+.four404-text{width: 100%; float: left;text-align: center;padding-top:18px ;}
+.four404-text p{font-size: 16px;margin-bottom: 16px;}
+.four404-text a{font-size: 14px;}
