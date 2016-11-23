@@ -85,13 +85,14 @@ public class AssembleUserInfoFilter implements Filter {
             } 
             //判断权限 若果没有权限跳到403，判断规则  request.getRequestURI 去掉request.getContext前缀    
             boolean authMenuFlag=authMenu(req);
-            if(!authMenuFlag){
+           /* if(!authMenuFlag){
             	//((HttpServletResponse)response).setStatus(HttpServletResponse.SC_FORBIDDEN);
             	((HttpServletResponse)response).sendRedirect(req.getContextPath()+"/403.jsp");
             }
             else{
             	chain.doFilter(req, response);
-            }
+            }*/
+            chain.doFilter(req, response);
         }
         
         
