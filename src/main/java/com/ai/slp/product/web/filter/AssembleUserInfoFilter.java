@@ -135,7 +135,7 @@ public class AssembleUserInfoFilter implements Filter {
         return user;
     }
 
-    private boolean shouldFilter(HttpServletRequest req) {
+/*    private boolean shouldFilter(HttpServletRequest req) {
         if (ignor_suffix != null && ignor_suffix.length > 0) {
             String uri = req.getRequestURI().toLowerCase();
             for (String suffix : ignor_suffix) {
@@ -145,7 +145,19 @@ public class AssembleUserInfoFilter implements Filter {
             }
         }
         return true;
+    }*/
+    private boolean shouldFilter(HttpServletRequest req) {
+        if (ignor_suffix != null && ignor_suffix.length > 0) {
+            String uri = req.getRequestURI().toLowerCase();
+            for (String suffix : ignor_suffix) {
+                if (uri.endsWith(suffix.toLowerCase())) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
+    
     private boolean authMenu(HttpServletRequest request) {
     	
     	String currentURL = request.getRequestURI(); // 取得根目录所对应的绝对路径:
