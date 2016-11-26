@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sso.client.filter.SSOClientConstants;
 import com.ai.platform.common.api.menu.interfaces.ISysMenuQuerySV;
 import com.ai.platform.common.api.menu.param.SysMenuListQueryRequest;
@@ -72,8 +73,12 @@ public class AssembleUserInfoFilter implements Filter {
                 	if(menuResp.getResponseHeader()!=null&&"000000".equalsIgnoreCase(menuResp.getResponseHeader().getResultCode())){
                 		menuList=menuResp.getMenuList();
                 		allMenuList =menuResp.getAllMenuList();
-                		session.setAttribute(USER_MENUS, menuList);
-                		session.setAttribute(ALL_MENUS, allMenuList);
+                		if (!CollectionUtil.isEmpty(allMenuList)) {
+                			session.setAttribute(USER_MENUS, menuList);
+						}
+                		if (!CollectionUtil.isEmpty(menuList)) {
+                			session.setAttribute(ALL_MENUS, allMenuList);
+						}
                 	}
                 	
                 	LOG.info("已封装的用户信息为：" + JSON.toJSONString(user));
@@ -85,14 +90,14 @@ public class AssembleUserInfoFilter implements Filter {
             } 
             //判断权限 若果没有权限跳到403，判断规则  request.getRequestURI 去掉request.getContext前缀    
             boolean authMenuFlag=authMenu(req);
-           /* if(!authMenuFlag){
+            if(!authMenuFlag){
             	//((HttpServletResponse)response).setStatus(HttpServletResponse.SC_FORBIDDEN);
             	((HttpServletResponse)response).sendRedirect(req.getContextPath()+"/403.jsp");
             }
             else{
             	chain.doFilter(req, response);
-            }*/
-            chain.doFilter(req, response);
+            }
+           // chain.doFilter(req, response);
         }
         
         
