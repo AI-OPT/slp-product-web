@@ -107,7 +107,8 @@ define('app/jsp/product/edit', function (require, exports, module) {
 		//完成目标地域选择
 		_finishTarget:function(){
 			$('#eject-mask').fadeOut(100);
-			$('#eject-city').slideUp(150);
+		//	$('#eject-city').slideUp(150);
+			$('#eject-city').slideUp(200);
 		},
 		//显示目标地域的信息
 		_showPartTarget:function(){
