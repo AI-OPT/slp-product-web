@@ -75,7 +75,7 @@ dependencies {
     compile 'com.ai.opt.sdk:opt-sdk:2.2-SNAPSHOT'
     compile 'com.ai.opt.xss.filter:opt-xss-firewall:1.0-SNAPSHOT'
     compile 'com.ai.opt.uni.session:opt-uni-session:2.0-SNAPSHOT'
-    compile 'com.ai.opt.sso.client:opt-sso-client:1.0-ch-SNAPSHOT'
+    compile 'com.ai.opt.sso.client:opt-sso-client:1.0.2-SNAPSHOT'
 
     //cache
     compile 'com.ai.runner.center.mmp:manager:1.0.0-SNAPSHOT'
