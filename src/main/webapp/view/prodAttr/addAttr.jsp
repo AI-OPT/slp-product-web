@@ -25,14 +25,14 @@
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>属性名称</p>
 					                    <p><input name="attrName0" type="text" class="int-text int-medium" maxlength="15"
-					                              required data-msg-required="属性名称不能为空"
-                                                  val-tag="attrName" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')" ></p>
+					                              required data-msg-required="属性名称不能为空" onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')"
+                                                  val-tag="attrName" ></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>名称首字母(大写)</p>
 										<p><input  name="firstLetter0" type="text" class="int-text int-medium"  maxlength="1"
 												  required data-msg-required="名称首字母不能为空" regexp="[A-Z]{1}"
-                                                  data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')" ></p>
+                                                  data-msg-regexp="请输入大写的名称首字母" val-tag="firstLetter" onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')" ></p>
 									</li>
 					             </ul>
 					             <ul>
