@@ -40,7 +40,7 @@ require("app/util/aiopt-validate-ext");
     	},
     	
     	//添加输入验证
- /*   	_addValidator:function(validator){
+/*    	_addValidator:function(validator){
     		validator.addItem({
     			element: "input[name=attrName]",
     			required: true,
@@ -71,6 +71,7 @@ require("app/util/aiopt-validate-ext");
 			if(!validateForm.form()){
 				return;
 			}
+			
 			$("#addViewDiv > .form-label.bd-bottom ").each(function(index,form){
 				
 				/*var validator = new Validator({
@@ -118,11 +119,41 @@ require("app/util/aiopt-validate-ext");
 				if("1"===data.statusCode){
 					//alert("保存成功");
 					//保存成功,回退到进入的列表页
-					window.history.go(-1)
+					//window.history.go(-1)
+					_this._showSuccessMsg("保存成功");
+				}else {
+					_this._showMsg("有部分内容未填写,无法提交");
 				}
 			}
 		});
-    }
+    },
+    _showSuccessMsg:function(msg){
+		var _this=this;
+		var msg = Dialog({
+			title: '提示',
+			icon:'success',
+			content:msg,
+			okValue: '确 定',
+			ok:function(){
+				//this.close();
+				window.history.go(-1);
+			}
+		});
+		msg.showModal();
+	},
+	_showMsg:function(msg){
+		var msg = Dialog({
+			title: '提示',
+			icon:'fail',
+			content:msg,
+			okValue: '确 定',
+			ok:function(){
+				this.close();
+			}
+		});
+		msg.showModal();
+	}
+	
     });
     
     module.exports = attrAddPager
