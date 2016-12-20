@@ -26,6 +26,7 @@
 					                    <p class="word"><span>*</span>属性名称</p>
 					                    <p><input name="attrName0" type="text" class="int-text int-medium" maxlength="15"
 					                              required data-msg-required="属性名称不能为空" onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')"
+					                              commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"
                                                   val-tag="attrName" ></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
@@ -93,6 +94,7 @@
 					                    <p class="word"><span>*</span>属性名称</p>
 					                    <p><input name="attrName{{:num}}" type="text" class="int-text int-medium" 
 											 maxlength="15"
+											 commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"
 					                         required data-msg-required="属性名称不能为空"
                                              val-tag="attrName" onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')"></p>
 					                </li>

@@ -24,7 +24,7 @@
 	           <ul>	
 	               <li>
 	                   <p class="word"><span>*</span>属性名称</p>
-	                   <p><input id="upAttrName" type="text" name="productAttrName" class="int-text int-medium" maxlength="15" ></p>
+	                   <p><input id="upAttrName" type="text" name="productAttrName" class="int-text int-medium" commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/" maxlength="15" ></p>
 	               </li>
 	           </ul>
 	           <ul>	

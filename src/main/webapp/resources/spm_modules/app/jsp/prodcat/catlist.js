@@ -126,7 +126,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
             +"    <li>"
             +"        <p class='word'><span>*</span>类目名称:</p>"
             +"        <p><input id='upCatName' type='text' class='int-text int-small'"
-            +"                  name='productCatName' maxlength='10'></p>"
+            +"                  commonText='/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/' name='productCatName' maxlength='10'></p>"
             +"    </li>"
             +"</ul>"
             +"<ul>"

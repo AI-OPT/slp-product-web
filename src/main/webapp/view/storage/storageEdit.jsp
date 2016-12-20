@@ -32,6 +32,7 @@
                 <li>
                     <p class="word"><span>*</span>库存名称</p>
                     <p><input type="text" id="newStorageName" class="int-text int-small" maxlength="15"
+                    commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"
                     required data-msg-required="库存名称不能为空" 
                     onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')"></p>
                 </li>
