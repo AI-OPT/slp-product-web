@@ -25,7 +25,7 @@
 			<ul>
 				<li>
                    <p class="word"><span>*</span>属性值名称</p>
-                   <p><input id=upAttrValueName type="text" name="productAttrValueName" class="int-text int-medium" maxlength="20"></p>
+                   <p><input id=upAttrValueName type="text" name="productAttrValueName" commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/" class="int-text int-medium" maxlength="20"></p>
                </li>
 				<li class="width-xlag">
 					<p class="word"><span>*</span>名称首字母(大写)</p>
