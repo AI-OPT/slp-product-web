@@ -134,7 +134,7 @@
 								<li class="width-xlag">
 									<p class="word3"><b class="red">*</b>商品名称</p>
 									<p class="wide-field" style="word-break:break-all;">${productInfo.prodName}</p>
-									<input type="hidden" name="prodName" value="${productInfo.prodName}">
+									<input type="hidden" name="prodName" value="${productInfo.prodName} commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"">
 								</li>
 							</ul>
 							<ul>
@@ -142,6 +142,7 @@
 									<p class="word3">商品卖点</p>
 									<p>
 										<textarea name="productSellPoint" class="int-text textarea-xlarge"
+													commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"
 												  maxlength="100">${productInfo.productSellPoint}</textarea>
 									</p>
 								</li>
@@ -391,7 +392,7 @@
 								</li>
 							</ul>
 							<input type="hidden" name="proDetailContent" value="${productInfo.proDetailContent}">
-							<textarea style="display: none;" name="detailConVal" id="detailConVal"></textarea>
+							<textarea style="display: none;" name="detailConVal" id="detailConVal" commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"></textarea>
 							<!-- <ul>
 								<li>
 									<p>

@@ -65,6 +65,7 @@
 	                   <p><textarea id="refuseDes" name="refuseDes" class="int-text textarea-xlarge"
 												  maxlength="100" style="width:190px;height:80px;" 
 												  required data-msg-required="问题描述不能为空"
+												  commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"
 												  onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')"></textarea>
 	                   </p>
 	                   

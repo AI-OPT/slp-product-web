@@ -28,6 +28,7 @@
                                         <p class="word"><span>*</span>类目名称</p>
                                         <p><input name="productCatName0" type="text" class="int-text int-medium"
                                                   maxlength="10" required data-msg-required="类目名称不能为空"
+                                                  commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"
                                                   val-tag="productCatName"
                                                   onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')">
                                         </p>
@@ -96,6 +97,7 @@
             <li class="col-md-12 ui-form-item">
                 <p class="word"><span>*</span>类目名称</p>
                 <p><input name="productCatName{{:num}}" type="text" class="int-text int-medium"
+						  commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"
                           maxlength="10" required data-msg-required="类目名称不能为空" val-tag="productCatName"onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')"></p>
             </li>
         </ul>
