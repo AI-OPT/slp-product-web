@@ -30,6 +30,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
     	Statics: {
     		DEFAULT_PAGE_SIZE: 10
     	},
+
     	//事件代理
     	events: {
 			"click #selectList":"_selectPageList",
@@ -119,6 +120,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
 			var _this = this;
 //			var innerHtml=$("#editDialogDiv").html();
 			var innerHtml = "<div class='form-label ml-50'>"
+//			var innerHtml = "<div class='form-label'>"
             +"<form id='upCatForm'>"
             +"<input type='hidden' name='productCatId' id='upCatId'>"
             +"<input type='hidden' name='parentProductCatId' id='parentCatId'>"
@@ -154,7 +156,7 @@ define('app/jsp/prodcat/catlist', function (require, exports, module) {
             +"</div>";
 			var d = Dialog({
 				title:"更新类目",
-				width:"500px",
+				width:"550px",
 				innerHtml:innerHtml,
 				okValue: '确 定',
 				ok: function () {
