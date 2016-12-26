@@ -10,9 +10,9 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 	require("my97DatePicker/WdatePicker");
     require("bootstrap-paginator/bootstrap-paginator.min");
     require("app/util/jsviews-ext");
- /*   require("jquery-validation/1.15.1/jquery.validate");
+    require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
-    */
+    
     
     var SendMessageUtil = require("app/util/sendMessage");
     
@@ -162,6 +162,13 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 		//添加库存
     	_addStorage:function(){
     		var _this = this;
+    		
+    		var validateForm = $("#storageForm").validate();
+			if(!validateForm.form()){
+				return;
+			}
+			
+    		
     		var storGroupId = $("#stoAddGroupId").val();
         	var priorityNumber = $("#stoAddGroupPn").val();
         	//number用于判断当前库存组下库存数量
@@ -408,6 +415,12 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 		//变更库存名称
 		_saveStoName:function(){
 			var _this = this;
+			
+			var validateForm = $("#storageForm").validate();
+			if(!validateForm.form()){
+				return;
+			}
+			
 			var stoName = $("#newStorageName").val().trim();
 			var storageId = $("#storageId").val();
 			//判断库存名称
