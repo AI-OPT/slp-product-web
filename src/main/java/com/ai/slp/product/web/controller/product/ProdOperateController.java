@@ -46,6 +46,7 @@ import com.ai.slp.route.api.routetargetarea.param.AreaQueryByRouteItemIdRequest;
 import com.ai.slp.route.api.routetargetarea.param.AreaQueryByRouteItemIdResponse;
 import com.ai.slp.route.api.routetargetarea.param.AreaQueryByRouteItemIdVo;
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 /**
  * 商品管理相关的商品操作 Created by lipeng16 on 16/7/6.
@@ -294,7 +295,7 @@ public class ProdOperateController {
 					break;
 				}
 			}
-		}else if (StringUtils.isEmpty(routeAreaList.get(0))) {
+		}else if(CollectionUtil.isEmpty(routeAreaList)){            //else if (StringUtils.isEmpty(routeAreaList.get(0))) {
 			flag = "false";
 		}
 		return flag;
@@ -381,7 +382,7 @@ public class ProdOperateController {
         	}
         	
           flag = routeItemIdInTargetArea(areaInfoList,routeAreaList);
-          if (flag=="false") {
+          if (flag.equals("false")) {
 			return flag;
           }
 		}
