@@ -6,7 +6,10 @@ import com.ai.paas.ipaas.image.IImageClient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+/**
+ *圖片工具類 
+ *
+ */
 public class ImageUtil {
 	private ImageUtil() {
 		// TODO Auto-generated constructor stub

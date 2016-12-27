@@ -4,11 +4,29 @@ package com.ai.slp.product.web.model.prodCat;
  * Created by jackieliu on 16/8/11.
  */
 public class ProdCatQuery {
+	/**
+	 * 分頁  默認第一頁
+	 */
     private Integer pageNo = 1;
+    /**
+	 * 每頁數據量
+	 */
     private Integer pageSize = 10;
+    /**
+	 * 父類目標識
+	 */
     private String parentProductCatId;
+    /**
+	 * 類目標識
+	 */
     private String productCatId;
+    /**
+	 * 類目名稱
+	 */
     private String productCatName;
+    /**
+	 * 是否為子類目
+	 */
     private String isChild;
 
     public Integer getPageNo() {

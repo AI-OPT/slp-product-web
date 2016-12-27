@@ -3,7 +3,10 @@ package com.ai.slp.product.web.util;
 import com.ai.net.xss.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ *ip工具 
+ *
+ */
 public  class IPUtil {
     private IPUtil() {
 		// TODO Auto-generated constructor stub
