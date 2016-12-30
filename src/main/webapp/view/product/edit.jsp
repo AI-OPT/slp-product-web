@@ -152,13 +152,28 @@
 						<header class="main-box-header clearfix ">
 							<h5 class="pull-left">商品关键属性</h5>
 						</header>
-						<div class="form-label  bd-bottom"><!--查询条件-->
+						<div class="form-label  bd-bottom">
+                                <c:forEach var="aav" items="${attrAndVal}">
+                                    <ul>
+                                        <li class="col-md-12">
+                                            <p class="word3">${aav.key.attrName}：</p>
+                                            <c:forEach var="attrVal" items="${aav.value}">
+                                                <p>${attrVal.attrVal}</p>
+                                            </c:forEach>
+                                        </li>
+                                    </ul>
+                                </c:forEach>
+                            </div>
+						
+						
+						
+						<%-- <div class="form-label  bd-bottom"><!--查询条件-->
 							<c:forEach var="aav" items="${attrAndVal}">
 								<ul>
 									<li>
 										<p class="word3">${aav.key.attrName}</p>
 										<c:choose>
-											<%--多选--%>
+											多选
 											<c:when test="${aav.key.attrType == '2'}">
 												<p class="wide-field">
 													<c:forEach var="attrVal" items="${aav.value}" varStatus="stat">
@@ -176,7 +191,7 @@
 									</li>
 								</ul>
 							</c:forEach>
-						</div>
+						</div> --%>
 						<!--标题-->
 						<header class="main-box-header clearfix ">
 							<h5 class="pull-left">商品非关键属性</h5>
