@@ -134,7 +134,7 @@
 								<li class="width-xlag">
 									<p class="word3"><b class="red">*</b>商品名称</p>
 									<p class="wide-field" style="word-break:break-all;">${productInfo.prodName}</p>
-									<input type="hidden" name="prodName" value="${productInfo.prodName} commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"">
+									<input type="hidden" name="prodName" value="${productInfo.prodName}"  commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/">
 								</li>
 							</ul>
 							<ul>

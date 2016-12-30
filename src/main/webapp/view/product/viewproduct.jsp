@@ -67,8 +67,23 @@
                                     <ul>
                                         <li class="col-md-12">
                                             <p class="word3">${aav.key.attrName}：</p>
+                                            <c:forEach var="attrVal" items="${aav.value}">
+                                                <p>${attrVal.attrVal}</p>
+                                            </c:forEach>
+                                        </li>
+                                    </ul>
+                                </c:forEach>
+                            </div>
+                            
+                            
+                            
+                          <%--   <div class="form-label  bd-bottom">
+                                <c:forEach var="aav" items="${keyAttr}">
+                                    <ul>
+                                        <li class="col-md-12">
+                                            <p class="word3">${aav.key.attrName}：</p>
 											<c:choose>
-												<%--多选--%>
+												多选
 												<c:when test="${aav.key.attrType == '2'}">
 													<div class="cit-width">
 														<c:forEach var="attrVal" items="${aav.value}" varStatus="stat">
@@ -86,7 +101,8 @@
                                         </li>
                                     </ul>
                                 </c:forEach>
-                            </div>
+                            </div> --%>
+                            
                             <!-- 非关键属性 -->
                             <header class="main-box-header clearfix">
                                 <h5 class="pull-left">商品非关键属性</h5>
