@@ -53,6 +53,11 @@ define('app/jsp/saleprice/salePriceEdit', function (require, exports, module) {
 					_this._showMsg("有部分价格未填写,无法提交");
 					return false;
 				}
+				if (price == 0 || price < 0){
+					hasError = true;
+					_this._showMsg("价格小于等于0,无法提交");
+					return false;
+				}
 				if (!salePriceEditPage.PRICE_REGEX.test(price)){
 					hasError = true;
 					_this._showMsg("请输入正确格式的价格,\n 如:123,12.3,1.23");
