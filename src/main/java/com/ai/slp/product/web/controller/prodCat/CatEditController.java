@@ -139,7 +139,9 @@ public class CatEditController {
         return genResponse(response);
     }
 
-
+    /**
+     * 更新属性和属性值 
+     */
     @RequestMapping("/attr/update")
     @ResponseBody
     public ResponseData<String> updateCatAttrAndVal(String catUpParamStr,HttpSession session){
@@ -152,7 +154,9 @@ public class CatEditController {
         BaseResponse response = productCatSV.updateCatAttrAndVal(updateReq);
         return genResponse(response);
     }
-
+    /**
+     * 返回信息
+     */
     private ResponseData<String> genResponse(BaseResponse response){
         ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"","");
         ResponseHeader header = response==null?null:response.getResponseHeader();

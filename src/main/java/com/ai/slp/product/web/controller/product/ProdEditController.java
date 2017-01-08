@@ -236,7 +236,9 @@ public class ProdEditController {
             uiModel.addAttribute("prodDetail",object.getString("content"));
         }
     }
-
+    /** 
+     * 受众类型 
+     */
     private String audiType(Map<String,ProdAudiencesInfo> audiMap){
         //默认部分可见
         String audiEnt = "1";

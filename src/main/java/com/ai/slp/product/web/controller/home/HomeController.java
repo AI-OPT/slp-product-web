@@ -103,6 +103,9 @@ public class HomeController {
 		return responseData;
 	}
 
+	/**
+	 * 查询用户 
+	 */
 	@RequestMapping("/queryuser")
 	@ResponseBody
 	public ResponseData<PageInfoResponse<UcGroupKeyInfoVo>> queryUserList(

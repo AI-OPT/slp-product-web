@@ -54,6 +54,9 @@ public class SalePriceEditController {
         return responseData;
     }
 
+    /** 
+     * 更新销售价 
+     */
     @RequestMapping("/sku/{id}")
     @ResponseBody
     public ResponseData<String> updateSalePrice(

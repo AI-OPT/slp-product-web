@@ -88,6 +88,9 @@ public class AttrValueController {
 			pageQuery.setAttrValueName(request.getParameter("attrValueName"));
 	}*/
 	
+	/**
+	 * 查询属性 
+	 */
 	private PageInfoResponse<AttrValInfo> queryAttrByAttrvalId(AttrValPageQuery pageQuery) {
 		IAttrAndValDefSV attrAndValDefSV = DubboConsumerFactory.getService(IAttrAndValDefSV.class);
 		PageInfoResponse<AttrValInfo> result = attrAndValDefSV.queryPageAttrvalue(pageQuery);

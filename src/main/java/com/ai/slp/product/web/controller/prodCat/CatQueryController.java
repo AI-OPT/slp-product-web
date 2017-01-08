@@ -229,7 +229,10 @@ public class CatQueryController {
         uiModel.addAttribute("otherSet",otherAttr);
         return "prodcat/catattrall";
     }
-
+    
+    /**
+     * 查询属性 
+     */
     public Map<Long,Set<String>> getAttr(String catId,String attrType,String queryType,
                                          Set<Long> otherAttr){
         IProductCatSV catSV = DubboConsumerFactory.getService(IProductCatSV.class);
@@ -245,7 +248,9 @@ public class CatQueryController {
             return null;
         }
     }
-
+    /**
+     * 添加属性 
+     */
     private void addAttr(String catId,Model uiModel){
         IProductCatSV catSV = DubboConsumerFactory.getService(IProductCatSV.class);
         //类目链

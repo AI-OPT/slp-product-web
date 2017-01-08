@@ -193,6 +193,9 @@ public class ProdQueryController {
         return responseData;
 	}
 
+	/** 
+	 * 查询在售商品 
+	 */
 	private PageInfoResponse<ProductEditUp> queryProductInSale(ProductQueryInfo queryInSale) {
         queryInSale.setSupplierId(AdminUtil.getSupplierId());
         IProductManagerSV productManagerSV = DubboConsumerFactory.getService("iProductManagerSV");
@@ -278,6 +281,9 @@ public class ProdQueryController {
 
 	}
 
+	/**
+	 * 查询待审核商品 
+	 */
 	private PageInfoResponse<ProductEditUp> queryProductAudit(ProductQueryInfo queryInfo) {
 		queryInfo.setTenantId(AdminUtil.getTenantId());
 		queryInfo.setSupplierId(AdminUtil.getSupplierId());
