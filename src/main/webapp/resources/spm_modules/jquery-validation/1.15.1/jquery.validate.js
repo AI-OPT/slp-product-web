@@ -6,16 +6,8 @@
  * Copyright (c) 2016 Jörn Zaefferer
  * Released under the MIT license
  */
-(function( factory ) {
-	if ( typeof define === "function" && define.amd ) {
-		define( ["jquery"], factory );
-	} else if (typeof module === "object" && module.exports) {
-		module.exports = factory( require( "jquery" ) );
-	} else {
-		factory( jQuery );
-	}
-}(function( $ ) {
-
+define(function () {
+	
 $.extend( $.fn, {
 
 	// http://jqueryvalidation.org/validate/
@@ -1571,4 +1563,5 @@ if ( $.ajaxPrefilter ) {
 	};
 }
 
-}));
+
+});//seajs end

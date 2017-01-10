@@ -10,8 +10,8 @@
 
 
 //start of seajs
-define(["jquery","jquery-validation/1.15.1/jquery.validate"],function (require, exports, module) {
-	var $=require('jquery');
+define(function (require, exports, module) {
+
 require("jquery-validation/1.15.1/jquery.validate");
 
 /***====AIOPT 扩展校验方法   开始====***/
