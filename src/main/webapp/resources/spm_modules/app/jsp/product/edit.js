@@ -424,6 +424,9 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			var upType = $("input[name='upshelfType']:checked").val();
 			var beginTime = $("#presaleBegin").val();
 			var endTime = $("#presaleEnd").val();
+			
+			var sellPoint = $("textarea[name='productSellPoint']").val();
+			
 			if (ProdEditPager.UPSHEL_PRESALE == upType
 				&& (beginTime=="" || typeof beginTime == 'undefined'
 				|| endTime == "" || typeof endTime == 'undefined')){
@@ -436,6 +439,20 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				this._showWarn("商品详情图文描述不能为空");
 				return false;
 			}
+			//return true;
+			
+			//商品卖点
+			var re= /select|insert|update|delete|exec|alert|count|'|"|=|!|>|<|%/i;
+			if(re.test(sellPoint)){
+				/*$("#contractCodeErrMsg").show();
+				$("#contractCodeText").show();*/
+				//$("#contractCodeText").text('请勿输入非法字符');
+	    		//$("#contractCodeFlag").val("0");
+
+				this._showWarn("商品卖点请勿输入非法字符");
+				return false;
+			}
+			
 			return true;
 		},
 		_showMsg:function(msg){

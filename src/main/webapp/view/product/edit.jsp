@@ -142,7 +142,7 @@
 									<p class="word3">商品卖点</p>
 									<p>
 										<textarea name="productSellPoint" class="int-text textarea-xlarge"
-													commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"
+													
 												  maxlength="100">${productInfo.productSellPoint}</textarea>
 									</p>
 								</li>
