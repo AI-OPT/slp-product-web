@@ -205,7 +205,8 @@ public class StorageEditController {
         StorageGroupRes queryGroup = storageSV.queryGroupInfoByGroupId(groupQuery);
         
         String state = queryGroup.getState();
-        if (state != null && !ProductConstants.Product.State.IN_SALE.equals(productInfo.getState())) {
+//        if (state != null && !ProductConstants.Product.State.IN_SALE.equals(productInfo.getState())) {
+        if (state != null) {
         	if (StorageAllConstants.StorageGroup.State.ACTIVE.equals(state) 
         			|| StorageAllConstants.StorageGroup.State.AUTO_ACTIVE.equals(state)) {
         		StoGroupStatus stogroupstatus = new StoGroupStatus();
