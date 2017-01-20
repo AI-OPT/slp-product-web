@@ -78,7 +78,7 @@ dependencies {
     compile 'com.ai.opt.sso.client:opt-sso-client:1.0.2-SNAPSHOT'
 
     //cache
-    compile 'com.ai.runner.center.mmp:manager:1.0.0-SNAPSHOT'
+//    compile 'com.ai.runner.center.mmp:manager:1.0.0-SNAPSHOT'
     //标准品
     compile 'com.ai.slp.product:normproduct:1.1.0-SNAPSHOT'
     //库存
@@ -94,7 +94,7 @@ dependencies {
     //用户
     compile 'com.ai.slp.user:keyinfo:1.0-SNAPSHOT'
 
-    compile 'com.ai.baas.smc:sysparamcache:2.0-SNAPSHOT'
+//    compile 'com.ai.baas.smc:sysparamcache:2.0-SNAPSHOT'
     //运营平台-用户
     compile 'com.ai.platform.common:sysuser:1.0-SNAPSHOT'
     
