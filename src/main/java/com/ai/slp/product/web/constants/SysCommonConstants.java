@@ -9,7 +9,7 @@ public final class SysCommonConstants {
     private SysCommonConstants() {
 		// TODO Auto-generated constructor stub
 	}
-
+//商品图片
 	public static final class ProductImage {
         private ProductImage() {
 			// TODO Auto-generated constructor stub
@@ -17,7 +17,7 @@ public final class SysCommonConstants {
 
 		public static final String IDPSNS = "slp-mall-web-idps";
     }
-
+//商品详情
     public static final class ProductDetail{
         private ProductDetail() {
 			// TODO Auto-generated constructor stub

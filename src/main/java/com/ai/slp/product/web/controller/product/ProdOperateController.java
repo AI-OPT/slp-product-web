@@ -169,7 +169,7 @@ public class ProdOperateController {
         productCheckParam.setProdIdList(idList);
         return auditProduct(productCheckParam, AuditStatus.REJECT);
     }
-
+    //商品审核
     private ResponseData<String> auditProduct(ProductCheckParam productCheckParam,
             AuditStatus status) {
         ResponseData<String> responseData = new ResponseData<String>(

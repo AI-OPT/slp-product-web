@@ -80,7 +80,7 @@ public class SalePriceQueryController {
         uiModel.addAttribute("stoStatusMap",storageService.getStorageStatus());
         return "/saleprice/salePriceEdit";
     }
-
+    //查询sku信息
     @RequestMapping("/sku/{id}")
     @ResponseBody
     public ResponseData<SkuPriceVo> querySkuInfo(@PathVariable("id") String groupId, Short groupPn){

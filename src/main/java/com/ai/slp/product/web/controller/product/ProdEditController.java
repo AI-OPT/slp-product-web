@@ -224,7 +224,7 @@ public class ProdEditController {
         }
         return responseData;
     }
-
+    //设置商品详情
     public void setProdDetail(String fileId,Model uiModel){
         if (StringUtils.isBlank(fileId)){
             return;
