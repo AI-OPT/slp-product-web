@@ -23,7 +23,7 @@
 	<dubbo:consumer timeout="${dubbo.provider.timeout}" />
 
 	<context:component-scan base-package="com.ai.slp" />
-
+	<!-- 标准品服务 -->
 	<dubbo:reference id="iNormProductSV" interface="com.ai.slp.product.api.normproduct.interfaces.INormProductSV"
 					 registry="slpRegistry"/>
 	<!-- 属性管理 -->
@@ -63,7 +63,7 @@
 	<!-- 仓库服务 -->
 	<dubbo:reference id="iRouteTargetAreaSV" interface="com.ai.slp.route.api.routetargetarea.interfaces.IRouteTargetAreaSV"
 					 registry="slpRegistry"/>
-					 
+	<!--公共管理  -->		 
 	<dubbo:reference id="iSysMenuQuerySV"
 	interface="com.ai.platform.common.api.menu.interfaces.ISysMenuQuerySV"
 	registry="slpRegistry" />				 
