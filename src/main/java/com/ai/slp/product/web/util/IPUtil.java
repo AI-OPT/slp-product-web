@@ -12,6 +12,12 @@ public  class IPUtil {
 		// TODO Auto-generated constructor stub
 	}
 
+    /**
+     * 获取ip
+     * @param request
+     * @return
+     * @UCUSER
+     */
 	public static String getIp(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
         if(!StringUtil.isBlank(ip) && !"unKnown".equalsIgnoreCase(ip)){
