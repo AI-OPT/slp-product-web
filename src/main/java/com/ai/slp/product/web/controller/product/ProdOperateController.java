@@ -30,6 +30,7 @@ import com.ai.slp.product.api.product.param.ProdTargetAreaInfo;
 import com.ai.slp.product.api.product.param.ProductCheckParam;
 import com.ai.slp.product.api.product.param.ProductInfo;
 import com.ai.slp.product.api.product.param.ProductInfoQuery;
+import com.ai.slp.product.api.product.param.SaleAreaInfoNew;
 import com.ai.slp.product.api.storage.interfaces.IStorageSV;
 import com.ai.slp.product.api.storage.param.StorageGroupQuery;
 import com.ai.slp.product.api.storage.param.StorageGroupRes;
@@ -225,11 +226,18 @@ public class ProdOperateController {
 		List<ProdTargetAreaInfo> areaInfoList = new ArrayList<>();
         if (ProductConstants.IsSaleNationwide.NO.equals(productInfo.getIsSaleNationwide())){
 			//目标地域
-        	for (ProdTargetAreaInfo areaInfo:otherSet.getAreaInfos()){
+        	//List<SaleAreaInfoNew> saleAreaInfos = productInfo.getSaleAreaInfos();
+        	for (SaleAreaInfoNew saleAreaInfos : productInfo.getSaleAreaInfos()) {
+        		ProdTargetAreaInfo areaInfo = new ProdTargetAreaInfo();
+        		areaInfo.setProvinceCode(saleAreaInfos.getProvcode());
+        		areaInfoList.add(areaInfo);
+			}
+        	
+        	/*for (ProdTargetAreaInfo areaInfo:otherSet.getAreaInfos()){
         		if (areaInfo.isOwn()){
         			areaInfoList.add(areaInfo);
         		}
-        	}
+        	}*/
 		}else {
 			for (int i = 0; i < otherSet.getAreaInfos().size(); i++) {
 				areaInfoList.add(otherSet.getAreaInfos().get(i));
