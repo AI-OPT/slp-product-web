@@ -1,5 +1,6 @@
 package com.ai.slp.product.web.controller.comment;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.PageInfoResponse;
@@ -131,10 +134,14 @@ public class ProductCommentController {
 	 * 
 	 * @param commentIdArray
 	 * @return
+	 * @throws Exception 
+	 * @throws IOException 
+	 * @throws SystemException 
+	 * @throws BusinessException 
 	 */
 	@RequestMapping("/discardComment")
 	@ResponseBody
-	public BaseResponse discardComment(String commentIds) {
+	public BaseResponse discardComment(String commentIds) throws BusinessException, SystemException, IOException, Exception {
 		IProdCommentManagerSV commentSV = DubboConsumerFactory.getService(IProdCommentManagerSV.class);
 		UpdateCommentStateRequest updataParams = new UpdateCommentStateRequest();
 		List<String> commentIdList = new ArrayList<String>();
