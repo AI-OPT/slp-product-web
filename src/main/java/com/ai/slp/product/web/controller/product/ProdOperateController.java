@@ -227,17 +227,17 @@ public class ProdOperateController {
         if (ProductConstants.IsSaleNationwide.NO.equals(productInfo.getIsSaleNationwide())){
 			//目标地域
         	//List<SaleAreaInfoNew> saleAreaInfos = productInfo.getSaleAreaInfos();
-        	for (SaleAreaInfoNew saleAreaInfos : productInfo.getSaleAreaInfos()) {
+        	/*for (SaleAreaInfoNew saleAreaInfos : productInfo.getSaleAreaInfos()) {
         		ProdTargetAreaInfo areaInfo = new ProdTargetAreaInfo();
         		areaInfo.setProvinceCode(saleAreaInfos.getProvcode());
         		areaInfoList.add(areaInfo);
-			}
+			}*/
         	
-        	/*for (ProdTargetAreaInfo areaInfo:otherSet.getAreaInfos()){
+        	for (ProdTargetAreaInfo areaInfo:otherSet.getAreaInfos()){
         		if (areaInfo.isOwn()){
         			areaInfoList.add(areaInfo);
         		}
-        	}*/
+        	}
 		}else {
 			for (int i = 0; i < otherSet.getAreaInfos().size(); i++) {
 				areaInfoList.add(otherSet.getAreaInfos().get(i));
