@@ -298,7 +298,7 @@ public class ProdOperateController {
 		
 		if (routeAreaList != null && areaInfos != null) {
 			for(ProdTargetAreaInfo area :areaInfos){
-				if(!routeAreaList.contains(area.getAreaCode())){
+				if(!routeAreaList.contains(area.getProvinceCode())){
 					flag = "false";
 					break;
 				}
