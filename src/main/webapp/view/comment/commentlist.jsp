@@ -56,7 +56,7 @@
 								<ul>
 									<li class="col-md-6">
 										<p class="word">服务态度</p>
-										<select id="shopScoreWl" class="select select-medium">
+										<select id="shopScoreFw" class="select select-medium">
 											<option value="">全部</option>
 											<option value="1">1分</option>
 											<option value="2">2分</option>
@@ -67,7 +67,7 @@
 									</li>
 									<li class="col-md-6">
 										<p class="word">物流服务</p>
-										<select id="shopScoreFw" class="select select-medium">
+										<select id="shopScoreWl" class="select select-medium">
 											<option value="">全部</option>
 											<option value="1">1分</option>
 											<option value="2">2分</option>
