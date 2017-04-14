@@ -2,7 +2,11 @@ package com.ai.slp.product.web.controller.comment;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -24,8 +29,15 @@ import com.ai.opt.sdk.dubbo.util.HttpClientUtil;
 import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.slp.product.api.flushdata.interfaces.IFlushDataSV;
+import com.ai.slp.product.api.flushdata.params.FlushDataRequest;
 import com.ai.slp.product.api.productcomment.interfaces.IProdCommentManagerSV;
-import com.ai.slp.product.api.productcomment.param.*;
+import com.ai.slp.product.api.productcomment.param.CommentPageRequest;
+import com.ai.slp.product.api.productcomment.param.CommentPageResponse;
+import com.ai.slp.product.api.productcomment.param.CommentPictureQueryRequset;
+import com.ai.slp.product.api.productcomment.param.CommentPictureQueryResponse;
+import com.ai.slp.product.api.productcomment.param.PictureVO;
+import com.ai.slp.product.api.productcomment.param.UpdateCommentStateRequest;
 import com.ai.slp.product.web.constants.ProductCommentConstants;
 import com.ai.slp.product.web.model.comment.CommentPageInfo;
 import com.ai.slp.product.web.util.AdminUtil;
@@ -179,4 +191,31 @@ public class ProductCommentController {
 		}
 		return responseData;
 	}
+	
+	@RequestMapping("/jumptoflushpage")
+	public ModelAndView jumpToFlushPage(){
+		return new ModelAndView("comment/flushData");
+	}
+	
+	
+	@RequestMapping("/flushproductdata")
+	public String flushProductData(){
+		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
+		FlushDataRequest request = new FlushDataRequest();
+		request.setPageNo(1);
+		request.setPageNo(100);
+		BaseResponse response = flushDataSV.flushProductData(request);
+		return JSONObject.toJSONString(response);
+	}
+	
+	@RequestMapping("/flushcommentdata")
+	public String flushCommentData(){
+		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
+		FlushDataRequest request = new FlushDataRequest();
+		request.setPageNo(1);
+		request.setPageNo(100);
+		BaseResponse response = flushDataSV.flushCommentData(request);
+		return JSONObject.toJSONString(response);
+	}
+	
 }
