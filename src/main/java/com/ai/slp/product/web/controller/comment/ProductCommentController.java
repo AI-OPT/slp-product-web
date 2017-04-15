@@ -198,7 +198,7 @@ public class ProductCommentController {
 	}
 	
 	
-	@RequestMapping("/flushproductdata")
+	@RequestMapping(value="/flushproductdata",produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String flushProductData(FlushDataRequest request){
 		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
@@ -206,7 +206,7 @@ public class ProductCommentController {
 		return JSONObject.toJSONString(response);
 	}
 	
-	@RequestMapping("/flushcommentdata")
+	@RequestMapping(value="/flushcommentdata",produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String flushCommentData(FlushDataRequest request){
 		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
