@@ -199,21 +199,17 @@ public class ProductCommentController {
 	
 	
 	@RequestMapping("/flushproductdata")
-	public String flushProductData(){
+	@ResponseBody
+	public String flushProductData(FlushDataRequest request){
 		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
-		FlushDataRequest request = new FlushDataRequest();
-		request.setPageNo(1);
-		request.setPageNo(100);
 		BaseResponse response = flushDataSV.flushProductData(request);
 		return JSONObject.toJSONString(response);
 	}
 	
 	@RequestMapping("/flushcommentdata")
-	public String flushCommentData(){
+	@ResponseBody
+	public String flushCommentData(FlushDataRequest request){
 		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
-		FlushDataRequest request = new FlushDataRequest();
-		request.setPageNo(1);
-		request.setPageNo(100);
 		BaseResponse response = flushDataSV.flushCommentData(request);
 		return JSONObject.toJSONString(response);
 	}
