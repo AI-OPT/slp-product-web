@@ -23,9 +23,16 @@
 		if (size == "" || size == null) {
 			size = 100;
 		}
-		window.location.href = _base
-				+ "/productcomment/flushproductdata?pageNo=" + no
-				+ "&pageSize=" + size;
+		var prodName = $("#prodName").val();
+		if (prodName == "" || prodName == null) {
+			window.location.href = _base
+			+ "/productcomment/flushproductdata?pageNo=" + no
+			+ "&pageSize=" + size;
+		} else {
+			window.location.href = _base
+			+ "/productcomment/flushproductdata?pageNo=" + no
+			+ "&pageSize=" + size + "&prodName=" + encodeURI(prodName);
+		}
 	}
 
 	function flushcomment() {
@@ -47,26 +54,28 @@
 	<div class="flushdata" style="margin: 10px 20px 30px 40px">
 		<div>
 			<ul style="margin: 10px 20px 30px 40px">
-				<li style="margin: 10px 20px 30px 40px"><input id="productNo" style="border: 1px solid #CCCCCC;"
-					name="productNo" type="text">--<input id="productSize"
-					style="border: 1px solid #CCCCCC;" name="productSize" type="text">
-				</li>
-				<li style="margin: 10px 20px 30px 40px"><a href="#"><input type="button"
-						class="biu-btn  btn-primary  btn-medium ml-10 " value="刷新商品"
-						onclick="flushproduct()"></a></li>
+				<li style="margin: 10px 20px 30px 40px">商品名称:<input id="prodName" style="border: 1px solid #CCCCCC;"
+					name="prodName" type="text"></li>
+				<li style="margin: 10px 20px 30px 40px"><input id="productNo"
+					style="border: 1px solid #CCCCCC;" name="productNo" type="text">--<input
+					id="productSize" style="border: 1px solid #CCCCCC;"
+					name="productSize" type="text"></li>
+				<li style="margin: 10px 20px 30px 40px"><a href="#"><input
+						type="button" class="biu-btn  btn-primary  btn-medium ml-10 "
+						value="刷新商品" onclick="flushproduct()"></a></li>
 			</ul>
 		</div>
-			<div>
-				<ul style="margin: 10px 20px 30px 40px">
-					<li style="margin: 10px 20px 30px 40px"><input id="commentNo" name="commentNo"
-						style="border: 1px solid #CCCCCC;" type="text">--<input
-						id="commentSize" name="commentSize"
-						style="border: 1px solid #CCCCCC;" type="text"></li>
-					<li style="margin: 10px 20px 30px 40px"><a href="#"><input type="button"
-							class="biu-btn  btn-primary  btn-medium ml-10 " value="刷新商品评论"
-							onclick="flushcomment()"></a></li>
-				</ul>
-			</div>
+		<div>
+			<ul style="margin: 10px 20px 30px 40px">
+				<li style="margin: 10px 20px 30px 40px"><input id="commentNo"
+					name="commentNo" style="border: 1px solid #CCCCCC;" type="text">--<input
+					id="commentSize" name="commentSize"
+					style="border: 1px solid #CCCCCC;" type="text"></li>
+				<li style="margin: 10px 20px 30px 40px"><a href="#"><input
+						type="button" class="biu-btn  btn-primary  btn-medium ml-10 "
+						value="刷新商品评论" onclick="flushcomment()"></a></li>
+			</ul>
+		</div>
 	</div>
 </body>
 </html>

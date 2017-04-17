@@ -1,6 +1,8 @@
 package com.ai.slp.product.web.controller.comment;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -200,8 +202,11 @@ public class ProductCommentController {
 	
 	@RequestMapping(value="/flushproductdata",produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String flushProductData(FlushDataRequest request){
+	public String flushProductData(FlushDataRequest request) throws UnsupportedEncodingException{
 		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
+		if(!StringUtil.isBlank(request.getProdName())){
+			request.setProdName(new String(request.getProdName().getBytes("iso8859-1"),"UTF-8"));
+		}
 		BaseResponse response = flushDataSV.flushProductData(request);
 		return JSONObject.toJSONString(response);
 	}
