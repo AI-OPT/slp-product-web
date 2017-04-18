@@ -208,7 +208,7 @@ public class ProductCommentController {
 			request.setProdName(new String(request.getProdName().getBytes("iso8859-1"),"UTF-8"));
 		}
 		BaseResponse response = flushDataSV.flushProductData(request);
-		return JSONObject.toJSONString(response);
+		return JSONObject.toJSONString(response).replace("\\","");
 	}
 	
 	@RequestMapping(value="/flushcommentdata",produces="text/html;charset=UTF-8")
