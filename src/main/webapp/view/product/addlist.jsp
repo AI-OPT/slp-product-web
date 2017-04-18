@@ -206,9 +206,11 @@
 													{{/if}}
 													
 													{{if state=="4"}}
-													<p><a prodId="{{:prodId}}" name="toViewReason" href="javaScript:void(0);" class="blue-border">查看原因</a></p>
+													<p><a prodId="{{:prodId}}" name="toViewReason" href="javaScript:void(0);" class="blue-border">查看原因</a></p>													<p><a href="${_base}/prodquery/{{:prodId}}" class="blue-border">查看商品</a></p>
 													{{/if}}
+													{{if state!="1"}}
 													<p><a href="${_base}/prodquery/{{:prodId}}" class="blue-border">查看商品</a></p>
+													{{/if}}
 												</div>
 											</td>
 									</tr>

@@ -56,7 +56,7 @@
 								<ul>
 									<li class="col-md-6">
 										<p class="word">服务态度</p>
-										<select id="shopScoreWl" class="select select-medium">
+										<select id="shopScoreFw" class="select select-medium">
 											<option value="">全部</option>
 											<option value="1">1分</option>
 											<option value="2">2分</option>
@@ -67,7 +67,7 @@
 									</li>
 									<li class="col-md-6">
 										<p class="word">物流服务</p>
-										<select id="shopScoreFw" class="select select-medium">
+										<select id="shopScoreWl" class="select select-medium">
 											<option value="">全部</option>
 											<option value="1">1分</option>
 											<option value="2">2分</option>
@@ -129,8 +129,8 @@
 										<th>评价人</th>
 										<th>评价内容</th>
 										<th>评价图片</th>
-										<th>物流服务</th>
-										<th>服务态度</th>
+										<th>服务服务</th>
+										<th>物流态度</th>
 										<th>商品ID</th>
 										<th>商品名称</th>
 										<th>订单号</th>

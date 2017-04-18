@@ -1,8 +1,14 @@
 package com.ai.slp.product.web.controller.comment;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -24,8 +31,15 @@ import com.ai.opt.sdk.dubbo.util.HttpClientUtil;
 import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.slp.product.api.flushdata.interfaces.IFlushDataSV;
+import com.ai.slp.product.api.flushdata.params.FlushDataRequest;
 import com.ai.slp.product.api.productcomment.interfaces.IProdCommentManagerSV;
-import com.ai.slp.product.api.productcomment.param.*;
+import com.ai.slp.product.api.productcomment.param.CommentPageRequest;
+import com.ai.slp.product.api.productcomment.param.CommentPageResponse;
+import com.ai.slp.product.api.productcomment.param.CommentPictureQueryRequset;
+import com.ai.slp.product.api.productcomment.param.CommentPictureQueryResponse;
+import com.ai.slp.product.api.productcomment.param.PictureVO;
+import com.ai.slp.product.api.productcomment.param.UpdateCommentStateRequest;
 import com.ai.slp.product.web.constants.ProductCommentConstants;
 import com.ai.slp.product.web.model.comment.CommentPageInfo;
 import com.ai.slp.product.web.util.AdminUtil;
@@ -179,4 +193,30 @@ public class ProductCommentController {
 		}
 		return responseData;
 	}
+	
+	@RequestMapping("/jumptoflushpage")
+	public ModelAndView jumpToFlushPage(){
+		return new ModelAndView("comment/flushData");
+	}
+	
+	
+	@RequestMapping(value="/flushproductdata",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String flushProductData(FlushDataRequest request) throws UnsupportedEncodingException{
+		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
+		if(!StringUtil.isBlank(request.getProdName())){
+			request.setProdName(new String(request.getProdName().getBytes("iso8859-1"),"UTF-8"));
+		}
+		BaseResponse response = flushDataSV.flushProductData(request);
+		return JSONObject.toJSONString(response).replace("\\","");
+	}
+	
+	@RequestMapping(value="/flushcommentdata",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String flushCommentData(FlushDataRequest request){
+		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
+		BaseResponse response = flushDataSV.flushCommentData(request);
+		return JSONObject.toJSONString(response);
+	}
+	
 }
