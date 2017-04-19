@@ -114,7 +114,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 		},
 		//关闭添加库存弹出框
 		_closeAddStoViewss:function(){
-			$("#newTotalNum").val("");
+			$("#TotalNum").val("");
 			$("#stoAddGroupId").val("");
 			$("#stoAddGroupPn").val("");
 			$("#StorageName").val("");
