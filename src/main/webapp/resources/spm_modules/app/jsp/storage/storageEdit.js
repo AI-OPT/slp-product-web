@@ -309,12 +309,23 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 		_showStorageInfo:function(obj){
 			var storageId = $(obj).attr("storageId");
 			var groupId = $(obj).attr("groupId");
-			//数量
+		/*	//数量
 			var nameTd = $(obj).parent().prev().prev();
 			("#stoInfoNum").text(nameTd.html());
 			//名称
-			$("#stoInfoName").text(nameTd.prev().prev().html());
+			$("#stoInfoName").text(nameTd.prev().prev().html());*/
 			//$("#stoInfoName").text(nameTd.prev().html());
+			
+			//数量
+			var nameTd = $(obj).parent().prev().prev();
+			$("#stoInfoNum").val(nameTd.html());
+			//添加只读
+			$('#stoInfoNum').attr("readonly","readonly");
+		/*	if (!$("#stoInfoNum").hasClass("input-disabled"))
+				$("#stoInfoNum").addClass("input-disabled");*/
+			//名称
+			$("#stoInfoName").val(nameTd.prev().prev().html());
+			
 			//若不包含销售属性,则直接返回
 			if (!hasSale){
 				$('#eject-mask').fadeIn(100);
