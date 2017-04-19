@@ -112,6 +112,15 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			$('#eject-mask').fadeOut(100);
 			$('#edit-medium').slideUp(150);
 		},
+		//关闭添加库存弹出框
+		_closeAddStoViewss:function(){
+			$("#newTotalNum").val("");
+			$("#stoAddGroupId").val("");
+			$("#stoAddGroupPn").val("");
+			$("#StorageName").val("");
+			$('#eject-mask').fadeOut(100);
+			$('#edit-medium').slideUp(150);
+		},
 		//更改库存组状态
 		_changeGroupStatus:function(statusBtn){
 			var statusBtnJ = $(statusBtn);

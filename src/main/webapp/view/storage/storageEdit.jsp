@@ -129,7 +129,7 @@
             <p class="center pr-30 mt-30">
                 <!-- <input type="button" id="addStorage" class="biu-btn  btn-primary  btn-auto  ml-5"
                        onclick="pager._addStorage();" value="确  认"> -->
-                <input id="edit-close" type="button" onclick="pager._closeStorageInfo();"
+                <input id="edit-close" type="button" onclick="pager._closeAddStoViewss();"
                        class="biu-btn  btn-primary  btn-auto  ml-5" value="返 回">
             </p>
         </div>
