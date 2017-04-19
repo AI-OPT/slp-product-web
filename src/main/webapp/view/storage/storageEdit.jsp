@@ -76,6 +76,70 @@
     </form>
     <div class="mask" id="eject-mask"></div>
 </div>
+
+
+<!--查看信息弹出框-->
+<div class="eject-big">
+<form id="storageForm"  method="post">
+    <div class="eject-medium" id="edit-medium">
+        <div class="eject-medium-title">
+            <p id="editTitle">查看库存</p>
+           <!--  <p class="img" onclick="pager._closeAddStoView();"><i class="fa fa-times"></i></p> -->
+        </div>
+        <div class="form-label">
+            <input type="hidden" id="storageId">
+            <input type="hidden" id="stoAddGroupId">
+            <input type="hidden" id="stoAddGroupPn">
+            <ul>
+                <li>
+                    <p class="word"><span>*</span>库存名称</p>
+                    <p><input type="text" id="StorageName" class="int-text int-small" maxlength="15"
+                    required data-msg-required="库存名称不能为空"  commonText="/^[a-zA-Z_()0-9\u4e00-\u9fa5\-]+$/"
+                    onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')"
+                    ></p>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <p class="word"><span>*</span>库存量</p>
+                    <p><input type="text" id="TotalNum" class="int-text int-small" value="0"
+                              <c:if test="${!saleAttr.isEmpty()}">readonly</c:if> maxlength="10"  
+                              onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')"></p>
+                </li>
+            </ul>
+        </div>
+        <c:set var="isSale" value="false"/>
+    <c:if test="${!saleAttr.isEmpty()}">
+        <c:set var="isSale" value="true"/>
+        <!--table表格-->
+        <div class="table-responsive clearfix">
+            <table class="table table-hover table-border table-bordered">
+                <thead>
+                <tr id="attrValTr">
+                </tr>
+                </thead>
+                <tbody id="skuInfo">
+                </tbody>
+            </table>
+        </div>
+    </c:if>
+        <!--/table表格结束-->
+        <!--按钮-->
+        <div class="row mt-15"><!--删格化-->
+            <p class="center pr-30 mt-30">
+                <!-- <input type="button" id="addStorage" class="biu-btn  btn-primary  btn-auto  ml-5"
+                       onclick="pager._addStorage();" value="确  认"> -->
+                <input id="edit-close" type="button" onclick="pager._closeAddStoView();"
+                       class="biu-btn  btn-primary  btn-auto  ml-5" value="返 回">
+            </p>
+        </div>
+    </div>
+    </form>
+    <div class="mask" id="eject-mask"></div>
+</div>
+
+
+
 <script id="skuStoTemp" type="text/template">
     <tr>
         {{for valForSkuList}}
@@ -323,7 +387,7 @@
                                                         <c:when test="${storage.state == '3' || storage.state == '31'}">
                                                             <a href="javaScript:void(0);"  class="blue"
                                                                storageId="${storage.storageId}" groupId="${stoGroup.storageGroupId}"
-                                                               onclick="pager._showStorageInfo(this)">查看</a>
+                                                               onclick="pager._showStorageInfoss(this)">查看</a>
                                                         </c:when>
                                                         <%-- 启用\自动启用状态 --%>
                                                         <c:when test="${storage.state == '1' || storage.state == '11'}">
