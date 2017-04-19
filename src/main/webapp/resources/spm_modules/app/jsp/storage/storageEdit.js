@@ -311,10 +311,13 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			var groupId = $(obj).attr("groupId");
 			//数量
 			var nameTd = $(obj).parent().prev().prev();
-			("#stoInfoNum").text(nameTd.html());
+			("#stoInfoNum").val(nameTd.html());
+			//名称
+			$("#stoInfoName").val(nameTd.prev().prev().html());
+/*			("#stoInfoNum").text(nameTd.html());
 			//名称
 			$("#stoInfoName").text(nameTd.prev().prev().html());
-			//$("#stoInfoName").text(nameTd.prev().html());
+*/			//$("#stoInfoName").text(nameTd.prev().html());
 			
 			//若不包含销售属性,则直接返回
 			if (!hasSale){
