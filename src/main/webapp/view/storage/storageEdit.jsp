@@ -81,7 +81,7 @@
 <!--查看信息弹出框-->
 <div class="eject-big">
 <form id="storageForm"  method="post">
-    <div class="eject-medium" id="edit-medium">
+    <div class="eject-medium" id="showss-medium">
         <div class="eject-medium-title">
             <p id="editTitle">查看库存</p>
            <!--  <p class="img" onclick="pager._closeAddStoView();"><i class="fa fa-times"></i></p> -->
@@ -109,7 +109,7 @@
             </ul>
         </div>
         <c:set var="isSale" value="false"/>
-    <c:if test="${!saleAttr.isEmpty()}">
+ <%--    <c:if test="${!saleAttr.isEmpty()}">
         <c:set var="isSale" value="true"/>
         <!--table表格-->
         <div class="table-responsive clearfix">
@@ -122,7 +122,7 @@
                 </tbody>
             </table>
         </div>
-    </c:if>
+    </c:if> --%>
         <!--/table表格结束-->
         <!--按钮-->
         <div class="row mt-15"><!--删格化-->

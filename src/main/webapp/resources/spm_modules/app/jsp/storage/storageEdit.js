@@ -411,6 +411,8 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 				}
 			});
 		},
+		
+		
 		//显示页面
 		_showStorageInfoss:function(obj){
 			$("#addStorage").attr("onclick","pager._saveStoName();");
@@ -420,20 +422,20 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			$("#stoAddGroupId").val(groupId);
 			//数量
 			var nameTd = $(obj).parent().prev().prev();
-			$("#newTotalNum").val(nameTd.html());
+			$("#TotalNum").val(nameTd.html());
 			//添加只读
-			$('#newTotalNum').attr("readonly","readonly");
-			if (!$("#newTotalNum").hasClass("input-disabled"))
-				$("#newTotalNum").addClass("input-disabled");
+			$('#TotalNum').attr("readonly","readonly");
+			if (!$("#TotalNum").hasClass("input-disabled"))
+				$("#TotalNum").addClass("input-disabled");
 			//名称
-			$("#newStorageName").val(nameTd.prev().prev().html());
+			$("#StorageName").val(nameTd.prev().prev().html());
 			$("#storageId").val(storageId);
 			$("#editTitle").html("查看库存");
 			
 			//若不包含销售属性,则直接返回
 			if (!hasSale){
 				$('#eject-mask').fadeIn(100);
-				$('#edit-medium').slideDown(200);
+				$('#showss-medium').slideDown(200);
 				if (window.console) {
 					console.log("The hasSale is " + hasSale);
 				}
