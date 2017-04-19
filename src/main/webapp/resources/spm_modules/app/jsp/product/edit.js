@@ -151,7 +151,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
       	_saveProd:function() {
 			var _this = this;
 			//验证通过,则进行保存操作.
-			if($("#prodForm").valid() && this._checkInput() && this._convertProdPic() && this._convertNoKeyAttr()){
+			if($("#prodForm").valid() && this._checkInput() && this._convertProdPic() && this._convertNoKeyAttr()  && this._checkAreaNum()){
 				//获取editor中内容
 				$("#detailConVal").val(editDom.getData());
 				if (window.console) {
@@ -453,6 +453,18 @@ define('app/jsp/product/edit', function (require, exports, module) {
 				return false;
 			}
 			
+			return true;
+		},
+		//地域信息保存检查
+		_checkAreaNum:function(){
+			//商品预售
+			var areaNum = $("#areaNum").val();
+			
+			
+			if (areaNum == 0){
+				this._showWarn("商品销售地域不能为空");
+				return false;
+			}
 			return true;
 		},
 		_showMsg:function(msg){
