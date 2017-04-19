@@ -461,7 +461,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			var areaNum = $("#areaNum").val();
 			
 			
-			if (areaNum == 0){
+			if (areaNum == "0"){
 				this._showWarn("商品的目标地域不能为空");
 				return false;
 			}
