@@ -307,61 +307,6 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 		},
 		//显示详情页面
 		_showStorageInfo:function(obj){
-			$("#addStorage").attr("onclick","pager._saveStoName();");
-			var storageId = $(obj).attr("storageId");
-			var groupId = $(obj).attr("groupId");
-			//库存组
-			$("#stoAddGroupId").val(groupId);
-			//数量
-			var nameTd = $(obj).parent().prev().prev();
-			$("#stoInfoNum").val(nameTd.html());
-			//添加只读
-			$('#stoInfoNum').attr("readonly","readonly");
-			if (!$("#stoInfoNum").hasClass("input-disabled"))
-				$("#stoInfoNum").addClass("input-disabled");
-			//名称
-			$("#stoInfoName").val(nameTd.prev().prev().html());
-			$("#storageId").val(storageId);
-			$("#editTitle").html("库存");
-			
-			//若不包含销售属性,则直接返回
-			if (!hasSale){
-				$('#eject-mask').fadeIn(100);
-				$('#edit-medium').slideDown(200);
-				if (window.console) {
-					console.log("The hasSale is " + hasSale);
-				}
-				return;
-			}
-
-			ajaxController.ajax({
-				type: "post",
-				processing: true,
-				message: "获取数据中，请等待...",
-				url: _base+"/storage/skuSto/"+storageId,
-				data:{"groupId":groupId},
-				success: function(data){
-					//变更成功
-					if("1"=== data.statusCode){
-						//属性标题信息
-						var attrValTr = "";
-						var attrVal = data.data.attrInfoList;
-						$.each( attrVal, function(index,item){
-							attrValTr = attrValTr+"<th>"+item.attrName+"</th>";
-						});
-						attrValTr = attrValTr+"<th>sku库存量</th>";
-						$("#attrValTr").html(attrValTr);
-						//SKU信息
-						var template = $.templates("#skuStoTemp");
-						var htmlOutput = template.render(data.data.skuInfoList);
-						$("#skuInfo").html(htmlOutput);
-						$('#eject-mask').fadeIn(100);
-						$('#edit-medium').slideDown(200);
-					}
-				}
-			});
-		},
-/*		_showStorageInfo:function(obj){
 			var storageId = $(obj).attr("storageId");
 			var groupId = $(obj).attr("groupId");
 			//数量
@@ -407,7 +352,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 				}
 			});
 		},
-*/		//关闭详情页
+		//关闭详情页
 		_closeStorageInfo:function(){
 			$('#eject-mask').fadeOut(100);
 			$('#info-medium').slideUp(150);
