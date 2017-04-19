@@ -310,11 +310,9 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			var storageId = $(obj).attr("storageId");
 			var groupId = $(obj).attr("groupId");
 			//数量
-			("#stoInfoNum").text(nameTd.html());
+			$("#stoInfoNum").text(nameTd.html());
 			//名称
-			//$("#stoInfoName").text(nameTd.prev().prev().html());
 			$("#stoInfoName").text(nameTd.prev().html());
-			
 			//若不包含销售属性,则直接返回
 			if (!hasSale){
 				$('#eject-mask').fadeIn(100);
