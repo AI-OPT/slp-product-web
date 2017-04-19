@@ -547,9 +547,11 @@ public class ProdQueryController {
 			}
 		}
 		//删除最后一个分隔号
-		int last = sb.lastIndexOf("、");
-		if (last==(sb.length()-1)){
-			sb.deleteCharAt(last);
+		if(sb.length()>0){
+			int last = sb.lastIndexOf("、");
+			if (last==(sb.length()-1)){
+				sb.deleteCharAt(last);
+			}
 		}
 		return sb.toString();
 	}
