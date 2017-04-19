@@ -462,7 +462,7 @@ define('app/jsp/product/edit', function (require, exports, module) {
 			
 			
 			if (areaNum == 0){
-				this._showWarn("商品销售地域不能为空");
+				this._showWarn("商品的目标地域不能为空");
 				return false;
 			}
 			return true;
