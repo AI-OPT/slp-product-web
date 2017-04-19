@@ -119,7 +119,7 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 			$("#stoAddGroupPn").val("");
 			$("#StorageName").val("");
 			$('#eject-mask').fadeOut(100);
-			$('#edit-medium').slideUp(150);
+			$('#showss-medium').slideUp(150);
 		},
 		//更改库存组状态
 		_changeGroupStatus:function(statusBtn){
