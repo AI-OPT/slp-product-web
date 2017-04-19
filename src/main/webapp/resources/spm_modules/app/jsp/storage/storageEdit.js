@@ -429,6 +429,10 @@ define('app/jsp/storage/storageEdit', function (require, exports, module) {
 				$("#TotalNum").addClass("input-disabled");
 			//名称
 			$("#StorageName").val(nameTd.prev().prev().html());
+			//添加只读
+			$('#StorageName').attr("readonly","readonly");
+			if (!$("#StorageName").hasClass("input-disabled"))
+				$("#StorageName").addClass("input-disabled");
 			$("#storageId").val(storageId);
 			$("#editTitle").html("查看库存");
 			
