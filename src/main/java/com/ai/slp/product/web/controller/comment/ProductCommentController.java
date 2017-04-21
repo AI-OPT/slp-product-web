@@ -2,7 +2,6 @@ package com.ai.slp.product.web.controller.comment;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +30,9 @@ import com.ai.opt.sdk.dubbo.util.HttpClientUtil;
 import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.slp.product.api.flushdata.interfaces.ICreateDataBatSV;
 import com.ai.slp.product.api.flushdata.interfaces.IFlushDataSV;
+import com.ai.slp.product.api.flushdata.params.CreateDataRequest;
 import com.ai.slp.product.api.flushdata.params.FlushDataRequest;
 import com.ai.slp.product.api.productcomment.interfaces.IProdCommentManagerSV;
 import com.ai.slp.product.api.productcomment.param.CommentPageRequest;
@@ -218,5 +219,15 @@ public class ProductCommentController {
 		BaseResponse response = flushDataSV.flushCommentData(request);
 		return JSONObject.toJSONString(response);
 	}
+	
+	@RequestMapping(value="/createProduct",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String createProduct(CreateDataRequest request) throws UnsupportedEncodingException{
+		ICreateDataBatSV createDataBatSV = DubboConsumerFactory.getService(ICreateDataBatSV.class);
+		request.setProductName(new String(request.getProductName().getBytes("iso8859-1"),"UTF-8"));
+		createDataBatSV.createProductBat(request);
+		return "/jumptoflushpage";
+	}
+	
 	
 }

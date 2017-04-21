@@ -105,7 +105,7 @@ dependencies {
     //商品评价
     compile 'com.ai.slp.product:productcomment:1.0-SNAPSHOT'
     //刷新缓存数据
-    compile 'com.ai.slp.product:flushdata:1.0.0-SNAPSHOT'
+    compile 'com.ai.slp.product:flushdata:1.0.1-SNAPSHOT'
 
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",
