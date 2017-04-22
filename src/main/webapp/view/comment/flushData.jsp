@@ -56,7 +56,7 @@
 		var productName = $("#productName").val();
 		window.location.href = _base
 				+ "/productcomment/createProduct?productCatIdStartNum=" + productCatIdStartNum
-				+ "&productCatIdEndNum=" + productCatIdEndNum+"&number="+number+"&productName="+productName;
+				+ "&productCatIdEndNum=" + productCatIdEndNum+"&number="+number+"&productName="+encodeURI(productName);
 	}
 </script>
 </head>
