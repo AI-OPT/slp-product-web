@@ -54,9 +54,10 @@
 		var productCatIdEndNum = $("#productCatIdEndNum").val();
 		var number = $("#number").val();
 		var productName = $("#productName").val();
+		var productIdStart = $("#productIdStart").val();
 		window.location.href = _base
 				+ "/productcomment/createProduct?productCatIdStartNum=" + productCatIdStartNum
-				+ "&productCatIdEndNum=" + productCatIdEndNum+"&number="+number+"&productName="+encodeURI(productName);
+				+ "&productCatIdEndNum=" + productCatIdEndNum+"&number="+number+"&productName="+encodeURI(productName)+"&productIdStart="+productIdStart;
 	}
 </script>
 </head>
@@ -98,6 +99,8 @@
 					name="number" style="border: 1px solid #CCCCCC;" type="text"/></li>
 					<li style="margin: 10px 20px 30px 40px">商品名称<input id="productName"
 					name="productName" style="border: 1px solid #CCCCCC;" type="text"/></li>
+					<li style="margin: 10px 20px 30px 40px">商品ID起始值<input id="productIdStart"
+					name="productIdStart" style="border: 1px solid #CCCCCC;" type="text"/></li>
 				<li style="margin: 10px 20px 30px 40px"><a href="#"><input
 						type="button" class="biu-btn  btn-primary  btn-medium ml-10 "
 						value="批量制造商品" onclick="createProduct()"></a></li>

@@ -58,6 +58,10 @@ import com.alibaba.fastjson.JSONObject;
 public class ProductCommentController {
 	private static final Logger LOG = LoggerFactory.getLogger(ProductCommentController.class);
 
+	public class Test {
+		
+	}
+	
 	/**
 	 * 进入页面
 	 */
@@ -229,5 +233,21 @@ public class ProductCommentController {
 		return "/jumptoflushpage";
 	}
 	
+	/*class Runner extends Thread{ 
+	private CreateDataRequest request;
+	public Runner(CreateDataRequest request){
+		this.request = request;
+	}
+	   public void run(){  
+		   ICreateDataBatSV createDataBatSV = DubboConsumerFactory.getService(ICreateDataBatSV.class);
+			try {
+				request.setProductName(new String(request.getProductName().getBytes("iso8859-1"),"UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+			}
+			createDataBatSV.createProductBat(request);
+	      }  
+	  
+	   } */ 
 	
 }
+
