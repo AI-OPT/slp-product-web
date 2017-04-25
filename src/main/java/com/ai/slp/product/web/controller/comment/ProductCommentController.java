@@ -229,7 +229,6 @@ public class ProductCommentController {
 	@RequestMapping(value="/createProduct")
 	public String createProduct(CreateDataRequest request) throws UnsupportedEncodingException{
 		ICreateDataBatSV createDataBatSV = DubboConsumerFactory.getService(ICreateDataBatSV.class);
-		request.setProductName(new String(request.getProductName().getBytes("iso8859-1"),"UTF-8"));
 		createDataBatSV.createProductBat(request);
 		return "jumptoflushpage";
 	}
