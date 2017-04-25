@@ -213,7 +213,8 @@ public class ProductCommentController {
 			request.setProdName(new String(request.getProdName().getBytes("iso8859-1"),"UTF-8"));
 		}
 		BaseResponse response = flushDataSV.flushProductData(request);
-		return new String(JSONObject.toJSONString(response).replace("\\","").getBytes("UTF-8"),"iso8859-1");
+		String str = JSONObject.toJSONString(response).replace("\\","");
+		return new String(str.getBytes("UTF-8"),"iso8859-1");
 	}
 	
 	@RequestMapping(value="/flushcommentdata")
@@ -221,7 +222,8 @@ public class ProductCommentController {
 	public String flushCommentData(FlushDataRequest request) throws UnsupportedEncodingException{
 		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
 		BaseResponse response = flushDataSV.flushCommentData(request);
-		return new String(JSONObject.toJSONString(response).replace("\\","").getBytes("UTF-8"),"iso8859-1");
+		String str = JSONObject.toJSONString(response).replace("\\","");
+		return new String(str.getBytes("UTF-8"),"iso8859-1");
 	}
 	
 	@RequestMapping(value="/createProduct")
@@ -230,7 +232,7 @@ public class ProductCommentController {
 		ICreateDataBatSV createDataBatSV = DubboConsumerFactory.getService(ICreateDataBatSV.class);
 		request.setProductName(new String(request.getProductName().getBytes("iso8859-1"),"UTF-8"));
 		createDataBatSV.createProductBat(request);
-		return "/jumptoflushpage";
+		return "jumptoflushpage";
 	}
 	
 	/*class Runner extends Thread{ 
