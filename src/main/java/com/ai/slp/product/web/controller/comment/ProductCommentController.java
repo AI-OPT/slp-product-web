@@ -227,10 +227,10 @@ public class ProductCommentController {
 	}
 	
 	@RequestMapping(value="/createProduct")
-	public String createProduct(CreateDataRequest request) throws UnsupportedEncodingException{
+	public ModelAndView createProduct(CreateDataRequest request) throws UnsupportedEncodingException{
 		ICreateDataBatSV createDataBatSV = DubboConsumerFactory.getService(ICreateDataBatSV.class);
 		createDataBatSV.createProductBat(request);
-		return "productcomment/jumptoflushpage";
+		return new ModelAndView("comment/flushData");
 	}
 	
 	/*class Runner extends Thread{ 
