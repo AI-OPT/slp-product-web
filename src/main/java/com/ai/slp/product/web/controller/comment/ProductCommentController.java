@@ -230,7 +230,7 @@ public class ProductCommentController {
 	public String createProduct(CreateDataRequest request) throws UnsupportedEncodingException{
 		ICreateDataBatSV createDataBatSV = DubboConsumerFactory.getService(ICreateDataBatSV.class);
 		createDataBatSV.createProductBat(request);
-		return "jumptoflushpage";
+		return "productcomment/jumptoflushpage";
 	}
 	
 	/*class Runner extends Thread{ 
