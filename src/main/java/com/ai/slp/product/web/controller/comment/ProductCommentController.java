@@ -205,7 +205,7 @@ public class ProductCommentController {
 	}
 	
 	
-	@RequestMapping(value="/flushproductdata",produces="text/html;charset=UTF-8")
+	@RequestMapping(value="/flushproductdata")
 	@ResponseBody
 	public String flushProductData(FlushDataRequest request) throws UnsupportedEncodingException{
 		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
@@ -213,18 +213,18 @@ public class ProductCommentController {
 			request.setProdName(new String(request.getProdName().getBytes("iso8859-1"),"UTF-8"));
 		}
 		BaseResponse response = flushDataSV.flushProductData(request);
-		return JSONObject.toJSONString(response).replace("\\","");
+		return new String(JSONObject.toJSONString(response).replace("\\","").getBytes("UTF-8"),"iso8859-1");
 	}
 	
-	@RequestMapping(value="/flushcommentdata",produces="text/html;charset=UTF-8")
+	@RequestMapping(value="/flushcommentdata")
 	@ResponseBody
-	public String flushCommentData(FlushDataRequest request){
+	public String flushCommentData(FlushDataRequest request) throws UnsupportedEncodingException{
 		IFlushDataSV flushDataSV = DubboConsumerFactory.getService(IFlushDataSV.class);
 		BaseResponse response = flushDataSV.flushCommentData(request);
-		return JSONObject.toJSONString(response);
+		return new String(JSONObject.toJSONString(response).replace("\\","").getBytes("UTF-8"),"iso8859-1");
 	}
 	
-	@RequestMapping(value="/createProduct",produces="text/html;charset=UTF-8")
+	@RequestMapping(value="/createProduct")
 	@ResponseBody
 	public String createProduct(CreateDataRequest request) throws UnsupportedEncodingException{
 		ICreateDataBatSV createDataBatSV = DubboConsumerFactory.getService(ICreateDataBatSV.class);
