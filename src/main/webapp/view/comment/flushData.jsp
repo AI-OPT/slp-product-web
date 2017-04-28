@@ -21,7 +21,7 @@ function comment() {
 	var number = $("#number").val();
 	var commentContent = $("#commentContent").val();
 	var commentIdStartNum = $("#commentIdStartNum").val();
-	window.location.href = _base + "/productcomment/createComment?productIdStartNum=" + productIdStartNum+ "&productIdEndNum=" + productIdEndNum+"&number="+number+"&commentContent="+commentContent+"&commentIdStartNum="+commentIdStartNum;
+	window.location.href = _base + "/productcomment/createComment?productIdStartNum=" + productIdStartNum+"&number="+ number +"&productIdEndNum=" + productIdEndNum+"&number="+number+"&commentContent="+commentContent+"&commentIdStartNum="+commentIdStartNum;
 }
 
 	function flushproduct() {
