@@ -32,6 +32,7 @@ import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.product.api.flushdata.interfaces.ICreateDataBatSV;
 import com.ai.slp.product.api.flushdata.interfaces.IFlushDataSV;
+import com.ai.slp.product.api.flushdata.params.CreateCommentRequest;
 import com.ai.slp.product.api.flushdata.params.CreateDataRequest;
 import com.ai.slp.product.api.flushdata.params.FlushDataRequest;
 import com.ai.slp.product.api.productcomment.interfaces.IProdCommentManagerSV;
@@ -233,21 +234,12 @@ public class ProductCommentController {
 		return new ModelAndView("comment/flushData");
 	}
 	
-	/*class Runner extends Thread{ 
-	private CreateDataRequest request;
-	public Runner(CreateDataRequest request){
-		this.request = request;
+	@RequestMapping(value="/createComment")
+	public ModelAndView createComment(CreateCommentRequest request) throws UnsupportedEncodingException{
+		ICreateDataBatSV createDataBatSV = DubboConsumerFactory.getService(ICreateDataBatSV.class);
+		createDataBatSV.createCommentBat(request);
+		return new ModelAndView("comment/flushData");
 	}
-	   public void run(){  
-		   ICreateDataBatSV createDataBatSV = DubboConsumerFactory.getService(ICreateDataBatSV.class);
-			try {
-				request.setProductName(new String(request.getProductName().getBytes("iso8859-1"),"UTF-8"));
-			} catch (UnsupportedEncodingException e) {
-			}
-			createDataBatSV.createProductBat(request);
-	      }  
-	  
-	   } */ 
 	
 }
 
