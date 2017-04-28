@@ -59,6 +59,16 @@
 				+ "/productcomment/createProduct?productCatIdStartNum=" + productCatIdStartNum
 				+ "&productCatIdEndNum=" + productCatIdEndNum+"&number="+number+"&productName="+productName+"&productIdStart="+productIdStart;
 	}
+	function createComment() {
+		var productIdStartNum = $("#productIdStartNum").val();
+		var productIdEndNum = $("#productIdEndNum").val();
+		var number = $("#number").val();
+		var commentContent = $("#commentContent").val();
+		var commentIdStartNum = $("#commentIdStartNum").val();
+		window.location.href = _base
+				+ "/productcomment/createComment?productIdStartNum=" + productIdStartNum
+				+ "&productIdEndNum=" + productIdEndNum+"&number="+number+"&commentContent="+commentContent+"&commentIdStartNum="+commentIdStartNum;
+	}
 </script>
 </head>
 <body>
@@ -104,6 +114,24 @@
 				<li style="margin: 10px 20px 30px 40px"><a href="#"><input
 						type="button" class="biu-btn  btn-primary  btn-medium ml-10 "
 						value="批量制造商品" onclick="createProduct()"></a></li>
+			</ul>
+		</div>
+		
+		<div>
+			<ul style="margin: 10px 20px 30px 40px">
+				<li style="margin: 10px 20px 30px 40px">商品ID<input id="productIdStartNum"
+					name="productIdStartNum" style="border: 1px solid #CCCCCC;" type="text">--<input
+					id="productIdEndNum" name="productIdEndNum"
+					style="border: 1px solid #CCCCCC;" type="text"></li>
+					<li style="margin: 10px 20px 30px 40px">评论数量<input id="number"
+					name="number" style="border: 1px solid #CCCCCC;" type="text"/></li>
+					<li style="margin: 10px 20px 30px 40px">评论内容<input id="commentContent"
+					name="commentContent" style="border: 1px solid #CCCCCC;" type="text"/></li>
+					<li style="margin: 10px 20px 30px 40px">评论ID起始值<input id="commentIdStartNum"
+					name="commentIdStartNum" style="border: 1px solid #CCCCCC;" type="text"/></li>
+				<li style="margin: 10px 20px 30px 40px"><a href="#"><input
+						type="button" class="biu-btn  btn-primary  btn-medium ml-10 "
+						value="批量制造商品评论" onclick="createComment()"></a></li>
 			</ul>
 		</div>
 	</div>
