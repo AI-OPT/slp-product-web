@@ -14,6 +14,16 @@
 <%@include file="/inc/inc.jsp"%>
 
 <script type="text/javascript">
+
+function comment() {
+	var productIdStartNum = $("#productIdStartNum").val();
+	var productIdEndNum = $("#productIdEndNum").val();
+	var number = $("#number").val();
+	var commentContent = $("#commentContent").val();
+	var commentIdStartNum = $("#commentIdStartNum").val();
+	window.location.href = _base + "/productcomment/createComment?productIdStartNum=" + productIdStartNum+ "&productIdEndNum=" + productIdEndNum+"&number="+number+"&commentContent="+commentContent+"&commentIdStartNum="+commentIdStartNum;
+}
+
 	function flushproduct() {
 		var no = $("#productNo").val();
 		var size = $("#productSize").val();
@@ -58,16 +68,6 @@
 		window.location.href = _base
 				+ "/productcomment/createProduct?productCatIdStartNum=" + productCatIdStartNum
 				+ "&productCatIdEndNum=" + productCatIdEndNum+"&number="+number+"&productName="+productName+"&productIdStart="+productIdStart;
-	}
-	function createComment() {
-		var productIdStartNum = $("#productIdStartNum").val();
-		var productIdEndNum = $("#productIdEndNum").val();
-		var number = $("#number").val();
-		var commentContent = $("#commentContent").val();
-		var commentIdStartNum = $("#commentIdStartNum").val();
-		window.location.href = _base
-				+ "/productcomment/createComment?productIdStartNum=" + productIdStartNum
-				+ "&productIdEndNum=" + productIdEndNum+"&number="+number+"&commentContent="+commentContent+"&commentIdStartNum="+commentIdStartNum;
 	}
 </script>
 </head>
@@ -131,7 +131,7 @@
 					name="commentIdStartNum" style="border: 1px solid #CCCCCC;" type="text"/></li>
 				<li style="margin: 10px 20px 30px 40px"><a href="#"><input
 						type="button" class="biu-btn  btn-primary  btn-medium ml-10 "
-						value="批量制造商品评论" onclick="createComment()"></a></li>
+						value="批量制造商品评论" onclick="comment()"></a></li>
 			</ul>
 		</div>
 	</div>
