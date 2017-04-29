@@ -18,10 +18,10 @@
 function comment() {
 	var productIdStartNum = $("#productIdStartNum").val();
 	var productIdEndNum = $("#productIdEndNum").val();
-	var number = $("#number").val();
+	var number = $("#contentnumber").val();
 	var commentContent = $("#commentContent").val();
 	var commentIdStartNum = $("#commentIdStartNum").val();
-	window.location.href = _base + "/productcomment/createComment?productIdStartNum=" + productIdStartNum+"&number="+ number +"&productIdEndNum=" + productIdEndNum+"&number="+number+"&commentContent="+commentContent+"&commentIdStartNum="+commentIdStartNum;
+	window.location.href = _base + "/productcomment/createComment?productIdStartNum=" + productIdStartNum +"&productIdEndNum=" + productIdEndNum+"&number="+number+"&commentContent="+commentContent+"&commentIdStartNum="+commentIdStartNum;
 }
 
 	function flushproduct() {
@@ -123,8 +123,8 @@ function comment() {
 					name="productIdStartNum" style="border: 1px solid #CCCCCC;" type="text">--<input
 					id="productIdEndNum" name="productIdEndNum"
 					style="border: 1px solid #CCCCCC;" type="text"></li>
-					<li style="margin: 10px 20px 30px 40px">评论数量<input id="number"
-					name="number" style="border: 1px solid #CCCCCC;" type="text"/></li>
+					<li style="margin: 10px 20px 30px 40px">评论数量<input id="contentnumber"
+					name="contentnumber" style="border: 1px solid #CCCCCC;" type="text"/></li>
 					<li style="margin: 10px 20px 30px 40px">评论内容<input id="commentContent"
 					name="commentContent" style="border: 1px solid #CCCCCC;" type="text"/></li>
 					<li style="margin: 10px 20px 30px 40px">评论ID起始值<input id="commentIdStartNum"
