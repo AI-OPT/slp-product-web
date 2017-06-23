@@ -151,6 +151,9 @@ public class HomeController {
      */
 	private void printParams(HttpServletRequest request){
 		Map<String,String[]> paramMap = request.getParameterMap();
+		if (paramMap == null) {
+			throw new BusinessException("paramMap为空");
+		}
 		for (Map.Entry<String,String[]> entry:paramMap.entrySet()){
 			logger.debug("the param:"+entry.getKey()+ Arrays.toString(entry.getValue()));
 		}
